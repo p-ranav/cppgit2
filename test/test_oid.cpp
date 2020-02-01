@@ -1,4 +1,3 @@
-#include <cppgit2/exception.hpp>
 #include <cppgit2/oid.hpp>
 #include <doctest.hpp>
 using doctest::test_suite;
