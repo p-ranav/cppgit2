@@ -16,13 +16,7 @@ TEST_CASE("Construct oid from C ptr" * test_suite("oid")) {
 }
 
 TEST_CASE("Invalid oid construction" * test_suite("oid")) {
-  bool exception_thrown{false};
-  try {
-    oid bad("f9de90000&^$%_%#");
-  } catch (exception &e) {
-    exception_thrown = true;
-  }
-  REQUIRE(exception_thrown);
+  REQUIRE_THROWS(oid("f9de90000&^$%_%#"));
 }
 
 TEST_CASE("Clone oid from existing oid struct" * test_suite("oid")) {
