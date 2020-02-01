@@ -77,7 +77,7 @@ TARGET_LINK_LIBRARIES(my_sample ${CPPGIT2_LIBRARY})
 SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 ```
 
-## Remaining Public API Functions
+## API Coverage
 
 ### annotated
 ```diff
