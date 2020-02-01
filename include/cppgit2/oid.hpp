@@ -50,7 +50,7 @@ public:
   bool operator==(const std::string &rhs) const;
 
   // Format oid into hex format string
-  std::string to_string(size_t n = GIT_OID_HEXSZ) const;
+  std::string to_hex_string(size_t n = GIT_OID_HEXSZ) const;
 
   // Format an oid into a loose-object path string
   //
@@ -60,6 +60,44 @@ public:
 
   // Access libgit2 C pointer
   const git_oid *c_ptr() const;
+
+  // The OID shortener is used to process a list of OIDs
+  // in text form and return the shortest length that
+  // would uniquely identify all of them.
+  //
+  // e.g. look at the result of git log --abbrev.
+  class shortener {
+  public:
+    // The minimal length for all identifiers,
+    // which will be used even if shorter
+    // OIDs would still be unique.
+    explicit shortener(size_t min_length = 0) {
+      git_libgit2_init();
+      c_ptr_ = git_oid_shorten_new(min_length);
+    }
+
+    ~shortener() {
+      if (c_ptr_)
+        git_oid_shorten_free(c_ptr_);
+      git_libgit2_shutdown();
+    }
+
+    // Add a new OID to set of shortened OIDs
+    // Returns the minimal length to uniquely identify
+    // all the OIDs in the set.
+    //
+    // For performance reasons, there is a hard-limit of
+    // how many OIDs can be added to a single set
+    // (around ~32000, assuming a mostly randomized distribution)
+    int add(const std::string &text_id) {
+      auto result = git_oid_shorten_add(c_ptr_, text_id.c_str());
+      if (result < 0)
+        throw exception();
+    }
+
+  private:
+    git_oid_shorten *c_ptr_;
+  };
 
 private:
   git_oid c_struct_;
