@@ -2,9 +2,7 @@
 
 using namespace cppgit2;
 
-oid::oid() {
-  git_libgit2_init();
-}
+oid::oid() { git_libgit2_init(); }
 
 oid::oid(const std::string &hex_string) {
   git_libgit2_init();

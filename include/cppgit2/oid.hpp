@@ -1,7 +1,7 @@
 #pragma once
+#include <cppgit2/exception.hpp>
 #include <git2.h>
 #include <string>
-#include <cppgit2/exception.hpp>
 
 namespace cppgit2 {
 
