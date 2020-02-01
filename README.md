@@ -161,12 +161,12 @@ git_branch_upstream_remote
 
 ### buf
 ```diff
-git_buf_contains_nul
-git_buf_dispose
-git_buf_free
-git_buf_grow
-git_buf_is_binary
-git_buf_set
++ git_buf_contains_nul
++ git_buf_dispose
++ git_buf_free
++ git_buf_grow
++ git_buf_is_binary
++ git_buf_set
 ```
 
 ### checkout
@@ -556,26 +556,26 @@ git_odb_write_pack
 
 ### oid
 ```diff
-git_oid_cmp
-git_oid_cpy
-git_oid_equal
-git_oid_fmt
-git_oid_fromraw
-git_oid_fromstr
-git_oid_fromstrn
-git_oid_fromstrp
-git_oid_is_zero
-git_oid_iszero
-git_oid_ncmp
-git_oid_nfmt
-git_oid_pathfmt
-git_oid_shorten_add
-git_oid_shorten_free
-git_oid_shorten_new
-git_oid_strcmp
-git_oid_streq
-git_oid_tostr
-git_oid_tostr_s
++ git_oid_cmp
++ git_oid_cpy
++ git_oid_equal
++ git_oid_fmt
+- git_oid_fromraw
++ git_oid_fromstr
++ git_oid_fromstrn
+- git_oid_fromstrp
++ git_oid_is_zero
++ git_oid_iszero
++ git_oid_ncmp
++ git_oid_nfmt
++ git_oid_pathfmt
++ git_oid_shorten_add
++ git_oid_shorten_free
++ git_oid_shorten_new
++ git_oid_strcmp
++ git_oid_streq
++ git_oid_tostr
++ git_oid_tostr_s
 ```
 
 ### oidarray
@@ -891,11 +891,11 @@ git_revwalk_sorting
 ### signature
 ```diff
 git_signature_default
-git_signature_dup
-git_signature_free
-git_signature_from_buffer
-git_signature_new
-git_signature_now
++ git_signature_dup
++ git_signature_free
++ git_signature_from_buffer
++ git_signature_new
++ git_signature_now
 ```
 
 ### stash
