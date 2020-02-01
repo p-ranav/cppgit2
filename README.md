@@ -923,8 +923,8 @@ git_status_should_ignore
 
 ### strarray
 ```diff
-git_strarray_copy
-git_strarray_free
++ git_strarray_copy
++ git_strarray_free
 ```
 
 ### submodule
