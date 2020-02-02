@@ -2,9 +2,5 @@
 
 namespace cppgit2 {
 
-  enum class ownership {
-    user,
-    libgit2
-  };
-
+enum class ownership { user, libgit2 };
 }

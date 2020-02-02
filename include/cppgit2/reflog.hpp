@@ -1,8 +1,8 @@
 #pragma once
 #include <cppgit2/exception.hpp>
 #include <cppgit2/oid.hpp>
-#include <cppgit2/signature.hpp>
 #include <cppgit2/ownership.hpp>
+#include <cppgit2/signature.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
@@ -15,7 +15,7 @@ public:
   // Construct reflog from libgit2 C ptr
   // If owned by user, will be free'd in the destructor
   // using git_reflog_free
-  reflog(git_reflog * c_ptr, ownership owner = ownership::libgit2);
+  reflog(git_reflog *c_ptr, ownership owner = ownership::libgit2);
 
   // Free reflog if owned by user
   ~reflog();
@@ -23,9 +23,7 @@ public:
   // Entry in this reflog
   class entry {
   public:
-    entry(const git_reflog_entry * c_ptr) : c_ptr_(c_ptr) {
-      git_libgit2_init();
-    }
+    entry(const git_reflog_entry *c_ptr) : c_ptr_(c_ptr) { git_libgit2_init(); }
 
     ~entry() { git_libgit2_shutdown(); }
 
@@ -36,19 +34,19 @@ public:
     std::string message() {
       auto ret = git_reflog_entry_message(c_ptr_);
       if (ret)
-	return std::string(ret);
+        return std::string(ret);
       else
-	return "";
+        return "";
     }
 
     oid new_oid() { return oid(git_reflog_entry_id_new(c_ptr_)); }
-    
+
     oid old_oid() { return oid(git_reflog_entry_id_old(c_ptr_)); }
 
-    const git_reflog_entry * c_ptr() { return c_ptr_; }
-    
+    const git_reflog_entry *c_ptr() { return c_ptr_; }
+
   private:
-    const git_reflog_entry * c_ptr_;
+    const git_reflog_entry *c_ptr_;
   };
 
   // Remove entry from reflog by index
@@ -61,7 +59,7 @@ public:
 
   // Add a new entry to the in-memory reflog
   void append(const oid &id, const signature &committer,
-	      const std::string &message = "");
+              const std::string &message = "");
 
   // Lookup an entry by index
   // Requesting reflog[0] will return the most recently created entry
@@ -72,12 +70,11 @@ public:
   void write_to_disk();
 
   // Access libgit2 C ptr
-  const git_reflog * c_ptr() const;
-  
+  const git_reflog *c_ptr() const;
+
 private:
-  git_reflog * c_ptr_;
+  git_reflog *c_ptr_;
   ownership owner_;
 };
 
-}
-
+} // namespace cppgit2
