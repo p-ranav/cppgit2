@@ -231,7 +231,7 @@ git_config_add_file_ondisk
 git_config_backend_foreach_match
 git_config_delete_entry
 git_config_delete_multivar
-git_config_entry_free
++ git_config_entry_free
 git_config_find_global
 git_config_find_programdata
 git_config_find_system
