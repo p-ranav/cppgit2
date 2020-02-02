@@ -9,10 +9,18 @@ namespace cppgit2 {
 
 class reflog {
 public:
+  // Default construct a reflog
   reflog();
+
+  // Construct reflog from libgit2 C ptr
+  // If owned by user, will be free'd in the destructor
+  // using git_reflog_free
   reflog(git_reflog * c_ptr, ownership owner = ownership::libgit2);
+
+  // Free reflog if owned by user
   ~reflog();
-  
+
+  // Entry in this reflog
   class entry {
   public:
     entry(const git_reflog_entry * c_ptr) : c_ptr_(c_ptr) {
