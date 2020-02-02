@@ -25,11 +25,8 @@ namespace cppgit2 {
 
   void reflog::append(const oid &id, const signature &committer,
 		      const std::string &message) {
-    const char * message_c = (message == "") ?
-      nullptr : message.c_str();
-
     if (git_reflog_append(c_ptr_, id.c_ptr(), committer.c_ptr(),
-			  message_c))
+			  message.c_str()))
       throw exception();
   }
 
