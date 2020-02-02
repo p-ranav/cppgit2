@@ -1,4 +1,5 @@
 #include <cppgit2/object.hpp>
+#include <cppgit2/data_buffer.hpp>
 
 namespace cppgit2 {
 
@@ -14,6 +15,13 @@ object::~object() { git_libgit2_shutdown(); }
 
 oid object::id() const { return oid(git_object_id(c_ptr_)->id); }
 
+std::string object::short_id() const {
+  git_buf result;
+  if (git_object_short_id(&result, c_ptr_))
+    throw exception();
+  return data_buffer(&result).to_string();
+}
+  
 object object::copy() const {
   object result;
   if (git_object_dup(&result.c_ptr_, c_ptr_))

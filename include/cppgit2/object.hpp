@@ -19,6 +19,9 @@ public:
   // SHA1 hash of this object
   oid id() const;
 
+  // Short abbreviated OID string of this object
+  std::string short_id() const;
+
   // Clone this object
   object copy() const;
 
