@@ -20,6 +20,9 @@ public:
   // Construct from C API
   oid(const git_oid *c_ptr);
 
+  // Construct from raw bytes
+  oid(const unsigned char *raw);
+
   // Shuts down libgit2
   ~oid();
 

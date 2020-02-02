@@ -29,6 +29,11 @@ oid::oid(const git_oid *c_ptr) {
     throw exception();
 }
 
+oid::oid(const unsigned char *raw) {
+  git_libgit2_init();
+  git_oid_fromraw(&c_struct_, raw);
+}
+
 oid::~oid() { git_libgit2_shutdown(); }
 
 int oid::compare(const oid &rhs) const {

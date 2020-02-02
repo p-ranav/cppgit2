@@ -560,7 +560,7 @@ git_odb_write_pack
 + git_oid_cpy
 + git_oid_equal
 + git_oid_fmt
-- git_oid_fromraw
++ git_oid_fromraw
 + git_oid_fromstr
 + git_oid_fromstrn
 - git_oid_fromstrp
