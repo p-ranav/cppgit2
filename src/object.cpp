@@ -1,5 +1,5 @@
-#include <cppgit2/object.hpp>
 #include <cppgit2/data_buffer.hpp>
+#include <cppgit2/object.hpp>
 
 namespace cppgit2 {
 
@@ -21,7 +21,7 @@ std::string object::short_id() const {
     throw exception();
   return data_buffer(&result).to_string();
 }
-  
+
 object object::copy() const {
   object result;
   if (git_object_dup(&result.c_ptr_, c_ptr_))
