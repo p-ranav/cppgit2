@@ -126,17 +126,17 @@ git_blob_create_from_stream
 git_blob_create_from_stream_commit
 git_blob_create_from_workdir
 git_blob_create_fromworkdir
-git_blob_dup
++ git_blob_dup
 git_blob_filter
 git_blob_filtered_content
-git_blob_free
-git_blob_id
-git_blob_is_binary
++ git_blob_free
++ git_blob_id
++ git_blob_is_binary
 git_blob_lookup
 git_blob_lookup_prefix
 git_blob_owner
-git_blob_rawcontent
-git_blob_rawsize
++ git_blob_rawcontent
++ git_blob_rawsize
 ```
 
 ### branch
