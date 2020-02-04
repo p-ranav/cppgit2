@@ -227,49 +227,49 @@ git_commit_tree_id
 
 ### config
 ```diff
-git_config_add_file_ondisk
-git_config_backend_foreach_match
-git_config_delete_entry
-git_config_delete_multivar
++ git_config_add_file_ondisk
+- git_config_backend_foreach_match
++ git_config_delete_entry
++ git_config_delete_multivar
 + git_config_entry_free
-git_config_find_global
-git_config_find_programdata
-git_config_find_system
-git_config_find_xdg
-git_config_foreach
-git_config_foreach_match
-git_config_free
-git_config_get_bool
-git_config_get_entry
-git_config_get_int32
-git_config_get_int64
-git_config_get_mapped
-git_config_get_multivar_foreach
-git_config_get_path
-git_config_get_string
-git_config_get_string_buf
-git_config_iterator_free
-git_config_iterator_glob_new
-git_config_iterator_new
-git_config_lock
-git_config_lookup_map_value
-git_config_multivar_iterator_new
-git_config_new
-git_config_next
-git_config_open_default
-git_config_open_global
-git_config_open_level
-git_config_open_ondisk
-git_config_parse_bool
-git_config_parse_int32
-git_config_parse_int64
-git_config_parse_path
-git_config_set_bool
-git_config_set_int32
-git_config_set_int64
-git_config_set_multivar
-git_config_set_string
-git_config_snapshot
++ git_config_find_global
++ git_config_find_programdata
++ git_config_find_system
++ git_config_find_xdg
++ git_config_foreach
+- git_config_foreach_match
++ git_config_free
++ git_config_get_bool
++ git_config_get_entry
++ git_config_get_int32
++ git_config_get_int64
+- git_config_get_mapped
+- git_config_get_multivar_foreach
++ git_config_get_path
++ git_config_get_string
++ git_config_get_string_buf
++ git_config_iterator_free
+- git_config_iterator_glob_new
++ git_config_iterator_new
++ git_config_lock
+- git_config_lookup_map_value
+- git_config_multivar_iterator_new
+- git_config_new
++ git_config_next
++ git_config_open_default
++ git_config_open_global
++ git_config_open_level
+- git_config_open_ondisk
++ git_config_parse_bool
++ git_config_parse_int32
++ git_config_parse_int64
++ git_config_parse_path
++ git_config_set_bool
++ git_config_set_int32
++ git_config_set_int64
++ git_config_set_multivar
++ git_config_set_string
++ git_config_snapshot
 ```
 
 ### cred
