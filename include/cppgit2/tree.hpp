@@ -86,8 +86,8 @@ public:
       return git_tree_entry_cmp(c_ptr_, e2.c_ptr());
     }
 
+    // Access libgit2 C ptr
     git_tree_entry *c_ptr() { return c_ptr_; }
-
     const git_tree_entry *c_ptr() const { return c_ptr_; }
 
   private:
@@ -99,12 +99,21 @@ public:
   // SHA1 hash of this tree
   oid id() const;
 
+  // Lookup tree entry by SHA value
+  // Returned entry is owned by the tree
+  // This must examine every entry in the tree, so it's not fast
   entry lookup_entry_by_id(const oid &id) const;
 
+  // Lookup tree entry by its position in the tree
+  // Returned entry is owned by the tree
   entry lookup_entry_by_index(size_t index) const;
 
+  // Lookup tree entry by its filename
+  // Returned entry is owned by the tree
   entry lookup_entry_by_name(const std::string &filename) const;
 
+  // Lookup tree entry given its relative path
+  // Returned tree entry is owned by the user
   entry lookup_entry_by_path(const std::string &path) const;
 
   // Number of entries in tree

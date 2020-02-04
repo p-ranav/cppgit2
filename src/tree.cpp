@@ -33,6 +33,7 @@ tree::entry tree::lookup_entry_by_name(const std::string &filename) const {
 
 tree::entry tree::lookup_entry_by_path(const std::string &path) const {
   tree::entry result;
+  result.owner_ = ownership::user;
   if (git_tree_entry_bypath(&result.c_ptr_, c_ptr_, path.c_str()))
     throw exception();
   return result;
