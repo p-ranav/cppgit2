@@ -55,6 +55,8 @@ void transaction::set_target(const std::string &refname, const oid &target,
     throw exception();
 }
 
+git_transaction *transaction::c_ptr() { return c_ptr_; }
+  
 const git_transaction *transaction::c_ptr() const { return c_ptr_; }
 
 } // namespace cppgit2

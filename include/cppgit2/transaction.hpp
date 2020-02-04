@@ -8,6 +8,7 @@
 namespace cppgit2 {
 
 class transaction {
+public:
   // Default construct a transaction
   transaction();
 
@@ -42,7 +43,8 @@ class transaction {
                   const signature &signature, const std::string &message);
 
   // Access the libgit2 C ptr
-  const git_transaction *c_ptr() const;
+  git_transaction * c_ptr();
+  const git_transaction *c_ptr() const;  
 
 private:
   git_transaction *c_ptr_;

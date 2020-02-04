@@ -78,17 +78,19 @@ namespace cppgit2 {
       const git_config_entry * c_ptr() const { return c_ptr_; }
       
     private:
+      friend config;
       git_config_entry * c_ptr_;
       ownership owner_;
     };
 
     // Delete a config variable from the config file with the
     // highest level (usually the local one)
-    void remove(const std::string &name);
+    void delete_entry(const std::string &name);
 
     // Remove one or several entries from a multivar in the
     // local config file
-    void remove(const std::string &name, const std::string &regexp);
+    void delete_entry(const std::string &name,
+		      const std::string &regexp);
 
     // Locate path to the global config file
     static std::string locate_global_config();
@@ -106,7 +108,7 @@ namespace cppgit2 {
     // Open global/XDG config file according to git's rules
     // Git allows to store global config in $HOME/.gitconfig
     // or $XDG_CONFIG_HOME/git/config.
-    static config open_global_config();
+    static config open_global_config(config &conf);
 
     // Build a single-level focused config object from
     // a multi-level one. The returned config object can be used

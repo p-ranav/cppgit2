@@ -36,6 +36,7 @@ public:
   std::string to_string() const;
 
   // Access libgit2 C ptr
+  git_buf *c_ptr();
   const git_buf *c_ptr() const;
 
 private:
