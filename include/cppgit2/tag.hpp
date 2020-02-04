@@ -1,84 +1,58 @@
 #pragma once
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
-#include <cppgit2/signature.hpp>
 #include <cppgit2/ownership.hpp>
+#include <cppgit2/signature.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
 
-  class tag {
-  public:
-    tag() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-      git_libgit2_init();
-    }
-    
-    tag(git_tag * c_ptr, ownership owner = ownership::libgit2) :
-      c_ptr_(c_ptr), owner_(owner) {
-      git_libgit2_init();
-    }
-    
-    ~tag() {
-      if (c_ptr_ && owner_ == ownership::user)
-	git_tag_free(c_ptr_);
-      git_libgit2_shutdown();
-    }
+class tag {
+public:
+  // Default construct a tag
+  tag();
 
-    // Create an in-memory copy of a tag
-    tag copy() const {
-      tag result;
-      if (git_tag_dup(&result.c_ptr_, c_ptr_))
-	throw exception();
-      return result;
-    }
+  // Construct from libgit2 C ptr
+  // If owned by user, this will be free'd in destructor
+  tag(git_tag *c_ptr, ownership owner = ownership::libgit2);
 
-    // Id of the tag
-    oid id() const { return oid(git_tag_id(c_ptr_)); }
+  // Cleanup tag ptr
+  ~tag();
 
-    std::string message() const {
-      auto ret = git_tag_message(c_ptr_);
-      if (ret)
-	return std::string(ret);
-      else return "";
-    }
+  // Create an in-memory copy of a tag
+  tag copy() const;
 
-    std::string name() const {
-      auto ret = git_tag_name(c_ptr_);
-      if (ret)
-	return std::string(ret);
-      else
-	return "";      
-    }
+  // Id of the tag
+  oid id() const;
 
-    object peel() const {
-      object result;
-      if (git_tag_peel(result.c_ptr_ptr(), c_ptr_))
-	throw exception();
-      return result;
-    }
+  // Tag mesage
+  std::string message() const;
 
-    signature tagger() const {
-      return signature(git_tag_tagger(c_ptr_));
-    }
+  // Tag name
+  std::string name() const;
 
-    object target() const {
-      object result;
-      if (git_tag_targert(result.c_ptr_ptr(), c_ptr_))
-	throw exception();
-      return result;
-    }
+  // Recursively peel until a non-tag git_object is found
+  object peel() const;
 
-    object::type target_type() const {
-      return static_cast<object::type>(git_tag_target_type(c_ptr_));
-    }
+  // Get tagger (author) of this tag
+  signature tagger() const;
 
-    git_tag * c_ptr() { return c_ptr_; }
+  // Get the tagged object of this tag
+  object target() const;
 
-    const git_tag * c_ptr() const { return c_ptr_; }
+  // Get the OID of the tagged object
+  oid target_id() const;
 
-  private:
-    git_tag * c_ptr_;
-    ownership owner_;
-  };
-  
-}
+  // Get the type of a tag's tagged object
+  object::object_type target_type() const;
+
+  // Access to libgit2 C ptr
+  git_tag *c_ptr();
+  const git_tag *c_ptr() const;
+
+private:
+  git_tag *c_ptr_;
+  ownership owner_;
+};
+
+} // namespace cppgit2
