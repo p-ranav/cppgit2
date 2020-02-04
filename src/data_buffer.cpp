@@ -46,7 +46,7 @@ std::string data_buffer::to_string() const {
   else
     return "";
 }
-  
+
 git_buf *data_buffer::c_ptr() { return &c_struct_; }
 
 const git_buf *data_buffer::c_ptr() const { return &c_struct_; }
