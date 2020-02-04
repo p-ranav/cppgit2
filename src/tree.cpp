@@ -41,6 +41,13 @@ tree::entry tree::lookup_entry_by_path(const std::string &path) const {
 
 oid tree::id() const { return oid(git_tree_id(c_ptr_)); }
 
+tree tree::copy() const {
+  tree result;
+  if (git_tree_dup(&result.c_ptr_, c_ptr_))
+    throw exception();
+  return result;
+}
+
 size_t tree::size() const { return git_tree_entrycount(c_ptr_); }
 
 git_tree *tree::c_ptr() { return c_ptr_; }

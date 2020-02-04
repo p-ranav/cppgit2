@@ -1009,23 +1009,23 @@ git_transaction_new
 ### tree
 ```diff
 git_tree_create_updated
-git_tree_dup
-git_tree_entry_byid
-git_tree_entry_byindex
-git_tree_entry_byname
-git_tree_entry_bypath
-git_tree_entry_cmp
-git_tree_entry_dup
-git_tree_entry_filemode
-git_tree_entry_filemode_raw
-git_tree_entry_free
-git_tree_entry_id
-git_tree_entry_name
++ git_tree_dup
++ git_tree_entry_byid
++ git_tree_entry_byindex
++ git_tree_entry_byname
++ git_tree_entry_bypath
++ git_tree_entry_cmp
++ git_tree_entry_dup
++ git_tree_entry_filemode
++ git_tree_entry_filemode_raw
++ git_tree_entry_free
++ git_tree_entry_id
++ git_tree_entry_name
 git_tree_entry_to_object
-git_tree_entry_type
-git_tree_entrycount
-git_tree_free
-git_tree_id
++ git_tree_entry_type
++ git_tree_entrycount
++ git_tree_free
++ git_tree_id
 git_tree_lookup
 git_tree_lookup_prefix
 git_tree_owner

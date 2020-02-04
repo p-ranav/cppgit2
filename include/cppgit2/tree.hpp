@@ -99,6 +99,9 @@ public:
   // SHA1 hash of this tree
   oid id() const;
 
+  // Duplicate of tree
+  tree copy() const;
+
   // Lookup tree entry by SHA value
   // Returned entry is owned by the tree
   // This must examine every entry in the tree, so it's not fast
