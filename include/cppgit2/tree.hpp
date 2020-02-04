@@ -17,7 +17,7 @@ public:
 
   // Construct from libgit2 C ptr
   // If owned by user, will be free'd in destructor
-  tree(git_tree * c_ptr, ownership owner);
+  tree(git_tree *c_ptr, ownership owner);
 
   // Cleanup
   ~tree();
@@ -31,16 +31,15 @@ public:
 
     // Construct from libgit2 C ptr
     // If owned by user, will be free'd in destructor
-    entry(git_tree_entry * c_ptr,
-	  ownership owner = ownership::libgit2) :
-      c_ptr_(c_ptr), owner_(owner) {
-      git_libgit2_init();      
+    entry(git_tree_entry *c_ptr, ownership owner = ownership::libgit2)
+        : c_ptr_(c_ptr), owner_(owner) {
+      git_libgit2_init();
     }
 
     // Clean up tree entry
     ~entry() {
       if (c_ptr_ && owner_ == ownership::user)
-	git_tree_entry_free(c_ptr_);
+        git_tree_entry_free(c_ptr_);
       git_libgit2_shutdown();
     }
 
@@ -48,7 +47,7 @@ public:
     entry copy() const {
       entry result;
       if (git_tree_entry_dup(&result.c_ptr_, c_ptr_))
-	throw exception();
+        throw exception();
       return result;
     }
 
@@ -59,8 +58,7 @@ public:
 
     // Raw UNIX file attributes of this tree entry
     file_mode raw_filemode() const {
-      return
-	static_cast<file_mode>(git_tree_entry_filemode_raw(c_ptr_));
+      return static_cast<file_mode>(git_tree_entry_filemode_raw(c_ptr_));
     }
 
     // SHA1 hash of this tree entry
@@ -70,9 +68,9 @@ public:
     std::string filename() const {
       auto entry_name = git_tree_entry_name(c_ptr_);
       if (entry_name)
-	return std::string(entry_name);
+        return std::string(entry_name);
       else
-	return "";
+        return "";
     }
 
     // Type of object pointed to by this entry
@@ -88,13 +86,13 @@ public:
       return git_tree_entry_cmp(c_ptr_, e2.c_ptr());
     }
 
-    git_tree_entry * c_ptr() { return c_ptr_; }
-    
-    const git_tree_entry * c_ptr() const { return c_ptr_; }
-    
+    git_tree_entry *c_ptr() { return c_ptr_; }
+
+    const git_tree_entry *c_ptr() const { return c_ptr_; }
+
   private:
     friend tree;
-    git_tree_entry * c_ptr_;
+    git_tree_entry *c_ptr_;
     ownership owner_;
   };
 
@@ -104,21 +102,21 @@ public:
   entry lookup_entry_by_id(const oid &id) const;
 
   entry lookup_entry_by_index(size_t index) const;
-  
+
   entry lookup_entry_by_name(const std::string &filename) const;
-  
+
   entry lookup_entry_by_path(const std::string &path) const;
 
   // Number of entries in tree
   size_t size() const;
 
   // Access libgit2 C ptr
-  git_tree * c_ptr();
-  const git_tree * c_ptr() const;
+  git_tree *c_ptr();
+  const git_tree *c_ptr() const;
 
 private:
-  git_tree * c_ptr_;
+  git_tree *c_ptr_;
   ownership owner_;
 };
 
-}
+} // namespace cppgit2
