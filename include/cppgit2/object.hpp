@@ -55,7 +55,11 @@ public:
   // Determine if the given type is a valid loose object type
   static bool is_type_loose(object_type type);
 
-  const git_object *c_ptr() const;
+  git_object * c_ptr() { return c_ptr_; }
+
+  const git_object *c_ptr() const { return c_ptr_; }
+  
+  git_object ** c_ptr_ptr() { return &c_ptr_; }
 
 private:
   git_object *c_ptr_;
