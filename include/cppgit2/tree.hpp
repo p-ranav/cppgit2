@@ -127,6 +127,7 @@ public:
   const git_tree *c_ptr() const;
 
 private:
+  friend class commit;
   git_tree *c_ptr_;
   ownership owner_;
 };

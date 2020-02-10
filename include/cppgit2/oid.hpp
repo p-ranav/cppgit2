@@ -96,6 +96,7 @@ public:
       auto result = git_oid_shorten_add(c_ptr_, text_id.c_str());
       if (result < 0)
         throw exception();
+      return result;
     }
 
   private:
