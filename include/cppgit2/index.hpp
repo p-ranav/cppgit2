@@ -133,6 +133,167 @@ public:
     git_index_entry default_;
   };
 
+  // Capabilities of system that affect index actions.
+  enum class capability {
+    ignore_case = 1,
+    no_filemode = 2,
+    no_symlinks = 4,
+    from_owner = -1,
+  };
+
+  // Flags for APIs that add files matching pathspec
+  enum class add_option {
+    default_ = 0,
+    force = (1u << 0),
+    disable_pathspec_match = (1u << 1),
+    check_pathspec = (1u << 2),
+  };
+
+  // Git index stage states
+  enum class stage {
+    any = -1, // Some index APIs take a stage to match; pass this value to match
+              // any entry matching the path regardless of stage.
+    normal = 0,   // A normal staged file in the index.
+    ancestor = 1, // The ancestor side of a conflict.
+    ours = 2,     // The "ours" side of a conflict.
+    theirs = 3,   // The "theirs" side of a conflict.
+  };
+
+  // Add or update an index entry from an in-memory struct
+  void add_entry(const entry &source_entry);
+
+  // Add or update index entries matching files in the working directory.
+  void add_entries_that_match(
+      const std::vector<std::string> &pathspec, add_option flags,
+      std::function<int(const std::string &, const std::string &)> callback =
+          {});
+
+  // Add or update an index entry from a file on disk
+  void add_entry_by_path(const std::string &path);
+
+  // Add or update an index entry from a buffer in memory
+  void add_entry_from_buffer(const entry &entry, const std::string &buffer);
+
+  // Read index capabilities flags.
+  capability capability_flags() const;
+
+  // This checksum is the SHA-1 hash over the index file
+  // (except the last 20 bytes which are the checksum itself).
+  const oid get_checksum();
+
+  // Clear the contents (all the entries) of an index object.
+  void clear();
+
+  // Add or update index entries to represent a conflict.
+  // Any staged entries that exist at the given paths will be removed.
+  void add_conflict_entry(const entry &ancestor_entry, const entry &our_entry,
+                          const entry &their_entry);
+
+  // Remove all conflicts in the index (entries with a stage greater than 0).
+  void remove_all_conflicts();
+
+  // Removes the index entries that represent a conflict of a single file.
+  void remove_conflict_entries(const std::string &path);
+
+  // Get the count of entries currently in the index
+  size_t size() const;
+
+  // Find the first position of any entries which point to given path in the Git
+  // index.
+  size_t find_first(const std::string &path);
+
+  // Find the first position of any entries matching a prefix.
+  // To find the first position of a path inside a given folder, suffix the
+  // prefix with a '/'.
+  size_t find_first_matching_prefix(const std::string &prefix);
+
+  // Run operation for each entry in index
+  void for_each(std::function<void(const entry &)> visitor);
+
+  // Run operator for each conflict in index
+  void for_each_conflict(
+      std::function<void(const entry &, const entry &, const entry &)> visitor);
+
+  // Get one of the entries in the index
+  const entry operator[](size_t index);
+
+  // Get one of the entries in the index
+  // The entry is not modifiable and should not be freed. Because the
+  // git_index_entry struct is a publicly defined struct, you should be able to
+  // make your own permanent copy of the data if necessary.
+  const entry entry_in_path(const std::string &path, stage stage);
+
+  // Determine if the index contains entries representing file conflicts.
+  bool has_conflicts() const;
+
+  // Get the full path to the index file on disk.
+  std::string path() const;
+
+  // Update the contents of an existing index object in memory by reading from
+  // the hard disk.
+  //
+  // If force is true, this performs a "hard" read that discards in-memory
+  // changes and always reloads the on-disk index data. If there is no on-disk
+  // version, the index will be cleared.
+  void read(bool force);
+
+  // Read a tree into the index file with stats
+  void read_tree(const tree &tree);
+
+  // Remove all matching index entries.
+  void remove_entries_that_match(
+      const std::vector<std::string> &pathspec,
+      std::function<int(const std::string &, const std::string &)> callback =
+          {});
+
+  // Remove an index entry corresponding to a file on disk
+  void remove_entry_by_path(const std::string &path);
+
+  // Remove all entries from the index under a given directory
+  void remove_entries_in_directory(const std::string &dir, stage stage);
+
+  // Set index capabilities flags.
+  void set_index_capabilities(capability caps);
+
+  // Set index on-disk version.
+  void set_version(unsigned int version);
+
+  // Update all index entries to match the working directory
+  // This method will fail in bare index instances.
+  //
+  // @param pathspec: array of path patterns
+  // @param callback: notification callback for each removed path (also gets
+  // index of matching pathspec entry); return 0 to add, >0 to skip, < 0 to
+  // abort scan.
+  //
+  // This scans the existing index entries and synchronizes them with the working directory,
+  // deleting them if the corresponding working directory file no longer exists otherwise updating
+  // the information (including adding the latest version of file to the ODB if needed).
+  //
+  // If you provide a callback function, it will be invoked on each matching item in the index
+  // immediately before it is updated (either refreshed or removed depending on working directory
+  // state). Return 0 to proceed with updating the item, > 0 to skip the item, and < 0 to abort the
+  // scan.
+  void update_entries_that_match(
+      const std::vector<std::string> &pathspec,
+      std::function<int(const std::string &, const std::string &)> callback =
+          {});
+
+  // Get index on-disk version.
+  // Valid return values are 2, 3, or 4. If 3 is returned, an index with version 2 may be written
+  // instead, if the extension data in version 3 is not necessary.
+  unsigned int version();
+
+  // Write an existing index object from memory back to disk using an atomic file lock.
+  void write();
+
+  // Write the index as a tree 
+  // The index must not contain any file in conflict.
+  oid write_tree();
+
+  // Access libgit2 C ptr
+  const git_index *c_ptr() const;
+
 private:
   git_index *c_ptr_;
   ownership owner_;
