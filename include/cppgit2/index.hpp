@@ -30,7 +30,7 @@ public:
   // Time structure used in a git index entry
   struct time {
     int32_t seconds;
-    int32_t nanoseconds;
+    uint32_t nanoseconds;
   };
 
   // File entry in index
@@ -240,6 +240,9 @@ public:
   // Read a tree into the index file with stats
   void read_tree(const tree &tree);
 
+  // Remove an entry from the index
+  void remove_entry(const std::string &path, stage stage);
+
   // Remove all matching index entries.
   void remove_entries_that_match(
       const std::vector<std::string> &pathspec,
@@ -282,7 +285,7 @@ public:
   // Get index on-disk version.
   // Valid return values are 2, 3, or 4. If 3 is returned, an index with version 2 may be written
   // instead, if the extension data in version 3 is not necessary.
-  unsigned int version();
+  unsigned int version() const;
 
   // Write an existing index object from memory back to disk using an atomic file lock.
   void write();
