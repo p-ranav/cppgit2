@@ -1,6 +1,6 @@
 #pragma once
-#include <git2.h>
 #include <cppgit2/ownership.hpp>
+#include <git2.h>
 #include <string>
 
 namespace cppgit2 {

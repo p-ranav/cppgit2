@@ -1,7 +1,7 @@
 #pragma once
 #include <cppgit2/oid.hpp>
-#include <cppgit2/signature.hpp>
 #include <cppgit2/ownership.hpp>
+#include <cppgit2/signature.hpp>
 #include <git2.h>
 #include <string>
 
@@ -10,7 +10,7 @@ namespace cppgit2 {
 class note {
 public:
   note();
-  note(git_note * c_ptr, ownership owner = ownership::libgit2);
+  note(git_note *c_ptr, ownership owner = ownership::libgit2);
   ~note();
 
   // Get the note author

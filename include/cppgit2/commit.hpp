@@ -2,10 +2,10 @@
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/exception.hpp>
 #include <cppgit2/oid.hpp>
+#include <cppgit2/ownership.hpp>
 #include <cppgit2/signature.hpp>
 #include <cppgit2/time.hpp>
 #include <cppgit2/tree.hpp>
-#include <cppgit2/ownership.hpp>
 #include <git2.h>
 #include <string>
 
@@ -14,14 +14,14 @@ namespace cppgit2 {
 class commit {
 public:
   commit();
-  commit(git_commit * c_ptr, ownership owner = ownership::libgit2);
+  commit(git_commit *c_ptr, ownership owner = ownership::libgit2);
   ~commit();
 
   // Amend an existing commit by replacing only non-NULL values
-  void amend(const oid& id, const std::string &update_ref,
-    const signature &author, const signature &committer,
-    const std::string &message_encoding, const std::string &message,
-    const tree &tree);
+  void amend(const oid &id, const std::string &update_ref,
+             const signature &author, const signature &committer,
+             const std::string &message_encoding, const std::string &message,
+             const tree &tree);
 
   // Author of this commit
   signature author() const;
@@ -47,7 +47,7 @@ public:
   // Get the encoding for the message of a commit,
   // as a string representing a standard encoding name
   std::string message_encoding() const;
-  
+
   // Full raw message of this commit
   std::string message_raw() const;
 
@@ -88,11 +88,11 @@ public:
   oid tree_id() const;
 
   // Access libgit2 C ptr
-  const git_commit * c_ptr() const;
+  const git_commit *c_ptr() const;
 
 private:
-  git_commit * c_ptr_;
+  git_commit *c_ptr_;
   ownership owner_;
 };
 
-}
+} // namespace cppgit2
