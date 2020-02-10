@@ -478,20 +478,20 @@ git_message_trailers
 
 ### note
 ```diff
-git_note_author
++ git_note_author
 git_note_commit_create
 git_note_commit_iterator_new
 git_note_commit_read
 git_note_commit_remove
-git_note_committer
++ git_note_committer
 git_note_create
 git_note_default_ref
 git_note_foreach
-git_note_free
-git_note_id
++ git_note_free
++ git_note_id
 git_note_iterator_free
 git_note_iterator_new
-git_note_message
++ git_note_message
 git_note_next
 git_note_read
 git_note_remove
