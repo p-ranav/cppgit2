@@ -385,49 +385,49 @@ git_ignore_path_is_ignored
 
 ### index
 ```diff
-git_index_add
-git_index_add_all
-git_index_add_bypath
-git_index_add_from_buffer
-git_index_caps
-git_index_checksum
-git_index_clear
-git_index_conflict_add
-git_index_conflict_cleanup
++ git_index_add
++ git_index_add_all
++ git_index_add_bypath
++ git_index_add_from_buffer
++ git_index_caps
++ git_index_checksum
++ git_index_clear
++ git_index_conflict_add
++ git_index_conflict_cleanup
 git_index_conflict_get
-git_index_conflict_iterator_free
-git_index_conflict_iterator_new
-git_index_conflict_next
-git_index_conflict_remove
-git_index_entry_is_conflict
-git_index_entry_stage
-git_index_entrycount
-git_index_find
-git_index_find_prefix
-git_index_free
-git_index_get_byindex
-git_index_get_bypath
-git_index_has_conflicts
-git_index_iterator_free
-git_index_iterator_new
-git_index_iterator_next
-git_index_new
++ git_index_conflict_iterator_free
++ git_index_conflict_iterator_new
++ git_index_conflict_next
++ git_index_conflict_remove
++ git_index_entry_is_conflict
++ git_index_entry_stage
++ git_index_entrycount
++ git_index_find
++ git_index_find_prefix
++ git_index_free
++ git_index_get_byindex
++ git_index_get_bypath
++ git_index_has_conflicts
++ git_index_iterator_free
++ git_index_iterator_new
++ git_index_iterator_next
++ git_index_new
 git_index_open
 git_index_owner
-git_index_path
-git_index_read
-git_index_read_tree
-git_index_remove
-git_index_remove_all
-git_index_remove_bypath
-git_index_remove_directory
-git_index_set_caps
-git_index_set_version
-git_index_update_all
-git_index_version
-git_index_write
-git_index_write_tree
-git_index_write_tree_to
++ git_index_path
++ git_index_read
++ git_index_read_tree
++ git_index_remove
++ git_index_remove_all
++ git_index_remove_bypath
++ git_index_remove_directory
++ git_index_set_caps
++ git_index_set_version
++ git_index_update_all
++ git_index_version
++ git_index_write
++ git_index_write_tree
++ git_index_write_tree_to
 ```
 
 ### indexer

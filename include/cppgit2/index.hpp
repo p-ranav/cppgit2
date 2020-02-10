@@ -269,28 +269,31 @@ public:
   // index of matching pathspec entry); return 0 to add, >0 to skip, < 0 to
   // abort scan.
   //
-  // This scans the existing index entries and synchronizes them with the working directory,
-  // deleting them if the corresponding working directory file no longer exists otherwise updating
-  // the information (including adding the latest version of file to the ODB if needed).
+  // This scans the existing index entries and synchronizes them with the
+  // working directory, deleting them if the corresponding working directory
+  // file no longer exists otherwise updating the information (including adding
+  // the latest version of file to the ODB if needed).
   //
-  // If you provide a callback function, it will be invoked on each matching item in the index
-  // immediately before it is updated (either refreshed or removed depending on working directory
-  // state). Return 0 to proceed with updating the item, > 0 to skip the item, and < 0 to abort the
-  // scan.
+  // If you provide a callback function, it will be invoked on each matching
+  // item in the index immediately before it is updated (either refreshed or
+  // removed depending on working directory state). Return 0 to proceed with
+  // updating the item, > 0 to skip the item, and < 0 to abort the scan.
   void update_entries_that_match(
       const std::vector<std::string> &pathspec,
       std::function<int(const std::string &, const std::string &)> callback =
           {});
 
   // Get index on-disk version.
-  // Valid return values are 2, 3, or 4. If 3 is returned, an index with version 2 may be written
-  // instead, if the extension data in version 3 is not necessary.
+  // Valid return values are 2, 3, or 4. If 3 is returned, an index with version
+  // 2 may be written instead, if the extension data in version 3 is not
+  // necessary.
   unsigned int version() const;
 
-  // Write an existing index object from memory back to disk using an atomic file lock.
+  // Write an existing index object from memory back to disk using an atomic
+  // file lock.
   void write();
 
-  // Write the index as a tree 
+  // Write the index as a tree
   // The index must not contain any file in conflict.
   oid write_tree();
 
