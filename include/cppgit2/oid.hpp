@@ -62,6 +62,7 @@ public:
   std::string to_path_string() const;
 
   // Access libgit2 C pointer
+  git_oid *c_ptr();
   const git_oid *c_ptr() const;
 
   // The OID shortener is used to process a list of OIDs

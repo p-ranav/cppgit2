@@ -73,6 +73,8 @@ std::string oid::to_path_string() const {
   return result;
 }
 
+git_oid *oid::c_ptr() { return &c_struct_; }
+
 const git_oid *oid::c_ptr() const { return &c_struct_; }
 
 } // namespace cppgit2

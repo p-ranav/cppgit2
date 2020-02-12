@@ -800,39 +800,39 @@ git_remote_url
 
 ### repository
 ```diff
-git_repository_commondir
-git_repository_config
-git_repository_config_snapshot
-git_repository_detach_head
-git_repository_discover
++ git_repository_commondir
++ git_repository_config
++ git_repository_config_snapshot
++ git_repository_detach_head
++ git_repository_discover
 git_repository_fetchhead_foreach
-git_repository_free
-git_repository_get_namespace
-git_repository_hashfile
++ git_repository_free
++ git_repository_get_namespace
++ git_repository_hashfile
 git_repository_head
-git_repository_head_detached
-git_repository_head_detached_for_worktree
++ git_repository_head_detached
++ git_repository_head_detached_for_worktree
 git_repository_head_for_worktree
-git_repository_head_unborn
-git_repository_ident
-git_repository_index
-git_repository_init
++ git_repository_head_unborn
++ git_repository_ident
++ git_repository_index
++ git_repository_init
 git_repository_init_ext
 git_repository_init_options_init
-git_repository_is_bare
-git_repository_is_empty
-git_repository_is_shallow
-git_repository_is_worktree
++ git_repository_is_bare
++ git_repository_is_empty
++ git_repository_is_shallow
++ git_repository_is_worktree
 git_repository_item_path
 git_repository_mergehead_foreach
 git_repository_message
 git_repository_message_remove
 git_repository_odb
-git_repository_open
-git_repository_open_bare
++ git_repository_open
++ git_repository_open_bare
 git_repository_open_ext
 git_repository_open_from_worktree
-git_repository_path
++ git_repository_path
 git_repository_refdb
 git_repository_set_head
 git_repository_set_head_detached

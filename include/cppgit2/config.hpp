@@ -176,6 +176,7 @@ public:
   const git_config *c_ptr() const;
 
 private:
+  friend class repository;
   git_config *c_ptr_;
   ownership owner_;
 };
