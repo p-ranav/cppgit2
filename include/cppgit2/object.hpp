@@ -62,6 +62,7 @@ public:
   git_object **c_ptr_ptr() { return &c_ptr_; }
 
 private:
+  friend class reference;
   git_object *c_ptr_;
 };
 

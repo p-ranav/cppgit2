@@ -677,47 +677,47 @@ git_refdb_open
 
 ### reference
 ```diff
-git_reference_cmp
++ git_reference_cmp
 git_reference_create
 git_reference_create_matching
-git_reference_delete
-git_reference_dup
++ git_reference_delete
++ git_reference_dup
 git_reference_dwim
 git_reference_ensure_log
 git_reference_foreach
 git_reference_foreach_glob
 git_reference_foreach_name
-git_reference_free
++ git_reference_free
 git_reference_has_log
-git_reference_is_branch
-git_reference_is_note
-git_reference_is_remote
-git_reference_is_tag
-git_reference_is_valid_name
++ git_reference_is_branch
++ git_reference_is_note
++ git_reference_is_remote
++ git_reference_is_tag
++ git_reference_is_valid_name
 git_reference_iterator_free
 git_reference_iterator_glob_new
 git_reference_iterator_new
 git_reference_list
 git_reference_lookup
-git_reference_name
++ git_reference_name
 git_reference_name_to_id
 git_reference_next
 git_reference_next_name
 git_reference_normalize_name
-git_reference_owner
-git_reference_peel
++ git_reference_owner
++ git_reference_peel
 git_reference_remove
 git_reference_rename
-git_reference_resolve
++ git_reference_resolve
 git_reference_set_target
-git_reference_shorthand
++ git_reference_shorthand
 git_reference_symbolic_create
 git_reference_symbolic_create_matching
 git_reference_symbolic_set_target
 git_reference_symbolic_target
-git_reference_target
-git_reference_target_peel
-git_reference_type
++ git_reference_target
++ git_reference_target_peel
++ git_reference_type
 ```
 
 ### reflog

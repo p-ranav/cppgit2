@@ -5,6 +5,7 @@
 #include <cppgit2/index.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
+#include <cppgit2/reference.hpp>
 #include <git2.h>
 #include <string>
 
@@ -14,7 +15,7 @@ namespace cppgit2 {
 class repository {
 public:
   // Default construct a git repo
-  repository();
+  repository(git_repository * c_ptr = nullptr);
 
   // Initialize git repository
   repository(const std::string &path, bool is_bare);

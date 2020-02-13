@@ -2,7 +2,7 @@
 
 namespace cppgit2 {
 
-repository::repository() : c_ptr_(nullptr) { git_libgit2_init(); }
+repository::repository(git_repository * c_ptr) : c_ptr_(c_ptr) { git_libgit2_init(); }
 
 repository::repository(const std::string &path, bool is_bare) {
   git_libgit2_init();
