@@ -103,6 +103,90 @@ public:
   // will be returned (the one located in .git/index).
   cppgit2::index index() const;
 
+  enum class item {
+    gitdir,
+    workdir,
+    commondir,
+    index,
+    objects,
+    refs,
+    packed_refs,
+    remotes,
+    config,
+    info,
+    hooks,
+    logs,
+    modules,
+    worktree
+  };
+
+  // Get the location of a specific repository file or directory
+  std::string path(item item) const;
+
+  // Retrieve git's prepared message
+  //
+  // Operations such as git revert/cherry-pick/merge with the -n option stop
+  // just short of creating a commit with the changes and save their prepared message
+  // in .git/MERGE_MSG so the next git-commit execution can present it to the user for
+  // them to amend if they wish.
+  //
+  // Use this function to get the contents of this file. Don't forget to remove the file after you
+  // create the commit.
+  std::string message() const;
+
+  // Remove the message that the above message() call retrieves.
+  void remove_message();
+
+  // Make the repository HEAD point to the specified reference.
+  void set_head(const std::string &refname);
+
+  // Make the repository HEAD directly point to the Commit.
+  void set_head_detached(const oid &commitish);
+
+  // Set the identity to be used for writing reflogs
+  void set_identity(const std::string &name, const std::string &email);
+
+  // Unset the identity used for writing reflogs
+  // When unset, the identity will be taken from the repository's configuration.
+  void unset_identity();
+
+  // Sets the active namespace for this Git Repository
+  // This should not include the refs folder, e.g. to namespace all
+  // references under `refs/namespaces/foo/`, use `foo` as the namespace.
+  void set_namespace(const std::string &nmspace);
+
+  // Set the path to the working directory for this repository
+  // The working directory doesn't need to be the same one that contains the .git folder for this
+  // repository.
+  void set_workdir(const std::string &workdir, bool update_gitlink);
+
+  // Remove all the metadata associated with an ongoing command like merge, revert, cherry-pick,
+  // etc. For example: MERGE_HEAD, MERGE_MSG, etc.
+  void cleanup_state();
+
+  enum class repository_state {
+    unknown,                 // maps to git_repository_state() of -1
+    none,                    // GIT_REPOSITORY_STATE_NONE
+    rebase_interactive,      // GIT_REPOSITORY_STATE_REBASE_INTERACTIVE
+    rebase_merge,            // GIT_REPOSITORY_STATE_REBASE_MERGE
+    rebase,                  // GIT_REPOSITORY_STATE_REBASE
+    apply_mailbox,           // GIT_REPOSITORY_STATE_APPLY_MAILBOX
+    apply_mailbox_or_rebase, // GIT_REPOSITORY_STATE_APPLY_MAILBOX_OR_REBASE
+    merge,                   // GIT_REPOSITORY_STATE_MERGE
+    revert,                  // GIT_REPOSITORY_STATE_REVERT
+    revert_sequence,         // GIT_REPOSITORY_STATE_REVERT_SEQUENCE
+    cherrypick,              // GIT_REPOSITORY_STATE_CHERRYPICK
+    cherrypick_sequence,     // GIT_REPOSITORY_STATE_CHERRYPICK_SEQUENCE
+    bisect,                  // GIT_REPOSITORY_STATE_BISECT
+  };
+
+  // Determines the status of a git repository - ie, whether an operation (merge, cherry-pick, etc)
+  // is in progress.
+  repository_state state() const;
+
+  // Get the path of the working directory for this repository
+  std::string workdir() const;
+
   // Access to libgit2 C ptr
   const git_repository *c_ptr() const;
 

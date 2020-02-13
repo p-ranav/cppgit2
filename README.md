@@ -823,10 +823,10 @@ git_repository_init_options_init
 + git_repository_is_empty
 + git_repository_is_shallow
 + git_repository_is_worktree
-git_repository_item_path
++ git_repository_item_path
 git_repository_mergehead_foreach
-git_repository_message
-git_repository_message_remove
++ git_repository_message
++ git_repository_message_remove
 git_repository_odb
 + git_repository_open
 + git_repository_open_bare
@@ -834,15 +834,15 @@ git_repository_open_ext
 git_repository_open_from_worktree
 + git_repository_path
 git_repository_refdb
-git_repository_set_head
-git_repository_set_head_detached
++ git_repository_set_head
++ git_repository_set_head_detached
 git_repository_set_head_detached_from_annotated
-git_repository_set_ident
-git_repository_set_namespace
-git_repository_set_workdir
-git_repository_state
-git_repository_state_cleanup
-git_repository_workdir
++ git_repository_set_ident
++ git_repository_set_namespace
++ git_repository_set_workdir
++ git_repository_state
++ git_repository_state_cleanup
++ git_repository_workdir
 git_repository_wrap_odb
 ```
 

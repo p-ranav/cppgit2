@@ -84,7 +84,7 @@ std::string repository::discover_path(const std::string &start_path,
                                       bool across_fs,
                                       const std::string &ceiling_dirs) {
   // TODO: Update this hardcoded size
-  data_buffer buffer(256);
+  data_buffer buffer(1024);
   if (git_repository_discover(buffer.c_ptr(), start_path.c_str(), across_fs,
                               ceiling_dirs.c_str()))
     throw exception();
@@ -158,6 +158,101 @@ cppgit2::index repository::index() const {
   if (git_repository_index(&result.c_ptr_, c_ptr_))
     throw exception();
   return result;
+}
+
+std::string repository::path(repository::item item) const {
+  // TODO: Update this hardcoded size
+  data_buffer buffer(1024);
+  if (git_repository_item_path(buffer.c_ptr(), c_ptr_, static_cast<git_repository_item_t>(item)))
+    throw exception();
+  return buffer.to_string();
+}
+
+std::string repository::message() const {
+  data_buffer buffer(1024);
+  if (git_repository_message(buffer.c_ptr(), c_ptr_))
+    throw exception();
+  return buffer.to_string();
+}
+
+void repository::remove_message() {
+  git_repository_message_remove(c_ptr_);
+}
+
+void repository::set_head(const std::string &refname) {
+  if (git_repository_set_head(c_ptr_, refname.c_str()))
+    throw exception();
+}
+
+void repository::set_head_detached(const oid &commitish) {
+  if (git_repository_set_head_detached(c_ptr_, commitish.c_ptr()))
+    throw exception();
+}
+
+void repository::set_identity(const std::string &name, const std::string &email) {
+  if (git_repository_set_ident(c_ptr_, name.c_str(), email.c_str()))
+    throw exception();
+}
+
+void repository::unset_identity() {
+  if (git_repository_set_ident(c_ptr_, nullptr, nullptr))
+    throw exception();
+}
+
+void repository::set_namespace(const std::string &namespace_) {
+  if (git_repository_set_namespace(c_ptr_, namespace_.c_str()))
+    throw exception();
+}
+
+void repository::set_workdir(const std::string &workdir, bool update_gitlink) {
+  if (git_repository_set_workdir(c_ptr_, workdir.c_str(), update_gitlink))
+    throw exception();
+}
+
+void repository::cleanup_state() {
+  if (git_repository_state_cleanup(c_ptr_))
+    throw exception();
+}
+
+repository::repository_state repository::state() const {
+  switch (git_repository_state(c_ptr_)) {
+  case GIT_REPOSITORY_STATE_NONE:
+    return repository_state::none;
+  case GIT_REPOSITORY_STATE_REBASE_INTERACTIVE:
+    return repository_state::rebase_interactive;
+  case GIT_REPOSITORY_STATE_REBASE_MERGE:
+    return repository_state::rebase_merge;
+  case GIT_REPOSITORY_STATE_REBASE:
+    return repository_state::rebase;
+  case GIT_REPOSITORY_STATE_APPLY_MAILBOX:
+    return repository_state::apply_mailbox;
+  case GIT_REPOSITORY_STATE_APPLY_MAILBOX_OR_REBASE:
+    return repository_state::apply_mailbox_or_rebase;
+  case GIT_REPOSITORY_STATE_MERGE:
+    return repository_state::merge;
+  case GIT_REPOSITORY_STATE_REVERT:
+    return repository_state::revert;
+  case GIT_REPOSITORY_STATE_REVERT_SEQUENCE:
+    return repository_state::revert_sequence;
+  case GIT_REPOSITORY_STATE_CHERRYPICK:
+    return repository_state::cherrypick;
+  case GIT_REPOSITORY_STATE_CHERRYPICK_SEQUENCE:
+    return repository_state::cherrypick_sequence;
+  case GIT_REPOSITORY_STATE_BISECT:
+    return repository_state::bisect;
+  case -1:
+  default:
+    return repository_state::unknown;
+  }
+}
+
+std::string repository::workdir() const {
+  auto ret = git_repository_workdir(c_ptr_);
+  if (ret) {
+    return std::string(ret);
+  } else {
+    throw exception("working directory does not exist");
+  }
 }
 
 const git_repository *repository::c_ptr() const { return c_ptr_; }
