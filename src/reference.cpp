@@ -6,8 +6,8 @@ reference::reference() : c_ptr_(nullptr), owner_(ownership::libgit2) {
   git_libgit2_init();
 }
 
-reference::reference(git_reference * c_ptr, ownership owner) :
-  c_ptr_(c_ptr), owner_(owner) {
+reference::reference(git_reference *c_ptr, ownership owner)
+    : c_ptr_(c_ptr), owner_(owner) {
   git_libgit2_init();
 }
 
@@ -17,7 +17,7 @@ reference::~reference() {
   git_libgit2_shutdown();
 }
 
-int reference::compare(const reference &rhs) const { 
+int reference::compare(const reference &rhs) const {
   return git_reference_cmp(c_ptr_, rhs.c_ptr());
 }
 
@@ -61,13 +61,14 @@ std::string reference::shorthand_name() const {
     return "";
 }
 
-repository reference::owner() const { 
+repository reference::owner() const {
   return repository(git_reference_owner(c_ptr_));
 }
 
 object reference::peel_until(object::object_type type) {
   object result;
-  if (git_reference_peel(&result.c_ptr_, c_ptr_, static_cast<git_object_t>(type)))
+  if (git_reference_peel(&result.c_ptr_, c_ptr_,
+                         static_cast<git_object_t>(type)))
     throw exception();
   return result;
 }
@@ -81,12 +82,14 @@ reference reference::resolve() {
 
 oid reference::target() const { return oid(git_reference_target(c_ptr_)); }
 
-oid reference::peeled_target() const { return oid(git_reference_target_peel(c_ptr_)); }
+oid reference::peeled_target() const {
+  return oid(git_reference_target_peel(c_ptr_));
+}
 
 reference::reference_type reference::type() const {
   return static_cast<reference_type>(git_reference_type(c_ptr_));
 }
 
-const git_reference * reference::c_ptr() const { return c_ptr_; }
+const git_reference *reference::c_ptr() const { return c_ptr_; }
 
-}
+} // namespace cppgit2

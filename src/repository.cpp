@@ -2,7 +2,9 @@
 
 namespace cppgit2 {
 
-repository::repository(git_repository * c_ptr) : c_ptr_(c_ptr) { git_libgit2_init(); }
+repository::repository(git_repository *c_ptr) : c_ptr_(c_ptr) {
+  git_libgit2_init();
+}
 
 repository::repository(const std::string &path, bool is_bare) {
   git_libgit2_init();
@@ -163,7 +165,8 @@ cppgit2::index repository::index() const {
 std::string repository::path(repository::item item) const {
   // TODO: Update this hardcoded size
   data_buffer buffer(1024);
-  if (git_repository_item_path(buffer.c_ptr(), c_ptr_, static_cast<git_repository_item_t>(item)))
+  if (git_repository_item_path(buffer.c_ptr(), c_ptr_,
+                               static_cast<git_repository_item_t>(item)))
     throw exception();
   return buffer.to_string();
 }
@@ -175,9 +178,7 @@ std::string repository::message() const {
   return buffer.to_string();
 }
 
-void repository::remove_message() {
-  git_repository_message_remove(c_ptr_);
-}
+void repository::remove_message() { git_repository_message_remove(c_ptr_); }
 
 void repository::set_head(const std::string &refname) {
   if (git_repository_set_head(c_ptr_, refname.c_str()))
@@ -189,7 +190,8 @@ void repository::set_head_detached(const oid &commitish) {
     throw exception();
 }
 
-void repository::set_identity(const std::string &name, const std::string &email) {
+void repository::set_identity(const std::string &name,
+                              const std::string &email) {
   if (git_repository_set_ident(c_ptr_, name.c_str(), email.c_str()))
     throw exception();
 }

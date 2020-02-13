@@ -15,7 +15,7 @@ namespace cppgit2 {
 class repository {
 public:
   // Default construct a git repo
-  repository(git_repository * c_ptr = nullptr);
+  repository(git_repository *c_ptr = nullptr);
 
   // Initialize git repository
   repository(const std::string &path, bool is_bare);
@@ -127,12 +127,12 @@ public:
   // Retrieve git's prepared message
   //
   // Operations such as git revert/cherry-pick/merge with the -n option stop
-  // just short of creating a commit with the changes and save their prepared message
-  // in .git/MERGE_MSG so the next git-commit execution can present it to the user for
-  // them to amend if they wish.
+  // just short of creating a commit with the changes and save their prepared
+  // message in .git/MERGE_MSG so the next git-commit execution can present it
+  // to the user for them to amend if they wish.
   //
-  // Use this function to get the contents of this file. Don't forget to remove the file after you
-  // create the commit.
+  // Use this function to get the contents of this file. Don't forget to remove
+  // the file after you create the commit.
   std::string message() const;
 
   // Remove the message that the above message() call retrieves.
@@ -157,12 +157,12 @@ public:
   void set_namespace(const std::string &nmspace);
 
   // Set the path to the working directory for this repository
-  // The working directory doesn't need to be the same one that contains the .git folder for this
-  // repository.
+  // The working directory doesn't need to be the same one that contains the
+  // .git folder for this repository.
   void set_workdir(const std::string &workdir, bool update_gitlink);
 
-  // Remove all the metadata associated with an ongoing command like merge, revert, cherry-pick,
-  // etc. For example: MERGE_HEAD, MERGE_MSG, etc.
+  // Remove all the metadata associated with an ongoing command like merge,
+  // revert, cherry-pick, etc. For example: MERGE_HEAD, MERGE_MSG, etc.
   void cleanup_state();
 
   enum class repository_state {
@@ -181,8 +181,8 @@ public:
     bisect,                  // GIT_REPOSITORY_STATE_BISECT
   };
 
-  // Determines the status of a git repository - ie, whether an operation (merge, cherry-pick, etc)
-  // is in progress.
+  // Determines the status of a git repository - ie, whether an operation
+  // (merge, cherry-pick, etc) is in progress.
   repository_state state() const;
 
   // Get the path of the working directory for this repository
