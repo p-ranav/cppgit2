@@ -1050,17 +1050,17 @@ git_tree_walk
 ```diff
 git_worktree_add
 git_worktree_add_options_init
-git_worktree_free
-git_worktree_is_locked
-git_worktree_is_prunable
++ git_worktree_free
++ git_worktree_is_locked
++ git_worktree_is_prunable
 git_worktree_list
-git_worktree_lock
++ git_worktree_lock
 git_worktree_lookup
-git_worktree_name
++ git_worktree_name
 git_worktree_open_from_repository
-git_worktree_path
-git_worktree_prune
-git_worktree_prune_options_init
-git_worktree_unlock
-git_worktree_validate
++ git_worktree_path
++ git_worktree_prune
++ git_worktree_prune_options_init
++ git_worktree_unlock
++ git_worktree_validate
 ```
