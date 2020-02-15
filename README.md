@@ -1034,16 +1034,16 @@ git_tree_walk
 
 ### treebuilder
 ```diff
-git_treebuilder_clear
-git_treebuilder_entrycount
++ git_treebuilder_clear
++ git_treebuilder_entrycount
 git_treebuilder_filter
-git_treebuilder_free
-git_treebuilder_get
-git_treebuilder_insert
-git_treebuilder_new
-git_treebuilder_remove
-git_treebuilder_write
-git_treebuilder_write_with_buffer
++ git_treebuilder_free
++ git_treebuilder_get
++ git_treebuilder_insert
++ git_treebuilder_new
++ git_treebuilder_remove
++ git_treebuilder_write
+- git_treebuilder_write_with_buffer
 ```
 
 ### worktree
