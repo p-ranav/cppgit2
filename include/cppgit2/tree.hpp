@@ -92,6 +92,7 @@ public:
 
   private:
     friend tree;
+    friend class tree_builder;
     git_tree_entry *c_ptr_;
     ownership owner_;
   };

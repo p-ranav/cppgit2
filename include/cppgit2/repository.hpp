@@ -192,6 +192,7 @@ public:
   const git_repository *c_ptr() const;
 
 private:
+  friend class tree_builder;
   git_repository *c_ptr_;
 };
 
