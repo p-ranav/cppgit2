@@ -36,6 +36,11 @@ public:
       git_libgit2_init();
     }
 
+    entry (const git_tree_entry * c_ptr) :
+      c_ptr_(const_cast<git_tree_entry *>(c_ptr)), owner_(ownership::libgit2) {
+      git_libgit2_init();
+    }
+
     // Clean up tree entry
     ~entry() {
       if (c_ptr_ && owner_ == ownership::user)

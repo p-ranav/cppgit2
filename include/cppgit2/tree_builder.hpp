@@ -28,7 +28,7 @@ public:
   // tree with a pointer to the entry and the provided payload; 
   // if the callback returns non-zero, the entry will be filtered 
   // (removed from the builder).
-  void filter(std::function<int(tree::entry &)> visitor);
+  void filter(std::function<int(const tree::entry &)> visitor);
 
   // Get the number of entries listed in a treebuilder
   size_t size() const;
