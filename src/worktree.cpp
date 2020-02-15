@@ -18,11 +18,11 @@ worktree::~worktree() {
 }
 
 std::pair<bool, std::string> worktree::is_locked() const {
-  data_buffer result(nullptr);
+  data_buffer result(1024);
   auto ret = git_worktree_is_locked(result.c_ptr(), c_ptr_);
   if (ret > 0) {
     // Locked
-    if (result.c_ptr())
+    if (result.c_ptr()->size) // size > 0 => reason available
       return {true, result.to_string()};
     else
       return {true, ""};
