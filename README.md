@@ -301,7 +301,7 @@ git_describe_workdir
 ### diff
 ```diff
 git_diff_blob_to_buffer
-git_diff_blobs
++ git_diff_blobs
 git_diff_buffers
 git_diff_commit_as_email
 git_diff_find_options_init
@@ -309,17 +309,17 @@ git_diff_find_similar
 git_diff_foreach
 git_diff_format_email
 git_diff_format_email_options_init
-git_diff_free
++ git_diff_free
 git_diff_from_buffer
-git_diff_get_delta
++ git_diff_get_delta
 git_diff_get_stats
 git_diff_index_to_index
 git_diff_index_to_workdir
-git_diff_is_sorted_icase
-git_diff_merge
-git_diff_num_deltas
-git_diff_num_deltas_of_type
-git_diff_options_init
++ git_diff_is_sorted_icase
++ git_diff_merge
++ git_diff_num_deltas
++ git_diff_num_deltas_of_type
++ git_diff_options_init
 git_diff_patchid
 git_diff_patchid_options_init
 git_diff_print
@@ -328,8 +328,8 @@ git_diff_stats_files_changed
 git_diff_stats_free
 git_diff_stats_insertions
 git_diff_stats_to_buf
-git_diff_status_char
-git_diff_to_buf
++ git_diff_status_char
++ git_diff_to_buf
 git_diff_tree_to_index
 git_diff_tree_to_tree
 git_diff_tree_to_workdir

@@ -25,7 +25,7 @@ void tree_builder::filter(std::function<int(const tree::entry &)> visitor) {
   visitor_wrapper wrapper;
   wrapper.fn = visitor;
 
-  auto visitor_c = [](const git_tree_entry * entry, void *payload) {
+  auto visitor_c = [](const git_tree_entry *entry, void *payload) {
     auto wrapped = reinterpret_cast<visitor_wrapper *>(payload);
     const tree::entry entry_arg = tree::entry(entry);
     return wrapped->fn(entry_arg);
@@ -37,14 +37,16 @@ void tree_builder::filter(std::function<int(const tree::entry &)> visitor) {
 size_t tree_builder::size() const { return git_treebuilder_entrycount(c_ptr_); }
 
 tree::entry tree_builder::operator[](const std::string &filename) const {
-  return tree::entry(const_cast<git_tree_entry *>(git_treebuilder_get(c_ptr_, filename.c_str())), 
-    ownership::libgit2);
+  return tree::entry(const_cast<git_tree_entry *>(
+                         git_treebuilder_get(c_ptr_, filename.c_str())),
+                     ownership::libgit2);
 }
 
-void tree_builder::insert(const std::string &filename, const oid &id, file_mode mode) {
-  const git_tree_entry ** result;
+void tree_builder::insert(const std::string &filename, const oid &id,
+                          file_mode mode) {
+  const git_tree_entry **result;
   if (git_treebuilder_insert(result, c_ptr_, filename.c_str(), id.c_ptr(),
-    static_cast<git_filemode_t>(mode)))
+                             static_cast<git_filemode_t>(mode)))
     throw exception();
 }
 
@@ -67,6 +69,6 @@ oid tree_builder::write(data_buffer &tree) {
   return oid(&id);
 }
 
-const git_treebuilder * tree_builder::c_ptr() const { return c_ptr_; }
+const git_treebuilder *tree_builder::c_ptr() const { return c_ptr_; }
 
-}
+} // namespace cppgit2
