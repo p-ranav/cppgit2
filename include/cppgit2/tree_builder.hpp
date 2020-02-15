@@ -6,6 +6,7 @@
 #include <cppgit2/tree.hpp>
 #include <git2.h>
 #include <string>
+#include <functional>
 
 namespace cppgit2 {
 
@@ -22,6 +23,12 @@ public:
 
   // Clear all the entires in the builder
   void clear();
+
+  // The filter callback will be called for each entry in the 
+  // tree with a pointer to the entry and the provided payload; 
+  // if the callback returns non-zero, the entry will be filtered 
+  // (removed from the builder).
+  void filter(std::function<int(tree::entry &)> visitor);
 
   // Get the number of entries listed in a treebuilder
   size_t size() const;

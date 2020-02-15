@@ -1036,7 +1036,7 @@ git_tree_walk
 ```diff
 + git_treebuilder_clear
 + git_treebuilder_entrycount
-git_treebuilder_filter
++ git_treebuilder_filter
 + git_treebuilder_free
 + git_treebuilder_get
 + git_treebuilder_insert

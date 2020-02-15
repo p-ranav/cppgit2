@@ -16,6 +16,24 @@ tree_builder::~tree_builder() {
 
 void tree_builder::clear() { git_treebuilder_clear(c_ptr_); }
 
+void tree_builder::filter(std::function<int(tree::entry &)> visitor) {
+  // Wrap user-provided visitor funciton in a struct
+  struct visitor_wrapper {
+    std::function<int(tree::entry &)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto visitor_c = [](const git_tree_entry * entry, void *payload) {
+    auto wrapped = reinterpret_cast<visitor_wrapper *>(payload);
+    tree::entry entry_arg = tree::entry(const_cast<git_tree_entry *>(entry), ownership::libgit2);
+    return wrapped->fn(entry_arg);
+  };
+
+  git_treebuilder_filter(c_ptr_, visitor_c, (void *)(&wrapper));
+}
+
 size_t tree_builder::size() const { return git_treebuilder_entrycount(c_ptr_); }
 
 tree::entry tree_builder::operator[](const std::string &filename) const {
