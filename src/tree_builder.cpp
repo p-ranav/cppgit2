@@ -60,6 +60,13 @@ oid tree_builder::write() {
   return oid(&id);
 }
 
+oid tree_builder::write(data_buffer &tree) {
+  git_oid id;
+  if (git_treebuilder_write_with_buffer(&id, c_ptr_, tree.c_ptr()))
+    throw exception();
+  return oid(&id);
+}
+
 const git_treebuilder * tree_builder::c_ptr() const { return c_ptr_; }
 
 }

@@ -47,6 +47,10 @@ public:
   // stored in the id pointer.
   oid write();
 
+  // Write the contents of the tree builder as a tree object using a shared git_buf.
+  oid write(data_buffer &tree);
+
+  // Acesss libgit2 C ptr
   const git_treebuilder * c_ptr() const;
 
 private:

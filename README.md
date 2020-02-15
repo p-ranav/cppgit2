@@ -1043,7 +1043,7 @@ git_tree_walk
 + git_treebuilder_new
 + git_treebuilder_remove
 + git_treebuilder_write
-- git_treebuilder_write_with_buffer
++ git_treebuilder_write_with_buffer
 ```
 
 ### worktree
