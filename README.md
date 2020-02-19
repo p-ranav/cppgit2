@@ -443,10 +443,10 @@ git_indexer_options_init
 ### libgit2
 ```diff
 git_libgit2_features
-git_libgit2_init
++ git_libgit2_init
 git_libgit2_opts
-git_libgit2_shutdown
-git_libgit2_version
++ git_libgit2_shutdown
++ git_libgit2_version
 ```
 
 ### merge
