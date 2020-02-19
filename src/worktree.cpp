@@ -49,7 +49,7 @@ bool worktree::is_prunable() const {
   git_worktree_prune_options options;
   // Initializes a git_worktree_prune_options with default values. Equivalent to
   // creating an instance with GIT_WORKTREE_PRUNE_OPTIONS_INIT.
-  auto ret = git_worktree_prune_init_options(
+  auto ret = git_worktree_prune_options_init(
       &options, GIT_WORKTREE_PRUNE_OPTIONS_VERSION);
   if (ret == 0) {
     ret = git_worktree_is_prunable(c_ptr_, &options);
@@ -95,7 +95,7 @@ void worktree::prune() {
   git_worktree_prune_options options;
   // Initializes a git_worktree_prune_options with default values. Equivalent to
   // creating an instance with GIT_WORKTREE_PRUNE_OPTIONS_INIT.
-  auto ret = git_worktree_prune_init_options(
+  auto ret = git_worktree_prune_options_init(
       &options, GIT_WORKTREE_PRUNE_OPTIONS_VERSION);
   if (ret == 0) {
     if (git_worktree_prune(c_ptr_, &options))
