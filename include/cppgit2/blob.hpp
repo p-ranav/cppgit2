@@ -1,12 +1,13 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 
 namespace cppgit2 {
 
 using blob_size = git_off_t;
 
-class blob {
+class blob : public libgit2_api {
 public:
   // Default construct a blob
   blob();

@@ -2,20 +2,14 @@
 
 namespace cppgit2 {
 
-commit::commit() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-  git_libgit2_init();
-}
+commit::commit() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
 commit::commit(git_commit *c_ptr, ownership owner)
-    : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 commit::~commit() {
-  if (c_ptr_ && owner_ == ownership::user) {
+  if (c_ptr_ && owner_ == ownership::user)
     git_commit_free(c_ptr_);
-  }
-  git_libgit2_shutdown();
 }
 
 void commit::amend(const oid &id, const std::string &update_ref,

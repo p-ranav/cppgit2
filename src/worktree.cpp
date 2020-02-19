@@ -2,19 +2,14 @@
 
 namespace cppgit2 {
 
-worktree::worktree() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-  git_libgit2_init();
-}
+worktree::worktree() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
 worktree::worktree(git_worktree *c_ptr, ownership owner)
-    : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 worktree::~worktree() {
   if (c_ptr_ && owner_ == ownership::user)
     git_worktree_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 std::pair<bool, std::string> worktree::is_locked() const {

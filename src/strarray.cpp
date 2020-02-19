@@ -5,13 +5,11 @@
 namespace cppgit2 {
 
 strarray::strarray() {
-  git_libgit2_init();
   c_struct_.count = 0;
   c_struct_.strings = nullptr;
 }
 
 strarray::strarray(const std::vector<std::string> &strings) {
-  git_libgit2_init();
   auto size = strings.size();
   c_struct_.count = size;
   c_struct_.strings = (char **)malloc(size * sizeof(char *));
@@ -24,7 +22,6 @@ strarray::strarray(const std::vector<std::string> &strings) {
 }
 
 strarray::strarray(const git_strarray *c_ptr) {
-  git_libgit2_init();
   c_struct_.count = c_ptr->count;
   c_struct_.strings = (char **)malloc(c_ptr->count * sizeof(char *));
   for (size_t i = 0; i < c_ptr->count; ++i) {
@@ -38,7 +35,6 @@ strarray::strarray(const git_strarray *c_ptr) {
 strarray::~strarray() {
   if (c_struct_.count)
     git_strarray_free(&c_struct_);
-  git_libgit2_shutdown();
 }
 
 strarray strarray::copy() const {

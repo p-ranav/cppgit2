@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/signature.hpp>
@@ -7,7 +8,7 @@
 
 namespace cppgit2 {
 
-class reflog {
+class reflog : public libgit2_api {
 public:
   // Default construct a reflog
   reflog();
@@ -21,11 +22,9 @@ public:
   ~reflog();
 
   // Entry in this reflog
-  class entry {
+  class entry : public libgit2_api {
   public:
-    entry(const git_reflog_entry *c_ptr) : c_ptr_(c_ptr) { git_libgit2_init(); }
-
-    ~entry() { git_libgit2_shutdown(); }
+    entry(const git_reflog_entry *c_ptr) : c_ptr_(c_ptr) {}
 
     signature committer() {
       return signature(git_reflog_entry_committer(c_ptr_));

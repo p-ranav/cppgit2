@@ -1,20 +1,18 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
 
-class object {
+class object : public libgit2_api {
 public:
   // Default construct a git object
   object();
 
   // Construct from libgit2 C ptr
   object(const git_object *c_ptr);
-
-  // Free the object
-  ~object();
 
   // SHA1 hash of this object
   oid id() const;

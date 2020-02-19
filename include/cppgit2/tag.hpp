@@ -1,4 +1,5 @@
 #pragma once
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
@@ -7,7 +8,7 @@
 
 namespace cppgit2 {
 
-class tag {
+class tag : public libgit2_api {
 public:
   // Default construct a tag
   tag();

@@ -3,6 +3,7 @@
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/exception.hpp>
 #include <cppgit2/index.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/reference.hpp>
@@ -12,7 +13,7 @@
 namespace cppgit2 {
 
 // Owned by user
-class repository {
+class repository : public libgit2_api {
 public:
   // Default construct a git repo
   repository(git_repository *c_ptr = nullptr);

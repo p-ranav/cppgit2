@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <git2.h>
@@ -7,7 +8,7 @@
 
 namespace cppgit2 {
 
-class submodule {
+class submodule : public libgit2_api {
 public:
   // Default construction
   submodule();

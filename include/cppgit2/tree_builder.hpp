@@ -1,6 +1,7 @@
 #pragma once
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/repository.hpp>
 #include <cppgit2/tree.hpp>
@@ -11,7 +12,7 @@
 namespace cppgit2 {
 
 // Always owned by user
-class tree_builder {
+class tree_builder : public libgit2_api {
 public:
   // Create a new tree builder.
   // The tree builder can be used to create or modify trees in memory and write

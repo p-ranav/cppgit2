@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cstdlib>
 #include <cstring>
 #include <git2.h>
@@ -7,7 +8,7 @@
 
 namespace cppgit2 {
 
-class data_buffer {
+class data_buffer : public libgit2_api {
 public:
   // Construct buffer of size n
   // Contains a git_buf with char buffer of size n

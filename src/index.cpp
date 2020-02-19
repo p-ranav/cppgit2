@@ -3,13 +3,11 @@
 namespace cppgit2 {
 
 index::index() : c_ptr_(nullptr), owner_(ownership::user) {
-  git_libgit2_init();
   git_index_new(&c_ptr_); // owned by user
 }
 
-index::index(git_index *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+index::index(git_index *c_ptr, ownership owner)
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 index::~index() {
   if (c_ptr_ && owner_ == ownership::user)

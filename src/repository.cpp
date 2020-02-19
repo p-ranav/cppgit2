@@ -2,12 +2,9 @@
 
 namespace cppgit2 {
 
-repository::repository(git_repository *c_ptr) : c_ptr_(c_ptr) {
-  git_libgit2_init();
-}
+repository::repository(git_repository *c_ptr) : c_ptr_(c_ptr) {}
 
 repository::repository(const std::string &path, bool is_bare) {
-  git_libgit2_init();
   if (git_repository_init(&c_ptr_, path.c_str(), is_bare))
     throw exception();
 }

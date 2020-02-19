@@ -1,11 +1,12 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <git2.h>
 #include <string>
 
 namespace cppgit2 {
 
-class oid {
+class oid : public libgit2_api {
 public:
   // Default constructor
   // Initializes libgit2
@@ -22,9 +23,6 @@ public:
 
   // Construct from raw bytes
   oid(const unsigned char *raw);
-
-  // Shuts down libgit2
-  ~oid();
 
   // Compare two oid structions
   //
@@ -70,20 +68,18 @@ public:
   // would uniquely identify all of them.
   //
   // e.g. look at the result of git log --abbrev.
-  class shortener {
+  class shortener : public libgit2_api {
   public:
     // The minimal length for all identifiers,
     // which will be used even if shorter
     // OIDs would still be unique.
     explicit shortener(size_t min_length = 0) {
-      git_libgit2_init();
       c_ptr_ = git_oid_shorten_new(min_length);
     }
 
     ~shortener() {
       if (c_ptr_)
         git_oid_shorten_free(c_ptr_);
-      git_libgit2_shutdown();
     }
 
     // Add a new OID to set of shortened OIDs

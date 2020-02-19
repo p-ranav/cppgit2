@@ -3,7 +3,6 @@
 namespace cppgit2 {
 
 data_buffer::data_buffer(size_t n) {
-  git_libgit2_init();
   c_struct_.ptr = (char *)malloc(n * sizeof(char));
   memset(c_struct_.ptr, '\0', n * sizeof(char));
   c_struct_.asize = n;
@@ -11,7 +10,6 @@ data_buffer::data_buffer(size_t n) {
 }
 
 data_buffer::data_buffer(const git_buf *c_ptr) {
-  git_libgit2_init();
   c_struct_.ptr = (char *)malloc(c_ptr->asize * sizeof(char));
   c_struct_.asize = c_ptr->asize;
   c_struct_.size = c_ptr->size;
@@ -21,7 +19,6 @@ data_buffer::data_buffer(const git_buf *c_ptr) {
 data_buffer::~data_buffer() {
   if (c_struct_.size)
     git_buf_dispose(&c_struct_);
-  git_libgit2_shutdown();
 }
 
 bool data_buffer::contains_nul() const {

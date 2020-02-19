@@ -2,6 +2,7 @@
 #include <cppgit2/blob.hpp>
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/diff.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
 #include <git2.h>
@@ -11,21 +12,20 @@
 
 namespace cppgit2 {
 
-class diff {
+class diff : public libgit2_api {
 public:
   diff();
   diff(git_diff *c_ptr, ownership owner = ownership::libgit2);
   ~diff();
 
-  class delta {
+  class delta : public libgit2_api {
   public:
-    delta() { git_libgit2_init(); }
+    delta() {}
     delta(const git_diff_delta *c_ptr) {
-      git_libgit2_init();
       if (c_ptr)
         c_struct_ = *c_ptr;
     }
-    ~delta() { git_libgit2_shutdown(); }
+    ~delta() {}
 
     // Flags for the delta object and the file objects on each side.
     enum class flag {
@@ -50,11 +50,8 @@ public:
       conflicted = 10 // entry in the index is conflicted
     };
 
-    class file {
+    class file : public libgit2_api {
     public:
-      file() { git_libgit2_init(); }
-      ~file() { git_libgit2_shutdown(); }
-
       // The `id` is the `git_oid` of the item.
       oid id() const { return oid(c_struct_.id.id); }
 
@@ -112,10 +109,9 @@ public:
     git_diff_delta c_struct_;
   };
 
-  class options {
+  class options : public libgit2_api {
   public:
     options() {
-      git_libgit2_init();
       auto ret =
           git_diff_init_options(&default_options_, GIT_DIFF_OPTIONS_VERSION);
       c_ptr_ = &default_options_;
@@ -123,9 +119,7 @@ public:
         throw exception();
     }
 
-    options(git_diff_options *c_ptr) : c_ptr_(c_ptr) { git_libgit2_init(); }
-
-    ~options() { git_libgit2_shutdown(); }
+    options(git_diff_options *c_ptr) : c_ptr_(c_ptr) {}
 
     // Flags for diff options.  A combination of these flags can be passed
     // in via the `flags` value in the `git_diff_options`

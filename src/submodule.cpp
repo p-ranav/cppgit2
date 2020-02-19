@@ -2,19 +2,14 @@
 
 namespace cppgit2 {
 
-submodule::submodule() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-  git_libgit2_init();
-}
+submodule::submodule() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
 submodule::submodule(git_submodule *c_ptr, ownership owner)
-    : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 submodule::~submodule() {
   if (c_ptr_ && owner_ == ownership::user)
     git_submodule_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 void submodule::init(bool overwrite) {

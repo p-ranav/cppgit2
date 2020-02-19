@@ -2,18 +2,13 @@
 
 namespace cppgit2 {
 
-diff::diff() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-  git_libgit2_init();
-}
+diff::diff() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
-diff::diff(git_diff *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+diff::diff(git_diff *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {}
 
 diff::~diff() {
   if (c_ptr_ && owner_ == ownership::user)
     git_diff_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 diff::delta diff::compare_files(const std::pair<blob, std::string> &old_file,

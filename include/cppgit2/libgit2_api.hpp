@@ -1,19 +1,17 @@
 #pragma once
-#include <git2.h>
-#include <tuple>
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
+#include <git2.h>
+#include <iostream>
+#include <tuple>
 
 namespace cppgit2 {
 
 class libgit2_api {
 public:
-  libgit2_api() {
-    git_libgit2_init();
-  }
+  libgit2_api() { git_libgit2_init(); }
 
-  ~libgit2_api() {
-    git_libgit2_shutdown();
-  }
+  ~libgit2_api() { git_libgit2_shutdown(); }
 
   std::tuple<int, int, int> version() const {
     int major, minor, revision;
@@ -21,7 +19,6 @@ public:
       throw exception();
     return {major, minor, revision};
   }
-
 };
 
-}
+} // namespace cppgit2

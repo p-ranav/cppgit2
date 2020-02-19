@@ -1,12 +1,13 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <git2.h>
 #include <string>
 #include <vector>
 
 namespace cppgit2 {
 
-class strarray {
+class strarray : public libgit2_api {
 public:
   // Default construction
   // Initializes libgit2

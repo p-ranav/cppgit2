@@ -2,19 +2,14 @@
 
 namespace cppgit2 {
 
-reference::reference() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-  git_libgit2_init();
-}
+reference::reference() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
 reference::reference(git_reference *c_ptr, ownership owner)
-    : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 reference::~reference() {
   if (c_ptr_ && owner_ == ownership::user)
     git_reference_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 int reference::compare(const reference &rhs) const {

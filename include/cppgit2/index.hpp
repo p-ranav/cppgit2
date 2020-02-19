@@ -1,4 +1,5 @@
 #pragma once
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
@@ -9,7 +10,7 @@
 
 namespace cppgit2 {
 
-class index {
+class index : public libgit2_api {
 public:
   // Default construct in-memory index object
   // Cannot be read/written to the filesystem
@@ -35,17 +36,16 @@ public:
 
   // File entry in index
   // Owned by libgit2
-  class entry {
+  class entry : public libgit2_api {
   public:
     // Default construct a file entry
-    entry() : c_ptr_(&default_) { git_libgit2_init(); }
+    entry() : c_ptr_(&default_) {}
 
     // Construct from libgit2 C ptr
     // If owned by user, will be free'd in destructor
     entry(git_index_entry *c_ptr) : c_ptr_(c_ptr) {
       if (!c_ptr)
         c_ptr_ = &default_;
-      git_libgit2_init();
     }
 
     // Cleanup file entry

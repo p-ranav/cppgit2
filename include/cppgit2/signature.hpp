@@ -1,12 +1,13 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/time.hpp>
 #include <git2.h>
 #include <string>
 
 namespace cppgit2 {
 
-class signature {
+class signature : public libgit2_api {
 public:
   signature();
 
@@ -35,8 +36,6 @@ public:
 
   // Construct from C ptr
   signature(const git_signature *c_ptr);
-
-  ~signature();
 
   // Duplicate this signature
   signature copy() const;

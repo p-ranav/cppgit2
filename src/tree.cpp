@@ -2,18 +2,13 @@
 
 namespace cppgit2 {
 
-tree::tree() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-  git_libgit2_init();
-}
+tree::tree() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
-tree::tree(git_tree *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+tree::tree(git_tree *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {}
 
 tree::~tree() {
   if (c_ptr_ && owner_ == ownership::user)
     git_tree_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 tree::entry tree::lookup_entry_by_id(const oid &id) const {

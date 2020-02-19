@@ -1,6 +1,7 @@
 #pragma once
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/signature.hpp>
@@ -11,7 +12,7 @@
 
 namespace cppgit2 {
 
-class commit {
+class commit : public libgit2_api {
 public:
   commit();
   commit(git_commit *c_ptr, ownership owner = ownership::libgit2);

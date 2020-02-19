@@ -1,16 +1,13 @@
 #include <cppgit2/tag.hpp>
 
 namespace cppgit2 {
-tag::tag() : c_ptr_(nullptr), owner_(ownership::libgit2) { git_libgit2_init(); }
+tag::tag() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
-tag::tag(git_tag *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+tag::tag(git_tag *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {}
 
 tag::~tag() {
   if (c_ptr_ && owner_ == ownership::user)
     git_tag_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 tag tag::copy() const {

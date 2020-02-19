@@ -1,6 +1,7 @@
 #pragma once
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/transaction.hpp>
 #include <functional>
@@ -9,7 +10,7 @@
 
 namespace cppgit2 {
 
-class config {
+class config : public libgit2_api {
 public:
   config();
   config(git_config *c_ptr, ownership owner = ownership::libgit2);
@@ -28,7 +29,7 @@ public:
   };
 
   // An entry in the configuration file
-  class entry {
+  class entry : public libgit2_api {
   public:
     // Default constructed config entry
     entry() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
@@ -36,15 +37,12 @@ public:
     // Construct from libgit2 C ptr
     // If owned by user, free'd in destructor
     entry(git_config_entry *c_ptr, ownership owner = ownership::libgit2)
-        : c_ptr_(c_ptr), owner_(owner) {
-      git_libgit2_init();
-    }
+        : c_ptr_(c_ptr), owner_(owner) {}
 
     // Free config entry if needed
     ~entry() {
       if (c_ptr_ && owner_ == ownership::user)
         git_config_entry_free(c_ptr_);
-      git_libgit2_shutdown();
     }
 
     // Name of the entry (normalized)

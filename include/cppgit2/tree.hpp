@@ -1,6 +1,7 @@
 #pragma once
 #include <cppgit2/exception.hpp>
 #include <cppgit2/file_mode.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/ownership.hpp>
 #include <git2.h>
@@ -10,7 +11,7 @@
 
 namespace cppgit2 {
 
-class tree {
+class tree : public libgit2_api {
 public:
   // Default construct a tree
   tree();
@@ -22,31 +23,24 @@ public:
   // Cleanup
   ~tree();
 
-  class entry {
+  class entry : public libgit2_api {
   public:
     // Default construction
-    entry() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-      git_libgit2_init();
-    }
+    entry() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
     // Construct from libgit2 C ptr
     // If owned by user, will be free'd in destructor
     entry(git_tree_entry *c_ptr, ownership owner = ownership::libgit2)
-        : c_ptr_(c_ptr), owner_(owner) {
-      git_libgit2_init();
-    }
+        : c_ptr_(c_ptr), owner_(owner) {}
 
     entry(const git_tree_entry *c_ptr)
         : c_ptr_(const_cast<git_tree_entry *>(c_ptr)),
-          owner_(ownership::libgit2) {
-      git_libgit2_init();
-    }
+          owner_(ownership::libgit2) {}
 
     // Clean up tree entry
     ~entry() {
       if (c_ptr_ && owner_ == ownership::user)
         git_tree_entry_free(c_ptr_);
-      git_libgit2_shutdown();
     }
 
     // Duplicate a tree entry

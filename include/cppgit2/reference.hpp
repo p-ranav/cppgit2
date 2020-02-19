@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/exception.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/ownership.hpp>
 #include <git2.h>
@@ -7,7 +8,7 @@
 
 namespace cppgit2 {
 
-class reference {
+class reference : public libgit2_api {
 public:
   reference();
   reference(git_reference *c_ptr = nullptr,

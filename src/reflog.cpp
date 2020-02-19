@@ -2,19 +2,14 @@
 
 namespace cppgit2 {
 
-reflog::reflog() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-  git_libgit2_init();
-}
+reflog::reflog() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
 reflog::reflog(git_reflog *c_ptr, ownership owner)
-    : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 reflog::~reflog() {
   if (c_ptr_ && owner_ == ownership::user)
     git_reflog_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 void reflog::remove(size_t index, bool rewrite_previous_entry) {

@@ -3,7 +3,6 @@
 namespace cppgit2 {
 
 tree_builder::tree_builder(repository &repo, tree source) {
-  git_libgit2_init();
   if (git_treebuilder_new(&c_ptr_, repo.c_ptr_, source.c_ptr()))
     throw exception();
 }
@@ -11,7 +10,6 @@ tree_builder::tree_builder(repository &repo, tree source) {
 tree_builder::~tree_builder() {
   if (c_ptr_)
     git_treebuilder_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 void tree_builder::clear() { git_treebuilder_clear(c_ptr_); }

@@ -3,22 +3,19 @@
 
 namespace cppgit2 {
 
-oid::oid() { git_libgit2_init(); }
+oid::oid() {}
 
 oid::oid(const std::string &hex_string) {
-  git_libgit2_init();
   if (git_oid_fromstr(&c_struct_, hex_string.c_str()))
     throw exception();
 }
 
 oid::oid(const std::string &hex_string, size_t length) {
-  git_libgit2_init();
   if (git_oid_fromstrn(&c_struct_, hex_string.c_str(), length))
     throw exception();
 }
 
 oid::oid(const git_oid *c_ptr) {
-  git_libgit2_init();
   // Convert git_oid * to string and construct this oid
   size_t n = GIT_OID_HEXSZ;
   std::string buffer(n, '0');
@@ -29,12 +26,7 @@ oid::oid(const git_oid *c_ptr) {
     throw exception();
 }
 
-oid::oid(const unsigned char *raw) {
-  git_libgit2_init();
-  git_oid_fromraw(&c_struct_, raw);
-}
-
-oid::~oid() { git_libgit2_shutdown(); }
+oid::oid(const unsigned char *raw) { git_oid_fromraw(&c_struct_, raw); }
 
 int oid::compare(const oid &rhs) const {
   return git_oid_cmp(&c_struct_, rhs.c_ptr());

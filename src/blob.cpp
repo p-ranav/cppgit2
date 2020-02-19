@@ -2,10 +2,9 @@
 
 namespace cppgit2 {
 
-blob::blob() : c_ptr_(nullptr) { git_libgit2_init(); }
+blob::blob() : c_ptr_(nullptr) {}
 
 blob::blob(const git_blob *c_ptr) {
-  git_libgit2_init();
   if (git_blob_dup(&c_ptr_, const_cast<git_blob *>(c_ptr)))
     throw exception();
 }
@@ -13,7 +12,6 @@ blob::blob(const git_blob *c_ptr) {
 blob::~blob() {
   if (c_ptr_)
     git_blob_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 blob blob::copy() const {

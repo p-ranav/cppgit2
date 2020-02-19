@@ -3,15 +3,12 @@
 
 namespace cppgit2 {
 
-object::object() : c_ptr_(nullptr) { git_libgit2_init(); }
+object::object() : c_ptr_(nullptr) {}
 
 object::object(const git_object *c_ptr) {
-  git_libgit2_init();
   if (git_object_dup(&c_ptr_, const_cast<git_object *>(c_ptr)))
     throw exception();
 }
-
-object::~object() { git_libgit2_shutdown(); }
 
 oid object::id() const { return oid(git_object_id(c_ptr_)->id); }
 

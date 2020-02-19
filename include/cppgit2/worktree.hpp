@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/data_buffer.hpp>
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
 #include <git2.h>
@@ -8,7 +9,7 @@
 
 namespace cppgit2 {
 
-class worktree {
+class worktree : public libgit2_api {
 public:
   // Default construct a worktree
   worktree();

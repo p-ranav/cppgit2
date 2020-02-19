@@ -1,4 +1,5 @@
 #pragma once
+#include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/signature.hpp>
@@ -7,7 +8,7 @@
 
 namespace cppgit2 {
 
-class note {
+class note : public libgit2_api {
 public:
   note();
   note(git_note *c_ptr, ownership owner = ownership::libgit2);

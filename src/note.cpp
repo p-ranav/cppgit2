@@ -2,18 +2,13 @@
 
 namespace cppgit2 {
 
-note::note() : c_ptr_(nullptr), owner_(ownership::libgit2) {
-  git_libgit2_init();
-}
+note::note() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
-note::note(git_note *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {
-  git_libgit2_init();
-}
+note::note(git_note *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {}
 
 note::~note() {
   if (c_ptr_ && owner_ == ownership::user)
     git_note_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 signature note::author() const { return signature(git_note_author(c_ptr_)); }
