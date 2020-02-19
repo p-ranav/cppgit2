@@ -15,6 +15,9 @@ public:
   // Construct from libgit2 C ptr
   pack_builder(git_packbuilder * c_ptr, ownership owner);
 
+  // Free packbuilder ptr if owned by user
+  ~pack_builder();
+
   // Get the packfile's hash
   oid id() const;
 
