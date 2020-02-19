@@ -6,8 +6,8 @@ submodule::submodule() : c_ptr_(nullptr), owner_(ownership::libgit2) {
   git_libgit2_init();
 }
 
-submodule::submodule(git_submodule * c_ptr, ownership owner) : 
-  c_ptr_(c_ptr), owner_(owner) {
+submodule::submodule(git_submodule *c_ptr, ownership owner)
+    : c_ptr_(c_ptr), owner_(owner) {
   git_libgit2_init();
 }
 
@@ -41,7 +41,8 @@ std::string submodule::branch_name() const {
 }
 
 submodule::recurse submodule::recurse_submodules_option() const {
-  return static_cast<submodule::recurse>(git_submodule_fetch_recurse_submodules(c_ptr_));
+  return static_cast<submodule::recurse>(
+      git_submodule_fetch_recurse_submodules(c_ptr_));
 }
 
 oid submodule::head_id() const { return oid(git_submodule_head_id(c_ptr_)); }
@@ -92,4 +93,4 @@ std::string submodule::url() const {
 
 const git_submodule *submodule::c_ptr() const { return c_ptr_; }
 
-}
+} // namespace cppgit2

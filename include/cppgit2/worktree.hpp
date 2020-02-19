@@ -26,7 +26,7 @@ public:
   //
   // TODO: CONSIDER ADDING AN OPTIONS CLASS
   // AND MERGE is_prunable() & prune() METHODS
-  // 
+  //
 
   // Is the worktree prunable with the given options?
   // A worktree is not prunable in the following scenarios:
