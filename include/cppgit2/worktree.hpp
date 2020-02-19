@@ -23,6 +23,11 @@ public:
   // If true, the string holds the reason
   std::pair<bool, std::string> is_locked() const;
 
+  //
+  // TODO: CONSIDER ADDING AN OPTIONS CLASS
+  // AND MERGE is_prunable() & prune() METHODS
+  // 
+
   // Is the worktree prunable with the given options?
   // A worktree is not prunable in the following scenarios:
   //   - the worktree is linking to a valid on-disk worktree. The valid member

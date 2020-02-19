@@ -961,7 +961,7 @@ git_submodule_update
 git_submodule_update_options_init
 git_submodule_update_strategy
 git_submodule_url
-git_submodule_wd_id
+- git_submodule_wd_id
 ```
 
 ### tag
@@ -991,7 +991,7 @@ git_tag_owner
 
 ### trace
 ```diff
-git_trace_set
+- git_trace_set
 ```
 
 ### transaction
