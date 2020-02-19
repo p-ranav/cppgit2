@@ -41,9 +41,9 @@ lib/
 ├── libcppgit2.static.a
 ├── libgit2_clar
 ├── libgit2.pc
-├── libgit2.so -> libgit2.so.28
-├── libgit2.so.0.28.4
-├── libgit2.so.28 -> libgit2.so.0.28.4
+├── libgit2.so -> libgit2.so.99
+├── libgit2.so.0.99.0
+├── libgit2.so.99 -> libgit2.so.0.99.0
 └── ...
 samples/
 test/
