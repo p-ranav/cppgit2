@@ -47,7 +47,7 @@ public:
   void set_threads(unsigned int num_threads);
 
   // Get the number of objects the packbuilder has already written out
-  size_t num_objects_written() const;
+  size_t written() const;
 
   // Access libgit2 C ptr
   const git_packbuilder * c_ptr() const;
