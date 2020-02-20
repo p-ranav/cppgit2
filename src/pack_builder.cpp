@@ -21,14 +21,14 @@ void pack_builder::insert_commit(const oid &commit_id) {
 
 void pack_builder::insert_object(const oid &commit_id,
                                  const std::string &name) {
-  auto name_c = name == "" ? nullptr : name.c_str();
+  auto name_c = name.empty() ? nullptr : name.c_str();
   if (git_packbuilder_insert(c_ptr_, commit_id.c_ptr(), name_c))
     throw exception();
 }
 
 void pack_builder::insert_object_recursively(const oid &commit_id,
                                              const std::string &name) {
-  auto name_c = name == "" ? nullptr : name.c_str();
+  auto name_c = name.empty() ? nullptr : name.c_str();
   if (git_packbuilder_insert_recur(c_ptr_, commit_id.c_ptr(), name_c))
     throw exception();
 }

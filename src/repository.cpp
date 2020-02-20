@@ -291,4 +291,70 @@ annotated_commit repository::lookup_annotated_commit(const oid &id) {
   return result;
 }
 
+void repository::add_attributes_macro(const std::string &name,
+                                      const std::string &values) {
+  if (git_attr_add_macro(c_ptr_, name.c_str(), values.c_str()))
+    throw exception();
+}
+
+void repository::flush_attributes_cache() { git_attr_cache_flush(c_ptr_); }
+
+void repository::for_each_attribute(
+    uint32_t flags, const std::string &path,
+    std::function<void(const std::string &, const std::string &)> visitor) {
+
+  struct visitor_wrapper {
+    std::function<void(const std::string &, const std::string &)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const char *name, const char *value, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(name, value);
+    return 0;
+  };
+
+  if (git_attr_foreach(c_ptr_, flags, path.c_str(), callback_c,
+                       (void *)(&wrapper)))
+    throw exception();
+}
+
+std::string repository::lookup_attribute(uint32_t flags,
+                                         const std::string &path,
+                                         const std::string &name) {
+  const char *result;
+  if (git_attr_get(&result, c_ptr_, flags, path.c_str(), name.c_str()))
+    throw exception();
+  if (result)
+    return std::string(result);
+  else
+    return "";
+}
+
+std::vector<std::string>
+repository::lookup_multiple_attributes(uint32_t flags, const std::string &path,
+                                       const std::vector<std::string> &names) {
+  const char *values[names.size()]; // TODO: Fix this
+
+  std::vector<const char *> names_c;
+  for (auto &name : names)
+    names_c.push_back(name.c_str());
+
+  if (git_attr_get_many(values, c_ptr_, flags, path.c_str(), names.size(),
+                        names_c.data()))
+    throw exception();
+
+  std::vector<std::string> result;
+  for (size_t i = 0; i < names.size(); ++i) {
+    if (values[i]) {
+      result.push_back(values[i]);
+    } else {
+      result.push_back("");
+    }
+  }
+  return result;
+}
+
 } // namespace cppgit2

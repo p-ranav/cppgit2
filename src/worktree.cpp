@@ -59,7 +59,7 @@ bool worktree::is_prunable() const {
 }
 
 void worktree::lock(const std::string &reason) {
-  const char *reason_c = reason == "" ? NULL : reason.c_str();
+  const char *reason_c = reason.empty() ? nullptr : reason.c_str();
   if (git_worktree_lock(c_ptr_, reason_c))
     throw exception();
 }

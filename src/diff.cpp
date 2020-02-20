@@ -32,9 +32,9 @@ diff::delta diff::compare_files(const std::pair<blob, std::string> &old_file,
   };
 
   const char *old_as_path_c =
-      old_file.second == "" ? nullptr : old_file.second.c_str();
+      old_file.second.empty() ? nullptr : old_file.second.c_str();
   const char *new_as_path_c =
-      new_file.second == "" ? nullptr : new_file.second.c_str();
+      new_file.second.empty() ? nullptr : new_file.second.c_str();
 
   auto ret = git_diff_blobs(old_file.first.c_ptr(), old_as_path_c,
                             new_file.first.c_ptr(), new_as_path_c,

@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/annotated_commit.hpp>
+#include <cppgit2/attribute.hpp>
 #include <cppgit2/config.hpp>
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/exception.hpp>
@@ -213,6 +214,47 @@ public:
 
   // Lookup annotated_commit from the given commit id
   annotated_commit lookup_annotated_commit(const oid &id);
+
+  /*
+   * Attributes API
+   * See git_attr_* functions
+   */
+
+  // Add a macro definition.
+  // Macros will automatically be loaded from the top level .gitattributes file
+  // of the repository (plus the build-in "binary" macro). This function allows
+  // you to add others. For example, to add the default macro, you would call:
+  //     repo.add_attributes_macro("binary", "-diff -crlf");
+  void add_attributes_macro(const std::string &name, const std::string &values);
+
+  // Flush the gitattributes cache.
+  //
+  // Call this if you have reason to believe that the attributes files on disk
+  // no longer match the cached contents of memory. This will cause the
+  // attributes files to be reloaded the next time that an attribute access
+  // function is called.
+  void flush_attributes_cache();
+
+  // Loop over all the git attributes for a path.
+  void for_each_attribute(
+      uint32_t flags, const std::string &path,
+      std::function<void(const std::string &, const std::string &)> visitor);
+
+  // Look up the value of one git attribute for path.
+  std::string lookup_attribute(uint32_t flags, const std::string &path,
+                               const std::string &name);
+
+  // Look up a list of git attributes for path.
+  // Use this if you have a known list of attributes that you want to look up in
+  // a single call. This is somewhat more efficient than calling
+  // lookup_attribute() multiple times.
+  //
+  // Example usage:
+  //   repo.get_multiple_attributes(repo, 0, "my/fun/file.c", { "crlf", "diff",
+  //   "foo" });
+  std::vector<std::string>
+  lookup_multiple_attributes(uint32_t flags, const std::string &path,
+                             const std::vector<std::string> &names);
 
 private:
   friend class tree_builder;

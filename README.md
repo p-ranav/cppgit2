@@ -98,12 +98,12 @@ git_apply_to_tree
 
 ### attr
 ```diff
-git_attr_add_macro
-git_attr_cache_flush
-git_attr_foreach
-git_attr_get
-git_attr_get_many
-git_attr_value
++ git_attr_add_macro
++ git_attr_cache_flush
++ git_attr_foreach
++ git_attr_get
++ git_attr_get_many
++ git_attr_value
 ```
 
 ### blame

@@ -5,8 +5,8 @@ using namespace cppgit2;
 
 TEST_CASE("Default, empty signature" * test_suite("signature")) {
   signature foo;
-  REQUIRE(foo.name() == "");
-  REQUIRE(foo.email() == "");
+  REQUIRE(foo.name().empty());
+  REQUIRE(foo.email().empty());
   REQUIRE(foo.time() == 0);
   REQUIRE(foo.offset() == 0);
 }
