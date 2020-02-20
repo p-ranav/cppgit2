@@ -256,4 +256,39 @@ std::string repository::workdir() const {
 
 const git_repository *repository::c_ptr() const { return c_ptr_; }
 
+annotated_commit
+repository::create_annotated_commit(const std::string &branch_name,
+                                    const std::string &remote_url,
+                                    const oid &id) {
+  annotated_commit result;
+  if (git_annotated_commit_from_fetchhead(&result.c_ptr_, c_ptr_,
+                                          branch_name.c_str(),
+                                          remote_url.c_str(), id.c_ptr()))
+    throw exception();
+  return result;
+}
+
+annotated_commit
+repository::create_annotated_commit(const std::string &revspec) {
+  annotated_commit result;
+  if (git_annotated_commit_from_revspec(&result.c_ptr_, c_ptr_,
+                                        revspec.c_str()))
+    throw exception();
+  return result;
+}
+
+annotated_commit repository::create_annotated_commit(const reference &ref) {
+  annotated_commit result;
+  if (git_annotated_commit_from_ref(&result.c_ptr_, c_ptr_, ref.c_ptr()))
+    throw exception();
+  return result;
+}
+
+annotated_commit repository::lookup_annotated_commit(const oid &id) {
+  annotated_commit result;
+  if (git_annotated_commit_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
+    throw exception();
+  return result;
+}
+
 } // namespace cppgit2

@@ -1,4 +1,5 @@
 #pragma once
+#include <cppgit2/annotated_commit.hpp>
 #include <cppgit2/config.hpp>
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/exception.hpp>
@@ -191,6 +192,27 @@ public:
 
   // Access to libgit2 C ptr
   const git_repository *c_ptr() const;
+
+  /*
+   * Annotated Commit API
+   * See git_annotated_commit_* functions
+   */
+
+  // Creates an annotated_commit from the given fetch head data
+  annotated_commit create_annotated_commit(const std::string &branch_name,
+                                           const std::string &remote_url,
+                                           const oid &id);
+
+  // Create annotated commit from revspec
+  // (the extended sha syntax string to use to lookup the commit)
+  annotated_commit create_annotated_commit(const std::string &revspec);
+
+  // Creates an annotated_commit from the given reference (
+  // (used to lookup the git_annotated_commit)
+  annotated_commit create_annotated_commit(const reference &ref);
+
+  // Lookup annotated_commit from the given commit id
+  annotated_commit lookup_annotated_commit(const oid &id);
 
 private:
   friend class tree_builder;
