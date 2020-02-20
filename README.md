@@ -81,13 +81,13 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ### annotated
 ```diff
-git_annotated_commit_free
++ git_annotated_commit_free
 git_annotated_commit_from_fetchhead
 git_annotated_commit_from_ref
 git_annotated_commit_from_revspec
-git_annotated_commit_id
++ git_annotated_commit_id
 git_annotated_commit_lookup
-git_annotated_commit_ref
++ git_annotated_commit_ref
 ```
 
 ### apply
