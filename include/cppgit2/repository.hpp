@@ -237,11 +237,11 @@ public:
 
   // Loop over all the git attributes for a path.
   void for_each_attribute(
-      uint32_t flags, const std::string &path,
+      attribute::flag flags, const std::string &path,
       std::function<void(const std::string &, const std::string &)> visitor);
 
   // Look up the value of one git attribute for path.
-  std::string lookup_attribute(uint32_t flags, const std::string &path,
+  std::string lookup_attribute(attribute::flag flags, const std::string &path,
                                const std::string &name);
 
   // Look up a list of git attributes for path.
@@ -250,10 +250,10 @@ public:
   // lookup_attribute() multiple times.
   //
   // Example usage:
-  //   repo.get_multiple_attributes(repo, 0, "my/fun/file.c", { "crlf", "diff",
-  //   "foo" });
+  //   repo.get_multiple_attributes(repo, attribute::flag::file_then_index, 
+  //      "my/fun/file.c", { "crlf", "diff", "foo" });
   std::vector<std::string>
-  lookup_multiple_attributes(uint32_t flags, const std::string &path,
+  lookup_multiple_attributes(attribute::flag flags, const std::string &path,
                              const std::vector<std::string> &names);
 
 private:
