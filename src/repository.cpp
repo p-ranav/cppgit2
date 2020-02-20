@@ -297,7 +297,10 @@ void repository::add_attributes_macro(const std::string &name,
     throw exception();
 }
 
-void repository::flush_attributes_cache() { git_attr_cache_flush(c_ptr_); }
+void repository::flush_attributes_cache() { 
+  if (git_attr_cache_flush(c_ptr_))
+    throw exception();
+}
 
 void repository::for_each_attribute(
     attribute::flag flags, const std::string &path,
