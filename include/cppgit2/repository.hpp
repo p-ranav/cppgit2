@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/annotated_commit.hpp>
+#include <cppgit2/apply.hpp>
 #include <cppgit2/attribute.hpp>
 #include <cppgit2/config.hpp>
 #include <cppgit2/data_buffer.hpp>
@@ -214,6 +215,20 @@ public:
 
   // Lookup annotated_commit from the given commit id
   annotated_commit lookup_annotated_commit(const oid &id);
+
+  /*
+   * Apply API
+   * See git_apply_* functions
+   */
+
+  // Apply a git_diff to the given repository, making changes directly in the
+  // working directory, the index, or both.
+  void apply_diff(const diff &diff, apply::location location,
+                  const apply::options &options = apply::options());
+
+  // Apply a git_diff to a git_tree, and return the resulting image as an index.
+  cppgit2::index apply_diff(const tree &preimage, const diff &diff,
+                            const apply::options &options = apply::options());
 
   /*
    * Attributes API

@@ -92,8 +92,8 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ### apply
 ```diff
-git_apply
-git_apply_to_tree
++ git_apply
++ git_apply_to_tree
 ```
 
 ### attr

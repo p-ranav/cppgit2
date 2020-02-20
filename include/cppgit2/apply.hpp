@@ -10,6 +10,19 @@ namespace cppgit2 {
 
 class apply : public libgit2_api {
 public:
+  // Possible application locations for git_apply
+  enum class location {
+    // Apply the patch to the workdir, leaving the index untouched.
+    // This is the equivalent of `git apply` with no location argument.
+    workdir = 0,
+    // Apply the patch to the index, leaving the working directory
+    // untouched.  This is the equivalent of `git apply --cached
+    index = 1,
+    // Apply the patch to both the working directory and the index.
+    // This is the equivalent of `git apply --index`.
+    both = 2
+  };
+
   class options : public libgit2_api {
   public:
     // Default construct apply::options

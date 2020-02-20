@@ -291,6 +291,23 @@ annotated_commit repository::lookup_annotated_commit(const oid &id) {
   return result;
 }
 
+void repository::apply_diff(const diff &diff, apply::location location,
+                            const apply::options &options) {
+  if (git_apply(c_ptr_, const_cast<git_diff *>(diff.c_ptr()),
+                static_cast<git_apply_location_t>(location), options.c_ptr()))
+    throw exception();
+}
+
+cppgit2::index repository::apply_diff(const tree &preimage, const diff &diff,
+                                      const apply::options &options) {
+  git_index *result; // the postimage of the application
+  if (git_apply_to_tree(&result, c_ptr_,
+                        const_cast<git_tree *>(preimage.c_ptr()),
+                        const_cast<git_diff *>(diff.c_ptr()), options.c_ptr()))
+    throw exception();
+  return cppgit2::index(result, ownership::user);
+}
+
 void repository::add_attributes_macro(const std::string &name,
                                       const std::string &values) {
   if (git_attr_add_macro(c_ptr_, name.c_str(), values.c_str()))
