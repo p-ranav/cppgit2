@@ -7,12 +7,10 @@ int main(int argc, char **argv) {
     repository repo(argv[1], false);
 
     repo.for_each_attribute(
-      attribute::flag::file_then_index, 
-      ".gitattributes", 
-      [](const std::string &name, const std::string &value) {
-        std::cout << name << ": " << value << std::endl;
-      }
-    );
+        attribute::flag::file_then_index, ".gitattributes",
+        [](const std::string &name, const std::string &value) {
+          std::cout << name << ": " << value << std::endl;
+        });
 
   } else {
     std::cout << "Usage: ./executable <repo_path>\n";

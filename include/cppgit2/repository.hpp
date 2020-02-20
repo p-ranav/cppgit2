@@ -250,7 +250,7 @@ public:
   // lookup_attribute() multiple times.
   //
   // Example usage:
-  //   repo.get_multiple_attributes(repo, attribute::flag::file_then_index, 
+  //   repo.get_multiple_attributes(repo, attribute::flag::file_then_index,
   //      "my/fun/file.c", { "crlf", "diff", "foo" });
   std::vector<std::string>
   lookup_multiple_attributes(attribute::flag flags, const std::string &path,

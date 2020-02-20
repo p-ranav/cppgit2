@@ -51,13 +51,14 @@ public:
   };
 
   friend inline flag operator|(flag a, flag b) {
-    return static_cast<flag>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
+    return static_cast<flag>(static_cast<uint32_t>(a) |
+                             static_cast<uint32_t>(b));
   }
 
   friend inline flag operator&(flag a, flag b) {
-    return static_cast<flag>(static_cast<uint32_t>(a) & static_cast<uint32_t>(b));
+    return static_cast<flag>(static_cast<uint32_t>(a) &
+                             static_cast<uint32_t>(b));
   }
-
 };
 
 } // namespace cppgit2

@@ -316,8 +316,8 @@ void repository::for_each_attribute(
     return 0;
   };
 
-  if (git_attr_foreach(c_ptr_, static_cast<uint32_t>(flags), path.c_str(), callback_c,
-                       (void *)(&wrapper)))
+  if (git_attr_foreach(c_ptr_, static_cast<uint32_t>(flags), path.c_str(),
+                       callback_c, (void *)(&wrapper)))
     throw exception();
 }
 
@@ -325,7 +325,8 @@ std::string repository::lookup_attribute(attribute::flag flags,
                                          const std::string &path,
                                          const std::string &name) {
   const char *result;
-  if (git_attr_get(&result, c_ptr_, static_cast<uint32_t>(flags), path.c_str(), name.c_str()))
+  if (git_attr_get(&result, c_ptr_, static_cast<uint32_t>(flags), path.c_str(),
+                   name.c_str()))
     throw exception();
   if (result)
     return std::string(result);
@@ -334,7 +335,8 @@ std::string repository::lookup_attribute(attribute::flag flags,
 }
 
 std::vector<std::string>
-repository::lookup_multiple_attributes(attribute::flag flags, const std::string &path,
+repository::lookup_multiple_attributes(attribute::flag flags,
+                                       const std::string &path,
                                        const std::vector<std::string> &names) {
   const char *values[names.size()]; // TODO: Fix this
 
@@ -342,8 +344,8 @@ repository::lookup_multiple_attributes(attribute::flag flags, const std::string 
   for (auto &name : names)
     names_c.push_back(name.c_str());
 
-  if (git_attr_get_many(values, c_ptr_, static_cast<uint32_t>(flags), path.c_str(), names.size(),
-                        names_c.data()))
+  if (git_attr_get_many(values, c_ptr_, static_cast<uint32_t>(flags),
+                        path.c_str(), names.size(), names_c.data()))
     throw exception();
 
   std::vector<std::string> result;
