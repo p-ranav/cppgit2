@@ -7,6 +7,8 @@ namespace cppgit2 {
 
 using blob_size = git_off_t;
 
+// Always owned by user
+// Free'd in destructor
 class blob : public libgit2_api {
 public:
   // Default construct a blob
@@ -18,6 +20,9 @@ public:
 
   // Free blob with git_blob_free
   ~blob();
+
+  // Owner repository
+  class repository owner() const;
 
   // Create an in-memory copy of a blob
   blob copy() const;
@@ -38,6 +43,7 @@ public:
   const git_blob *c_ptr() const;
 
 private:
+  friend class repository;
   git_blob *c_ptr_;
 };
 

@@ -2,6 +2,7 @@
 #include <cppgit2/annotated_commit.hpp>
 #include <cppgit2/apply.hpp>
 #include <cppgit2/attribute.hpp>
+#include <cppgit2/blob.hpp>
 #include <cppgit2/config.hpp>
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/exception.hpp>
@@ -270,6 +271,28 @@ public:
   std::vector<std::string>
   lookup_multiple_attributes(attribute::flag flags, const std::string &path,
                              const std::vector<std::string> &names);
+
+  /*
+   * BLOB API
+   * See git_blob_* functions
+   */
+
+  // Write an in-memory buffer to the ODB as a blob
+  oid create_blob_from_buffer(const std::string &buffer);
+
+  // Read a file from the filesystem and write its content to the Object
+  // Database as a loose blob
+  oid create_blob_from_disk(const std::string &path);
+  // Read a file from the working folder of a repository
+  // and write it to the Object Database as a loose blob
+  oid create_blob_from_workdir(const std::string &relative_path);
+
+  // Lookup a blob object from a repository.
+  blob lookup_blob(const oid &id) const;
+
+  // Lookup a blob object from a repository,
+  // given a prefix of its identifier (short id).
+  blob lookup_blob(const oid &id, size_t len) const;
 
 private:
   friend class tree_builder;

@@ -1,4 +1,4 @@
-#include <cppgit2/blob.hpp>
+#include <cppgit2/repository.hpp>
 
 namespace cppgit2 {
 
@@ -13,6 +13,8 @@ blob::~blob() {
   if (c_ptr_)
     git_blob_free(c_ptr_);
 }
+
+repository blob::owner() const { return repository(git_blob_owner(c_ptr_)); }
 
 blob blob::copy() const {
   blob result;

@@ -379,4 +379,38 @@ repository::lookup_multiple_attributes(attribute::flag flags,
   return result;
 }
 
+oid repository::create_blob_from_buffer(const std::string &buffer) {
+  oid result;
+  if (git_blob_create_frombuffer(result.c_ptr(), c_ptr_, buffer.c_str(),
+                                 buffer.size()))
+    throw exception();
+}
+
+oid repository::create_blob_from_disk(const std::string &path) {
+  oid result;
+  if (git_blob_create_fromdisk(result.c_ptr(), c_ptr_, path.c_str()))
+    throw exception();
+}
+
+oid repository::create_blob_from_workdir(const std::string &relative_path) {
+  oid result;
+  if (git_blob_create_fromworkdir(result.c_ptr(), c_ptr_,
+                                  relative_path.c_str()))
+    throw exception();
+}
+
+blob repository::lookup_blob(const oid &id) const {
+  blob result;
+  if (git_blob_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
+    throw exception();
+  return result;
+}
+
+blob repository::lookup_blob(const oid &id, size_t len) const {
+  blob result;
+  if (git_blob_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), len))
+    throw exception();
+  return result;
+}
+
 } // namespace cppgit2
