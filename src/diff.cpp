@@ -41,7 +41,7 @@ diff::delta diff::compare_files(const std::pair<blob, std::string> &old_file,
                             options.c_ptr_, file_callback, nullptr, nullptr,
                             nullptr, (void *)(&result));
   if (ret)
-    throw exception();
+    throw git_exception();
   return result;
 }
 
@@ -55,7 +55,7 @@ bool diff::is_sorted_case_sensitive() const {
 
 void diff::merge(const diff &from) {
   if (git_diff_merge(c_ptr_, from.c_ptr()))
-    throw exception();
+    throw git_exception();
 }
 
 size_t diff::size() const { return git_diff_num_deltas(c_ptr_); }
@@ -73,7 +73,7 @@ std::string diff::to_string(diff::format format_type) const {
   data_buffer result(1024);
   if (git_diff_to_buf(result.c_ptr(), c_ptr_,
                       static_cast<git_diff_format_t>(format_type)))
-    throw exception();
+    throw git_exception();
   return result.to_string();
 }
 

@@ -17,7 +17,7 @@ index::~index() {
 
 void index::add_entry(const entry &source_entry) {
   if (git_index_add(c_ptr_, source_entry.c_ptr()))
-    throw exception();
+    throw git_exception();
 }
 
 void index::add_entries_that_match(
@@ -40,19 +40,19 @@ void index::add_entries_that_match(
   auto pathspec_c = strarray(pathspec).c_ptr();
   if (git_index_add_all(c_ptr_, pathspec_c, static_cast<int>(flags), callback_c,
                         (void *)(&wrapper)))
-    throw exception();
+    throw git_exception();
 }
 
 void index::add_entry_by_path(const std::string &path) {
   if (git_index_add_bypath(c_ptr_, path.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 void index::add_entry_from_buffer(const entry &entry,
                                   const std::string &buffer) {
   if (git_index_add_frombuffer(c_ptr_, entry.c_ptr(), buffer.c_str(),
                                buffer.size()))
-    throw exception();
+    throw git_exception();
 }
 
 index::capability index::capability_flags() const {
@@ -63,7 +63,7 @@ const oid index::get_checksum() { return oid(git_index_checksum(c_ptr_)); }
 
 void index::clear() {
   if (git_index_clear(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 void index::add_conflict_entry(const entry &ancestor_entry,
@@ -71,17 +71,17 @@ void index::add_conflict_entry(const entry &ancestor_entry,
                                const entry &their_entry) {
   if (git_index_conflict_add(c_ptr_, ancestor_entry.c_ptr(), our_entry.c_ptr(),
                              their_entry.c_ptr()))
-    throw exception();
+    throw git_exception();
 }
 
 void index::remove_all_conflicts() {
   if (git_index_conflict_cleanup(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 void index::remove_conflict_entries(const std::string &path) {
   if (git_index_conflict_remove(c_ptr_, path.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 size_t index::size() const { return git_index_entrycount(c_ptr_); }
@@ -89,14 +89,14 @@ size_t index::size() const { return git_index_entrycount(c_ptr_); }
 size_t index::find_first(const std::string &path) {
   size_t result{0};
   if (git_index_find(&result, c_ptr_, path.c_str()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
 size_t index::find_first_matching_prefix(const std::string &prefix) {
   size_t result{0};
   if (git_index_find_prefix(&result, c_ptr_, prefix.c_str()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
@@ -134,7 +134,7 @@ void index::for_each_conflict(
 const index::entry index::operator[](size_t index) {
   auto ret = git_index_get_byindex(c_ptr_, index);
   if (!ret)
-    throw exception();
+    throw git_exception();
   entry result(nullptr);
   if (ret)
     *(result.c_ptr_) = *ret;
@@ -144,7 +144,7 @@ const index::entry index::operator[](size_t index) {
 const index::entry index::entry_in_path(const std::string &path, stage s) {
   auto ret = git_index_get_bypath(c_ptr_, path.c_str(), static_cast<int>(s));
   if (!ret)
-    throw exception();
+    throw git_exception();
   entry result(nullptr);
   *(result.c_ptr_) = *ret;
   return result;
@@ -162,17 +162,17 @@ std::string index::path() const {
 
 void index::read(bool force) {
   if (git_index_read(c_ptr_, force))
-    throw exception();
+    throw git_exception();
 }
 
 void index::read_tree(const tree &tree) {
   if (git_index_read_tree(c_ptr_, tree.c_ptr()))
-    throw exception();
+    throw git_exception();
 }
 
 void index::remove_entry(const std::string &path, index::stage stage) {
   if (git_index_remove(c_ptr_, path.c_str(), static_cast<int>(stage)))
-    throw exception();
+    throw git_exception();
 }
 
 void index::remove_entries_that_match(
@@ -193,27 +193,27 @@ void index::remove_entries_that_match(
 
   auto pathspec_c = strarray(pathspec).c_ptr();
   if (git_index_remove_all(c_ptr_, pathspec_c, callback_c, (void *)(&wrapper)))
-    throw exception();
+    throw git_exception();
 }
 
 void index::remove_entry_by_path(const std::string &path) {
   if (git_index_remove_bypath(c_ptr_, path.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 void index::remove_entries_in_directory(const std::string &dir, stage stage) {
   if (git_index_remove_directory(c_ptr_, dir.c_str(), static_cast<int>(stage)))
-    throw exception();
+    throw git_exception();
 }
 
 void index::set_index_capabilities(capability caps) {
   if (git_index_set_caps(c_ptr_, static_cast<int>(caps)))
-    throw exception();
+    throw git_exception();
 }
 
 void index::set_version(unsigned int version) {
   if (git_index_set_version(c_ptr_, version))
-    throw exception();
+    throw git_exception();
 }
 
 void index::update_entries_that_match(
@@ -234,20 +234,20 @@ void index::update_entries_that_match(
 
   auto pathspec_c = strarray(pathspec).c_ptr();
   if (git_index_update_all(c_ptr_, pathspec_c, callback_c, (void *)(&wrapper)))
-    throw exception();
+    throw git_exception();
 }
 
 unsigned int index::version() const { return git_index_version(c_ptr_); }
 
 void index::write() {
   if (git_index_write(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 oid index::write_tree() {
   git_oid result;
   if (git_index_write_tree(&result, c_ptr_))
-    throw exception();
+    throw git_exception();
   return oid(&result);
 }
 

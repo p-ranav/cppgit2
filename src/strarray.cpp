@@ -40,7 +40,7 @@ strarray::~strarray() {
 strarray strarray::copy() const {
   strarray result;
   if (git_strarray_copy(&result.c_struct_, &c_struct_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 

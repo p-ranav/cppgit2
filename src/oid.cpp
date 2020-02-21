@@ -7,12 +7,12 @@ oid::oid() {}
 
 oid::oid(const std::string &hex_string) {
   if (git_oid_fromstr(&c_struct_, hex_string.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 oid::oid(const std::string &hex_string, size_t length) {
   if (git_oid_fromstrn(&c_struct_, hex_string.c_str(), length))
-    throw exception();
+    throw git_exception();
 }
 
 oid::oid(const git_oid *c_ptr) {
@@ -20,10 +20,10 @@ oid::oid(const git_oid *c_ptr) {
   size_t n = GIT_OID_HEXSZ;
   std::string buffer(n, '0');
   if (!git_oid_tostr(const_cast<char *>(buffer.c_str()), n + 1, c_ptr))
-    throw exception();
+    throw git_exception();
   // Construct from string
   if (git_oid_fromstr(&c_struct_, buffer.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 oid::oid(const unsigned char *raw) { git_oid_fromraw(&c_struct_, raw); }
@@ -55,7 +55,7 @@ bool oid::operator==(const std::string &rhs) const {
 std::string oid::to_hex_string(size_t n) const {
   std::string result(n, '0');
   if (!git_oid_tostr(const_cast<char *>(result.c_str()), n + 1, &c_struct_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 

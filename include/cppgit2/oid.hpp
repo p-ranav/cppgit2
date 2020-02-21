@@ -1,5 +1,5 @@
 #pragma once
-#include <cppgit2/exception.hpp>
+#include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <git2.h>
 #include <string>
@@ -92,7 +92,7 @@ public:
     int add(const std::string &text_id) {
       auto result = git_oid_shorten_add(c_ptr_, text_id.c_str());
       if (result < 0)
-        throw exception();
+        throw git_exception();
       return result;
     }
 

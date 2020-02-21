@@ -19,13 +19,13 @@ int reference::compare(const reference &rhs) const {
 reference reference::copy() const {
   reference result(nullptr, ownership::user);
   if (git_reference_dup(&result.c_ptr_, c_ptr_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
 void reference::delete_reference(reference &ref) {
   if (git_reference_delete(ref.c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 bool reference::is_branch() const { return git_reference_is_branch(c_ptr_); }
@@ -64,14 +64,14 @@ object reference::peel_until(object::object_type type) {
   object result;
   if (git_reference_peel(&result.c_ptr_, c_ptr_,
                          static_cast<git_object_t>(type)))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
 reference reference::resolve() {
   reference result(nullptr, ownership::user);
   if (git_reference_resolve(&result.c_ptr_, c_ptr_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 

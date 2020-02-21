@@ -116,7 +116,7 @@ public:
           git_diff_init_options(&default_options_, GIT_DIFF_OPTIONS_VERSION);
       c_ptr_ = &default_options_;
       if (ret != 0)
-        throw exception();
+        throw git_exception();
     }
 
     options(git_diff_options *c_ptr) : c_ptr_(c_ptr) {}

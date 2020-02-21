@@ -14,17 +14,17 @@ submodule::~submodule() {
 
 void submodule::init(bool overwrite) {
   if (git_submodule_init(c_ptr_, overwrite))
-    throw exception();
+    throw git_exception();
 }
 
 void submodule::resolve_setup() {
   if (git_submodule_add_finalize(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 void submodule::add_to_index(bool write_index) {
   if (git_submodule_add_to_index(c_ptr_, write_index))
-    throw exception();
+    throw git_exception();
 }
 
 std::string submodule::branch_name() const {
@@ -70,12 +70,12 @@ std::string submodule::path() const {
 
 void submodule::reload(bool force) {
   if (git_submodule_reload(c_ptr_, force))
-    throw exception();
+    throw git_exception();
 }
 
 void submodule::sync() {
   if (git_submodule_sync(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 std::string submodule::url() const {

@@ -6,7 +6,7 @@ repository::repository(git_repository *c_ptr) : c_ptr_(c_ptr) {}
 
 repository::repository(const std::string &path, bool is_bare) {
   if (git_repository_init(&c_ptr_, path.c_str(), is_bare))
-    throw exception();
+    throw git_exception();
 }
 
 repository::~repository() {
@@ -18,14 +18,14 @@ void repository::open(const std::string &path) {
   if (c_ptr_)
     git_repository_free(c_ptr_);
   if (git_repository_open(&c_ptr_, path.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::open_bare(const std::string &path) {
   if (c_ptr_)
     git_repository_free(c_ptr_);
   if (git_repository_open_bare(&c_ptr_, path.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 std::string repository::path() const {
@@ -41,7 +41,7 @@ bool repository::is_empty() const {
   else if (ret == 0)
     return false;
   else
-    throw exception();
+    throw git_exception();
 }
 
 bool repository::is_shallow() const {
@@ -57,26 +57,26 @@ std::string repository::commondir() const {
   if (ret)
     return std::string(ret);
   else
-    throw exception();
+    throw git_exception();
 }
 
 cppgit2::config repository::config() const {
   cppgit2::config result;
   if (git_repository_config(&result.c_ptr_, c_ptr_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
 cppgit2::config repository::config_snapshot() const {
   cppgit2::config result;
   if (git_repository_config_snapshot(&result.c_ptr_, c_ptr_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
 void repository::detach_head() {
   if (git_repository_detach_head(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 std::string repository::discover_path(const std::string &start_path,
@@ -86,7 +86,7 @@ std::string repository::discover_path(const std::string &start_path,
   data_buffer buffer(1024);
   if (git_repository_discover(buffer.c_ptr(), start_path.c_str(), across_fs,
                               ceiling_dirs.c_str()))
-    throw exception();
+    throw git_exception();
   return buffer.to_string();
 }
 
@@ -99,7 +99,7 @@ std::string repository::namespace_() const {
   if (ret)
     return std::string(ret);
   else
-    throw exception("namespace directory does not exist");
+    throw git_exception("namespace directory does not exist");
 }
 
 oid repository::hashfile(const std::string &path, object::object_type type,
@@ -107,7 +107,7 @@ oid repository::hashfile(const std::string &path, object::object_type type,
   oid result;
   if (git_repository_hashfile(result.c_ptr(), c_ptr_, path.c_str(),
                               static_cast<git_object_t>(type), as_path.c_str()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
@@ -122,7 +122,7 @@ bool repository::is_head_detached() const {
   else if (ret == 1)
     return true;
   else
-    throw exception();
+    throw git_exception();
 }
 
 bool repository::is_head_detached_for_worktree(const std::string &path) {
@@ -132,7 +132,7 @@ bool repository::is_head_detached_for_worktree(const std::string &path) {
   else if (ret == 1)
     return true;
   else
-    throw exception();
+    throw git_exception();
 }
 
 bool repository::is_head_unborn() const {
@@ -142,20 +142,20 @@ bool repository::is_head_unborn() const {
   else if (ret == 1)
     return true;
   else
-    throw exception();
+    throw git_exception();
 }
 
 std::pair<std::string, std::string> repository::identity() const {
   const char *name_c, *email_c;
   if (git_repository_ident(&name_c, &email_c, c_ptr_))
-    throw exception();
+    throw git_exception();
   return {name_c ? name_c : "", email_c ? email_c : ""};
 }
 
 cppgit2::index repository::index() const {
   cppgit2::index result(nullptr);
   if (git_repository_index(&result.c_ptr_, c_ptr_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
@@ -164,14 +164,14 @@ std::string repository::path(repository::item item) const {
   data_buffer buffer(1024);
   if (git_repository_item_path(buffer.c_ptr(), c_ptr_,
                                static_cast<git_repository_item_t>(item)))
-    throw exception();
+    throw git_exception();
   return buffer.to_string();
 }
 
 std::string repository::message() const {
   data_buffer buffer(1024);
   if (git_repository_message(buffer.c_ptr(), c_ptr_))
-    throw exception();
+    throw git_exception();
   return buffer.to_string();
 }
 
@@ -179,38 +179,38 @@ void repository::remove_message() { git_repository_message_remove(c_ptr_); }
 
 void repository::set_head(const std::string &refname) {
   if (git_repository_set_head(c_ptr_, refname.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::set_head_detached(const oid &commitish) {
   if (git_repository_set_head_detached(c_ptr_, commitish.c_ptr()))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::set_identity(const std::string &name,
                               const std::string &email) {
   if (git_repository_set_ident(c_ptr_, name.c_str(), email.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::unset_identity() {
   if (git_repository_set_ident(c_ptr_, nullptr, nullptr))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::set_namespace(const std::string &namespace_) {
   if (git_repository_set_namespace(c_ptr_, namespace_.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::set_workdir(const std::string &workdir, bool update_gitlink) {
   if (git_repository_set_workdir(c_ptr_, workdir.c_str(), update_gitlink))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::cleanup_state() {
   if (git_repository_state_cleanup(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 repository::repository_state repository::state() const {
@@ -250,7 +250,7 @@ std::string repository::workdir() const {
   if (ret) {
     return std::string(ret);
   } else {
-    throw exception("working directory does not exist");
+    throw git_exception("working directory does not exist");
   }
 }
 
@@ -264,7 +264,7 @@ repository::create_annotated_commit(const std::string &branch_name,
   if (git_annotated_commit_from_fetchhead(&result.c_ptr_, c_ptr_,
                                           branch_name.c_str(),
                                           remote_url.c_str(), id.c_ptr()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
@@ -273,21 +273,21 @@ repository::create_annotated_commit(const std::string &revspec) {
   annotated_commit result;
   if (git_annotated_commit_from_revspec(&result.c_ptr_, c_ptr_,
                                         revspec.c_str()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
 annotated_commit repository::create_annotated_commit(const reference &ref) {
   annotated_commit result;
   if (git_annotated_commit_from_ref(&result.c_ptr_, c_ptr_, ref.c_ptr()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
 annotated_commit repository::lookup_annotated_commit(const oid &id) {
   annotated_commit result;
   if (git_annotated_commit_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
@@ -295,7 +295,7 @@ void repository::apply_diff(const diff &diff, apply::location location,
                             const apply::options &options) {
   if (git_apply(c_ptr_, const_cast<git_diff *>(diff.c_ptr()),
                 static_cast<git_apply_location_t>(location), options.c_ptr()))
-    throw exception();
+    throw git_exception();
 }
 
 cppgit2::index repository::apply_diff(const tree &preimage, const diff &diff,
@@ -304,19 +304,19 @@ cppgit2::index repository::apply_diff(const tree &preimage, const diff &diff,
   if (git_apply_to_tree(&result, c_ptr_,
                         const_cast<git_tree *>(preimage.c_ptr()),
                         const_cast<git_diff *>(diff.c_ptr()), options.c_ptr()))
-    throw exception();
+    throw git_exception();
   return cppgit2::index(result, ownership::user);
 }
 
 void repository::add_attributes_macro(const std::string &name,
                                       const std::string &values) {
   if (git_attr_add_macro(c_ptr_, name.c_str(), values.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::flush_attributes_cache() {
   if (git_attr_cache_flush(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 void repository::for_each_attribute(
@@ -338,7 +338,7 @@ void repository::for_each_attribute(
 
   if (git_attr_foreach(c_ptr_, static_cast<uint32_t>(flags), path.c_str(),
                        callback_c, (void *)(&wrapper)))
-    throw exception();
+    throw git_exception();
 }
 
 std::string repository::lookup_attribute(attribute::flag flags,
@@ -347,7 +347,7 @@ std::string repository::lookup_attribute(attribute::flag flags,
   const char *result;
   if (git_attr_get(&result, c_ptr_, static_cast<uint32_t>(flags), path.c_str(),
                    name.c_str()))
-    throw exception();
+    throw git_exception();
   if (result)
     return std::string(result);
   else
@@ -366,7 +366,7 @@ repository::lookup_multiple_attributes(attribute::flag flags,
 
   if (git_attr_get_many(values, c_ptr_, static_cast<uint32_t>(flags),
                         path.c_str(), names.size(), names_c.data()))
-    throw exception();
+    throw git_exception();
 
   std::vector<std::string> result;
   for (size_t i = 0; i < names.size(); ++i) {
@@ -383,33 +383,36 @@ oid repository::create_blob_from_buffer(const std::string &buffer) {
   oid result;
   if (git_blob_create_frombuffer(result.c_ptr(), c_ptr_, buffer.c_str(),
                                  buffer.size()))
-    throw exception();
+    throw git_exception();
+  return result;
 }
 
 oid repository::create_blob_from_disk(const std::string &path) {
   oid result;
   if (git_blob_create_fromdisk(result.c_ptr(), c_ptr_, path.c_str()))
-    throw exception();
+    throw git_exception();
+  return result;
 }
 
 oid repository::create_blob_from_workdir(const std::string &relative_path) {
   oid result;
   if (git_blob_create_fromworkdir(result.c_ptr(), c_ptr_,
                                   relative_path.c_str()))
-    throw exception();
+    throw git_exception();
+  return result;
 }
 
 blob repository::lookup_blob(const oid &id) const {
   blob result;
   if (git_blob_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
 blob repository::lookup_blob(const oid &id, size_t len) const {
   blob result;
   if (git_blob_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), len))
-    throw exception();
+    throw git_exception();
   return result;
 }
 

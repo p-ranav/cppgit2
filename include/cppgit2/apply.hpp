@@ -1,6 +1,6 @@
 #pragma once
 #include <cppgit2/diff.hpp>
-#include <cppgit2/exception.hpp>
+#include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <functional>
@@ -28,7 +28,7 @@ public:
     // Default construct apply::options
     options() {
       if (git_apply_options_init(&default_options_, GIT_APPLY_OPTIONS_VERSION))
-        throw exception();
+        throw git_exception();
       c_ptr_ = &default_options_;
     }
 

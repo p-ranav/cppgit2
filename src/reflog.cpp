@@ -14,13 +14,13 @@ reflog::~reflog() {
 
 void reflog::remove(size_t index, bool rewrite_previous_entry) {
   if (git_reflog_drop(c_ptr_, index, rewrite_previous_entry))
-    throw exception();
+    throw git_exception();
 }
 
 void reflog::append(const oid &id, const signature &committer,
                     const std::string &message) {
   if (git_reflog_append(c_ptr_, id.c_ptr(), committer.c_ptr(), message.c_str()))
-    throw exception();
+    throw git_exception();
 }
 
 reflog::entry reflog::operator[](size_t index) const {
@@ -29,7 +29,7 @@ reflog::entry reflog::operator[](size_t index) const {
 
 void reflog::write_to_disk() {
   if (git_reflog_write(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 size_t reflog::size() const { return git_reflog_entrycount(c_ptr_); }

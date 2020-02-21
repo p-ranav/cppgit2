@@ -6,7 +6,7 @@ blob::blob() : c_ptr_(nullptr) {}
 
 blob::blob(const git_blob *c_ptr) {
   if (git_blob_dup(&c_ptr_, const_cast<git_blob *>(c_ptr)))
-    throw exception();
+    throw git_exception();
 }
 
 blob::~blob() {
@@ -19,7 +19,7 @@ repository blob::owner() const { return repository(git_blob_owner(c_ptr_)); }
 blob blob::copy() const {
   blob result;
   if (git_blob_dup(&result.c_ptr_, c_ptr_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 

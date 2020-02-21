@@ -7,7 +7,7 @@ object::object() : c_ptr_(nullptr) {}
 
 object::object(const git_object *c_ptr) {
   if (git_object_dup(&c_ptr_, const_cast<git_object *>(c_ptr)))
-    throw exception();
+    throw git_exception();
 }
 
 oid object::id() const { return oid(git_object_id(c_ptr_)->id); }
@@ -15,14 +15,14 @@ oid object::id() const { return oid(git_object_id(c_ptr_)->id); }
 std::string object::short_id() const {
   git_buf result;
   if (git_object_short_id(&result, c_ptr_))
-    throw exception();
+    throw git_exception();
   return data_buffer(&result).to_string();
 }
 
 object object::copy() const {
   object result;
   if (git_object_dup(&result.c_ptr_, c_ptr_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
@@ -30,7 +30,7 @@ object object::peel_until(object_type target_type) {
   object result;
   if (git_object_peel(&result.c_ptr_, c_ptr_,
                       static_cast<git_object_t>(target_type)))
-    throw exception();
+    throw git_exception();
   return result;
 }
 

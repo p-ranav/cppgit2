@@ -25,7 +25,7 @@ std::pair<bool, std::string> worktree::is_locked() const {
     // Not locked
     return {false, ""};
   } else {
-    throw exception();
+    throw git_exception();
   }
 }
 
@@ -37,7 +37,7 @@ bool worktree::is_prunable(unsigned int version, uint32_t flags) const {
   else if (ret == 0)
     return false;
   else
-    throw exception();
+    throw git_exception();
 }
 
 bool worktree::is_prunable() const {
@@ -53,15 +53,15 @@ bool worktree::is_prunable() const {
     else if (ret == 0)
       return false;
     else
-      throw exception();
+      throw git_exception();
   } else
-    throw exception();
+    throw git_exception();
 }
 
 void worktree::lock(const std::string &reason) {
   const char *reason_c = reason.empty() ? nullptr : reason.c_str();
   if (git_worktree_lock(c_ptr_, reason_c))
-    throw exception();
+    throw git_exception();
 }
 
 std::string worktree::name() const {
@@ -83,7 +83,7 @@ std::string worktree::path() const {
 void worktree::prune(unsigned int version, uint32_t flags) {
   git_worktree_prune_options options{.version = version, .flags = flags};
   if (git_worktree_prune(c_ptr_, &options))
-    throw exception();
+    throw git_exception();
 }
 
 void worktree::prune() {
@@ -94,21 +94,21 @@ void worktree::prune() {
       &options, GIT_WORKTREE_PRUNE_OPTIONS_VERSION);
   if (ret == 0) {
     if (git_worktree_prune(c_ptr_, &options))
-      throw exception();
+      throw git_exception();
   } else
-    throw exception();
+    throw git_exception();
 }
 
 void worktree::unlock() {
   if (git_worktree_unlock(c_ptr_))
-    throw exception();
+    throw git_exception();
 }
 
 bool worktree::is_valid() { return git_worktree_validate(c_ptr_) == 0; }
 
 bool worktree::validate() {
   if (!is_valid())
-    throw exception();
+    throw git_exception();
   return true;
 }
 

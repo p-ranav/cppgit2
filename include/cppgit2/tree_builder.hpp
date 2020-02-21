@@ -1,6 +1,6 @@
 #pragma once
 #include <cppgit2/data_buffer.hpp>
-#include <cppgit2/exception.hpp>
+#include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/repository.hpp>

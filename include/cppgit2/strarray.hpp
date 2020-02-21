@@ -1,5 +1,5 @@
 #pragma once
-#include <cppgit2/exception.hpp>
+#include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <git2.h>
 #include <string>

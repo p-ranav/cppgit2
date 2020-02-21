@@ -16,26 +16,26 @@ oid pack_builder::id() const { return oid(git_packbuilder_hash(c_ptr_)); }
 
 void pack_builder::insert_commit(const oid &commit_id) {
   if (git_packbuilder_insert_commit(c_ptr_, commit_id.c_ptr()))
-    throw exception();
+    throw git_exception();
 }
 
 void pack_builder::insert_object(const oid &commit_id,
                                  const std::string &name) {
   auto name_c = name.empty() ? nullptr : name.c_str();
   if (git_packbuilder_insert(c_ptr_, commit_id.c_ptr(), name_c))
-    throw exception();
+    throw git_exception();
 }
 
 void pack_builder::insert_object_recursively(const oid &commit_id,
                                              const std::string &name) {
   auto name_c = name.empty() ? nullptr : name.c_str();
   if (git_packbuilder_insert_recur(c_ptr_, commit_id.c_ptr(), name_c))
-    throw exception();
+    throw git_exception();
 }
 
 void pack_builder::insert_tree(const oid &tree_id) {
   if (git_packbuilder_insert_tree(c_ptr_, tree_id.c_ptr()))
-    throw exception();
+    throw git_exception();
 }
 
 size_t pack_builder::size() const {
@@ -61,12 +61,12 @@ void pack_builder::set_progress_callback(
   };
 
   if (git_packbuilder_set_callbacks(c_ptr_, callback_c, (void *)(&wrapper)))
-    throw exception();
+    throw git_exception();
 }
 
 void pack_builder::set_threads(unsigned int num_threads) {
   if (git_packbuilder_set_threads(c_ptr_, num_threads))
-    throw exception();
+    throw git_exception();
 }
 
 size_t pack_builder::written() const { return git_packbuilder_written(c_ptr_); }

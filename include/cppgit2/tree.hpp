@@ -1,5 +1,5 @@
 #pragma once
-#include <cppgit2/exception.hpp>
+#include <cppgit2/git_exception.hpp>
 #include <cppgit2/file_mode.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/object.hpp>
@@ -47,7 +47,7 @@ public:
     entry copy() const {
       entry result;
       if (git_tree_entry_dup(&result.c_ptr_, c_ptr_))
-        throw exception();
+        throw git_exception();
       return result;
     }
 

@@ -30,7 +30,7 @@ tree::entry tree::lookup_entry_by_path(const std::string &path) const {
   tree::entry result;
   result.owner_ = ownership::user;
   if (git_tree_entry_bypath(&result.c_ptr_, c_ptr_, path.c_str()))
-    throw exception();
+    throw git_exception();
   return result;
 }
 
@@ -39,7 +39,7 @@ oid tree::id() const { return oid(git_tree_id(c_ptr_)); }
 tree tree::copy() const {
   tree result;
   if (git_tree_dup(&result.c_ptr_, c_ptr_))
-    throw exception();
+    throw git_exception();
   return result;
 }
 

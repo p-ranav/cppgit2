@@ -27,14 +27,14 @@ bool data_buffer::contains_nul() const {
 
 void data_buffer::grow_to_size(size_t target_size) {
   if (git_buf_grow(&c_struct_, target_size))
-    throw exception();
+    throw git_exception();
 }
 
 bool data_buffer::is_binary() const { return git_buf_is_binary(&c_struct_); }
 
 void data_buffer::set_buffer(const std::string &buffer) {
   if (git_buf_set(&c_struct_, buffer.c_str(), buffer.size()))
-    throw exception();
+    throw git_exception();
 }
 
 std::string data_buffer::to_string() const {

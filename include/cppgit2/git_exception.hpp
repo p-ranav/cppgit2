@@ -5,15 +5,15 @@
 
 namespace cppgit2 {
 
-class exception : public std::exception {
+class git_exception : public std::exception {
 public:
-  exception() {
+  git_exception() {
     auto error = git_error_last();
     message_ = error ? error->message : "unknown error";
   }
-  exception(const char *message) : message_(message) {}
-  exception(const std::string &message) : message_(message) {}
-  virtual ~exception() throw() {}
+  git_exception(const char *message) : message_(message) {}
+  git_exception(const std::string &message) : message_(message) {}
+  virtual ~git_exception() throw() {}
   virtual const char *what() const throw() { return message_.c_str(); }
 
 protected:

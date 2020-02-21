@@ -1,5 +1,5 @@
 #pragma once
-#include <cppgit2/exception.hpp>
+#include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <git2.h>
 #include <iostream>
@@ -16,7 +16,7 @@ public:
   std::tuple<int, int, int> version() const {
     int major, minor, revision;
     if (git_libgit2_version(&major, &minor, &revision))
-      throw exception();
+      throw git_exception();
     return {major, minor, revision};
   }
 };
