@@ -424,18 +424,21 @@ blob repository::lookup_blob(const oid &id, size_t len) const {
   return result;
 }
 
-reference repository::create_branch(
-  const std::string &branch_name, const commit &target, bool force) {
+reference repository::create_branch(const std::string &branch_name,
+                                    const commit &target, bool force) {
   reference result(nullptr, ownership::user);
-  if (git_branch_create(&result.c_ptr_, c_ptr_, branch_name.c_str(), target.c_ptr(), force))
+  if (git_branch_create(&result.c_ptr_, c_ptr_, branch_name.c_str(),
+                        target.c_ptr(), force))
     throw git_exception();
   return result;
 }
 
-reference repository::create_branch(
-  const std::string &branch_name, const annotated_commit &commit, bool force) {
+reference repository::create_branch(const std::string &branch_name,
+                                    const annotated_commit &commit,
+                                    bool force) {
   reference result(nullptr, ownership::user);
-  if (git_branch_create_from_annotated(&result.c_ptr_, c_ptr_, branch_name.c_str(), commit.c_ptr(), force))
+  if (git_branch_create_from_annotated(
+          &result.c_ptr_, c_ptr_, branch_name.c_str(), commit.c_ptr(), force))
     throw git_exception();
   return result;
 }
@@ -445,7 +448,8 @@ void repository::delete_branch(const reference &ref) {
     throw git_exception();
 }
 
-void repository::delete_branch(const std::string &branch_name, branch::branch_type branch_type) {
+void repository::delete_branch(const std::string &branch_name,
+                               branch::branch_type branch_type) {
   delete_branch(lookup_branch(branch_name, branch_type));
 }
 
@@ -459,12 +463,14 @@ bool repository::is_branch_checked_out(const reference &ref) const {
     throw git_exception();
 }
 
-bool repository::is_branch_checked_out(const std::string &branch_name, branch::branch_type branch_type) {
+bool repository::is_branch_checked_out(const std::string &branch_name,
+                                       branch::branch_type branch_type) {
   return is_branch_checked_out(lookup_branch(branch_name, branch_type));
 }
 
 bool repository::is_head_pointing_to_branch(const reference &ref) const {
-  // 1 if HEAD points at the branch, 0 if it isn't, or a negative value as an error code.
+  // 1 if HEAD points at the branch, 0 if it isn't, or a negative value as an
+  // error code.
   auto ret = git_branch_is_head(ref.c_ptr());
   if (ret == 1)
     return true;
@@ -479,15 +485,20 @@ bool repository::is_head_pointing_to_branch(const std::string &branch_name,
   return is_head_pointing_to_branch(lookup_branch(branch_name, branch_type));
 }
 
-reference repository::rename_branch(const reference &ref, const std::string &new_branch_name, bool force) {
+reference repository::rename_branch(const reference &ref,
+                                    const std::string &new_branch_name,
+                                    bool force) {
   reference result(nullptr, ownership::user);
-  if (git_branch_move(&result.c_ptr_, ref.c_ptr_, new_branch_name.c_str(), force))
+  if (git_branch_move(&result.c_ptr_, ref.c_ptr_, new_branch_name.c_str(),
+                      force))
     throw git_exception();
   return result;
 }
 
-reference repository::rename_branch(const std::string &branch_name, const std::string &new_branch_name,
-                                 bool force, branch::branch_type branch_type) {
+reference repository::rename_branch(const std::string &branch_name,
+                                    const std::string &new_branch_name,
+                                    bool force,
+                                    branch::branch_type branch_type) {
   auto ref = lookup_branch(branch_name, branch_type);
   return rename_branch(ref, new_branch_name, force);
 }
@@ -511,7 +522,8 @@ std::string repository::branch_remote_name(const std::string &refname) const {
   return result.to_string();
 }
 
-void repository::set_branch_upstream(const reference &ref, const std::string &upstream_name) {
+void repository::set_branch_upstream(const reference &ref,
+                                     const std::string &upstream_name) {
   if (git_branch_set_upstream(ref.c_ptr_, upstream_name.c_str()))
     throw git_exception();
 }
@@ -551,22 +563,25 @@ std::string repository::branch_upstream_name(const std::string &refname) const {
   return result.to_string();
 }
 
-std::string repository::branch_upstream_remote(const std::string &refname) const {
+std::string
+repository::branch_upstream_remote(const std::string &refname) const {
   data_buffer result(1024);
   if (git_branch_upstream_remote(result.c_ptr(), c_ptr_, refname.c_str()))
     throw git_exception();
   return result.to_string();
 }
 
-reference repository::lookup_branch(const std::string &branch_name, branch::branch_type branch_type) {
+reference repository::lookup_branch(const std::string &branch_name,
+                                    branch::branch_type branch_type) {
   reference result(nullptr, ownership::user);
   if (git_branch_lookup(&result.c_ptr_, c_ptr_, branch_name.c_str(),
-                               static_cast<git_branch_t>(branch_type)))
+                        static_cast<git_branch_t>(branch_type)))
     throw git_exception();
   return result;
 }
 
-void repository::for_each_branch(std::function<void(const reference &)> visitor, branch::branch_type branch_type) {
+void repository::for_each_branch(std::function<void(const reference &)> visitor,
+                                 branch::branch_type branch_type) {
   git_branch_t branch_type_c = static_cast<git_branch_t>(branch_type);
   git_branch_iterator *iter;
   git_branch_iterator_new(&iter, c_ptr_, branch_type_c);

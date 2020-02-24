@@ -310,51 +310,61 @@ public:
    */
 
   // Create a new branch pointing at a target commit
-  reference create_branch(const std::string &branch_name, const commit &target, bool force);
+  reference create_branch(const std::string &branch_name, const commit &target,
+                          bool force);
 
   // Create a new branch pointing at a target commit
-  // Takes an annotated commit, which lets you specify which extended 
-  // sha syntax string was specified by a user, allowing for more exact reflog messages.
-  reference create_branch(const std::string &branch_name, const annotated_commit &commit, 
-    bool force);
+  // Takes an annotated commit, which lets you specify which extended
+  // sha syntax string was specified by a user, allowing for more exact reflog
+  // messages.
+  reference create_branch(const std::string &branch_name,
+                          const annotated_commit &commit, bool force);
 
   // Delete an existing branch given its name
   void delete_branch(const reference &ref);
-  void delete_branch(const std::string &branch_name,
-                      branch::branch_type branch_type = branch::branch_type::local);
+  void
+  delete_branch(const std::string &branch_name,
+                branch::branch_type branch_type = branch::branch_type::local);
 
   // Determine if any HEAD points to the current branch
   bool is_branch_checked_out(const reference &ref) const;
 
   // Determine if any HEAD points to the current branch
-  bool is_branch_checked_out(const std::string &branch_name,
-                              branch::branch_type branch_type = branch::branch_type::local);
+  bool is_branch_checked_out(
+      const std::string &branch_name,
+      branch::branch_type branch_type = branch::branch_type::local);
 
   // Determine if HEAD points to the given branch
   bool is_head_pointing_to_branch(const reference &ref) const;
 
   // Determine if HEAD points to the given branch
-  bool is_head_pointing_to_branch(const std::string &branch_name,
-                                  branch::branch_type branch_type = branch::branch_type::local);
+  bool is_head_pointing_to_branch(
+      const std::string &branch_name,
+      branch::branch_type branch_type = branch::branch_type::local);
 
   // Move/rename an existing local branch reference.
-  reference rename_branch(const reference &ref, const std::string &new_branch_name, bool force);
+  reference rename_branch(const reference &ref,
+                          const std::string &new_branch_name, bool force);
 
   // Move/rename an existing local branch reference.
-  reference rename_branch(const std::string &branch_name, const std::string &new_branch_name,
-                       bool force, branch::branch_type branch_type = branch::branch_type::local);
+  reference
+  rename_branch(const std::string &branch_name,
+                const std::string &new_branch_name, bool force,
+                branch::branch_type branch_type = branch::branch_type::local);
 
   // Get the branch name
-  std::string branch_name(const reference& branch) const;
+  std::string branch_name(const reference &branch) const;
 
   // Find the remote name of a remote-tracking branch
   std::string branch_remote_name(const std::string &refname) const;
 
   // Set a branch's upstream branch
-  void set_branch_upstream(const reference &ref, const std::string &upstream_name);
+  void set_branch_upstream(const reference &ref,
+                           const std::string &upstream_name);
 
   // Set a branch's upstream branch
-  void set_branch_upstream(const std::string &branch_name, const std::string &upstream_name);
+  void set_branch_upstream(const std::string &branch_name,
+                           const std::string &upstream_name);
 
   // Unset the branch's upstream branch
   void unset_branch_upstream(const reference &ref);
@@ -369,25 +379,28 @@ public:
   reference branch_upstream(const std::string &local_branch_name);
   // Get the upstream name of a branch
   //
-  // Given a local branch, this will return its remote-tracking branch information, as a full
-  // reference name, ie. "feature/nice" would become "refs/remote/origin/feature/nice", depending on
-  // that branch's configuration.
+  // Given a local branch, this will return its remote-tracking branch
+  // information, as a full reference name, ie. "feature/nice" would become
+  // "refs/remote/origin/feature/nice", depending on that branch's
+  // configuration.
   std::string branch_upstream_name(const std::string &refname) const;
 
   // Retrieve the upstream remote of a local branch
   //
-  // This will return the currently configured "branch.*.remote" for a given branch. This branch
-  // must be local.
+  // This will return the currently configured "branch.*.remote" for a given
+  // branch. This branch must be local.
   std::string branch_upstream_remote(const std::string &refname) const;
 
   // Lookup a branch by its name in a repository.
   //
   // The branch name will be checked for validity.
-  reference lookup_branch(const std::string &branch_name, branch::branch_type branch_type);
+  reference lookup_branch(const std::string &branch_name,
+                          branch::branch_type branch_type);
 
   // Run visitor function for each branch in the repository
-  void for_each_branch(std::function<void(const reference &)> visitor, 
-    branch::branch_type branch_type = branch::branch_type::local);
+  void
+  for_each_branch(std::function<void(const reference &)> visitor,
+                  branch::branch_type branch_type = branch::branch_type::local);
 
   /*
    * CHECKOUT API

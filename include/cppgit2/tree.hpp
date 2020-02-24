@@ -18,7 +18,7 @@ public:
 
   // Construct from libgit2 C ptr
   // If owned by user, will be free'd in destructor
-  tree(git_tree *c_ptr, ownership owner);
+  tree(git_tree *c_ptr, ownership owner = ownership::libgit2);
 
   // Cleanup
   ~tree();
