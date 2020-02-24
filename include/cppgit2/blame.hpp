@@ -2,6 +2,7 @@
 #include <cppgit2/git_exception.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
+#include <cppgit2/signature.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
@@ -122,6 +123,73 @@ public:
     git_blame_options *c_ptr_;
     git_blame_options default_options_;
   };
+
+  // Always owned by libgit2
+  class hunk: public libgit2_api {
+  public:
+    hunk(git_blame_hunk * c_ptr) : c_ptr_(c_ptr) {}
+
+   size_t lines_in_hunk() const { return c_ptr_->lines_in_hunk; }
+   void set_lines_in_hunk(size_t value) { c_ptr_->lines_in_hunk = value; }
+
+   oid final_commit_id() const { return oid(&c_ptr_->final_commit_id); }
+   void set_final_commit_id(const oid& id) {
+     c_ptr_->final_commit_id = *(id.c_ptr());
+   }
+
+   size_t final_start_line_number() const { return c_ptr_->final_start_line_number; }
+   void set_final_start_line_number(size_t value) {
+     c_ptr_->final_start_line_number = value;
+   }
+
+   signature final_signature() const { return signature(c_ptr_->final_signature); }
+   void set_final_signature(const signature &sig) {
+     c_ptr_->final_signature = const_cast<git_signature *>(sig.c_ptr());
+   }
+
+   oid orig_commit_id() const { return oid(&c_ptr_->orig_commit_id); }
+   void set_orig_commit_id(const oid& id) {
+     c_ptr_->orig_commit_id = *(id.c_ptr());
+   }
+
+    std::string orig_path() const {
+      if (c_ptr_->orig_path)
+        return std::string(c_ptr_->orig_path);
+      else 
+        return "";
+    }
+    void set_orig_path(const std::string &value) {
+      c_ptr_->orig_path = value.c_str();
+    }
+
+    size_t orig_start_line_number() const { return c_ptr_->orig_start_line_number; }
+    void set_orig_start_line_number(size_t value) {
+      c_ptr_->orig_start_line_number = value;
+    }
+
+    signature orig_signature() const { return signature(c_ptr_->orig_signature); }
+    void set_orig_signature(const signature &sig) {
+      c_ptr_->orig_signature = const_cast<git_signature *>(sig.c_ptr());
+    }
+
+    char boundary() const { return c_ptr_->boundary; }
+    void set_boundary(char value) {
+      c_ptr_->boundary = value;
+    }
+
+  private:
+    git_blame_hunk * c_ptr_;
+  };
+
+  // Gets the blame hunk at the given index.
+  hunk hunk_by_index(uint32_t index) const;
+
+  // Gets the hunk that relates to the given line number in the newest commit.
+  // lineno is the (1-based) line number to find a hunk for
+  hunk hunk_by_line(size_t lineno) const;
+
+  // Gets the number of hunks that exist in the blame structure.
+  size_t hunk_count() const;
 
   // Access libgit2 C ptr
   const git_blame *c_ptr() const;

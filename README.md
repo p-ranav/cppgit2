@@ -111,9 +111,9 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 + git_blame_buffer
 git_blame_file
 + git_blame_free
-git_blame_get_hunk_byindex
-git_blame_get_hunk_byline
-git_blame_get_hunk_count
++ git_blame_get_hunk_byindex
++ git_blame_get_hunk_byline
++ git_blame_get_hunk_count
 + git_blame_init_options
 + git_blame_options_init
 ```
