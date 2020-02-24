@@ -119,7 +119,7 @@ public:
     size_t max_line() const { return c_ptr_->max_line; }
     void set_max_line(size_t max_line) { c_ptr_->max_line = max_line; }
 
-    const git_blame_options * c_ptr() const { return c_ptr_; }
+    const git_blame_options *c_ptr() const { return c_ptr_; }
 
   private:
     friend class repository;
@@ -128,35 +128,55 @@ public:
   };
 
   // Always owned by libgit2
-  class hunk: public libgit2_api {
+  class hunk : public libgit2_api {
   public:
-    hunk(const git_blame_hunk * c_ptr) : c_ptr_(c_ptr) {}
-    
+    hunk(const git_blame_hunk *c_ptr) : c_ptr_(c_ptr) {}
 
-   size_t lines_in_hunk() const { return c_ptr_->lines_in_hunk; }
+    // Number of lines in hunk
+    size_t lines_in_hunk() const { return c_ptr_->lines_in_hunk; }
 
-   oid final_commit_id() const { return oid(&c_ptr_->final_commit_id); }
+    // OID of the commit where this line was last changed
+    oid final_commit_id() const { return oid(&c_ptr_->final_commit_id); }
 
-   size_t final_start_line_number() const { return c_ptr_->final_start_line_number; }
+    // 1-based line number where this hunk begins, in the final version of the
+    // file
+    size_t final_start_line_number() const {
+      return c_ptr_->final_start_line_number;
+    }
 
-   signature final_signature() const { return signature(c_ptr_->final_signature); }
+    // Author of the final commit ID
+    signature final_signature() const {
+      return signature(c_ptr_->final_signature);
+    }
 
-   oid orig_commit_id() const { return oid(&c_ptr_->orig_commit_id); }
+    // OID of the commit where this hunk was found
+    oid orig_commit_id() const { return oid(&c_ptr_->orig_commit_id); }
 
+    // Path of the file where this hunk originated, as specified by
+    // orig_commit_id
     std::string orig_path() const {
       if (c_ptr_->orig_path)
         return std::string(c_ptr_->orig_path);
-      else 
+      else
         return "";
     }
 
-    size_t orig_start_line_number() const { return c_ptr_->orig_start_line_number; }
+    // 1-based line number where this hunk begins in the file named orig_path
+    // in the commit specified by orig_commit_id
+    size_t orig_start_line_number() const {
+      return c_ptr_->orig_start_line_number;
+    }
 
-    signature orig_signature() const { return signature(c_ptr_->orig_signature); }
+    // Author of orig_commit_id
+    signature orig_signature() const {
+      return signature(c_ptr_->orig_signature);
+    }
+
+    // 1 iff the hunk has been tracked to a boundary commit
     char boundary() const { return c_ptr_->boundary; }
 
   private:
-    const git_blame_hunk * c_ptr_;
+    const git_blame_hunk *c_ptr_;
   };
 
   // Gets the blame hunk at the given index.

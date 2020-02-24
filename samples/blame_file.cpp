@@ -17,7 +17,6 @@ int main(int argc, char **argv) {
                 << hunk.boundary() << " " << original_signature.name() << " "
                 << original_signature.email() << std::endl;
     }
-
   } else {
     std::cout
         << "Usage: ./executable <repo_path> <file_path_to_get_blame_for>\n";
