@@ -425,9 +425,17 @@ blob repository::lookup_blob(const oid &id, size_t len) const {
 }
 
 reference repository::create_branch(
-  const std::string &branch_name, commit &target, bool force) {
+  const std::string &branch_name, const commit &target, bool force) {
   reference result(nullptr, ownership::user);
   if (git_branch_create(&result.c_ptr_, c_ptr_, branch_name.c_str(), target.c_ptr(), force))
+    throw git_exception();
+  return result;
+}
+
+reference repository::create_branch(
+  const std::string &branch_name, const annotated_commit &commit, bool force) {
+  reference result(nullptr, ownership::user);
+  if (git_branch_create_from_annotated(&result.c_ptr_, c_ptr_, branch_name.c_str(), commit.c_ptr(), force))
     throw git_exception();
   return result;
 }
@@ -556,6 +564,19 @@ reference repository::lookup_branch(const std::string &branch_name, branch::bran
                                static_cast<git_branch_t>(branch_type)))
     throw git_exception();
   return result;
+}
+
+void repository::for_each_branch(std::function<void(const reference &)> visitor, branch::branch_type branch_type) {
+  git_branch_t branch_type_c = static_cast<git_branch_t>(branch_type);
+  git_branch_iterator *iter;
+  git_branch_iterator_new(&iter, c_ptr_, branch_type_c);
+  git_reference *ref_c;
+  int ret;
+  while ((ret = git_branch_next(&ref_c, &branch_type_c, iter)) == 0) {
+    reference payload(ref_c);
+    visitor(payload);
+  }
+  git_branch_iterator_free(iter);
 }
 
 } // namespace cppgit2

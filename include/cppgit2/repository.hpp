@@ -310,7 +310,13 @@ public:
    */
 
   // Create a new branch pointing at a target commit
-  reference create_branch(const std::string &branch_name, commit &target, bool force);
+  reference create_branch(const std::string &branch_name, const commit &target, bool force);
+
+  // Create a new branch pointing at a target commit
+  // Takes an annotated commit, which lets you specify which extended 
+  // sha syntax string was specified by a user, allowing for more exact reflog messages.
+  reference create_branch(const std::string &branch_name, const annotated_commit &commit, 
+    bool force);
 
   // Delete an existing branch given its name
   void delete_branch(const reference &ref);
@@ -378,6 +384,10 @@ public:
   //
   // The branch name will be checked for validity.
   reference lookup_branch(const std::string &branch_name, branch::branch_type branch_type);
+
+  // Run visitor function for each branch in the repository
+  void for_each_branch(std::function<void(const reference &)> visitor, 
+    branch::branch_type branch_type = branch::branch_type::local);
 
 private:
   friend class tree_builder;
