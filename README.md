@@ -18,7 +18,7 @@ Rainglow theme VSCode: Rainbow contrast (rainglow)
 
 Run the following commands to build `cppgit2`. 
 
-**NOTE**: This also builds `libgit2` from source. `libgit2` is a submodule in the `ext/` directory that points to a stable release commit, e.g., [v0.28.4](https://github.com/libgit2/libgit2/releases/tag/v0.28.4).
+**NOTE**: This also builds `libgit2` from source. `libgit2` is a submodule in the `ext/` directory that points to a stable release commit, e.g., [v0.99.0](https://github.com/libgit2/libgit2/releases/tag/v0.99.0).
 
 ```bash
 git clone --recurse-submodules -j8 https://github.com/p-ranav/cppgit2
@@ -41,9 +41,9 @@ lib/
 ├── libcppgit2.static.a
 ├── libgit2_clar
 ├── libgit2.pc
-├── libgit2.so -> libgit2.so.28
-├── libgit2.so.0.28.4
-├── libgit2.so.28 -> libgit2.so.0.28.4
+├── libgit2.so -> libgit2.so.99
+├── libgit2.so.0.99.0
+├── libgit2.so.99 -> libgit2.so.0.99.0
 └── ...
 samples/
 test/
