@@ -2,6 +2,7 @@
 #include <cppgit2/annotated_commit.hpp>
 #include <cppgit2/apply.hpp>
 #include <cppgit2/attribute.hpp>
+#include <cppgit2/blame.hpp>
 #include <cppgit2/blob.hpp>
 #include <cppgit2/config.hpp>
 #include <cppgit2/data_buffer.hpp>
@@ -271,6 +272,13 @@ public:
   std::vector<std::string>
   lookup_multiple_attributes(attribute::flag flags, const std::string &path,
                              const std::vector<std::string> &names);
+
+  /*
+   * BLAME API
+   * See git_blame_* functions
+   */
+  blame blame_file(const std::string &path,
+                   blame::options options = blame::options()) const;
 
   /*
    * BLOB API

@@ -379,6 +379,14 @@ repository::lookup_multiple_attributes(attribute::flag flags,
   return result;
 }
 
+blame repository::blame_file(const std::string &path,
+                             blame::options options) const {
+  blame result;
+  if (git_blame_file(&result.c_ptr_, c_ptr_, path.c_str(), options.c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 oid repository::create_blob_from_buffer(const std::string &buffer) {
   oid result;
   if (git_blob_create_frombuffer(result.c_ptr(), c_ptr_, buffer.c_str(),

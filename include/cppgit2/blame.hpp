@@ -119,7 +119,10 @@ public:
     size_t max_line() const { return c_ptr_->max_line; }
     void set_max_line(size_t max_line) { c_ptr_->max_line = max_line; }
 
+    const git_blame_options * c_ptr() const { return c_ptr_; }
+
   private:
+    friend class repository;
     git_blame_options *c_ptr_;
     git_blame_options default_options_;
   };
@@ -127,30 +130,18 @@ public:
   // Always owned by libgit2
   class hunk: public libgit2_api {
   public:
-    hunk(git_blame_hunk * c_ptr) : c_ptr_(c_ptr) {}
+    hunk(const git_blame_hunk * c_ptr) : c_ptr_(c_ptr) {}
+    
 
    size_t lines_in_hunk() const { return c_ptr_->lines_in_hunk; }
-   void set_lines_in_hunk(size_t value) { c_ptr_->lines_in_hunk = value; }
 
    oid final_commit_id() const { return oid(&c_ptr_->final_commit_id); }
-   void set_final_commit_id(const oid& id) {
-     c_ptr_->final_commit_id = *(id.c_ptr());
-   }
 
    size_t final_start_line_number() const { return c_ptr_->final_start_line_number; }
-   void set_final_start_line_number(size_t value) {
-     c_ptr_->final_start_line_number = value;
-   }
 
    signature final_signature() const { return signature(c_ptr_->final_signature); }
-   void set_final_signature(const signature &sig) {
-     c_ptr_->final_signature = const_cast<git_signature *>(sig.c_ptr());
-   }
 
    oid orig_commit_id() const { return oid(&c_ptr_->orig_commit_id); }
-   void set_orig_commit_id(const oid& id) {
-     c_ptr_->orig_commit_id = *(id.c_ptr());
-   }
 
     std::string orig_path() const {
       if (c_ptr_->orig_path)
@@ -158,27 +149,14 @@ public:
       else 
         return "";
     }
-    void set_orig_path(const std::string &value) {
-      c_ptr_->orig_path = value.c_str();
-    }
 
     size_t orig_start_line_number() const { return c_ptr_->orig_start_line_number; }
-    void set_orig_start_line_number(size_t value) {
-      c_ptr_->orig_start_line_number = value;
-    }
 
     signature orig_signature() const { return signature(c_ptr_->orig_signature); }
-    void set_orig_signature(const signature &sig) {
-      c_ptr_->orig_signature = const_cast<git_signature *>(sig.c_ptr());
-    }
-
     char boundary() const { return c_ptr_->boundary; }
-    void set_boundary(char value) {
-      c_ptr_->boundary = value;
-    }
 
   private:
-    git_blame_hunk * c_ptr_;
+    const git_blame_hunk * c_ptr_;
   };
 
   // Gets the blame hunk at the given index.
@@ -195,6 +173,7 @@ public:
   const git_blame *c_ptr() const;
 
 private:
+  friend class repository;
   git_blame *c_ptr_;
   ownership owner_;
 };

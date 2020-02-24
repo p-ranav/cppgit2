@@ -23,16 +23,14 @@ blame blame::get_blame_for_buffer(const blame &reference,
 }
 
 blame::hunk blame::hunk_by_index(uint32_t index) const {
-  return hunk(const_cast<git_blame_hunk *>(git_blame_get_hunk_byindex(c_ptr_, index)));
+  return hunk(git_blame_get_hunk_byindex(c_ptr_, index));
 }
 
 blame::hunk blame::hunk_by_line(size_t lineno) const {
-  return hunk(const_cast<git_blame_hunk *>(git_blame_get_hunk_byline(c_ptr_, lineno)));
+  return hunk(git_blame_get_hunk_byline(c_ptr_, lineno));
 }
 
-size_t blame::hunk_count() const {
-  return git_blame_get_hunk_count(c_ptr_);
-}
+size_t blame::hunk_count() const { return git_blame_get_hunk_count(c_ptr_); }
 
 const git_blame *blame::c_ptr() const { return c_ptr_; }
 
