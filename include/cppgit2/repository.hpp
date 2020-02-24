@@ -389,6 +389,11 @@ public:
   void for_each_branch(std::function<void(const reference &)> visitor, 
     branch::branch_type branch_type = branch::branch_type::local);
 
+  /*
+   * CHECKOUT API
+   * See git_checkout_* functions
+   */
+
 private:
   friend class tree_builder;
   git_repository *c_ptr_;
