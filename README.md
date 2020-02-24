@@ -142,16 +142,16 @@ git_blob_filter
 ### branch
 ```diff
 + git_branch_create
-git_branch_create_from_annotated
++ git_branch_create_from_annotated
 + git_branch_delete
 + git_branch_is_checked_out
 + git_branch_is_head
-git_branch_iterator_free
-git_branch_iterator_new
++ git_branch_iterator_free
++ git_branch_iterator_new
 + git_branch_lookup
 + git_branch_move
 + git_branch_name
-git_branch_next
++ git_branch_next
 + git_branch_remote_name
 + git_branch_set_upstream
 + git_branch_upstream
