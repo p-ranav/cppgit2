@@ -171,10 +171,10 @@ git_blob_filter
 
 ### checkout
 ```diff
-git_checkout_head
-git_checkout_index
-git_checkout_options_init
-git_checkout_tree
++ git_checkout_head
++ git_checkout_index
++ git_checkout_options_init
++ git_checkout_tree
 ```
 
 ### cherrypick

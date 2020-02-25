@@ -5,6 +5,7 @@
 #include <cppgit2/blame.hpp>
 #include <cppgit2/blob.hpp>
 #include <cppgit2/branch.hpp>
+#include <cppgit2/checkout.hpp>
 #include <cppgit2/commit.hpp>
 #include <cppgit2/config.hpp>
 #include <cppgit2/data_buffer.hpp>
@@ -406,6 +407,23 @@ public:
    * CHECKOUT API
    * See git_checkout_* functions
    */
+
+  // Updates files in the index and the working tree to match
+  // the content of the commit pointed at by HEAD.
+  //
+  // NOTE: repository must be non-bare
+  void checkout_head(const checkout::options &options = checkout::options());
+
+  // Updates files in the working tree to match the content of the index.
+  //
+  // NOTE: repository must be non-bare
+  void checkout_index(const cppgit2::index &index,
+                      const checkout::options &options = checkout::options());
+
+  // Updates files in the index and working tree to match the
+  // content of the tree pointed at by the treeish.
+  void checkout_tree(const object &treeish,
+                     const checkout::options &options = checkout::options());
 
 private:
   friend class tree_builder;

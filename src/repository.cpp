@@ -594,4 +594,27 @@ void repository::for_each_branch(std::function<void(const reference &)> visitor,
   git_branch_iterator_free(iter);
 }
 
+void repository::checkout_head(const checkout::options &options) {
+  // Note that this is not the correct mechanism used to switch branches; do not
+  // change your HEAD and then call this method, that would leave you with
+  // checkout conflicts since your working directory would then appear to be
+  // dirty. Instead, checkout the target of the branch and then update HEAD
+  // using repository.set_head to point to the branch you checked out.
+  if (git_checkout_head(c_ptr_, options.c_ptr())) // options may be NULL
+    throw git_exception();
+}
+
+void repository::checkout_index(const cppgit2::index &index,
+                                const checkout::options &options) {
+  if (git_checkout_index(c_ptr_, const_cast<git_index *>(index.c_ptr()),
+                         options.c_ptr())) // index & options may be NULL
+    throw git_exception();
+}
+
+void repository::checkout_tree(const object &treeish,
+                               const checkout::options &options) {
+  if (git_checkout_tree(c_ptr_, treeish.c_ptr(), options.c_ptr()))
+    throw git_exception();
+}
+
 } // namespace cppgit2
