@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
     auto hunk_count = blame.hunk_count();
     std::cout << "Blame Hunk count: " << hunk_count << std::endl;
     std::cout << "Blame Hunk by index:" << std::endl;
-    for (size_t i = 0; i < hunk_count; ++i) {
+    for (uint32_t i = 0; i < hunk_count; ++i) {
       auto hunk = blame.hunk_by_index(i);
       auto original_commit_id = hunk.orig_commit_id();
       auto original_signature = hunk.orig_signature();

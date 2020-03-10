@@ -4,7 +4,8 @@ namespace cppgit2 {
 
 data_buffer::data_buffer(size_t n) {
   c_struct_.ptr = (char *)malloc(n * sizeof(char));
-  memset(c_struct_.ptr, '\0', n * sizeof(char));
+  if (c_struct_.ptr)
+    memset(c_struct_.ptr, '\0', n * sizeof(char));
   c_struct_.asize = n;
   c_struct_.size = 0;
 }
@@ -13,7 +14,8 @@ data_buffer::data_buffer(const git_buf *c_ptr) {
   c_struct_.ptr = (char *)malloc(c_ptr->asize * sizeof(char));
   c_struct_.asize = c_ptr->asize;
   c_struct_.size = c_ptr->size;
-  strncpy(c_struct_.ptr, c_ptr->ptr, c_ptr->asize);
+  if (c_struct_.ptr)
+    strncpy(c_struct_.ptr, c_ptr->ptr, c_ptr->asize);
 }
 
 data_buffer::~data_buffer() {

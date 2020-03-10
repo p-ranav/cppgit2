@@ -42,8 +42,8 @@ tree::entry tree_builder::operator[](const std::string &filename) const {
 
 void tree_builder::insert(const std::string &filename, const oid &id,
                           file_mode mode) {
-  const git_tree_entry **result;
-  if (git_treebuilder_insert(result, c_ptr_, filename.c_str(), id.c_ptr(),
+  const git_tree_entry *result = nullptr;
+  if (git_treebuilder_insert(&result, c_ptr_, filename.c_str(), id.c_ptr(),
                              static_cast<git_filemode_t>(mode)))
     throw git_exception();
 }

@@ -39,7 +39,9 @@ public:
   class entry : public libgit2_api {
   public:
     // Default construct a file entry
-    entry() : c_ptr_(&default_) {}
+    entry() {
+      c_ptr_ = &default_;
+    }
 
     // Construct from libgit2 C ptr
     // If owned by user, will be free'd in destructor

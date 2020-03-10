@@ -123,7 +123,7 @@ public:
 
     // Flags for diff options.  A combination of these flags can be passed
     // in via the `flags` value in the `git_diff_options`
-    enum flag {
+    enum class flag {
       // Normal diff, the default
       normal = 0,
 

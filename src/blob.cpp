@@ -33,4 +33,11 @@ blob_size blob::raw_size() const { return git_blob_rawsize(c_ptr_); }
 
 const git_blob *blob::c_ptr() const { return c_ptr_; }
 
+data_buffer blob::filter(const std::string& as_path, filter::options options) {
+  data_buffer result(nullptr);
+  if (git_blob_filter(result.c_ptr(), c_ptr_, as_path.c_str(), options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
 } // namespace cppgit2
