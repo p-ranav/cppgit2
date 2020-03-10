@@ -127,7 +127,7 @@ git_blob_create_from_stream_commit
 + git_blob_create_from_workdir
 + git_blob_create_fromworkdir
 + git_blob_dup
-git_blob_filter
+- git_blob_filter
 - git_blob_filtered_content - Deprecated in favor of git_blob_filter
 + git_blob_free
 + git_blob_id
