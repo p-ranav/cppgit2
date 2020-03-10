@@ -30,7 +30,9 @@ std::pair<bool, std::string> worktree::is_locked() const {
 }
 
 bool worktree::is_prunable(unsigned int version, uint32_t flags) const {
-  git_worktree_prune_options options{.version = version, .flags = flags};
+  git_worktree_prune_options options;
+  options.version = version;
+  options.flags = flags;
   auto ret = git_worktree_is_prunable(c_ptr_, &options);
   if (ret == 1)
     return true;
@@ -81,7 +83,9 @@ std::string worktree::path() const {
 }
 
 void worktree::prune(unsigned int version, uint32_t flags) {
-  git_worktree_prune_options options{.version = version, .flags = flags};
+  git_worktree_prune_options options;
+  options.version = version;
+  options.flags = flags;
   if (git_worktree_prune(c_ptr_, &options))
     throw git_exception();
 }

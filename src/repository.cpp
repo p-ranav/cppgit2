@@ -358,7 +358,8 @@ std::vector<std::string>
 repository::lookup_multiple_attributes(attribute::flag flags,
                                        const std::string &path,
                                        const std::vector<std::string> &names) {
-  const char *values[names.size()]; // TODO: Fix this
+  const char** values = (const char**)malloc(names.size());
+  // const char *values[names.size()]; // TODO: Fix this
 
   std::vector<const char *> names_c;
   for (auto &name : names)
@@ -376,6 +377,7 @@ repository::lookup_multiple_attributes(attribute::flag flags,
       result.push_back("");
     }
   }
+  free(values);
   return result;
 }
 

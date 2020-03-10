@@ -79,13 +79,17 @@ public:
     };
 
     index::time ctime() const {
-      return {.seconds = c_ptr_->ctime.seconds,
-              .nanoseconds = c_ptr_->ctime.nanoseconds};
+      index::time result;
+      result.seconds = c_ptr_->ctime.seconds;
+      result.nanoseconds = c_ptr_->ctime.nanoseconds;
+      return result;
     }
 
     index::time mtime() const {
-      return {.seconds = c_ptr_->mtime.seconds,
-              .nanoseconds = c_ptr_->mtime.nanoseconds};
+      index::time result;
+      result.seconds = c_ptr_->mtime.seconds;
+      result.nanoseconds = c_ptr_->mtime.nanoseconds;
+      return result;
     }
 
     uint32_t dev() const { return c_ptr_->dev; }
