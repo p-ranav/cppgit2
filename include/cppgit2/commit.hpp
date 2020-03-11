@@ -82,7 +82,7 @@ public:
   offset_minutes time_offset() const;
 
   // Get the tree pointed by this commit
-  tree tree() const;
+  cppgit2::tree tree() const;
 
   // SHA-1 has of the tree pointed to by this commit
   // No attempts are made to fetch an object from the ODB
