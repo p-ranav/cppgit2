@@ -198,22 +198,22 @@ git_commit_author_with_mailmap
 + git_commit_body
 + git_commit_committer
 git_commit_committer_with_mailmap
-git_commit_create
-git_commit_create_buffer
-git_commit_create_v
-git_commit_create_with_signature
++ git_commit_create
++ git_commit_create_buffer
+- git_commit_create_v
++ git_commit_create_with_signature
 + git_commit_dup
-git_commit_extract_signature
++ git_commit_extract_signature
 + git_commit_free
 + git_commit_header_field
 + git_commit_id
-git_commit_lookup
-git_commit_lookup_prefix
++ git_commit_lookup
++ git_commit_lookup_prefix
 + git_commit_message
 + git_commit_message_encoding
 + git_commit_message_raw
 + git_commit_nth_gen_ancestor
-git_commit_owner
++ git_commit_owner
 + git_commit_parent
 + git_commit_parent_id
 + git_commit_parentcount

@@ -88,6 +88,9 @@ public:
   // No attempts are made to fetch an object from the ODB
   oid tree_id() const;
 
+  // Get owner repository
+  class repository owner() const;
+
   // Access libgit2 C ptr
   const git_commit *c_ptr() const;
 

@@ -679,6 +679,13 @@ commit repository::lookup_commit(const oid &id) {
   return result;
 }
 
+commit repository::lookup_commit(const oid &id, size_t len) {
+  commit result;
+  if (git_commit_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), len))
+    throw git_exception();
+  return result;
+}
+
 void repository::for_each_commit(std::function<void(const commit &id)> visitor,
                       revision::sort sort_ordering) {
   git_revwalk *iter;

@@ -1,4 +1,4 @@
-#include <cppgit2/commit.hpp>
+#include <cppgit2/repository.hpp>
 
 namespace cppgit2 {
 
@@ -132,6 +132,10 @@ tree commit::tree() const {
 }
 
 oid commit::tree_id() const { return oid(git_commit_tree_id(c_ptr_)); }
+
+repository commit::owner() const {
+  return repository(git_commit_owner(c_ptr_));
+}
 
 const git_commit *commit::c_ptr() const { return c_ptr_; }
 

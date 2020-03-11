@@ -451,6 +451,9 @@ public:
 
   // Lookup a commit object from a repository.
   commit lookup_commit(const oid &id);
+  
+  // Lookup a commit object from a repository given a prefix (short ID)
+  commit lookup_commit(const oid &id, size_t len /* length of short identifier*/);
 
   // The following for_each methods are convenience versions of for_each_revision
   // where the commit (instead of the oid) is passed to the visitor function
