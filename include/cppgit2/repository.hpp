@@ -15,6 +15,7 @@
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/reference.hpp>
+#include <cppgit2/revision.hpp>
 #include <git2.h>
 #include <string>
 
@@ -424,6 +425,43 @@ public:
   // content of the tree pointed at by the treeish.
   void checkout_tree(const object &treeish,
                      const checkout::options &options = checkout::options());
+
+  /*
+   * COMMIT API
+   * See git_commit_* functions
+   */
+  
+  // Create new commit in the repository from a list of git objects
+  oid create_commit(const std::string &update_ref, const signature &author, const signature &committer,
+                    const std::string &message_encoding, const std::string &message, const tree &tree,
+                    const std::vector<commit> &parents);
+
+  // Create a commit and write it into a buffer
+  data_buffer create_commit(const signature &author, const signature &committer,
+                            const std::string &message_encoding, const std::string &message,
+                            const tree &tree, const std::vector<commit> &parents);
+
+  // Create a commit object from the given buffer and signature
+  oid create_commit(const std::string &commit_content, const std::string &signature = "",
+                    const std::string &signature_field = "gpgsig");
+
+  // Extract the signature from a commit
+  std::pair<data_buffer, data_buffer>
+  extract_signature_from_commit(oid id, const std::string &signature_field = "gpgsig");
+
+  // Lookup a commit object from a repository.
+  commit lookup_commit(const oid &id);
+
+  // The following for_each methods are convenience versions of for_each_revision
+  // where the commit (instead of the oid) is passed to the visitor function
+
+  // Run operation for each commit in the repository
+  void for_each_commit(std::function<void(const commit &id)> visitor,
+                       revision::sort sort_ordering = revision::sort::none);
+
+  // Run operation for each commit in the repository
+  void for_each_commit(std::function<void(const commit &id)> visitor, const commit &start_from,
+                       revision::sort sort_ordering = revision::sort::none);
 
 private:
   friend class tree_builder;

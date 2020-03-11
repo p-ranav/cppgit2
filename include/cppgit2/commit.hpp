@@ -92,6 +92,7 @@ public:
   const git_commit *c_ptr() const;
 
 private:
+  friend class repository;
   git_commit *c_ptr_;
   ownership owner_;
 };

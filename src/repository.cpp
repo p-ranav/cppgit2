@@ -619,4 +619,104 @@ void repository::checkout_tree(const object &treeish,
     throw git_exception();
 }
 
+oid repository::create_commit(const std::string &update_ref, const signature &author, const signature &committer,
+                  const std::string &message_encoding, const std::string &message, const tree &tree,
+                  const std::vector<commit> &parents) {
+  oid result;
+  const char *update_ref_c = (update_ref == "") ? NULL : update_ref.c_str();
+  const char *message_encoding_c = message_encoding == "" ? NULL : message_encoding.c_str();
+  std::vector<const git_commit *> parents_c;
+  for (auto &p : parents) {
+    parents_c.push_back(p.c_ptr());
+  }
+  if (git_commit_create(result.c_ptr(), c_ptr_, update_ref_c, author.c_ptr(),
+                               committer.c_ptr(), message_encoding_c, message.c_str(), tree.c_ptr(),
+                               parents.size(), parents_c.data()))
+    throw git_exception();
+  return result;
+}
+
+data_buffer repository::create_commit(const signature &author, const signature &committer,
+                          const std::string &message_encoding, const std::string &message,
+                          const tree &tree, const std::vector<commit> &parents) {
+  data_buffer result(1024);
+  const char *message_encoding_c = message_encoding == "" ? NULL : message_encoding.c_str();
+  std::vector<const git_commit *> parents_c;
+  for (auto &p : parents) {
+    parents_c.push_back(p.c_ptr());
+  }
+  if (git_commit_create_buffer(result.c_ptr(), c_ptr_, author.c_ptr(), committer.c_ptr(),
+                                      message_encoding_c, message.c_str(), tree.c_ptr(),
+                                      parents.size(), parents_c.data()))
+    throw git_exception();
+  return result;
+}
+
+oid repository::create_commit(const std::string &commit_content, const std::string &signature,
+                  const std::string &signature_field) {
+  oid result;
+  const char *signature_c = signature == "" ? NULL : signature.c_str();
+  const char *signature_field_c = signature_field == "" ? "" : signature_field.c_str();
+  if (git_commit_create_with_signature(result.c_ptr(), c_ptr_, commit_content.c_str(),
+                                              signature_c, signature_field_c))
+    throw git_exception();
+  return result;
+}
+
+std::pair<data_buffer, data_buffer> 
+repository::extract_signature_from_commit(oid id, const std::string &signature_field) {
+  data_buffer sig(1024), signed_data(1024);
+  if (git_commit_extract_signature(sig.c_ptr(), signed_data.c_ptr(), c_ptr_, id.c_ptr(),
+                                          signature_field.c_str()))
+    throw git_exception();
+  return {sig, signed_data};
+}
+
+commit repository::lookup_commit(const oid &id) {
+  commit result;
+  if (git_commit_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+void repository::for_each_commit(std::function<void(const commit &id)> visitor,
+                      revision::sort sort_ordering) {
+  git_revwalk *iter;
+  auto ret = git_revwalk_new(&iter, c_ptr_);
+  git_revwalk_push_head(iter);
+
+  if (ret != 0) {
+    git_revwalk_free(iter);
+    throw git_exception();
+  }
+
+  git_revwalk_sorting(iter, static_cast<unsigned int>(sort_ordering));
+  git_oid id_c;
+  while ((ret = git_revwalk_next(&id_c, iter)) == 0) {
+    oid id(&id_c);
+    visitor(lookup_commit(id));
+  }
+  git_revwalk_free(iter);
+}
+
+void repository::for_each_commit(std::function<void(const commit &id)> visitor, const commit &start_from,
+                      revision::sort sort_ordering) {
+  git_revwalk *iter;
+  auto ret = git_revwalk_new(&iter, c_ptr_);
+  git_revwalk_push(iter, start_from.id().c_ptr());
+
+  if (ret != 0) {
+    git_revwalk_free(iter);
+    throw git_exception();
+  }
+
+  git_revwalk_sorting(iter, static_cast<unsigned int>(sort_ordering));
+  git_oid id_c;
+  while ((ret = git_revwalk_next(&id_c, iter)) == 0) {
+    oid payload(&id_c);
+    visitor(lookup_commit(payload));
+  }
+  git_revwalk_free(iter);
+}
+
 } // namespace cppgit2
