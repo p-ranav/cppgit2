@@ -16,6 +16,7 @@
 #include <cppgit2/oid.hpp>
 #include <cppgit2/reference.hpp>
 #include <cppgit2/revision.hpp>
+#include <cppgit2/tree_builder.hpp>
 #include <git2.h>
 #include <string>
 
@@ -453,7 +454,7 @@ public:
   commit lookup_commit(const oid &id);
   
   // Lookup a commit object from a repository given a prefix (short ID)
-  commit lookup_commit(const oid &id, size_t len /* length of short identifier*/);
+  commit lookup_commit(const oid &id, size_t length /* length of short identifier*/);
 
   // The following for_each methods are convenience versions of for_each_revision
   // where the commit (instead of the oid) is passed to the visitor function
@@ -465,6 +466,20 @@ public:
   // Run operation for each commit in the repository
   void for_each_commit(std::function<void(const commit &id)> visitor, const commit &start_from,
                        revision::sort sort_ordering = revision::sort::none);
+
+  /*
+   * TREE API
+   * See git_tree_* functions
+   */
+
+  // Convert a tree entry to the git_object it points to.
+  object tree_to_object(const tree::entry &entry);
+
+  // Lookup a tree object from the repository.
+  tree lookup_tree(const oid &id);
+
+  // Lookup a tree object from the repository, given a prefix of its identifier (short id).
+  tree lookup_tree(const oid &id, size_t length);
 
 private:
   friend class tree_builder;

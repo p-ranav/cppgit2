@@ -61,6 +61,7 @@ public:
 
 private:
   friend class reference;
+  friend class repository;
   git_object *c_ptr_;
 };
 

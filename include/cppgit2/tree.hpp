@@ -129,6 +129,7 @@ public:
 
 private:
   friend class commit;
+  friend class repository;
   git_tree *c_ptr_;
   ownership owner_;
 };

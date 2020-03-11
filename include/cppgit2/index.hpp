@@ -4,6 +4,7 @@
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
 #include <cppgit2/tree.hpp>
+#include <cppgit2/file_mode.hpp>
 #include <functional>
 #include <git2.h>
 #include <string>
@@ -49,9 +50,6 @@ public:
       if (!c_ptr)
         c_ptr_ = &default_;
     }
-
-    // Cleanup file entry
-    ~entry() { git_libgit2_shutdown(); }
 
     // Flags for index entries
     enum class flag {
@@ -100,6 +98,8 @@ public:
 
     uint32_t mode() const { return c_ptr_->mode; }
 
+    void set_mode(file_mode mode) { c_ptr_->mode = static_cast<uint32_t>(mode); }
+
     uint32_t uid() const { return c_ptr_->uid; }
 
     uint32_t gid() const { return c_ptr_->gid; }
@@ -107,6 +107,10 @@ public:
     uint32_t file_size() const { return c_ptr_->file_size; }
 
     oid id() const { return oid(&c_ptr_->id); }
+
+    void set_id(const oid& id) {
+      c_ptr_->id = *(id.c_ptr());
+    }
 
     flag flags() const { return static_cast<flag>(c_ptr_->flags); }
 
@@ -119,6 +123,10 @@ public:
         return std::string(c_ptr_->path);
       else
         return "";
+    }
+
+    void set_path(const std::string& path) {
+      c_ptr_->path = path.c_str();
     }
 
     // Return the stage number from a git index entry

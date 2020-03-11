@@ -679,9 +679,9 @@ commit repository::lookup_commit(const oid &id) {
   return result;
 }
 
-commit repository::lookup_commit(const oid &id, size_t len) {
+commit repository::lookup_commit(const oid &id, size_t length) {
   commit result;
-  if (git_commit_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), len))
+  if (git_commit_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
     throw git_exception();
   return result;
 }
@@ -724,6 +724,27 @@ void repository::for_each_commit(std::function<void(const commit &id)> visitor, 
     visitor(lookup_commit(payload));
   }
   git_revwalk_free(iter);
+}
+
+object repository::tree_to_object(const tree::entry &entry) {
+  object result;
+  if (git_tree_entry_to_object(&result.c_ptr_, c_ptr_, entry.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+tree repository::lookup_tree(const oid &id) {
+  tree result;
+  if (git_tree_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+tree repository::lookup_tree(const oid &id, size_t length) {
+  tree result;
+  if (git_tree_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
+    throw git_exception();
+  return result;
 }
 
 } // namespace cppgit2

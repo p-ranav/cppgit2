@@ -12,7 +12,6 @@ index::index(git_index *c_ptr, ownership owner)
 index::~index() {
   if (c_ptr_ && owner_ == ownership::user)
     git_index_free(c_ptr_);
-  git_libgit2_shutdown();
 }
 
 void index::add_entry(const entry &source_entry) {
@@ -245,10 +244,10 @@ void index::write() {
 }
 
 oid index::write_tree() {
-  git_oid result;
-  if (git_index_write_tree(&result, c_ptr_))
+  oid result;
+  if (git_index_write_tree(result.c_ptr(), c_ptr_))
     throw git_exception();
-  return oid(&result);
+  return result;
 }
 
 const git_index *index::c_ptr() const { return c_ptr_; }
