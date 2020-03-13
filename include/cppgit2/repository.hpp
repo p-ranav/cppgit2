@@ -94,6 +94,12 @@ public:
   // hashfile overload that uses as_path = path
   oid hashfile(const std::string &path, object::object_type type);
 
+  // Retrieve and resolve the reference pointed at by HEAD.
+  reference head() const;
+
+  // Retrieve the referenced HEAD for the worktree
+  reference head_for_worktree(const std::string &name) const;
+
   // Check if repo HEAD is detached
   // A repository's HEAD is detached when it points directly to a commit instead
   // of a branch.

@@ -809,10 +809,10 @@ git_repository_fetchhead_foreach
 + git_repository_free
 + git_repository_get_namespace
 + git_repository_hashfile
-git_repository_head
++ git_repository_head
 + git_repository_head_detached
 + git_repository_head_detached_for_worktree
-git_repository_head_for_worktree
++ git_repository_head_for_worktree
 + git_repository_head_unborn
 + git_repository_ident
 + git_repository_index

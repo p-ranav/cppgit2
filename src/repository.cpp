@@ -116,6 +116,20 @@ oid repository::hashfile(const std::string &path, object::object_type type) {
   return hashfile(path, type, path);
 }
 
+reference repository::head() const {
+  reference result;
+  if (git_repository_head(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+reference repository::head_for_worktree(const std::string &name) const {
+  reference result;
+  if (git_repository_head_for_worktree(&result.c_ptr_, c_ptr_, name.c_str()))
+    throw git_exception();
+  return result;
+}
+
 bool repository::is_head_detached() const {
   auto ret = git_repository_head_detached(c_ptr_);
   if (ret == 0)
