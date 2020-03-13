@@ -127,10 +127,59 @@ public:
   // Tree traversal modes
   enum class traversal_mode { preorder = 0, postorder = 1 };
 
+  // Owning repository
+  class repository owner() const;
+
   // Traverse the entries in a tree and its subtrees in post or pre order.
   void walk(traversal_mode mode,
             std::function<void(const std::string &, const tree::entry &)>
                 visitor) const;
+
+  enum class update_type {
+    upsert, // Update or insert an entry at the specified path
+    remove  // Remove an entry from the specified path
+  };
+
+  class update : public libgit2_api {
+  public:
+    tree::update_type action() const {
+      return static_cast<tree::update_type>(c_struct_.action);
+    }
+
+    void set_action(tree::update_type update_type) {
+      c_struct_.action = static_cast<git_tree_update_t>(update_type);
+    }
+
+    oid id() const {
+      return oid(&c_struct_.id);
+    }
+
+    void set_id(const oid& id) {
+      c_struct_.id = *(id.c_ptr());
+    }
+
+    cppgit2::file_mode file_mode() const {
+      return static_cast<cppgit2::file_mode>(c_struct_.filemode);
+    }
+
+    void set_file_mode(cppgit2::file_mode mode) {
+      c_struct_.filemode = static_cast<git_filemode_t>(mode);
+    }
+
+    std::string path() const {
+      if (c_struct_.path)
+        return std::string(c_struct_.path);
+      else return "";
+    }
+
+    void set_path(const std::string &path) {
+      c_struct_.path = path.c_str();
+    }
+
+  private:
+    friend class repository;
+    git_tree_update c_struct_;
+  };
 
   // Access libgit2 C ptr
   git_tree *c_ptr();

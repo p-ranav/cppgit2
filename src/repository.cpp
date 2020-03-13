@@ -897,7 +897,7 @@ void repository::for_each_reference_glob(
   git_reference_iterator_free(iter);
 }
 
-object repository::tree_to_object(const tree::entry &entry) {
+object repository::tree_entry_to_object(const tree::entry &entry) {
   object result;
   if (git_tree_entry_to_object(&result.c_ptr_, c_ptr_, entry.c_ptr()))
     throw git_exception();
@@ -915,6 +915,19 @@ tree repository::lookup_tree(const oid &id, size_t length) {
   tree result;
   if (git_tree_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
     throw git_exception();
+  return result;
+}
+
+oid repository::create_updated_tree(const tree &baseline, 
+  std::vector<tree::update> updates) {
+  oid result;
+  git_tree_update * updates_c = (git_tree_update *)malloc(updates.size() * sizeof(git_tree_update));
+  for (size_t i = 0; i < updates.size(); ++i)
+    updates_c[i] = updates[i].c_struct_;
+
+  if (git_tree_create_updated(result.c_ptr(), c_ptr_, baseline.c_ptr_, updates.size(), updates_c))
+    throw git_exception();
+  free(updates_c);
   return result;
 }
 

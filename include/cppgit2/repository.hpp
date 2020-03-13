@@ -562,7 +562,7 @@ public:
    */
 
   // Convert a tree entry to the git_object it points to.
-  object tree_to_object(const tree::entry &entry);
+  object tree_entry_to_object(const tree::entry &entry);
 
   // Lookup a tree object from the repository.
   tree lookup_tree(const oid &id);
@@ -570,6 +570,9 @@ public:
   // Lookup a tree object from the repository, given a prefix of its identifier
   // (short id).
   tree lookup_tree(const oid &id, size_t length);
+
+  // Create a tree based on another one with the specified modifications
+  oid create_updated_tree(const tree &baseline, std::vector<tree::update> updates);
 
 private:
   friend class tree_builder;

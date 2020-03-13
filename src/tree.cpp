@@ -1,4 +1,4 @@
-#include <cppgit2/tree.hpp>
+#include <cppgit2/repository.hpp>
 
 namespace cppgit2 {
 
@@ -44,6 +44,10 @@ tree tree::copy() const {
 }
 
 size_t tree::size() const { return git_tree_entrycount(c_ptr_); }
+
+repository tree::owner() const {
+  return repository(git_tree_owner(c_ptr_));
+}
 
 void tree::walk(traversal_mode mode,
                 std::function<void(const std::string &, const tree::entry &)>
