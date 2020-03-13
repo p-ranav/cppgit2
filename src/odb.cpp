@@ -13,11 +13,26 @@ odb::~odb() {
     git_odb_free(c_ptr_);
 }
 
+bool odb::exists(const oid& id) const {
+  return git_odb_exists(c_ptr_, id.c_ptr());
+}
+
+oid odb::exists(const oid& id, size_t length) const {
+  oid result;
+  if (git_odb_exists_prefix(result.c_ptr(), c_ptr_, id.c_ptr(), length))
+    throw git_exception();
+  return result;  
+}
 
 odb::backend odb::operator[](size_t index) const {
   odb::backend result;
   if (git_odb_get_backend(&result.c_ptr_, c_ptr_, index))
     throw git_exception();
+  return result;
+}
+
+size_t odb::size() const {
+  return git_odb_num_backends(c_ptr_);
 }
 
 odb::backend odb::create_backend_for_loose_objects(const std::string &objects_dir, 

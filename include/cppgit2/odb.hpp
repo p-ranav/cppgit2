@@ -2,8 +2,10 @@
 #include <cppgit2/file_mode.hpp>
 #include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
+#include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <git2.h>
+#include <utility>
 
 namespace cppgit2 {
 
@@ -29,8 +31,18 @@ public:
     git_odb_backend * c_ptr_;
   };
 
+  // Determine if the given object can be found in the object database.
+  bool exists(const oid& id) const;
+
+  // Determine if an object can be found in the object database by an abbreviated object ID.
+  // If true, a valid OID is returned
+  oid exists(const oid& id, size_t length) const;
+
   // Lookup an ODB backend object by index
   backend operator[](size_t index) const;
+
+  // Get the number of ODB backend objects
+  size_t size() const;
 
   // Create a backend for loose objects
   static backend create_backend_for_loose_objects(const std::string &objects_dir, 
