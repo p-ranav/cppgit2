@@ -9,8 +9,14 @@ namespace cppgit2 {
 
 class odb : public libgit2_api {
 public:
+  // Default construct an odb object
+  // Owned by user. Calls git_odb_new
   odb();
+
+  // Construct from libgit2 C ptr
   odb(git_odb *c_ptr, ownership owner = ownership::libgit2);
+
+  // Cleanup odb object if owned by user
   ~odb();
 
   class backend: public libgit2_api {
@@ -19,6 +25,7 @@ public:
     backend(git_odb_backend *c_ptr) : c_ptr_(c_ptr) {}
 
   private:
+    friend class odb;
     git_odb_backend * c_ptr_;
   };
 
