@@ -967,21 +967,21 @@ git_submodule_update_options_init
 ### tag
 ```diff
 git_tag_annotation_create
-git_tag_create
-git_tag_create_from_buffer
-git_tag_create_lightweight
-git_tag_delete
++ git_tag_create
++ git_tag_create_from_buffer
++ git_tag_create_lightweight
++ git_tag_delete
 + git_tag_dup
 git_tag_foreach
 + git_tag_free
 + git_tag_id
-git_tag_list
-git_tag_list_match
-git_tag_lookup
-git_tag_lookup_prefix
++ git_tag_list
++ git_tag_list_match
++ git_tag_lookup
++ git_tag_lookup_prefix
 + git_tag_message
 + git_tag_name
-git_tag_owner
++ git_tag_owner
 + git_tag_peel
 + git_tag_tagger
 + git_tag_target

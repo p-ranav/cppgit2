@@ -16,6 +16,7 @@
 #include <cppgit2/oid.hpp>
 #include <cppgit2/reference.hpp>
 #include <cppgit2/revision.hpp>
+#include <cppgit2/tag.hpp>
 #include <cppgit2/tree_builder.hpp>
 #include <git2.h>
 #include <string>
@@ -555,6 +556,38 @@ public:
   void
   for_each_reference_glob(const std::string &glob,
                           std::function<void(const std::string &)> visitor);
+
+  /*
+   * TAG API
+   * See git_tag_* funcitons
+   */
+
+  // Create a new tag in the repository from an object
+  oid create_tag(const std::string &tag_name, const object &target, const signature &tagger,
+                 const std::string &message, bool force);
+
+  // Create a new tag in the repository from a buffer
+  oid create_tag(const std::string &buffer, bool force);
+
+  // Create a new lightweight tag pointing at a target object
+  oid create_lightweight_tag(const std::string &tag_name, const object &target, bool force);
+
+  // Delete an existing tag reference.
+  void delete_tag(const std::string &tag_name);
+
+  // Fill a list with all the tags in the Repository
+  // The string array will be filled with the names of the matching tags; 
+  // these values are owned by the user.
+  strarray tags() const;
+
+  // Fill a list with all the tags in the Repository which name match a defined pattern
+  strarray tags_that_match(const std::string &pattern) const;
+
+  // Lookup a tag object from the repository.
+  tag lookup_tag(const oid &id) const;
+
+  // Lookup a tag object from the repository, given a prefix of its identifier (short id).
+  tag lookup_tag(const oid &id, size_t length) const;
 
   /*
    * TRANSACTION API

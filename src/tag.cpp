@@ -1,4 +1,4 @@
-#include <cppgit2/tag.hpp>
+#include <cppgit2/repository.hpp>
 
 namespace cppgit2 {
 tag::tag() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
@@ -55,6 +55,10 @@ oid tag::target_id() const { return oid(git_tag_target_id(c_ptr_)); }
 
 object::object_type tag::target_type() const {
   return static_cast<object::object_type>(git_tag_target_type(c_ptr_));
+}
+
+repository tag::owner() const {
+  return repository(git_tag_owner(c_ptr_));
 }
 
 git_tag *tag::c_ptr() { return c_ptr_; }

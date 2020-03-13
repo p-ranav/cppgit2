@@ -897,6 +897,63 @@ void repository::for_each_reference_glob(
   git_reference_iterator_free(iter);
 }
 
+oid repository::create_tag(const std::string &tag_name, const object &target, const signature &tagger,
+                           const std::string &message, bool force) {
+  oid result;
+  if (git_tag_create(result.c_ptr(), c_ptr_, tag_name.c_str(), target.c_ptr(),
+                            tagger.c_ptr(), message.c_str(), force))
+    throw git_exception();
+  return result;
+}
+
+oid repository::create_tag(const std::string &buffer, bool force) {
+  oid result;
+  if (git_tag_create_frombuffer(result.c_ptr(), c_ptr_, buffer.c_str(), force))
+    throw git_exception();
+  return result;
+}
+
+oid repository::create_lightweight_tag(const std::string &tag_name, const object &target,
+                                       bool force) {
+  oid result;
+  if (git_tag_create_lightweight(result.c_ptr(), c_ptr_, tag_name.c_str(), target.c_ptr(), force))
+    throw git_exception();
+  return result;
+}
+
+void repository::delete_tag(const std::string &tag_name) {
+  if (git_tag_delete(c_ptr_, tag_name.c_str()))
+    throw git_exception();
+}
+
+strarray repository::tags() const {
+  strarray result;
+  if (git_tag_list(&result.c_struct_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+strarray repository::tags_that_match(const std::string &pattern) const {
+  strarray result;
+  if (git_tag_list_match(&result.c_struct_, pattern.c_str(), c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+tag repository::lookup_tag(const oid &id) const {
+  tag result;
+  if (git_tag_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+tag repository::lookup_tag(const oid &id, size_t length) const {
+  tag result;
+  if (git_tag_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
+    throw git_exception();
+  return result;
+}
+
 transaction repository::create_transaction() {
   transaction result(nullptr, ownership::user);
   if (git_transaction_new(&result.c_ptr_, c_ptr_))

@@ -47,11 +47,15 @@ public:
   // Get the type of a tag's tagged object
   object::object_type target_type() const;
 
+  // Owner repository for this tag
+  class repository owner() const;
+
   // Access to libgit2 C ptr
   git_tag *c_ptr();
   const git_tag *c_ptr() const;
 
 private:
+  friend class repository;
   git_tag *c_ptr_;
   ownership owner_;
 };
