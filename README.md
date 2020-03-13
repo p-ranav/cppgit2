@@ -520,18 +520,18 @@ git_note_remove
 git_odb_add_alternate
 git_odb_add_backend
 git_odb_add_disk_alternate
-git_odb_backend_loose
-git_odb_backend_one_pack
-git_odb_backend_pack
++ git_odb_backend_loose
++ git_odb_backend_one_pack
++ git_odb_backend_pack
 git_odb_exists
 git_odb_exists_prefix
 git_odb_expand_ids
 git_odb_foreach
-git_odb_free
-git_odb_get_backend
++ git_odb_free
++ git_odb_get_backend
 git_odb_hash
 git_odb_hashfile
-git_odb_new
++ git_odb_new
 git_odb_num_backends
 git_odb_object_data
 git_odb_object_dup
