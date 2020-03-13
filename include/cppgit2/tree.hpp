@@ -4,11 +4,11 @@
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/ownership.hpp>
+#include <functional>
 #include <git2.h>
 #include <memory>
 #include <string>
 #include <utility>
-#include <functional>
 
 namespace cppgit2 {
 
@@ -125,13 +125,12 @@ public:
   size_t size() const;
 
   // Tree traversal modes
-  enum class traversal_mode {
-    preorder = 0,
-    postorder = 1
-  };
+  enum class traversal_mode { preorder = 0, postorder = 1 };
 
   // Traverse the entries in a tree and its subtrees in post or pre order.
-  void walk(traversal_mode mode, std::function<void(const std::string&,const tree::entry&)> visitor) const;
+  void walk(traversal_mode mode,
+            std::function<void(const std::string &, const tree::entry &)>
+                visitor) const;
 
   // Access libgit2 C ptr
   git_tree *c_ptr();

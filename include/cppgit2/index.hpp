@@ -1,10 +1,10 @@
 #pragma once
+#include <cppgit2/file_mode.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
 #include <cppgit2/tree.hpp>
-#include <cppgit2/file_mode.hpp>
 #include <functional>
 #include <git2.h>
 #include <string>
@@ -40,9 +40,7 @@ public:
   class entry : public libgit2_api {
   public:
     // Default construct a file entry
-    entry() {
-      c_ptr_ = &default_;
-    }
+    entry() { c_ptr_ = &default_; }
 
     // Construct from libgit2 C ptr
     // If owned by user, will be free'd in destructor
@@ -98,7 +96,9 @@ public:
 
     uint32_t mode() const { return c_ptr_->mode; }
 
-    void set_mode(file_mode mode) { c_ptr_->mode = static_cast<uint32_t>(mode); }
+    void set_mode(file_mode mode) {
+      c_ptr_->mode = static_cast<uint32_t>(mode);
+    }
 
     uint32_t uid() const { return c_ptr_->uid; }
 
@@ -108,9 +108,7 @@ public:
 
     oid id() const { return oid(&c_ptr_->id); }
 
-    void set_id(const oid& id) {
-      c_ptr_->id = *(id.c_ptr());
-    }
+    void set_id(const oid &id) { c_ptr_->id = *(id.c_ptr()); }
 
     flag flags() const { return static_cast<flag>(c_ptr_->flags); }
 
@@ -125,9 +123,7 @@ public:
         return "";
     }
 
-    void set_path(const std::string& path) {
-      c_ptr_->path = path.c_str();
-    }
+    void set_path(const std::string &path) { c_ptr_->path = path.c_str(); }
 
     // Return the stage number from a git index entry
     // This entry is calculated from the entry's flag attribute like this:

@@ -8,7 +8,8 @@ int main(int argc, char **argv) {
     repo.open(argv[1]);
 
     repo.for_each_commit([](const commit &c) {
-      std::cout << c.id().to_hex_string(8) << " [" << c.committer().name() << "]"
+      std::cout << c.id().to_hex_string(8) << " [" << c.committer().name()
+                << "]"
                 << " " << c.summary() << std::endl;
     });
 

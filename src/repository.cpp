@@ -4,7 +4,8 @@ namespace cppgit2 {
 
 repository::repository(git_repository *c_ptr) : c_ptr_(c_ptr) {}
 
-repository::repository(const std::string &path, bool is_bare) : c_ptr_(nullptr) {
+repository::repository(const std::string &path, bool is_bare)
+    : c_ptr_(nullptr) {
   if (git_repository_init(&c_ptr_, path.c_str(), is_bare))
     throw git_exception();
 }
@@ -358,7 +359,7 @@ std::vector<std::string>
 repository::lookup_multiple_attributes(attribute::flag flags,
                                        const std::string &path,
                                        const std::vector<std::string> &names) {
-  const char** values = (const char**)malloc(names.size());
+  const char **values = (const char **)malloc(names.size());
   // const char *values[names.size()]; // TODO: Fix this
 
   std::vector<const char *> names_c;
@@ -619,55 +620,68 @@ void repository::checkout_tree(const object &treeish,
     throw git_exception();
 }
 
-oid repository::create_commit(const std::string &update_ref, const signature &author, const signature &committer,
-                  const std::string &message_encoding, const std::string &message, const tree &tree,
-                  const std::vector<commit> &parents) {
+oid repository::create_commit(const std::string &update_ref,
+                              const signature &author,
+                              const signature &committer,
+                              const std::string &message_encoding,
+                              const std::string &message, const tree &tree,
+                              const std::vector<commit> &parents) {
   oid result;
   const char *update_ref_c = (update_ref == "") ? NULL : update_ref.c_str();
-  const char *message_encoding_c = message_encoding == "" ? NULL : message_encoding.c_str();
+  const char *message_encoding_c =
+      message_encoding == "" ? NULL : message_encoding.c_str();
   std::vector<const git_commit *> parents_c;
   for (auto &p : parents) {
     parents_c.push_back(p.c_ptr());
   }
   if (git_commit_create(result.c_ptr(), c_ptr_, update_ref_c, author.c_ptr(),
-                               committer.c_ptr(), message_encoding_c, message.c_str(), tree.c_ptr(),
-                               parents.size(), parents_c.data()))
+                        committer.c_ptr(), message_encoding_c, message.c_str(),
+                        tree.c_ptr(), parents.size(), parents_c.data()))
     throw git_exception();
   return result;
 }
 
-data_buffer repository::create_commit(const signature &author, const signature &committer,
-                          const std::string &message_encoding, const std::string &message,
-                          const tree &tree, const std::vector<commit> &parents) {
+data_buffer repository::create_commit(const signature &author,
+                                      const signature &committer,
+                                      const std::string &message_encoding,
+                                      const std::string &message,
+                                      const tree &tree,
+                                      const std::vector<commit> &parents) {
   data_buffer result(1024);
-  const char *message_encoding_c = message_encoding == "" ? NULL : message_encoding.c_str();
+  const char *message_encoding_c =
+      message_encoding == "" ? NULL : message_encoding.c_str();
   std::vector<const git_commit *> parents_c;
   for (auto &p : parents) {
     parents_c.push_back(p.c_ptr());
   }
-  if (git_commit_create_buffer(result.c_ptr(), c_ptr_, author.c_ptr(), committer.c_ptr(),
-                                      message_encoding_c, message.c_str(), tree.c_ptr(),
-                                      parents.size(), parents_c.data()))
+  if (git_commit_create_buffer(result.c_ptr(), c_ptr_, author.c_ptr(),
+                               committer.c_ptr(), message_encoding_c,
+                               message.c_str(), tree.c_ptr(), parents.size(),
+                               parents_c.data()))
     throw git_exception();
   return result;
 }
 
-oid repository::create_commit(const std::string &commit_content, const std::string &signature,
-                  const std::string &signature_field) {
+oid repository::create_commit(const std::string &commit_content,
+                              const std::string &signature,
+                              const std::string &signature_field) {
   oid result;
   const char *signature_c = signature == "" ? NULL : signature.c_str();
-  const char *signature_field_c = signature_field == "" ? "" : signature_field.c_str();
-  if (git_commit_create_with_signature(result.c_ptr(), c_ptr_, commit_content.c_str(),
-                                              signature_c, signature_field_c))
+  const char *signature_field_c =
+      signature_field == "" ? "" : signature_field.c_str();
+  if (git_commit_create_with_signature(result.c_ptr(), c_ptr_,
+                                       commit_content.c_str(), signature_c,
+                                       signature_field_c))
     throw git_exception();
   return result;
 }
 
-std::pair<data_buffer, data_buffer> 
-repository::extract_signature_from_commit(oid id, const std::string &signature_field) {
+std::pair<data_buffer, data_buffer>
+repository::extract_signature_from_commit(oid id,
+                                          const std::string &signature_field) {
   data_buffer sig(1024), signed_data(1024);
-  if (git_commit_extract_signature(sig.c_ptr(), signed_data.c_ptr(), c_ptr_, id.c_ptr(),
-                                          signature_field.c_str()))
+  if (git_commit_extract_signature(sig.c_ptr(), signed_data.c_ptr(), c_ptr_,
+                                   id.c_ptr(), signature_field.c_str()))
     throw git_exception();
   return {sig, signed_data};
 }
@@ -687,7 +701,7 @@ commit repository::lookup_commit(const oid &id, size_t length) {
 }
 
 void repository::for_each_commit(std::function<void(const commit &id)> visitor,
-                      revision::sort sort_ordering) {
+                                 revision::sort sort_ordering) {
   git_revwalk *iter;
   auto ret = git_revwalk_new(&iter, c_ptr_);
   git_revwalk_push_head(iter);
@@ -706,8 +720,9 @@ void repository::for_each_commit(std::function<void(const commit &id)> visitor,
   git_revwalk_free(iter);
 }
 
-void repository::for_each_commit(std::function<void(const commit &id)> visitor, const commit &start_from,
-                      revision::sort sort_ordering) {
+void repository::for_each_commit(std::function<void(const commit &id)> visitor,
+                                 const commit &start_from,
+                                 revision::sort sort_ordering) {
   git_revwalk *iter;
   auto ret = git_revwalk_new(&iter, c_ptr_);
   git_revwalk_push(iter, start_from.id().c_ptr());
@@ -726,61 +741,73 @@ void repository::for_each_commit(std::function<void(const commit &id)> visitor, 
   git_revwalk_free(iter);
 }
 
-object repository::lookup_object(const oid& id, object::object_type type) const {
+object repository::lookup_object(const oid &id,
+                                 object::object_type type) const {
   object result;
-  if (git_object_lookup(&result.c_ptr_, c_ptr_, id.c_ptr(), static_cast<git_object_t>(type)))
+  if (git_object_lookup(&result.c_ptr_, c_ptr_, id.c_ptr(),
+                        static_cast<git_object_t>(type)))
     throw git_exception();
   return result;
 }
 
-object repository::lookup_object(const oid& id, size_t length, object::object_type type) const {
+object repository::lookup_object(const oid &id, size_t length,
+                                 object::object_type type) const {
   object result;
-  if (git_object_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length, static_cast<git_object_t>(type)))
+  if (git_object_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length,
+                               static_cast<git_object_t>(type)))
     throw git_exception();
   return result;
 }
 
-object repository::lookup_object(const object& treeish, const std::string& path, object::object_type type) const {
+object repository::lookup_object(const object &treeish, const std::string &path,
+                                 object::object_type type) const {
   object result;
-  if (git_object_lookup_bypath(&result.c_ptr_, treeish.c_ptr_, path.c_str(), static_cast<git_object_t>(type)))
+  if (git_object_lookup_bypath(&result.c_ptr_, treeish.c_ptr_, path.c_str(),
+                               static_cast<git_object_t>(type)))
     throw git_exception();
   return result;
 }
 
-reference repository::create_reference(const std::string& name, const oid& id, bool force,
-  const std::string& log_message) {
+reference repository::create_reference(const std::string &name, const oid &id,
+                                       bool force,
+                                       const std::string &log_message) {
   reference result;
-  if (git_reference_create(&result.c_ptr_, c_ptr_, name.c_str(), id.c_ptr(), force, log_message.c_str()))
+  if (git_reference_create(&result.c_ptr_, c_ptr_, name.c_str(), id.c_ptr(),
+                           force, log_message.c_str()))
     throw git_exception();
   return result;
 }
 
-reference repository::create_reference(const std::string& name, const oid& id, bool force,
-  const oid& current_id, const std::string& log_message) {
+reference repository::create_reference(const std::string &name, const oid &id,
+                                       bool force, const oid &current_id,
+                                       const std::string &log_message) {
   reference result;
-  if (git_reference_create_matching(&result.c_ptr_, c_ptr_, name.c_str(), id.c_ptr(), force, current_id.c_ptr(), log_message.c_str()))
+  if (git_reference_create_matching(&result.c_ptr_, c_ptr_, name.c_str(),
+                                    id.c_ptr(), force, current_id.c_ptr(),
+                                    log_message.c_str()))
     throw git_exception();
   return result;
 }
 
-void repository::delete_reference(const std::string& refname) {
+void repository::delete_reference(const std::string &refname) {
   if (git_reference_remove(c_ptr_, refname.c_str()))
     throw git_exception();
 }
 
-reference repository::lookup_reference_by_dwim(const std::string& shorthand_name) const {
+reference
+repository::lookup_reference_by_dwim(const std::string &shorthand_name) const {
   reference result;
   if (git_reference_dwim(&result.c_ptr_, c_ptr_, shorthand_name.c_str()))
     throw git_exception();
   return result;
 }
 
-void repository::ensure_reflog_for_reference(const std::string& refname) {
+void repository::ensure_reflog_for_reference(const std::string &refname) {
   if (git_reference_ensure_log(c_ptr_, refname.c_str()))
     throw git_exception();
 }
 
-bool repository::reference_has_reflog(const std::string& refname) const {
+bool repository::reference_has_reflog(const std::string &refname) const {
   return git_reference_has_log(c_ptr_, refname.c_str());
 }
 
@@ -791,42 +818,47 @@ strarray repository::reference_list() const {
   return result;
 }
 
-reference repository::lookup_reference(const std::string& refname) const {
+reference repository::lookup_reference(const std::string &refname) const {
   reference result;
   if (git_reference_lookup(&result.c_ptr_, c_ptr_, refname.c_str()))
     throw git_exception();
   return result;
 }
 
-oid repository::reference_name_to_id(const std::string& refname) const {
+oid repository::reference_name_to_id(const std::string &refname) const {
   oid result;
   if (git_reference_name_to_id(result.c_ptr(), c_ptr_, refname.c_str()))
     throw git_exception();
   return result;
 }
 
-reference repository::create_symbolic_reference(const std::string& name, const std::string& target,
-  bool force, const std::string& log_message) {
+reference
+repository::create_symbolic_reference(const std::string &name,
+                                      const std::string &target, bool force,
+                                      const std::string &log_message) {
   reference result;
-  if (git_reference_symbolic_create(&result.c_ptr_, c_ptr_, name.c_str(), target.c_str(),
-    force, log_message.c_str()))
+  if (git_reference_symbolic_create(&result.c_ptr_, c_ptr_, name.c_str(),
+                                    target.c_str(), force, log_message.c_str()))
     throw git_exception();
   return result;
 }
 
-reference repository::create_symbolic_reference(const std::string& name, const std::string& target,
-  bool force, const std::string& current_value, const std::string& log_message) {
+reference repository::create_symbolic_reference(
+    const std::string &name, const std::string &target, bool force,
+    const std::string &current_value, const std::string &log_message) {
   reference result;
-  if (git_reference_symbolic_create_matching(&result.c_ptr_, c_ptr_, name.c_str(), target.c_str(),
-    force, current_value.c_str(), log_message.c_str()))
+  if (git_reference_symbolic_create_matching(
+          &result.c_ptr_, c_ptr_, name.c_str(), target.c_str(), force,
+          current_value.c_str(), log_message.c_str()))
     throw git_exception();
   return result;
 }
 
-void repository::for_each_reference(std::function<void(const reference&)> visitor) {
-  git_reference_iterator* iter;
+void repository::for_each_reference(
+    std::function<void(const reference &)> visitor) {
+  git_reference_iterator *iter;
   git_reference_iterator_new(&iter, c_ptr_);
-  git_reference* ref_c;
+  git_reference *ref_c;
   int ret;
   while ((ret = git_reference_next(&ref_c, iter)) == 0) {
     reference payload(ref_c);
@@ -835,13 +867,14 @@ void repository::for_each_reference(std::function<void(const reference&)> visito
   git_reference_iterator_free(iter);
 }
 
-void repository::for_each_reference_name(std::function<void(const std::string&)> visitor) {
-  git_reference_iterator* iter;
+void repository::for_each_reference_name(
+    std::function<void(const std::string &)> visitor) {
+  git_reference_iterator *iter;
   git_reference_iterator_new(&iter, c_ptr_);
-  const char* refname_c;
+  const char *refname_c;
   int ret;
   while ((ret = git_reference_next_name(&refname_c, iter)) == 0) {
-    std::string payload{ "" };
+    std::string payload{""};
     if (refname_c)
       payload = std::string(refname_c);
     visitor(payload);
@@ -849,14 +882,14 @@ void repository::for_each_reference_name(std::function<void(const std::string&)>
   git_reference_iterator_free(iter);
 }
 
-void repository::for_each_reference_glob(const std::string& glob, 
-  std::function<void(const std::string&)> visitor) {
-  git_reference_iterator * iter;
+void repository::for_each_reference_glob(
+    const std::string &glob, std::function<void(const std::string &)> visitor) {
+  git_reference_iterator *iter;
   git_reference_iterator_glob_new(&iter, c_ptr_, glob.c_str());
-  const char* refname_c;
+  const char *refname_c;
   int ret;
   while ((ret = git_reference_next_name(&refname_c, iter)) == 0) {
-    std::string payload{ "" };
+    std::string payload{""};
     if (refname_c)
       payload = std::string(refname_c);
     visitor(payload);

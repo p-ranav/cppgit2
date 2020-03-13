@@ -11,8 +11,7 @@ namespace cppgit2 {
 class reference : public libgit2_api {
 public:
   reference();
-  reference(git_reference *c_ptr,
-            ownership owner = ownership::libgit2);
+  reference(git_reference *c_ptr, ownership owner = ownership::libgit2);
   ~reference();
 
   // Basic type of any Git reference
@@ -62,10 +61,11 @@ public:
   };
 
   // Normalize reference name and check validity.
-  // This will normalize the reference name by removing any leading 
-  // slash '/' characters and collapsing runs of adjacent 
+  // This will normalize the reference name by removing any leading
+  // slash '/' characters and collapsing runs of adjacent
   // slashes between name components into a single slash.
-  static std::string normalize_name(size_t length, const std::string &name, reference::format flags);
+  static std::string normalize_name(size_t length, const std::string &name,
+                                    reference::format flags);
 
   // This will transform the reference name into a name "human-readable"
   // version. If no shortname is appropriate, it will return the full name.
@@ -79,24 +79,27 @@ public:
 
   // Rename an existing reference.
   // This method works for both direct and symbolic references.
-  // IMPORTANT: The user needs to write a proper reflog entry 
-  // if the reflog is enabled for the repository. We only rename the reflog if it exists.
-  reference rename(const std::string &new_name, bool force, const std::string &log_message);
+  // IMPORTANT: The user needs to write a proper reflog entry
+  // if the reflog is enabled for the repository. We only rename the reflog if
+  // it exists.
+  reference rename(const std::string &new_name, bool force,
+                   const std::string &log_message);
 
   // Resolve a sym reference to a direct reference
   // If a direct reference is passed as an argument, a copy of that reference is
   // returned. This copy must be manually freed too.
   reference resolve();
 
-  // Conditionally create a new reference with the same name as 
+  // Conditionally create a new reference with the same name as
   // the given reference but a different OID target.
   // The reference must be a direct reference, otherwise this will fail.
-  reference set_target(const oid& id, const std::string &log_message);
+  reference set_target(const oid &id, const std::string &log_message);
 
-  // Create a new reference with the same name as the given reference 
-  // but a different symbolic target. 
+  // Create a new reference with the same name as the given reference
+  // but a different symbolic target.
   // The reference must be a symbolic reference, otherwise this will fail.
-  reference set_symbolic_target(const std::string& target, const std::string& log_message);
+  reference set_symbolic_target(const std::string &target,
+                                const std::string &log_message);
 
   // Get the OID pointed by a direct reference
   // Only available if the reference is direct (i.e. an object id reference, not

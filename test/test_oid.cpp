@@ -18,8 +18,7 @@ TEST_CASE("Invalid oid construction" * test_suite("oid")) {
   bool exception_thrown = false;
   try {
     oid foo("f9de90000&^$%_%#");
-  }
-  catch (git_exception&) {
+  } catch (git_exception &) {
     exception_thrown = true;
   }
   REQUIRE(exception_thrown);

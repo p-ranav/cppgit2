@@ -1,6 +1,6 @@
-#include <iostream>
-#include <fstream>
 #include <cppgit2/repository.hpp>
+#include <fstream>
+#include <iostream>
 using namespace cppgit2;
 
 int main(int argc, char **argv) {
@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
 
     // Write README file
     std::ofstream readme;
-    readme.open (std::string{argv[1]} + "/README.md");
+    readme.open(std::string{argv[1]} + "/README.md");
     readme << "Hello, World!";
     readme.close();
 
@@ -26,10 +26,12 @@ int main(int argc, char **argv) {
     auto committer = signature("foobar", "foo.bar@baz.com");
 
     // Create commit
-    auto commit_oid = repo.create_commit("HEAD", author, committer,
-      "utf-8", "Update README", repo.lookup_tree(tree_oid), {});
+    auto commit_oid =
+        repo.create_commit("HEAD", author, committer, "utf-8", "Update README",
+                           repo.lookup_tree(tree_oid), {});
 
-    std::cout << "Created commit with ID: " << commit_oid.to_hex_string() << std::endl;
+    std::cout << "Created commit with ID: " << commit_oid.to_hex_string()
+              << std::endl;
 
   } else {
     std::cout << "Usage: ./executable <new_repo_path>\n";

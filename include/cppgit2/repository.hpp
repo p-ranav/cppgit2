@@ -431,40 +431,48 @@ public:
    * COMMIT API
    * See git_commit_* functions
    */
-  
+
   // Create new commit in the repository from a list of git objects
-  oid create_commit(const std::string &update_ref, const signature &author, const signature &committer,
-                    const std::string &message_encoding, const std::string &message, const tree &tree,
+  oid create_commit(const std::string &update_ref, const signature &author,
+                    const signature &committer,
+                    const std::string &message_encoding,
+                    const std::string &message, const tree &tree,
                     const std::vector<commit> &parents);
 
   // Create a commit and write it into a buffer
   data_buffer create_commit(const signature &author, const signature &committer,
-                            const std::string &message_encoding, const std::string &message,
-                            const tree &tree, const std::vector<commit> &parents);
+                            const std::string &message_encoding,
+                            const std::string &message, const tree &tree,
+                            const std::vector<commit> &parents);
 
   // Create a commit object from the given buffer and signature
-  oid create_commit(const std::string &commit_content, const std::string &signature = "",
+  oid create_commit(const std::string &commit_content,
+                    const std::string &signature = "",
                     const std::string &signature_field = "gpgsig");
 
   // Extract the signature from a commit
   std::pair<data_buffer, data_buffer>
-  extract_signature_from_commit(oid id, const std::string &signature_field = "gpgsig");
+  extract_signature_from_commit(oid id,
+                                const std::string &signature_field = "gpgsig");
 
   // Lookup a commit object from a repository.
   commit lookup_commit(const oid &id);
-  
-  // Lookup a commit object from a repository given a prefix (short ID)
-  commit lookup_commit(const oid &id, size_t length /* length of short identifier*/);
 
-  // The following for_each methods are convenience versions of for_each_revision
-  // where the commit (instead of the oid) is passed to the visitor function
+  // Lookup a commit object from a repository given a prefix (short ID)
+  commit lookup_commit(const oid &id,
+                       size_t length /* length of short identifier*/);
+
+  // The following for_each methods are convenience versions of
+  // for_each_revision where the commit (instead of the oid) is passed to the
+  // visitor function
 
   // Run operation for each commit in the repository
   void for_each_commit(std::function<void(const commit &id)> visitor,
                        revision::sort sort_ordering = revision::sort::none);
 
   // Run operation for each commit in the repository
-  void for_each_commit(std::function<void(const commit &id)> visitor, const commit &start_from,
+  void for_each_commit(std::function<void(const commit &id)> visitor,
+                       const commit &start_from,
                        revision::sort sort_ordering = revision::sort::none);
 
   /*
@@ -473,17 +481,20 @@ public:
    */
 
   // Lookup a reference to one of the objects in a repository.
-  // The generated reference is owned by the repository and 
-  // should be closed with the git_object_free method instead of free'd manually.
-  object lookup_object(const oid& id, object::object_type type) const;
+  // The generated reference is owned by the repository and
+  // should be closed with the git_object_free method instead of free'd
+  // manually.
+  object lookup_object(const oid &id, object::object_type type) const;
 
-  // Lookup a reference to one of the objects in a repository, 
+  // Lookup a reference to one of the objects in a repository,
   // given a prefix of its identifier (short id).
-  object lookup_object(const oid& id, size_t length, object::object_type type) const;
+  object lookup_object(const oid &id, size_t length,
+                       object::object_type type) const;
 
   // Lookup an object that represents a tree entry.
   // Path is the relative path from the root object to the desired object
-  object lookup_object(const object& treeish, const std::string& path, object::object_type type) const;
+  object lookup_object(const object &treeish, const std::string &path,
+                       object::object_type type) const;
 
   /*
    * REFERENCE API
@@ -491,52 +502,59 @@ public:
    */
 
   // Create a new direct reference.
-  reference create_reference(const std::string& name, const oid& id, bool force,
-    const std::string& log_message);
+  reference create_reference(const std::string &name, const oid &id, bool force,
+                             const std::string &log_message);
 
   // Conditionally create new direct reference
-  reference create_reference(const std::string& name, const oid& id, bool force,
-    const oid& current_id, const std::string& log_message);
+  reference create_reference(const std::string &name, const oid &id, bool force,
+                             const oid &current_id,
+                             const std::string &log_message);
 
   // Delete an existing reference by name
-  void delete_reference(const std::string& refname);
+  void delete_reference(const std::string &refname);
 
   // Ensure there is a reflog for a particular reference.
-  void ensure_reflog_for_reference(const std::string& refname);
+  void ensure_reflog_for_reference(const std::string &refname);
 
   // Check if a reflog exists for the specified reference.
-  bool reference_has_reflog(const std::string& refname) const;
+  bool reference_has_reflog(const std::string &refname) const;
 
   // Fill a list with all the references that can be found in a repository.
   // The string array will be filled with the names of all references
   strarray reference_list() const;
 
   // Lookup a reference by name in a repository.
-  reference lookup_reference(const std::string& refname) const;
+  reference lookup_reference(const std::string &refname) const;
 
   // Lookup a reference by DWIMing its short name
-  reference lookup_reference_by_dwim(const std::string& shorthand_name) const;
+  reference lookup_reference_by_dwim(const std::string &shorthand_name) const;
 
   // Lookup a reference by name and resolve immediately to OID.
-  oid reference_name_to_id(const std::string& refname) const;
+  oid reference_name_to_id(const std::string &refname) const;
 
   // Create a new symbolic reference.
-  reference create_symbolic_reference(const std::string& name, const std::string& target,
-    bool force, const std::string& log_message);
+  reference create_symbolic_reference(const std::string &name,
+                                      const std::string &target, bool force,
+                                      const std::string &log_message);
 
   // Conditionally create a new symbolic reference.
-  reference create_symbolic_reference(const std::string& name, const std::string& target,
-    bool force, const std::string &current_value, const std::string& log_message);
+  reference create_symbolic_reference(const std::string &name,
+                                      const std::string &target, bool force,
+                                      const std::string &current_value,
+                                      const std::string &log_message);
 
   // Perform a callback on each reference in the repository.
-  void for_each_reference(std::function<void(const reference&)> visitor);
+  void for_each_reference(std::function<void(const reference &)> visitor);
 
   // Callback used to iterate over reference names
-  void for_each_reference_name(std::function<void(const std::string&)> visitor);
+  void
+  for_each_reference_name(std::function<void(const std::string &)> visitor);
 
-  // Perform a callback on each reference in the repository 
+  // Perform a callback on each reference in the repository
   // whose name matches the given pattern.
-  void for_each_reference_glob(const std::string &glob, std::function<void(const std::string&)> visitor);
+  void
+  for_each_reference_glob(const std::string &glob,
+                          std::function<void(const std::string &)> visitor);
 
   /*
    * TREE API
@@ -549,7 +567,8 @@ public:
   // Lookup a tree object from the repository.
   tree lookup_tree(const oid &id);
 
-  // Lookup a tree object from the repository, given a prefix of its identifier (short id).
+  // Lookup a tree object from the repository, given a prefix of its identifier
+  // (short id).
   tree lookup_tree(const oid &id, size_t length);
 
 private:
