@@ -468,6 +468,24 @@ public:
                        revision::sort sort_ordering = revision::sort::none);
 
   /*
+   * OBJECT API
+   * See git_object_* functions
+   */
+
+  // Lookup a reference to one of the objects in a repository.
+  // The generated reference is owned by the repository and 
+  // should be closed with the git_object_free method instead of free'd manually.
+  object lookup_object(const oid& id, object::object_type type) const;
+
+  // Lookup a reference to one of the objects in a repository, 
+  // given a prefix of its identifier (short id).
+  object lookup_object(const oid& id, size_t length, object::object_type type) const;
+
+  // Lookup an object that represents a tree entry.
+  // Path is the relative path from the root object to the desired object
+  object lookup_object(const object& treeish, const std::string& path, object::object_type type) const;
+
+  /*
    * TREE API
    * See git_tree_* functions
    */

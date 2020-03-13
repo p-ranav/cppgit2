@@ -53,6 +53,9 @@ public:
   // Determine if the given type is a valid loose object type
   static bool is_type_loose(object_type type);
 
+  // Get owner repository
+  class repository owner() const;
+
   git_object *c_ptr() { return c_ptr_; }
 
   const git_object *c_ptr() const { return c_ptr_; }

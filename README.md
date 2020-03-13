@@ -503,10 +503,10 @@ git_note_remove
 + git_object_dup
 + git_object_free
 + git_object_id
-git_object_lookup
-git_object_lookup_bypath
-git_object_lookup_prefix
-git_object_owner
++ git_object_lookup
++ git_object_lookup_bypath
++ git_object_lookup_prefix
++ git_object_owner
 + git_object_peel
 + git_object_short_id
 + git_object_string2type

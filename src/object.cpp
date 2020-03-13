@@ -1,5 +1,5 @@
 #include <cppgit2/data_buffer.hpp>
-#include <cppgit2/object.hpp>
+#include <cppgit2/repository.hpp>
 
 namespace cppgit2 {
 
@@ -52,6 +52,10 @@ std::string object::string_from_type(object_type type) {
 
 bool object::is_type_loose(object_type type) {
   return git_object_typeisloose(static_cast<git_object_t>(type));
+}
+
+repository object::owner() const {
+  return repository(git_object_owner(c_ptr_));
 }
 
 } // namespace cppgit2

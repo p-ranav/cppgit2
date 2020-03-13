@@ -726,6 +726,27 @@ void repository::for_each_commit(std::function<void(const commit &id)> visitor, 
   git_revwalk_free(iter);
 }
 
+object repository::lookup_object(const oid& id, object::object_type type) const {
+  object result;
+  if (git_object_lookup(&result.c_ptr_, c_ptr_, id.c_ptr(), static_cast<git_object_t>(type)))
+    throw git_exception();
+  return result;
+}
+
+object repository::lookup_object(const oid& id, size_t length, object::object_type type) const {
+  object result;
+  if (git_object_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length, static_cast<git_object_t>(type)))
+    throw git_exception();
+  return result;
+}
+
+object repository::lookup_object(const object& treeish, const std::string& path, object::object_type type) const {
+  object result;
+  if (git_object_lookup_bypath(&result.c_ptr_, treeish.c_ptr_, path.c_str(), static_cast<git_object_t>(type)))
+    throw git_exception();
+  return result;
+}
+
 object repository::tree_to_object(const tree::entry &entry) {
   object result;
   if (git_tree_entry_to_object(&result.c_ptr_, c_ptr_, entry.c_ptr()))
