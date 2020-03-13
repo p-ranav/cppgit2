@@ -747,6 +747,91 @@ object repository::lookup_object(const object& treeish, const std::string& path,
   return result;
 }
 
+reference repository::create_reference(const std::string& name, const oid& id, bool force,
+  const std::string& log_message) {
+  reference result;
+  if (git_reference_create(&result.c_ptr_, c_ptr_, name.c_str(), id.c_ptr(), force, log_message.c_str()))
+    throw git_exception();
+  return result;
+}
+
+void repository::delete_reference(const std::string& refname) {
+  if (git_reference_remove(c_ptr_, refname.c_str()))
+    throw git_exception();
+}
+
+reference repository::lookup_reference_by_dwim(const std::string& shorthand_name) const {
+  reference result;
+  if (git_reference_dwim(&result.c_ptr_, c_ptr_, shorthand_name.c_str()))
+    throw git_exception();
+  return result;
+}
+
+void repository::ensure_reflog_for_reference(const std::string& refname) {
+  if (git_reference_ensure_log(c_ptr_, refname.c_str()))
+    throw git_exception();
+}
+
+bool repository::reference_has_reflog(const std::string& refname) const {
+  return git_reference_has_log(c_ptr_, refname.c_str());
+}
+
+strarray repository::reference_list() const {
+  strarray result;
+  if (git_reference_list(&result.c_struct_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+reference repository::lookup_reference(const std::string& refname) const {
+  reference result;
+  if (git_reference_lookup(&result.c_ptr_, c_ptr_, refname.c_str()))
+    throw git_exception();
+  return result;
+}
+
+oid repository::reference_name_to_id(const std::string& refname) const {
+  oid result;
+  if (git_reference_name_to_id(result.c_ptr(), c_ptr_, refname.c_str()))
+    throw git_exception();
+  return result;
+}
+
+reference repository::create_symbolic_reference(const std::string& name, const std::string& target,
+  bool force, const std::string& log_message) {
+  reference result;
+  if (git_reference_symbolic_create(&result.c_ptr_, c_ptr_, name.c_str(), target.c_str(),
+    force, log_message.c_str()))
+    throw git_exception();
+  return result;
+}
+
+void repository::for_each_reference(std::function<void(const reference&)> visitor) {
+  git_reference_iterator* iter;
+  git_reference_iterator_new(&iter, c_ptr_);
+  git_reference* ref_c;
+  int ret;
+  while ((ret = git_reference_next(&ref_c, iter)) == 0) {
+    reference payload(ref_c);
+    visitor(payload);
+  }
+  git_reference_iterator_free(iter);
+}
+
+void repository::for_each_reference_name(std::function<void(const std::string&)> visitor) {
+  git_reference_iterator* iter;
+  git_reference_iterator_new(&iter, c_ptr_);
+  const char* refname_c;
+  int ret;
+  while ((ret = git_reference_next_name(&refname_c, iter)) == 0) {
+    std::string payload{ "" };
+    if (refname_c)
+      payload = std::string(refname_c);
+    visitor(payload);
+  }
+  git_reference_iterator_free(iter);
+}
+
 object repository::tree_to_object(const tree::entry &entry) {
   object result;
   if (git_tree_entry_to_object(&result.c_ptr_, c_ptr_, entry.c_ptr()))

@@ -11,7 +11,7 @@ namespace cppgit2 {
 class reference : public libgit2_api {
 public:
   reference();
-  reference(git_reference *c_ptr = nullptr,
+  reference(git_reference *c_ptr,
             ownership owner = ownership::libgit2);
   ~reference();
 

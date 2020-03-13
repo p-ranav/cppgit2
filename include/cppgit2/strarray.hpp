@@ -66,6 +66,7 @@ public:
   const git_strarray *c_ptr() const;
 
 private:
+  friend class repository;
   git_strarray c_struct_;
 };
 

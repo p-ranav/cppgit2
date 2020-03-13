@@ -486,6 +486,48 @@ public:
   object lookup_object(const object& treeish, const std::string& path, object::object_type type) const;
 
   /*
+   * REFERENCE API
+   * See git_reference_* functions
+   */
+
+  // Create a new direct reference.
+  reference create_reference(const std::string& name, const oid& id, bool force,
+    const std::string& log_message);
+
+  // Delete an existing reference by name
+  void delete_reference(const std::string& refname);
+
+  // Ensure there is a reflog for a particular reference.
+  void ensure_reflog_for_reference(const std::string& refname);
+
+  // Check if a reflog exists for the specified reference.
+  bool reference_has_reflog(const std::string& refname) const;
+
+  // Fill a list with all the references that can be found in a repository.
+  // The string array will be filled with the names of all references
+  strarray reference_list() const;
+
+  // Lookup a reference by name in a repository.
+  reference lookup_reference(const std::string& refname) const;
+
+  // Lookup a reference by DWIMing its short name
+  reference lookup_reference_by_dwim(const std::string& shorthand_name) const;
+
+  // Lookup a reference by name and resolve immediately to OID.
+  oid reference_name_to_id(const std::string& refname) const;
+
+  // Create a new symbolic reference.
+  reference create_symbolic_reference(const std::string& name, const std::string& target,
+    bool force, const std::string& log_message);
+
+  // Perform a callback on each reference in the repository.
+  void for_each_reference(std::function<void(const reference&)> visitor);
+
+  // Callback used to iterate over reference names
+  void for_each_reference_name(std::function<void(const std::string&)> visitor);
+
+
+  /*
    * TREE API
    * See git_tree_* functions
    */
