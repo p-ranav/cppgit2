@@ -494,6 +494,10 @@ public:
   reference create_reference(const std::string& name, const oid& id, bool force,
     const std::string& log_message);
 
+  // Conditionally create new direct reference
+  reference create_reference(const std::string& name, const oid& id, bool force,
+    const oid& current_id, const std::string& log_message);
+
   // Delete an existing reference by name
   void delete_reference(const std::string& refname);
 
@@ -520,12 +524,19 @@ public:
   reference create_symbolic_reference(const std::string& name, const std::string& target,
     bool force, const std::string& log_message);
 
+  // Conditionally create a new symbolic reference.
+  reference create_symbolic_reference(const std::string& name, const std::string& target,
+    bool force, const std::string &current_value, const std::string& log_message);
+
   // Perform a callback on each reference in the repository.
   void for_each_reference(std::function<void(const reference&)> visitor);
 
   // Callback used to iterate over reference names
   void for_each_reference_name(std::function<void(const std::string&)> visitor);
 
+  // Perform a callback on each reference in the repository 
+  // whose name matches the given pattern.
+  void for_each_reference_glob(const std::string &glob, std::function<void(const std::string&)> visitor);
 
   /*
    * TREE API

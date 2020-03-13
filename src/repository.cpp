@@ -755,6 +755,14 @@ reference repository::create_reference(const std::string& name, const oid& id, b
   return result;
 }
 
+reference repository::create_reference(const std::string& name, const oid& id, bool force,
+  const oid& current_id, const std::string& log_message) {
+  reference result;
+  if (git_reference_create_matching(&result.c_ptr_, c_ptr_, name.c_str(), id.c_ptr(), force, current_id.c_ptr(), log_message.c_str()))
+    throw git_exception();
+  return result;
+}
+
 void repository::delete_reference(const std::string& refname) {
   if (git_reference_remove(c_ptr_, refname.c_str()))
     throw git_exception();
@@ -806,6 +814,15 @@ reference repository::create_symbolic_reference(const std::string& name, const s
   return result;
 }
 
+reference repository::create_symbolic_reference(const std::string& name, const std::string& target,
+  bool force, const std::string& current_value, const std::string& log_message) {
+  reference result;
+  if (git_reference_symbolic_create_matching(&result.c_ptr_, c_ptr_, name.c_str(), target.c_str(),
+    force, current_value.c_str(), log_message.c_str()))
+    throw git_exception();
+  return result;
+}
+
 void repository::for_each_reference(std::function<void(const reference&)> visitor) {
   git_reference_iterator* iter;
   git_reference_iterator_new(&iter, c_ptr_);
@@ -821,6 +838,21 @@ void repository::for_each_reference(std::function<void(const reference&)> visito
 void repository::for_each_reference_name(std::function<void(const std::string&)> visitor) {
   git_reference_iterator* iter;
   git_reference_iterator_new(&iter, c_ptr_);
+  const char* refname_c;
+  int ret;
+  while ((ret = git_reference_next_name(&refname_c, iter)) == 0) {
+    std::string payload{ "" };
+    if (refname_c)
+      payload = std::string(refname_c);
+    visitor(payload);
+  }
+  git_reference_iterator_free(iter);
+}
+
+void repository::for_each_reference_glob(const std::string& glob, 
+  std::function<void(const std::string&)> visitor) {
+  git_reference_iterator * iter;
+  git_reference_iterator_glob_new(&iter, c_ptr_, glob.c_str());
   const char* refname_c;
   int ret;
   while ((ret = git_reference_next_name(&refname_c, iter)) == 0) {

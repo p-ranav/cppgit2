@@ -53,6 +53,20 @@ public:
   // Full name of this reference
   std::string name() const;
 
+  // Normalization options for reference lookup
+  enum class format {
+    normal = 0u,
+    allow_onelevel = (1u << 0),
+    refspec_pattern = (1u << 1),
+    refspec_shorthand = (1u << 2)
+  };
+
+  // Normalize reference name and check validity.
+  // This will normalize the reference name by removing any leading 
+  // slash '/' characters and collapsing runs of adjacent 
+  // slashes between name components into a single slash.
+  static std::string normalize_name(size_t length, const std::string &name, reference::format flags);
+
   // This will transform the reference name into a name "human-readable"
   // version. If no shortname is appropriate, it will return the full name.
   std::string shorthand_name() const;
@@ -63,10 +77,26 @@ public:
   // Recursively peel reference until object of the specified type is found.
   object peel_until(object::object_type type);
 
+  // Rename an existing reference.
+  // This method works for both direct and symbolic references.
+  // IMPORTANT: The user needs to write a proper reflog entry 
+  // if the reflog is enabled for the repository. We only rename the reflog if it exists.
+  reference rename(const std::string &new_name, bool force, const std::string &log_message);
+
   // Resolve a sym reference to a direct reference
   // If a direct reference is passed as an argument, a copy of that reference is
   // returned. This copy must be manually freed too.
   reference resolve();
+
+  // Conditionally create a new reference with the same name as 
+  // the given reference but a different OID target.
+  // The reference must be a direct reference, otherwise this will fail.
+  reference set_target(const oid& id, const std::string &log_message);
+
+  // Create a new reference with the same name as the given reference 
+  // but a different symbolic target. 
+  // The reference must be a symbolic reference, otherwise this will fail.
+  reference set_symbolic_target(const std::string& target, const std::string& log_message);
 
   // Get the OID pointed by a direct reference
   // Only available if the reference is direct (i.e. an object id reference, not
@@ -76,6 +106,9 @@ public:
   // function (or maybe use reference.name_to_id() to directly resolve a
   // reference name all the way through to an OID).
   oid target() const;
+
+  // Get full name to the reference pointed to by a symbolic reference.
+  std::string symbolic_target() const;
 
   // Return the peeled OID target of this reference
   oid peeled_target() const;
