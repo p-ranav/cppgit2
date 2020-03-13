@@ -897,6 +897,13 @@ void repository::for_each_reference_glob(
   git_reference_iterator_free(iter);
 }
 
+transaction repository::create_transaction() {
+  transaction result(nullptr, ownership::user);
+  if (git_transaction_new(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 object repository::tree_entry_to_object(const tree::entry &entry) {
   object result;
   if (git_tree_entry_to_object(&result.c_ptr_, c_ptr_, entry.c_ptr()))

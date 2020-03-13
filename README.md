@@ -999,7 +999,7 @@ git_tag_owner
 + git_transaction_commit
 + git_transaction_free
 + git_transaction_lock_ref
-git_transaction_new
++ git_transaction_new
 + git_transaction_remove
 + git_transaction_set_reflog
 + git_transaction_set_symbolic_target

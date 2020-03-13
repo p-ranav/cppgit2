@@ -557,6 +557,12 @@ public:
                           std::function<void(const std::string &)> visitor);
 
   /*
+   * TRANSACTION API
+   * See git_transaction_* functions
+   */
+  transaction create_transaction();
+
+  /*
    * TREE API
    * See git_tree_* functions
    */

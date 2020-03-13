@@ -48,6 +48,7 @@ public:
   const git_transaction *c_ptr() const;
 
 private:
+  friend class repository;
   git_transaction *c_ptr_;
   ownership owner_;
 };
