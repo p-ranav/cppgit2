@@ -45,6 +45,24 @@ tree tree::copy() const {
 
 size_t tree::size() const { return git_tree_entrycount(c_ptr_); }
 
+void tree::walk(traversal_mode mode, std::function<void(const std::string&, const tree::entry&)> visitor) const {
+  struct visitor_wrapper {
+    std::function<void(const std::string&, const tree::entry&)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const char* root, const git_tree_entry * entry, void* payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper*>(payload);
+    wrapper->fn(root, entry);
+    return 0;
+  };
+
+  if (git_tree_walk(c_ptr_, static_cast<git_treewalk_mode>(mode), callback_c, (void*)(&wrapper)))
+    throw git_exception();
+}
+
 git_tree *tree::c_ptr() { return c_ptr_; }
 
 const git_tree *tree::c_ptr() const { return c_ptr_; }

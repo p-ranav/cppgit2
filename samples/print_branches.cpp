@@ -4,7 +4,8 @@ using namespace cppgit2;
 
 int main(int argc, char **argv) {
   if (argc == 2) {
-    repository repo(argv[1], false);
+    repository repo;
+    repo.open(argv[1]);
 
     std::cout << "Local branches:\n";
     repo.for_each_branch(

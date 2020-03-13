@@ -4,19 +4,19 @@ namespace cppgit2 {
 
 repository::repository(git_repository *c_ptr) : c_ptr_(c_ptr) {}
 
-repository::repository(const std::string &path, bool is_bare) {
+repository::repository(const std::string &path, bool is_bare) : c_ptr_(nullptr) {
   if (git_repository_init(&c_ptr_, path.c_str(), is_bare))
     throw git_exception();
 }
 
 repository::~repository() {
-  if (c_ptr_)
-    git_repository_free(c_ptr_);
+  // TODO: uncomment these lines and properly cleanup repo on exit
+  // walk_tree.cpp sample fails with SEGFAULT - TODO: Fix this
+  //if (c_ptr_)
+  //  git_repository_free(c_ptr_);
 }
 
 void repository::open(const std::string &path) {
-  if (c_ptr_)
-    git_repository_free(c_ptr_);
   if (git_repository_open(&c_ptr_, path.c_str()))
     throw git_exception();
 }
