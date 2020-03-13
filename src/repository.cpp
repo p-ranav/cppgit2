@@ -10,13 +10,13 @@ repository::repository(const std::string &path, bool is_bare) : c_ptr_(nullptr) 
 }
 
 repository::~repository() {
-  // TODO: uncomment these lines and properly cleanup repo on exit
-  // walk_tree.cpp sample fails with SEGFAULT - TODO: Fix this
-  //if (c_ptr_)
-  //  git_repository_free(c_ptr_);
+  if (c_ptr_)
+    git_repository_free(c_ptr_);
 }
 
 void repository::open(const std::string &path) {
+  if (c_ptr_)
+    git_repository_free(c_ptr_);
   if (git_repository_open(&c_ptr_, path.c_str()))
     throw git_exception();
 }
@@ -153,7 +153,7 @@ std::pair<std::string, std::string> repository::identity() const {
 }
 
 cppgit2::index repository::index() const {
-  cppgit2::index result(nullptr);
+  cppgit2::index result(nullptr, ownership::user);
   if (git_repository_index(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;

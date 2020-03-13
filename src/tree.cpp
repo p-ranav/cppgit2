@@ -55,7 +55,7 @@ void tree::walk(traversal_mode mode, std::function<void(const std::string&, cons
 
   auto callback_c = [](const char* root, const git_tree_entry * entry, void* payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper*>(payload);
-    wrapper->fn(root, entry);
+    wrapper->fn(root ? std::string(root) : "", tree::entry(entry));
     return 0;
   };
 
