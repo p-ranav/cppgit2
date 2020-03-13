@@ -83,10 +83,3 @@ TEST_CASE("Compare two oids" * test_suite("oid")) {
   oid oid4("f9de900000000000000000000000000000000000");
   REQUIRE(oid1.compare(oid4, 5) == 0);
 }
-
-TEST_CASE("Create an OID shortener and add oids to it" * test_suite("oid")) {
-  oid::shortener shortener(1);
-  REQUIRE(shortener.add("502ce33af489e7641a8e23171e71a775b1731fae") == 1);
-  REQUIRE(shortener.add("503c2217a080538ffc3e47114405883f0c672964") == 3);
-  REQUIRE(shortener.add("69de917ac729414151fdce077d4098cfec9a45a5") == 3);
-}
