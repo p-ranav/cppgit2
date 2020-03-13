@@ -15,6 +15,7 @@
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/reference.hpp>
+#include <cppgit2/reset.hpp>
 #include <cppgit2/revision.hpp>
 #include <cppgit2/tag.hpp>
 #include <cppgit2/tree_builder.hpp>
@@ -556,6 +557,22 @@ public:
   void
   for_each_reference_glob(const std::string &glob,
                           std::function<void(const std::string &)> visitor);
+
+  /*
+   * RESET API
+   * See git_reset_* functions
+   */
+
+  // Sets the current head to the specified commit oid 
+  // and optionally resets the index and working tree to match.
+  void reset(const object &target, reset::reset_type reset_type, const checkout::options &options = checkout::options());
+
+  // Updates some entries in the index from the target commit tree.
+  void reset_default(const object & target, const std::vector<std::string> &pathspecs);
+
+  // Sets the current head to the specified annotated commit oid 
+  // and optionally resets the index and working tree to match.
+  void reset(const annotated_commit &target, reset::reset_type reset_type, const checkout::options &options = checkout::options());
 
   /*
    * SIGNATURE API

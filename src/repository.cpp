@@ -897,6 +897,21 @@ void repository::for_each_reference_glob(
   git_reference_iterator_free(iter);
 }
 
+void repository::reset(const object &target, reset::reset_type reset_type, const checkout::options &options) {
+  if (git_reset(c_ptr_, target.c_ptr(), static_cast<git_reset_t>(reset_type), options.c_ptr()))
+    throw git_exception();
+}
+
+void repository::reset_default(const object & target, const std::vector<std::string> &pathspecs) {
+  if (git_reset_default(c_ptr_, target.c_ptr(), strarray(pathspecs).c_ptr()))
+    throw git_exception();
+}
+
+void repository::reset(const annotated_commit &target, reset::reset_type reset_type, const checkout::options &options) {
+  if (git_reset_from_annotated(c_ptr_, target.c_ptr(), static_cast<git_reset_t>(reset_type), options.c_ptr()))
+    throw git_exception();
+}
+
 signature repository::default_signature() const {
   signature result;
   if (git_signature_default(&result.c_ptr_, c_ptr_))

@@ -848,9 +848,9 @@ git_repository_wrap_odb
 
 ### reset
 ```diff
-git_reset
-git_reset_default
-git_reset_from_annotated
++ git_reset
++ git_reset_default
++ git_reset_from_annotated
 ```
 
 ### revert
