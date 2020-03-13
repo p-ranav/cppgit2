@@ -562,6 +562,10 @@ public:
    * See git_tag_* funcitons
    */
 
+  // Create a new tag in the object database pointing to a git_object
+  oid create_tag_annotation(const std::string &tag_name, const object &target, const signature &tagger,
+                 const std::string &message);
+
   // Create a new tag in the repository from an object
   oid create_tag(const std::string &tag_name, const object &target, const signature &tagger,
                  const std::string &message, bool force);
@@ -574,6 +578,10 @@ public:
 
   // Delete an existing tag reference.
   void delete_tag(const std::string &tag_name);
+
+  // Callback used to iterate over tags
+  void
+  for_each_tag(std::function<void(const std::string &, const oid&)> visitor);
 
   // Fill a list with all the tags in the Repository
   // The string array will be filled with the names of the matching tags; 

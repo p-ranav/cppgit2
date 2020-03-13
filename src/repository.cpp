@@ -897,6 +897,15 @@ void repository::for_each_reference_glob(
   git_reference_iterator_free(iter);
 }
 
+oid repository::create_tag_annotation(const std::string &tag_name, const object &target, const signature &tagger,
+                 const std::string &message) {
+  oid result;
+  if (git_tag_annotation_create(result.c_ptr(), c_ptr_, tag_name.c_str(), target.c_ptr(),
+                            tagger.c_ptr(), message.c_str()))
+    throw git_exception();
+  return result;
+}
+
 oid repository::create_tag(const std::string &tag_name, const object &target, const signature &tagger,
                            const std::string &message, bool force) {
   oid result;
@@ -923,6 +932,24 @@ oid repository::create_lightweight_tag(const std::string &tag_name, const object
 
 void repository::delete_tag(const std::string &tag_name) {
   if (git_tag_delete(c_ptr_, tag_name.c_str()))
+    throw git_exception();
+}
+
+void repository::for_each_tag(std::function<void(const std::string &, const oid&)> visitor) {
+  struct visitor_wrapper {
+    std::function<void(const std::string &, const oid &)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const char *name, git_oid * oid_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(name, oid(oid_c));
+    return 0;
+  };
+
+  if (git_tag_foreach(c_ptr_, callback_c, (void *)(&wrapper)))
     throw git_exception();
 }
 

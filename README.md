@@ -966,7 +966,7 @@ git_submodule_update_options_init
 
 ### tag
 ```diff
-git_tag_annotation_create
++ git_tag_annotation_create
 + git_tag_create
 + git_tag_create_from_buffer
 + git_tag_create_lightweight

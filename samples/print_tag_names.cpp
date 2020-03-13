@@ -7,9 +7,9 @@ int main(int argc, char **argv) {
     repository repo;
     repo.open(argv[1]);
 
-    repo.for_each_tag([&repo](const std::string &name, const oid &id) {
-      std::cout << "[" << id.to_hex_string(8) << "] " << name << std::endl;
-    });
+    // Fetch, iterate over and print tags 
+    for (const auto& tag : repo.tags())
+      std::cout << tag << std::endl;
 
   } else {
     std::cout << "Usage: ./executable <repo_path>\n";
