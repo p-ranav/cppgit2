@@ -723,7 +723,7 @@ git_refdb_open
 ### reflog
 ```diff
 + git_reflog_append
-git_reflog_delete
++ git_reflog_delete
 + git_reflog_drop
 + git_reflog_entry_byindex
 + git_reflog_entry_committer
@@ -732,8 +732,8 @@ git_reflog_delete
 + git_reflog_entry_message
 + git_reflog_entrycount
 + git_reflog_free
-git_reflog_read
-git_reflog_rename
++ git_reflog_read
++ git_reflog_rename
 + git_reflog_write
 ```
 

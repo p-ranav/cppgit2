@@ -565,6 +565,20 @@ public:
                           std::function<void(const std::string &)> visitor);
 
   /*
+   * REFLOG API
+   * See git_reflog_* functions
+   */
+
+  // Delete the reflog for the given reference
+  void delete_reflog(const std::string &name);
+
+  // Read the reflog for the given reference
+  reflog read_reflog(const std::string &name);
+
+  // Rename a reflog
+  void rename_reflog(const std::string &old_name, const std::string &name);
+
+  /*
    * RESET API
    * See git_reset_* functions
    */

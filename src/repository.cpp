@@ -911,6 +911,23 @@ void repository::for_each_reference_glob(
   git_reference_iterator_free(iter);
 }
 
+void repository::delete_reflog(const std::string &name) {
+  if (git_reflog_delete(c_ptr_, name.c_str()))
+    throw git_exception();
+}
+
+reflog repository::read_reflog(const std::string &name) {
+  reflog result;
+  if (git_reflog_read(&result.c_ptr_, c_ptr_, name.c_str()))
+    throw git_exception();
+  return result;
+}
+
+void repository::rename_reflog(const std::string &old_name, const std::string &name) {
+  if (git_reflog_rename(c_ptr_, old_name.c_str(), name.c_str()))
+    throw git_exception();
+}
+
 void repository::reset(const object &target, reset::reset_type reset_type, const checkout::options &options) {
   if (git_reset(c_ptr_, target.c_ptr(), static_cast<git_reset_t>(reset_type), options.c_ptr()))
     throw git_exception();

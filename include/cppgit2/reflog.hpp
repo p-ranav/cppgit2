@@ -72,6 +72,7 @@ public:
   const git_reflog *c_ptr() const;
 
 private:
+  friend class repository;
   git_reflog *c_ptr_;
   ownership owner_;
 };
