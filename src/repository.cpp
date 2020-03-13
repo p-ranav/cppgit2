@@ -897,6 +897,13 @@ void repository::for_each_reference_glob(
   git_reference_iterator_free(iter);
 }
 
+signature repository::default_signature() const {
+  signature result;
+  if (git_signature_default(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 oid repository::create_tag_annotation(const std::string &tag_name, const object &target, const signature &tagger,
                  const std::string &message) {
   oid result;

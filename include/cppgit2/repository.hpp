@@ -558,6 +558,12 @@ public:
                           std::function<void(const std::string &)> visitor);
 
   /*
+   * SIGNATURE API
+   * See git_signature_* functions
+   */
+  signature default_signature() const;
+
+  /*
    * TAG API
    * See git_tag_* funcitons
    */

@@ -50,6 +50,7 @@ public:
   const git_signature *c_ptr() const;
 
 private:
+  friend class repository;
   git_signature *c_ptr_;
   git_signature default_;
   std::string default_name_{""};

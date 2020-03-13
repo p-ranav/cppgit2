@@ -890,7 +890,7 @@ git_revwalk_sorting
 
 ### signature
 ```diff
-git_signature_default
++ git_signature_default
 + git_signature_dup
 + git_signature_free
 + git_signature_from_buffer
