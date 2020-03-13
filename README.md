@@ -972,7 +972,7 @@ git_submodule_update_options_init
 + git_tag_create_lightweight
 + git_tag_delete
 + git_tag_dup
-git_tag_foreach
++ git_tag_foreach
 + git_tag_free
 + git_tag_id
 + git_tag_list
