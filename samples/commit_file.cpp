@@ -22,8 +22,9 @@ int main(int argc, char **argv) {
   auto tree_oid = index.write_tree();
 
   // Prepare signatures
-  auto author = signature("foobar", "foo.bar@baz.com");
-  auto committer = signature("foobar", "foo.bar@baz.com");
+  auto author = signature("foobar", 
+    "foo.bar@baz.com");
+  auto committer = author;
 
   // Create commit
   auto commit_oid = repo.create_commit("HEAD", 
