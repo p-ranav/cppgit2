@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img height="700" src="img/commit_file.png"/>  
+  <img height="1000" src="img/commit_file.png"/>  
 </p>
 
 `cppgit2` is a `libgit2` wrapper library for use in modern C++ `( >= C++11)`. See the [Build and Integration](#build-and-integration) section of details on how to build and integrate `cppgit2` in your projects.
