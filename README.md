@@ -81,27 +81,29 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ### annotated
 
-| libgit2 | cppgit2 |
---- | --- |
-| `git_annotated_commit_free` | `cppgit2::annotated_commit::~annotated_commit` |
-| `git_annotated_commit_from_fetchhead` | `cppgit2::repository::create_annotated_commit` |
-| `git_annotated_commit_from_ref` | `cppgit2::repository::create_annotated_commit` |
-| `git_annotated_commit_from_revspec` | `cppgit2::repository::create_annotated_commit` |
-| `git_annotated_commit_id` | `cppgit2::annotated_commit::id` |
-| `git_annotated_commit_lookup` | `cppgit2::repository::lookup_annotated_commit` |
-| `git_annotated_commit_ref` | `cppgit2::annotated_commit::refname` |
+| libgit2 | cppgit2:: |
+| --- | --- |
+| `git_annotated_commit_free` | `annotated_commit::~annotated_commit` |
+| `git_annotated_commit_from_fetchhead` | `repository::create_annotated_commit` |
+| `git_annotated_commit_from_ref` | `repository::create_annotated_commit` |
+| `git_annotated_commit_from_revspec` | `epository::create_annotated_commit` |
+| `git_annotated_commit_id` | `annotated_commit::id` |
+| `git_annotated_commit_lookup` | `repository::lookup_annotated_commit` |
+| `git_annotated_commit_ref` | `annotated_commit::refname` |
 
 
 ### apply
 
 | libgit2 | cppgit2 |
-| git_apply
-| git_apply_to_tree
+| --- | --- |
+| `git_apply` | `repository::apply_diff` |
+| `git_apply_to_tree` | `repository::apply_diff` |
 
 
 ### attr
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_attr_add_macro
 | git_attr_cache_flush
 | git_attr_foreach
@@ -113,6 +115,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 ### blame
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_blame_buffer
 | git_blame_file
 | git_blame_free
@@ -126,6 +129,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 ### blob
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_blob_create_from_buffer
 | git_blob_create_from_disk
 git_blob_create_from_stream
@@ -148,6 +152,7 @@ git_blob_create_from_stream_commit
 ### branch
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_branch_create
 | git_branch_create_from_annotated
 | git_branch_delete
@@ -169,6 +174,7 @@ git_blob_create_from_stream_commit
 ### buf
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_buf_contains_nul
 | git_buf_dispose
 | git_buf_free
@@ -180,6 +186,7 @@ git_blob_create_from_stream_commit
 ### checkout
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_checkout_head
 | git_checkout_index
 | git_checkout_options_init
@@ -189,6 +196,7 @@ git_blob_create_from_stream_commit
 ### cherrypick
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_cherrypick
 git_cherrypick_commit
 git_cherrypick_options_init
@@ -197,6 +205,7 @@ git_cherrypick_options_init
 ### clone
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_clone
 git_clone_options_init
 
@@ -204,6 +213,7 @@ git_clone_options_init
 ### commit
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_commit_amend
 | git_commit_author
 git_commit_author_with_mailmap
@@ -240,6 +250,7 @@ git_commit_committer_with_mailmap
 ### config
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_config_add_file_ondisk
 - git_config_backend_foreach_match
 | git_config_delete_entry
@@ -288,6 +299,7 @@ git_commit_committer_with_mailmap
 ### cred
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_cred_default_new
 git_cred_free
 git_cred_get_username
@@ -305,6 +317,7 @@ git_cred_userpass_plaintext_new
 ### describe
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_describe_commit
 git_describe_format
 git_describe_format_options_init
@@ -316,6 +329,7 @@ git_describe_workdir
 ### diff
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_diff_blob_to_buffer
 | git_diff_blobs
 git_diff_buffers
@@ -355,6 +369,7 @@ git_diff_tree_to_workdir_with_index
 ### error
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_error_clear
 git_error_last
 git_error_set_oom
@@ -364,12 +379,14 @@ git_error_set_str
 ### fetch
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_fetch_options_init
 
 
 ### filter
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_filter_list_apply_to_blob
 git_filter_list_apply_to_data
 git_filter_list_apply_to_file
@@ -384,6 +401,7 @@ git_filter_list_stream_file
 ### giterr
 
 | libgit2 | cppgit2 |
+| --- | --- |
 giterr_clear
 giterr_last
 giterr_set_oom
@@ -393,6 +411,7 @@ giterr_set_str
 ### graph
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_graph_ahead_behind
 git_graph_descendant_of
 
@@ -400,6 +419,7 @@ git_graph_descendant_of
 ### ignore
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_ignore_add_rule
 git_ignore_clear_internal_rules
 git_ignore_path_is_ignored
@@ -408,6 +428,7 @@ git_ignore_path_is_ignored
 ### index
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_index_add
 | git_index_add_all
 | git_index_add_bypath
@@ -456,6 +477,7 @@ git_index_owner
 ### indexer
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_indexer_append
 git_indexer_commit
 git_indexer_free
@@ -467,6 +489,7 @@ git_indexer_options_init
 ### libgit2
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_libgit2_features
 | git_libgit2_init
 git_libgit2_opts
@@ -477,6 +500,7 @@ git_libgit2_opts
 ### merge
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_merge
 git_merge_analysis
 git_merge_analysis_for_ref
@@ -498,6 +522,7 @@ git_merge_trees
 ### message
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_message_prettify
 git_message_trailer_array_free
 git_message_trailers
@@ -506,6 +531,7 @@ git_message_trailers
 ### note
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_note_author
 git_note_commit_create
 git_note_commit_iterator_new
@@ -528,6 +554,7 @@ git_note_remove
 ### object
 
 | libgit2 | cppgit2 |
+| --- | --- |
 - git_object__size
 | git_object_dup
 | git_object_free
@@ -547,6 +574,7 @@ git_note_remove
 ### odb
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_odb_add_alternate
 git_odb_add_backend
 git_odb_add_disk_alternate
@@ -587,6 +615,7 @@ git_odb_write_pack
 ### oid
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_oid_cmp
 | git_oid_cpy
 | git_oid_equal
@@ -612,12 +641,14 @@ git_odb_write_pack
 ### oidarray
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_oidarray_free
 
 
 ### packbuilder
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_packbuilder_foreach
 | git_packbuilder_free
 | git_packbuilder_hash
@@ -638,6 +669,7 @@ git_packbuilder_write_buf
 ### patch
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_patch_free
 git_patch_from_blob_and_buffer
 git_patch_from_blobs
@@ -657,6 +689,7 @@ git_patch_to_buf
 ### pathspec
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_pathspec_free
 git_pathspec_match_diff
 git_pathspec_match_index
@@ -675,6 +708,7 @@ git_pathspec_new
 ### proxy
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_proxy_options_init
 
 
@@ -687,6 +721,7 @@ git_push_options_init
 ### rebase
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_rebase_abort
 git_rebase_commit
 git_rebase_finish
@@ -708,6 +743,7 @@ git_rebase_orig_head_name
 ### refdb
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_refdb_compress
 git_refdb_free
 git_refdb_new
@@ -717,6 +753,7 @@ git_refdb_open
 ### reference
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_reference_cmp
 | git_reference_create
 | git_reference_create_matching
@@ -763,6 +800,7 @@ git_refdb_open
 ### reflog
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_reflog_append
 | git_reflog_delete
 | git_reflog_drop
@@ -781,6 +819,7 @@ git_refdb_open
 ### refspec
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_refspec_direction
 git_refspec_dst
 git_refspec_dst_matches
@@ -797,6 +836,7 @@ git_refspec_transform
 ### remote
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_remote_add_fetch
 git_remote_add_push
 git_remote_autotag
@@ -844,6 +884,7 @@ git_remote_url
 ### repository
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_repository_commondir
 | git_repository_config
 | git_repository_config_snapshot
@@ -893,6 +934,7 @@ git_repository_wrap_odb
 ### reset
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_reset
 | git_reset_default
 | git_reset_from_annotated
@@ -901,6 +943,7 @@ git_repository_wrap_odb
 ### revert
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_revert
 git_revert_commit
 git_revert_options_init
@@ -909,6 +952,7 @@ git_revert_options_init
 ### revparse
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_revparse
 git_revparse_ext
 git_revparse_single
@@ -917,6 +961,7 @@ git_revparse_single
 ### revwalk
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_revwalk_add_hide_cb
 git_revwalk_free
 git_revwalk_hide
@@ -939,6 +984,7 @@ git_revwalk_sorting
 ### signature
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_signature_default
 | git_signature_dup
 | git_signature_free
@@ -950,6 +996,7 @@ git_revwalk_sorting
 ### stash
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_stash_apply
 | git_stash_apply_options_init
 | git_stash_drop
@@ -961,6 +1008,7 @@ git_revwalk_sorting
 ### status
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_status_byindex
 | git_status_file
 | git_status_foreach
@@ -975,6 +1023,7 @@ git_revwalk_sorting
 ### strarray
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_strarray_copy
 | git_strarray_free
 
@@ -982,6 +1031,7 @@ git_revwalk_sorting
 ### submodule
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_submodule_add_finalize
 git_submodule_add_setup
 | git_submodule_add_to_index
@@ -1020,6 +1070,7 @@ git_submodule_update_options_init
 ### tag
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_tag_annotation_create
 | git_tag_create
 | git_tag_create_from_buffer
@@ -1046,12 +1097,14 @@ git_submodule_update_options_init
 ### trace
 
 | libgit2 | cppgit2 |
+| --- | --- |
 - git_trace_set
 
 
 ### transaction
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_transaction_commit
 | git_transaction_free
 | git_transaction_lock_ref
@@ -1065,6 +1118,7 @@ git_submodule_update_options_init
 ### tree
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_tree_create_updated
 | git_tree_dup
 | git_tree_entry_byid
@@ -1092,6 +1146,7 @@ git_submodule_update_options_init
 ### treebuilder
 
 | libgit2 | cppgit2 |
+| --- | --- |
 | git_treebuilder_clear
 | git_treebuilder_entrycount
 | git_treebuilder_filter
@@ -1107,6 +1162,7 @@ git_submodule_update_options_init
 ### worktree
 
 | libgit2 | cppgit2 |
+| --- | --- |
 git_worktree_add
 git_worktree_add_options_init
 | git_worktree_free
