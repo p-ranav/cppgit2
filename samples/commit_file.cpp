@@ -22,14 +22,13 @@ int main(int argc, char **argv) {
   auto tree_oid = index.write_tree();
 
   // Prepare signatures
-  auto author = signature("foobar", 
-    "foo.bar@baz.com");
+  auto author = signature("foobar", "foo.bar@baz.com");
   auto committer = author;
 
   // Create commit
-  auto commit_oid = repo.create_commit("HEAD", 
-    author, committer, "utf-8", 
-    "Update README\n", repo.lookup_tree(tree_oid), {});
+  repo.create_commit("HEAD", author, committer, 
+    "utf-8", "Update README\n", 
+    repo.lookup_tree(tree_oid), {});
 }
 
 
