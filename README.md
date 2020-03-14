@@ -153,22 +153,22 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_branch_create` | |
-| `git_branch_create_from_annotated` | |
-| `git_branch_delete` | |
-| `git_branch_is_checked_out` | |
-| `git_branch_is_head` | |
-| `git_branch_iterator_free` | |
-| `git_branch_iterator_new` | |
-| `git_branch_lookup` | |
-| `git_branch_move` | |
-| `git_branch_name` | |
-| `git_branch_next` | |
-| `git_branch_remote_name` | |
-| `git_branch_set_upstream` | |
-| `git_branch_upstream` | |
-| `git_branch_upstream_name` | |
-| `git_branch_upstream_remote` | |
+| `git_branch_create` |  `repository::create_branch` |
+| `git_branch_create_from_annotated` | `repository::create_branch` |
+| `git_branch_delete` | `repository::delete_branch` |
+| `git_branch_is_checked_out` | `repository::is_branched_checked_out` |
+| `git_branch_is_head` | `repository::is_head_pointing_to_branch` |
+| `git_branch_iterator_free` | `repository::for_each_branch` |
+| `git_branch_iterator_new` | `repository::for_each_branch` |
+| `git_branch_lookup` | `repository::lookup_branch` |
+| `git_branch_move` | `repository::rename_branch` |
+| `git_branch_name` | `repository::branch_name` |
+| `git_branch_next` | `repository::for_each_branch` |
+| `git_branch_remote_name` | `repository::branch_remote_name` |
+| `git_branch_set_upstream` | `repository::set_branch_upstream` |
+| `git_branch_upstream` | `repository::branch_upstream` |
+| `git_branch_upstream_name` | `repository::branch_upstream_name` |
+| `git_branch_upstream_remote` | `repository::branch_upstream_remote` |
 
 
 ### buf
