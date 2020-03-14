@@ -8,16 +8,6 @@
   <img src="img/init_add_commit.png"/>
 </p>
 
-## Note to self:
-
-Use inotifywait for demos
-
-```
-while inotifywait --quiet -e close_write main.cpp; do clear && g++ -o main main.cpp && ./main; done
-```
-
-Rainglow theme VSCode: Rainbow contrast (rainglow)
-
 ## Build and Integration
 
 Run the following commands to build `cppgit2`. 
