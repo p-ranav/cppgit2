@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
   if (argc == 2) {
 
     // Create new repo
-    repository repo(argv[1], false);
+    repository repo(argv[1], /* bare = */false);
 
     // Write README file
     std::ofstream readme;
@@ -27,8 +27,8 @@ int main(int argc, char **argv) {
 
     // Create commit
     auto commit_oid =
-        repo.create_commit("HEAD", author, committer, "utf-8", "Update README",
-                           repo.lookup_tree(tree_oid), {});
+        repo.create_commit("HEAD", author, committer, "utf-8", 
+          "Update README", repo.lookup_tree(tree_oid), {});
 
     std::cout << "Created commit with ID: " << commit_oid.to_hex_string()
               << std::endl;
@@ -37,3 +37,4 @@ int main(int argc, char **argv) {
     std::cout << "Usage: ./executable <new_repo_path>\n";
   }
 }
+
