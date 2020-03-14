@@ -755,6 +755,11 @@ void repository::for_each_commit(std::function<void(const commit &id)> visitor,
   git_revwalk_free(iter);
 }
 
+void repository::add_ondisk_config_file(const cppgit2::config &cfg, const std::string &path, config::priority_level level, bool force) {
+  if (git_config_add_file_ondisk(cfg.c_ptr_, path.c_str(), static_cast<git_config_level_t>(level), c_ptr_, force))
+    throw git_exception();
+}
+
 object repository::lookup_object(const oid &id,
                                  object::object_type type) const {
   object result;

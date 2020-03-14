@@ -486,6 +486,12 @@ public:
                        revision::sort sort_ordering = revision::sort::none);
 
   /*
+   * CONFIG API
+   * See git_config_* functions
+   */
+  void add_ondisk_config_file(const cppgit2::config &cfg, const std::string &path, config::priority_level level, bool force);
+
+  /*
    * OBJECT API
    * See git_object_* functions
    */

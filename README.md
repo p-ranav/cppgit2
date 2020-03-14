@@ -250,7 +250,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_config_add_file_ondisk` | |
+| `git_config_add_file_ondisk` | `repository::add_ondisk_config_file` |
 | `git_config_backend_foreach_match` | **Not implemented** |
 | `git_config_delete_entry` | `config::delete_entry` |
 | `git_config_delete_multivar` | `config::delete_entry` |
