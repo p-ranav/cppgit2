@@ -4,6 +4,10 @@
 
 `cppgit2` is a `libgit2` wrapper library for use in modern C++ `( >= C++11)`. See the [Build and Integration](#build-and-integration) section of details on how to build and integrate `cppgit2` in your projects.
 
+<p align="center">
+  <img height="500" src="img/commit_file.png"/>  
+</p>
+
 ## Note to self:
 
 Use inotifywait for demos
