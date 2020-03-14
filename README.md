@@ -186,10 +186,10 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_checkout_head` | |
-| `git_checkout_index` | |
-| `git_checkout_options_init` | |
-| `git_checkout_tree` | |
+| `git_checkout_head` | `repository::checkout_head` |
+| `git_checkout_index` | `repository::checkout_index` |
+| `git_checkout_options_init` | `repository::checkout::options::options` |
+| `git_checkout_tree` | `repository::checkout_tree` |
 
 
 ### cherrypick
@@ -213,37 +213,37 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_commit_amend` | |
-| `git_commit_author` | |
+| `git_commit_amend` | `commit::amend` |
+| `git_commit_author` | `commit::author` |
 `git_commit_author_with_mailmap` | |
-| `git_commit_body` | |
-| `git_commit_committer` | |
+| `git_commit_body` | `commit::body` |
+| `git_commit_committer` | `commit::committer` |
 `git_commit_committer_with_mailmap` | |
-| `git_commit_create` | |
-| `git_commit_create_buffer` | |
+| `git_commit_create` | `repository::create_commit` |
+| `git_commit_create_buffer` | `repository::create_commit` |
 | `git_commit_create_v | **Not implemented** |
-| `git_commit_create_with_signature` | |
-| `git_commit_dup` | |
-| `git_commit_extract_signature` | |
-| `git_commit_free` | |
-| `git_commit_header_field` | |
-| `git_commit_id` | |
-| `git_commit_lookup` | |
-| `git_commit_lookup_prefix` | |
-| `git_commit_message` | |
-| `git_commit_message_encoding` | |
-| `git_commit_message_raw` | |
-| `git_commit_nth_gen_ancestor` | |
-| `git_commit_owner` | |
-| `git_commit_parent` | |
-| `git_commit_parent_id` | |
-| `git_commit_parentcount` | |
-| `git_commit_raw_header` | |
-| `git_commit_summary` | |
-| `git_commit_time` | |
-| `git_commit_time_offset` | |
-| `git_commit_tree` | |
-| `git_commit_tree_id` | |
+| `git_commit_create_with_signature` | `repository::create_commit` |
+| `git_commit_dup` | `commit::copy` |
+| `git_commit_extract_signature` | `repository::extract_signature_from_commit` |
+| `git_commit_free` | `commit::~commit` |
+| `git_commit_header_field` | `commit::operator[]` |
+| `git_commit_id` | `commit::id` |
+| `git_commit_lookup` | `repository::lookup_commit` |
+| `git_commit_lookup_prefix` | `repository::lookup_commit` |
+| `git_commit_message` | `commit::message` |
+| `git_commit_message_encoding` | `commit::message_encoding` |
+| `git_commit_message_raw` | `commit::message_raw` |
+| `git_commit_nth_gen_ancestor` | `commit::ancestor` |
+| `git_commit_owner` | `commit::owner` |
+| `git_commit_parent` | `commit::parent` |
+| `git_commit_parent_id` | `commit::parent_id` |
+| `git_commit_parentcount` | `commit::parent_count` |
+| `git_commit_raw_header` | `commit::raw_header` |
+| `git_commit_summary` | `commit::summary` |
+| `git_commit_time` | `commit::time` |
+| `git_commit_time_offset` | `commit::time_offset` |
+| `git_commit_tree` | `commit::tree` |
+| `git_commit_tree_id` | `commit::tree_id` |
 
 
 ### config
