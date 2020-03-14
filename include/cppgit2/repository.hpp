@@ -17,6 +17,7 @@
 #include <cppgit2/reference.hpp>
 #include <cppgit2/reset.hpp>
 #include <cppgit2/revision.hpp>
+#include <cppgit2/status.hpp>
 #include <cppgit2/tag.hpp>
 #include <cppgit2/tree_builder.hpp>
 #include <git2.h>
@@ -599,6 +600,31 @@ public:
    * See git_signature_* functions
    */
   signature default_signature() const;
+
+  /*
+   * STATUS API
+   * See git_status_* functions
+   */
+
+  // Get file status for a single file.
+  status::status_type status_file(const std::string &path) const;
+
+  // Gather file statuses and run a callback for each one.
+  void for_each_status(std::function<void(const std::string &, status::status_type)> visitor);
+
+  // Gather file status information and run callbacks as requested.
+  void for_each_status(const status::options &options, std::function<void(const std::string &, status::status_type)> visitor);
+
+  // Gather file status information and populate the git_status_list.
+  status::list status_list(const status::options &options = status::options());
+
+  // Test if the ignore rules apply to a given file.
+  // Returns false if the file is not ignored, 1 if it is
+  //
+  // One way to think of this is if you were to do 
+  // "git add ." on the directory containing the file, 
+  // would it be added or not?
+  bool should_ignore(const std::string &path) const;
 
   /*
    * TAG API

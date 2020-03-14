@@ -950,6 +950,64 @@ signature repository::default_signature() const {
   return result;
 }
 
+status::status_type repository::status_file(const std::string &path) const {
+  unsigned int result;
+  if (git_status_file(&result, c_ptr_, path.c_str()))
+    throw git_exception();
+  return static_cast<status::status_type>(result);
+}
+
+void repository::for_each_status(std::function<void(const std::string &, status::status_type)> visitor) {
+  struct visitor_wrapper {
+    std::function<void(const std::string &, status::status_type)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const char *path, unsigned int status_flags, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(path, static_cast<status::status_type>(status_flags));
+    return 0;
+  };
+
+  if (git_status_foreach(c_ptr_, callback_c, (void *)(&wrapper)))
+    throw git_exception();
+}
+
+void repository::for_each_status(const status::options &options, 
+  std::function<void(const std::string &, status::status_type)> visitor) {
+  struct visitor_wrapper {
+    std::function<void(const std::string &, status::status_type)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const char *path, unsigned int status_flags, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(path, static_cast<status::status_type>(status_flags));
+    return 0;
+  };
+
+  if (git_status_foreach_ext(c_ptr_, options.c_ptr(), callback_c, (void *)(&wrapper)))
+    throw git_exception();
+}
+
+status::list repository::status_list(const status::options &options) {
+  status::list result;
+  if (git_status_list_new(&result.c_ptr_, c_ptr_, options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+bool repository::should_ignore(const std::string &path) const {
+  int result;
+  if (git_status_should_ignore(&result, c_ptr_, path.c_str()))
+    throw git_exception();
+  return result;
+}
+
 oid repository::create_tag_annotation(const std::string &tag_name, const object &target, const signature &tagger,
                  const std::string &message) {
   oid result;
