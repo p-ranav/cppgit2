@@ -52,7 +52,7 @@ public:
   // Full raw message of this commit
   std::string message_raw() const;
 
-  // Get the commit object that  is the < nth gen ancestopr
+  // Get the commit ob`ject that  is the < nth gen ancestopr
   // of the named commit object.
   //
   // Returned commit is owned by the caller.

@@ -95,6 +95,8 @@ public:
   // If /etc/gitconfig doesn't exist, checks in %PROGRAMFILES%
   static std::string locate_global_system_config();
 
+  static config new_config();
+
   // Open the global, XDG, and system config files
   // into a single prioritized config object
   static config open_default_config();

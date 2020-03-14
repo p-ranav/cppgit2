@@ -50,6 +50,13 @@ std::string config::locate_global_xdg_compatible_config() {
   return result.to_string();
 }
 
+config config::new_config() {
+  config result;
+  if (git_config_new(&result.c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 config config::open_default_config() {
   config result;
   if (git_config_open_default(&result.c_ptr_))

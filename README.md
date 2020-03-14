@@ -252,47 +252,47 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 | --- | --- |
 | `git_config_add_file_ondisk` | |
 | `git_config_backend_foreach_match | **Not implemented** |
-| `git_config_delete_entry` | |
-| `git_config_delete_multivar` | |
-| `git_config_entry_free` | |
-| `git_config_find_global` | |
-| `git_config_find_programdata` | |
-| `git_config_find_system` | |
-| `git_config_find_xdg` | |
-| `git_config_foreach` | |
+| `git_config_delete_entry` | `config::delete_entry` |
+| `git_config_delete_multivar` | `config::delete_entry` |
+| `git_config_entry_free` | `config::entry::~entry` |
+| `git_config_find_global` | `config::locate_global_config` |
+| `git_config_find_programdata` | `config::locate_global_config_in_programdata` |
+| `git_config_find_system` | `config::locate_global_system_config` |
+| `git_config_find_xdg` | `config::locate_global_xdg_compatible_config`  |
+| `git_config_foreach` | `config::for_each` |
 | `git_config_foreach_match | **Not implemented** |
-| `git_config_free` | |
-| `git_config_get_bool` | |
-| `git_config_get_entry` | |
-| `git_config_get_int32` | |
-| `git_config_get_int64` | |
+| `git_config_free` | `config::~config` |
+| `git_config_get_bool` | `config::value_as_bool` |
+| `git_config_get_entry` | `config::operator[]` |
+| `git_config_get_int32` | `config::value_as_int32` |
+| `git_config_get_int64` | `config::value_as_int64` |
 | `git_config_get_mapped | **Not implemented** |
 | `git_config_get_multivar_foreach | **Not implemented** |
-| `git_config_get_path` | |
-| `git_config_get_string` | |
-| `git_config_get_string_buf` | |
-| `git_config_iterator_free` | |
+| `git_config_get_path` | `config::path` |
+| `git_config_get_string` | `config::value_as_string` |
+| `git_config_get_string_buf` | `config::value_as_data_buffer` |
+| `git_config_iterator_free` | `config::for_each_entry` |
 | `git_config_iterator_glob_new | **Not implemented** |
-| `git_config_iterator_new` | |
-| `git_config_lock` | |
+| `git_config_iterator_new` | `config::for_each_entry` |
+| `git_config_lock` | `config::lock` |
 | `git_config_lookup_map_value | **Not implemented** |
 | `git_config_multivar_iterator_new | **Not implemented** |
-| `git_config_new` | |
-| `git_config_next` | |
-| `git_config_open_default` | |
-| `git_config_open_global` | |
-| `git_config_open_level` | |
+| `git_config_new` | `config::new_config` |
+| `git_config_next` | `config::for_each_entry` |
+| `git_config_open_default` | `config::open_default_config`  |
+| `git_config_open_global` | `config::open_global_config` |
+| `git_config_open_level` | `config::open_config_at_level` |
 | `git_config_open_ondisk | **Not implemented** |
-| `git_config_parse_bool` | |
-| `git_config_parse_int32` | |
-| `git_config_parse_int64` | |
-| `git_config_parse_path` | |
-| `git_config_set_bool` | |
-| `git_config_set_int32` | |
-| `git_config_set_int64` | |
-| `git_config_set_multivar` | |
-| `git_config_set_string` | |
-| `git_config_snapshot` | |
+| `git_config_parse_bool` | `config::parse_as_bool` |
+| `git_config_parse_int32` | `config::parse_as_int32` |
+| `git_config_parse_int64` | `config::parse_as_int64` |
+| `git_config_parse_path` | `config::parse_path` |
+| `git_config_set_bool` | `config::insert_entry` |
+| `git_config_set_int32` | `config::insert_entry` |
+| `git_config_set_int64` | `config::insert_entry` |
+| `git_config_set_multivar` | `config::insert_entry` |
+| `git_config_set_string` | `config::insert_entry` |
+| `git_config_snapshot` | `config::snapshot` |
 
 ### cred
 
