@@ -137,8 +137,8 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 | `git_blob_create_from_workdir` | `repository::create_blobf=_from_workdir` |
 | `git_blob_create_fromworkdir` | `repository::create_blobf=_from_workdir` |
 | `git_blob_dup` | `blob::copy` |
-| `git_blob_filter | **Not implemented** |
-| `git_blob_filtered_content | **Not implemented** |
+| `git_blob_filter` | **Not implemented** |
+| `git_blob_filtered_content` | **Not implemented** |
 | `git_blob_free` | `blob::~blob` |
 | `git_blob_id` | `blob::id` |
 | `git_blob_is_binary` | `blob::is_binary` |
@@ -221,7 +221,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 `git_commit_committer_with_mailmap` | |
 | `git_commit_create` | `repository::create_commit` |
 | `git_commit_create_buffer` | `repository::create_commit` |
-| `git_commit_create_v | **Not implemented** |
+| `git_commit_create_v` | **Not implemented** |
 | `git_commit_create_with_signature` | `repository::create_commit` |
 | `git_commit_dup` | `commit::copy` |
 | `git_commit_extract_signature` | `repository::extract_signature_from_commit` |
@@ -251,7 +251,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 | libgit2 | cppgit2:: |
 | --- | --- |
 | `git_config_add_file_ondisk` | |
-| `git_config_backend_foreach_match | **Not implemented** |
+| `git_config_backend_foreach_match` | **Not implemented** |
 | `git_config_delete_entry` | `config::delete_entry` |
 | `git_config_delete_multivar` | `config::delete_entry` |
 | `git_config_entry_free` | `config::entry::~entry` |
@@ -260,29 +260,29 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 | `git_config_find_system` | `config::locate_global_system_config` |
 | `git_config_find_xdg` | `config::locate_global_xdg_compatible_config`  |
 | `git_config_foreach` | `config::for_each` |
-| `git_config_foreach_match | **Not implemented** |
+| `git_config_foreach_match` | **Not implemented** |
 | `git_config_free` | `config::~config` |
 | `git_config_get_bool` | `config::value_as_bool` |
 | `git_config_get_entry` | `config::operator[]` |
 | `git_config_get_int32` | `config::value_as_int32` |
 | `git_config_get_int64` | `config::value_as_int64` |
-| `git_config_get_mapped | **Not implemented** |
-| `git_config_get_multivar_foreach | **Not implemented** |
+| `git_config_get_mapped` | **Not implemented** |
+| `git_config_get_multivar_foreach` | **Not implemented** |
 | `git_config_get_path` | `config::path` |
 | `git_config_get_string` | `config::value_as_string` |
 | `git_config_get_string_buf` | `config::value_as_data_buffer` |
 | `git_config_iterator_free` | `config::for_each_entry` |
-| `git_config_iterator_glob_new | **Not implemented** |
+| `git_config_iterator_glob_new` | **Not implemented** |
 | `git_config_iterator_new` | `config::for_each_entry` |
 | `git_config_lock` | `config::lock` |
-| `git_config_lookup_map_value | **Not implemented** |
-| `git_config_multivar_iterator_new | **Not implemented** |
+| `git_config_lookup_map_value` | **Not implemented** |
+| `git_config_multivar_iterator_new` | **Not implemented** |
 | `git_config_new` | `config::new_config` |
 | `git_config_next` | `config::for_each_entry` |
 | `git_config_open_default` | `config::open_default_config`  |
 | `git_config_open_global` | `config::open_global_config` |
 | `git_config_open_level` | `config::open_config_at_level` |
-| `git_config_open_ondisk | **Not implemented** |
+| `git_config_open_ondisk` | **Not implemented** |
 | `git_config_parse_bool` | `config::parse_as_bool` |
 | `git_config_parse_int32` | `config::parse_as_int32` |
 | `git_config_parse_int64` | `config::parse_as_int64` |
@@ -545,7 +545,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_object__size | **Not implemented** |
+| `git_object__size` | **Not implemented** |
 | `git_object_dup` | |
 | `git_object_free` | |
 | `git_object_id` | |
@@ -613,7 +613,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 | `git_oid_fromraw` | |
 | `git_oid_fromstr` | |
 | `git_oid_fromstrn` | |
-| `git_oid_fromstrp | **Not implemented** |
+| `git_oid_fromstrp` | **Not implemented** |
 | `git_oid_is_zero` | |
 | `git_oid_iszero` | |
 | `git_oid_ncmp` | |
@@ -1054,7 +1054,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 `git_submodule_update_options_init` | |
 | `git_submodule_update_strategy` | |
 | `git_submodule_url` | |
-| `git_submodule_wd_id | **Not implemented** |
+| `git_submodule_wd_id` | **Not implemented** |
 
 ### tag
 
@@ -1086,7 +1086,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_trace_set | **Not implemented** |
+| `git_trace_set` | **Not implemented** |
 
 ### transaction
 
