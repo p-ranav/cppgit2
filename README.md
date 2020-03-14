@@ -84,11 +84,11 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 | libgit2 | cppgit2 |
 --- | --- |
 | `git_annotated_commit_free` | `cppgit2::annotated_commit::~annotated_commit` |
-| `git_annotated_commit_from_fetchhead` | |
-| `git_annotated_commit_from_ref` | |
-| `git_annotated_commit_from_revspec` | |
+| `git_annotated_commit_from_fetchhead` | `cppgit2::repository::create_annotated_commit` |
+| `git_annotated_commit_from_ref` | `cppgit2::repository::create_annotated_commit` |
+| `git_annotated_commit_from_revspec` | `cppgit2::repository::create_annotated_commit` |
 | `git_annotated_commit_id` | `cppgit2::annotated_commit::id` |
-| `git_annotated_commit_lookup` | |
+| `git_annotated_commit_lookup` | `cppgit2::repository::lookup_annotated_commit` |
 | `git_annotated_commit_ref` | `cppgit2::annotated_commit::refname` |
 
 
