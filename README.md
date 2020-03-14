@@ -137,8 +137,8 @@ git_blob_create_from_stream_commit
 | git_blob_create_from_workdir
 | git_blob_create_fromworkdir
 | git_blob_dup
-- git_blob_filter
-- git_blob_filtered_content - Deprecated in favor of git_blob_filter
+| git_blob_filter | **Not implemented** |
+| git_blob_filtered_content | **Not implemented** |
 | git_blob_free
 | git_blob_id
 | git_blob_is_binary
@@ -222,7 +222,7 @@ git_commit_author_with_mailmap
 git_commit_committer_with_mailmap
 | git_commit_create
 | git_commit_create_buffer
-- git_commit_create_v
+| git_commit_create_v | **Not implemented** |
 | git_commit_create_with_signature
 | git_commit_dup
 | git_commit_extract_signature
@@ -252,7 +252,7 @@ git_commit_committer_with_mailmap
 | libgit2 | cppgit2:: |
 | --- | --- |
 | git_config_add_file_ondisk
-- git_config_backend_foreach_match
+| git_config_backend_foreach_match | **Not implemented** |
 | git_config_delete_entry
 | git_config_delete_multivar
 | git_config_entry_free
@@ -261,29 +261,29 @@ git_commit_committer_with_mailmap
 | git_config_find_system
 | git_config_find_xdg
 | git_config_foreach
-- git_config_foreach_match
+| git_config_foreach_match | **Not implemented** |
 | git_config_free
 | git_config_get_bool
 | git_config_get_entry
 | git_config_get_int32
 | git_config_get_int64
-- git_config_get_mapped
-- git_config_get_multivar_foreach
+| git_config_get_mapped | **Not implemented** |
+| git_config_get_multivar_foreach | **Not implemented** |
 | git_config_get_path
 | git_config_get_string
 | git_config_get_string_buf
 | git_config_iterator_free
-- git_config_iterator_glob_new
+| git_config_iterator_glob_new | **Not implemented** |
 | git_config_iterator_new
 | git_config_lock
-- git_config_lookup_map_value
-- git_config_multivar_iterator_new
-- git_config_new
+| git_config_lookup_map_value | **Not implemented** |
+| git_config_multivar_iterator_new | **Not implemented** |
+| git_config_new
 | git_config_next
 | git_config_open_default
 | git_config_open_global
 | git_config_open_level
-- git_config_open_ondisk
+| git_config_open_ondisk | **Not implemented** |
 | git_config_parse_bool
 | git_config_parse_int32
 | git_config_parse_int64
@@ -555,7 +555,7 @@ git_note_remove
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-- git_object__size
+| git_object__size | **Not implemented** |
 | git_object_dup
 | git_object_free
 | git_object_id
@@ -623,7 +623,7 @@ git_odb_write_pack
 | git_oid_fromraw
 | git_oid_fromstr
 | git_oid_fromstrn
-- git_oid_fromstrp
+| git_oid_fromstrp | **Not implemented** |
 | git_oid_is_zero
 | git_oid_iszero
 | git_oid_ncmp
@@ -1064,7 +1064,7 @@ git_submodule_update
 git_submodule_update_options_init
 | git_submodule_update_strategy
 | git_submodule_url
-- git_submodule_wd_id
+| git_submodule_wd_id | **Not implemented** |
 
 
 ### tag
@@ -1098,7 +1098,7 @@ git_submodule_update_options_init
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-- git_trace_set
+| git_trace_set | **Not implemented** |
 
 
 ### transaction
