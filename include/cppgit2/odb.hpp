@@ -21,22 +21,22 @@ public:
   // Cleanup odb object if owned by user
   ~odb();
 
-  class backend: public libgit2_api {
+  class backend : public libgit2_api {
   public:
     backend() : c_ptr_(nullptr) {}
     backend(git_odb_backend *c_ptr) : c_ptr_(c_ptr) {}
 
   private:
     friend class odb;
-    git_odb_backend * c_ptr_;
+    git_odb_backend *c_ptr_;
   };
 
   // Determine if the given object can be found in the object database.
-  bool exists(const oid& id) const;
+  bool exists(const oid &id) const;
 
-  // Determine if an object can be found in the object database by an abbreviated object ID.
-  // If true, a valid OID is returned
-  oid exists(const oid& id, size_t length) const;
+  // Determine if an object can be found in the object database by an
+  // abbreviated object ID. If true, a valid OID is returned
+  oid exists(const oid &id, size_t length) const;
 
   // Lookup an ODB backend object by index
   backend operator[](size_t index) const;
@@ -45,8 +45,10 @@ public:
   size_t size() const;
 
   // Create a backend for loose objects
-  static backend create_backend_for_loose_objects(const std::string &objects_dir, 
-    int compression_level, bool do_fsync, unsigned int dir_mode, file_mode mode);
+  static backend
+  create_backend_for_loose_objects(const std::string &objects_dir,
+                                   int compression_level, bool do_fsync,
+                                   unsigned int dir_mode, file_mode mode);
 
   // Create a backend out of a single packfile
   // index_file is the path to the packfile's .idx file

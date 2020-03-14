@@ -1,6 +1,6 @@
 #pragma once
-#include <cppgit2/git_exception.hpp>
 #include <cppgit2/bitmask_operators.hpp>
+#include <cppgit2/git_exception.hpp>
 #include <git2.h>
 #include <string>
 

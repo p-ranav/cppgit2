@@ -1,11 +1,11 @@
 #pragma once
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/blob.hpp>
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/diff.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
-#include <cppgit2/bitmask_operators.hpp>
 #include <git2.h>
 #include <string>
 #include <utility>

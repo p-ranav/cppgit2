@@ -584,16 +584,19 @@ public:
    * See git_reset_* functions
    */
 
-  // Sets the current head to the specified commit oid 
+  // Sets the current head to the specified commit oid
   // and optionally resets the index and working tree to match.
-  void reset(const object &target, reset::reset_type reset_type, const checkout::options &options = checkout::options());
+  void reset(const object &target, reset::reset_type reset_type,
+             const checkout::options &options = checkout::options());
 
   // Updates some entries in the index from the target commit tree.
-  void reset_default(const object & target, const std::vector<std::string> &pathspecs);
+  void reset_default(const object &target,
+                     const std::vector<std::string> &pathspecs);
 
-  // Sets the current head to the specified annotated commit oid 
+  // Sets the current head to the specified annotated commit oid
   // and optionally resets the index and working tree to match.
-  void reset(const annotated_commit &target, reset::reset_type reset_type, const checkout::options &options = checkout::options());
+  void reset(const annotated_commit &target, reset::reset_type reset_type,
+             const checkout::options &options = checkout::options());
 
   /*
    * SIGNATURE API
@@ -610,10 +613,13 @@ public:
   status::status_type status_file(const std::string &path) const;
 
   // Gather file statuses and run a callback for each one.
-  void for_each_status(std::function<void(const std::string &, status::status_type)> visitor);
+  void for_each_status(
+      std::function<void(const std::string &, status::status_type)> visitor);
 
   // Gather file status information and run callbacks as requested.
-  void for_each_status(const status::options &options, std::function<void(const std::string &, status::status_type)> visitor);
+  void for_each_status(
+      const status::options &options,
+      std::function<void(const std::string &, status::status_type)> visitor);
 
   // Gather file status information and populate the git_status_list.
   status::list status_list(const status::options &options = status::options());
@@ -621,8 +627,8 @@ public:
   // Test if the ignore rules apply to a given file.
   // Returns false if the file is not ignored, 1 if it is
   //
-  // One way to think of this is if you were to do 
-  // "git add ." on the directory containing the file, 
+  // One way to think of this is if you were to do
+  // "git add ." on the directory containing the file,
   // would it be added or not?
   bool should_ignore(const std::string &path) const;
 
@@ -632,38 +638,43 @@ public:
    */
 
   // Create a new tag in the object database pointing to a git_object
-  oid create_tag_annotation(const std::string &tag_name, const object &target, const signature &tagger,
-                 const std::string &message);
+  oid create_tag_annotation(const std::string &tag_name, const object &target,
+                            const signature &tagger,
+                            const std::string &message);
 
   // Create a new tag in the repository from an object
-  oid create_tag(const std::string &tag_name, const object &target, const signature &tagger,
-                 const std::string &message, bool force);
+  oid create_tag(const std::string &tag_name, const object &target,
+                 const signature &tagger, const std::string &message,
+                 bool force);
 
   // Create a new tag in the repository from a buffer
   oid create_tag(const std::string &buffer, bool force);
 
   // Create a new lightweight tag pointing at a target object
-  oid create_lightweight_tag(const std::string &tag_name, const object &target, bool force);
+  oid create_lightweight_tag(const std::string &tag_name, const object &target,
+                             bool force);
 
   // Delete an existing tag reference.
   void delete_tag(const std::string &tag_name);
 
   // Callback used to iterate over tags
   void
-  for_each_tag(std::function<void(const std::string &, const oid&)> visitor);
+  for_each_tag(std::function<void(const std::string &, const oid &)> visitor);
 
   // Fill a list with all the tags in the Repository
-  // The string array will be filled with the names of the matching tags; 
+  // The string array will be filled with the names of the matching tags;
   // these values are owned by the user.
   strarray tags() const;
 
-  // Fill a list with all the tags in the Repository which name match a defined pattern
+  // Fill a list with all the tags in the Repository which name match a defined
+  // pattern
   strarray tags_that_match(const std::string &pattern) const;
 
   // Lookup a tag object from the repository.
   tag lookup_tag(const oid &id) const;
 
-  // Lookup a tag object from the repository, given a prefix of its identifier (short id).
+  // Lookup a tag object from the repository, given a prefix of its identifier
+  // (short id).
   tag lookup_tag(const oid &id, size_t length) const;
 
   /*
@@ -688,7 +699,8 @@ public:
   tree lookup_tree(const oid &id, size_t length);
 
   // Create a tree based on another one with the specified modifications
-  oid create_updated_tree(const tree &baseline, std::vector<tree::update> updates);
+  oid create_updated_tree(const tree &baseline,
+                          std::vector<tree::update> updates);
 
 private:
   friend class tree_builder;

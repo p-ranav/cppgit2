@@ -150,13 +150,9 @@ public:
       c_struct_.action = static_cast<git_tree_update_t>(update_type);
     }
 
-    oid id() const {
-      return oid(&c_struct_.id);
-    }
+    oid id() const { return oid(&c_struct_.id); }
 
-    void set_id(const oid& id) {
-      c_struct_.id = *(id.c_ptr());
-    }
+    void set_id(const oid &id) { c_struct_.id = *(id.c_ptr()); }
 
     cppgit2::file_mode file_mode() const {
       return static_cast<cppgit2::file_mode>(c_struct_.filemode);
@@ -169,12 +165,11 @@ public:
     std::string path() const {
       if (c_struct_.path)
         return std::string(c_struct_.path);
-      else return "";
+      else
+        return "";
     }
 
-    void set_path(const std::string &path) {
-      c_struct_.path = path.c_str();
-    }
+    void set_path(const std::string &path) { c_struct_.path = path.c_str(); }
 
   private:
     friend class repository;

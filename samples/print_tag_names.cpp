@@ -7,8 +7,8 @@ int main(int argc, char **argv) {
     repository repo;
     repo.open(argv[1]);
 
-    // Fetch, iterate over and print tags 
-    for (const auto& tag : repo.tags())
+    // Fetch, iterate over and print tags
+    for (const auto &tag : repo.tags())
       std::cout << tag << std::endl;
 
   } else {

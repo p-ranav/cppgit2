@@ -1,6 +1,6 @@
 #pragma once
-#include <cppgit2/diff.hpp>
 #include <cppgit2/bitmask_operators.hpp>
+#include <cppgit2/diff.hpp>
 #include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>

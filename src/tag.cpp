@@ -57,9 +57,7 @@ object::object_type tag::target_type() const {
   return static_cast<object::object_type>(git_tag_target_type(c_ptr_));
 }
 
-repository tag::owner() const {
-  return repository(git_tag_owner(c_ptr_));
-}
+repository tag::owner() const { return repository(git_tag_owner(c_ptr_)); }
 
 git_tag *tag::c_ptr() { return c_ptr_; }
 

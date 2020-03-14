@@ -923,23 +923,31 @@ reflog repository::read_reflog(const std::string &name) {
   return result;
 }
 
-void repository::rename_reflog(const std::string &old_name, const std::string &name) {
+void repository::rename_reflog(const std::string &old_name,
+                               const std::string &name) {
   if (git_reflog_rename(c_ptr_, old_name.c_str(), name.c_str()))
     throw git_exception();
 }
 
-void repository::reset(const object &target, reset::reset_type reset_type, const checkout::options &options) {
-  if (git_reset(c_ptr_, target.c_ptr(), static_cast<git_reset_t>(reset_type), options.c_ptr()))
+void repository::reset(const object &target, reset::reset_type reset_type,
+                       const checkout::options &options) {
+  if (git_reset(c_ptr_, target.c_ptr(), static_cast<git_reset_t>(reset_type),
+                options.c_ptr()))
     throw git_exception();
 }
 
-void repository::reset_default(const object & target, const std::vector<std::string> &pathspecs) {
+void repository::reset_default(const object &target,
+                               const std::vector<std::string> &pathspecs) {
   if (git_reset_default(c_ptr_, target.c_ptr(), strarray(pathspecs).c_ptr()))
     throw git_exception();
 }
 
-void repository::reset(const annotated_commit &target, reset::reset_type reset_type, const checkout::options &options) {
-  if (git_reset_from_annotated(c_ptr_, target.c_ptr(), static_cast<git_reset_t>(reset_type), options.c_ptr()))
+void repository::reset(const annotated_commit &target,
+                       reset::reset_type reset_type,
+                       const checkout::options &options) {
+  if (git_reset_from_annotated(c_ptr_, target.c_ptr(),
+                               static_cast<git_reset_t>(reset_type),
+                               options.c_ptr()))
     throw git_exception();
 }
 
@@ -957,7 +965,8 @@ status::status_type repository::status_file(const std::string &path) const {
   return static_cast<status::status_type>(result);
 }
 
-void repository::for_each_status(std::function<void(const std::string &, status::status_type)> visitor) {
+void repository::for_each_status(
+    std::function<void(const std::string &, status::status_type)> visitor) {
   struct visitor_wrapper {
     std::function<void(const std::string &, status::status_type)> fn;
   };
@@ -965,7 +974,8 @@ void repository::for_each_status(std::function<void(const std::string &, status:
   visitor_wrapper wrapper;
   wrapper.fn = visitor;
 
-  auto callback_c = [](const char *path, unsigned int status_flags, void *payload) {
+  auto callback_c = [](const char *path, unsigned int status_flags,
+                       void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     wrapper->fn(path, static_cast<status::status_type>(status_flags));
     return 0;
@@ -975,8 +985,9 @@ void repository::for_each_status(std::function<void(const std::string &, status:
     throw git_exception();
 }
 
-void repository::for_each_status(const status::options &options, 
-  std::function<void(const std::string &, status::status_type)> visitor) {
+void repository::for_each_status(
+    const status::options &options,
+    std::function<void(const std::string &, status::status_type)> visitor) {
   struct visitor_wrapper {
     std::function<void(const std::string &, status::status_type)> fn;
   };
@@ -984,13 +995,15 @@ void repository::for_each_status(const status::options &options,
   visitor_wrapper wrapper;
   wrapper.fn = visitor;
 
-  auto callback_c = [](const char *path, unsigned int status_flags, void *payload) {
+  auto callback_c = [](const char *path, unsigned int status_flags,
+                       void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     wrapper->fn(path, static_cast<status::status_type>(status_flags));
     return 0;
   };
 
-  if (git_status_foreach_ext(c_ptr_, options.c_ptr(), callback_c, (void *)(&wrapper)))
+  if (git_status_foreach_ext(c_ptr_, options.c_ptr(), callback_c,
+                             (void *)(&wrapper)))
     throw git_exception();
 }
 
@@ -1008,20 +1021,24 @@ bool repository::should_ignore(const std::string &path) const {
   return result;
 }
 
-oid repository::create_tag_annotation(const std::string &tag_name, const object &target, const signature &tagger,
-                 const std::string &message) {
+oid repository::create_tag_annotation(const std::string &tag_name,
+                                      const object &target,
+                                      const signature &tagger,
+                                      const std::string &message) {
   oid result;
-  if (git_tag_annotation_create(result.c_ptr(), c_ptr_, tag_name.c_str(), target.c_ptr(),
-                            tagger.c_ptr(), message.c_str()))
+  if (git_tag_annotation_create(result.c_ptr(), c_ptr_, tag_name.c_str(),
+                                target.c_ptr(), tagger.c_ptr(),
+                                message.c_str()))
     throw git_exception();
   return result;
 }
 
-oid repository::create_tag(const std::string &tag_name, const object &target, const signature &tagger,
-                           const std::string &message, bool force) {
+oid repository::create_tag(const std::string &tag_name, const object &target,
+                           const signature &tagger, const std::string &message,
+                           bool force) {
   oid result;
   if (git_tag_create(result.c_ptr(), c_ptr_, tag_name.c_str(), target.c_ptr(),
-                            tagger.c_ptr(), message.c_str(), force))
+                     tagger.c_ptr(), message.c_str(), force))
     throw git_exception();
   return result;
 }
@@ -1033,10 +1050,11 @@ oid repository::create_tag(const std::string &buffer, bool force) {
   return result;
 }
 
-oid repository::create_lightweight_tag(const std::string &tag_name, const object &target,
-                                       bool force) {
+oid repository::create_lightweight_tag(const std::string &tag_name,
+                                       const object &target, bool force) {
   oid result;
-  if (git_tag_create_lightweight(result.c_ptr(), c_ptr_, tag_name.c_str(), target.c_ptr(), force))
+  if (git_tag_create_lightweight(result.c_ptr(), c_ptr_, tag_name.c_str(),
+                                 target.c_ptr(), force))
     throw git_exception();
   return result;
 }
@@ -1046,7 +1064,8 @@ void repository::delete_tag(const std::string &tag_name) {
     throw git_exception();
 }
 
-void repository::for_each_tag(std::function<void(const std::string &, const oid&)> visitor) {
+void repository::for_each_tag(
+    std::function<void(const std::string &, const oid &)> visitor) {
   struct visitor_wrapper {
     std::function<void(const std::string &, const oid &)> fn;
   };
@@ -1054,7 +1073,7 @@ void repository::for_each_tag(std::function<void(const std::string &, const oid&
   visitor_wrapper wrapper;
   wrapper.fn = visitor;
 
-  auto callback_c = [](const char *name, git_oid * oid_c, void *payload) {
+  auto callback_c = [](const char *name, git_oid *oid_c, void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     wrapper->fn(name, oid(oid_c));
     return 0;
@@ -1120,14 +1139,16 @@ tree repository::lookup_tree(const oid &id, size_t length) {
   return result;
 }
 
-oid repository::create_updated_tree(const tree &baseline, 
-  std::vector<tree::update> updates) {
+oid repository::create_updated_tree(const tree &baseline,
+                                    std::vector<tree::update> updates) {
   oid result;
-  git_tree_update * updates_c = (git_tree_update *)malloc(updates.size() * sizeof(git_tree_update));
+  git_tree_update *updates_c =
+      (git_tree_update *)malloc(updates.size() * sizeof(git_tree_update));
   for (size_t i = 0; i < updates.size(); ++i)
     updates_c[i] = updates[i].c_struct_;
 
-  if (git_tree_create_updated(result.c_ptr(), c_ptr_, baseline.c_ptr_, updates.size(), updates_c))
+  if (git_tree_create_updated(result.c_ptr(), c_ptr_, baseline.c_ptr_,
+                              updates.size(), updates_c))
     throw git_exception();
   free(updates_c);
   return result;
