@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   // Create commit
   auto commit_oid = repo.create_commit("HEAD", 
     author, committer, "utf-8", 
-    "Update README", repo.lookup_tree(tree_oid), {});
+    "Update README\n", repo.lookup_tree(tree_oid), {});
 }
 
 
