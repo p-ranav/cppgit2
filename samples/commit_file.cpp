@@ -29,6 +29,8 @@ int main(int argc, char **argv) {
     auto commit_oid = repo.create_commit("HEAD", author, committer, "utf-8", 
           "Update README", repo.lookup_tree(tree_oid), {});
 
+    std::cout << commit_oid.to_hex_string() << std::endl;
+
   } else {
     std::cout << "Usage: ./executable <new_repo_path>\n";
   }
