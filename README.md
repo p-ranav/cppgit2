@@ -130,23 +130,23 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_blob_create_from_buffer` | |
-| `git_blob_create_from_disk` | |
+| `git_blob_create_from_buffer` | `repository::create_blob_from_buffer` |
+| `git_blob_create_from_disk` | `repository::create_blob_from_disk` |
 `git_blob_create_from_stream` | |
 `git_blob_create_from_stream_commit` | |
-| `git_blob_create_from_workdir` | |
-| `git_blob_create_fromworkdir` | |
-| `git_blob_dup` | |
+| `git_blob_create_from_workdir` | `repository::create_blobf=_from_workdir` |
+| `git_blob_create_fromworkdir` | `repository::create_blobf=_from_workdir` |
+| `git_blob_dup` | `blob::copy` |
 | `git_blob_filter | **Not implemented** |
 | `git_blob_filtered_content | **Not implemented** |
-| `git_blob_free` | |
-| `git_blob_id` | |
-| `git_blob_is_binary` | |
-| `git_blob_lookup` | |
-| `git_blob_lookup_prefix` | |
-| `git_blob_owner` | |
-| `git_blob_rawcontent` | |
-| `git_blob_rawsize` | |
+| `git_blob_free` | `blob::~blob` |
+| `git_blob_id` | `blob::id` |
+| `git_blob_is_binary` | `blob::is_binary` |
+| `git_blob_lookup` | `repository::lookup_blob` |
+| `git_blob_lookup_prefix` | `repository::lookup_blob` |
+| `git_blob_owner` | `blob::owner` |
+| `git_blob_rawcontent` | `blob::raw_content` |
+| `git_blob_rawsize` | `blob::raw_size` |
 
 
 ### branch
