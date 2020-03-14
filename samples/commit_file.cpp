@@ -1,38 +1,39 @@
-
-
 #include <cppgit2/repository.hpp>
 #include <fstream>
 #include <iostream>
 using namespace cppgit2;
 
 int main(int argc, char **argv) {
-  // Create new repo
-  repository repo(argv[1], false);
+  if (argc == 2) {
 
-  // Write README file
-  std::ofstream readme;
-  readme.open(std::string{argv[1]} + "/README.md");
-  readme << "Hello, World!\n";
-  readme.close();
+    // Create new repo
+    repository repo(argv[1], false);
 
-  // Get repo index and write as tree
-  auto index = repo.index();
-  index.add_entry_by_path("README.md");
-  index.write();
-  auto tree_oid = index.write_tree();
+    // Write README file
+    std::ofstream readme;
+    readme.open(std::string{argv[1]} + "/README.md");
+    readme << "Hello, World!";
+    readme.close();
 
-  // Prepare signatures
-  auto author = signature("foobar", "foo.bar@baz.com");
-  auto committer = author;
+    // Get repo index and write as tree
+    auto index = repo.index();
+    index.add_entry_by_path("README.md");
+    index.write();
+    auto tree_oid = index.write_tree();
 
-  // Create commit
-  repo.create_commit("HEAD", author, committer, 
-    "utf-8", "Update README\n", 
-    repo.lookup_tree(tree_oid), {});
+    // Prepare signatures
+    auto author = signature("foobar", "foo.bar@baz.com");
+    auto committer = signature("foobar", "foo.bar@baz.com");
+
+    // Create commit
+    auto commit_oid =
+        repo.create_commit("HEAD", author, committer, "utf-8", "Update README",
+                           repo.lookup_tree(tree_oid), {});
+
+    std::cout << "Created commit with ID: " << commit_oid.to_hex_string()
+              << std::endl;
+
+  } else {
+    std::cout << "Usage: ./executable <new_repo_path>\n";
+  }
 }
-
-
-
-
-
-
