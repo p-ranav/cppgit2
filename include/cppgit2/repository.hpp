@@ -17,6 +17,7 @@
 #include <cppgit2/reference.hpp>
 #include <cppgit2/reset.hpp>
 #include <cppgit2/revision.hpp>
+#include <cppgit2/stash.hpp>
 #include <cppgit2/status.hpp>
 #include <cppgit2/tag.hpp>
 #include <cppgit2/tree_builder.hpp>
@@ -603,6 +604,31 @@ public:
    * See git_signature_* functions
    */
   signature default_signature() const;
+
+  /*
+   * STASH API
+   * See git_stash_* functions
+   */
+
+  // Apply a single stashed state from the stash list.
+  // index is the position within the stash list. 
+  // -> 0 points to the most recent stashed state.
+  void apply_stash(size_t index, const stash::apply::options &options = stash::apply::options());
+
+  // Remove a single stashed state from the stash list.
+  // index is the position within the stash list. 
+  // -> 0 points to the most recent stashed state.
+  void drop_stash(size_t index);
+
+  // Loop over all the stashed states and issue a callback for each one.
+  void for_each_stash(std::function<void(size_t, const std::string &, const oid &)> visitor) const;
+
+  // Apply a single stashed state from the stash list 
+  // and remove it from the list if successful.
+  void pop_stash(size_t index, const stash::apply::options &options = stash::apply::options());
+
+  // Save the local modifications to a new stash.
+  oid save_stash(const signature &stasher, const std::string &message, stash::apply::flag flags);
 
   /*
    * STATUS API

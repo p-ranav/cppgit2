@@ -900,12 +900,12 @@ git_revwalk_sorting
 
 ### stash
 ```diff
-git_stash_apply
-git_stash_apply_options_init
-git_stash_drop
-git_stash_foreach
-git_stash_pop
-git_stash_save
++ git_stash_apply
++ git_stash_apply_options_init
++ git_stash_drop
++ git_stash_foreach
++ git_stash_pop
++ git_stash_save
 ```
 
 ### status
