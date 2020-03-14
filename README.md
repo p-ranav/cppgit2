@@ -693,13 +693,13 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_proxy_options_init` | |
-
+| `git_proxy_options_init` | `proxy::options::options` |
 
 ### push
 
 | libgit2 | cppgit2:: |
-`git_push_options_init` | |
+| --- | --- |
+| `git_push_options_init` | `push::options::options` |
 
 
 ### rebase
