@@ -1,4 +1,5 @@
 #pragma once
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/object.hpp>
@@ -127,5 +128,6 @@ private:
   git_reference *c_ptr_;
   ownership owner_;
 };
+ENABLE_BITMASK_OPERATORS(reference::format);
 
 } // namespace cppgit2

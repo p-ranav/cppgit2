@@ -5,6 +5,7 @@
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <git2.h>
 #include <string>
 #include <utility>
@@ -340,5 +341,7 @@ private:
   git_diff *c_ptr_;
   ownership owner_;
 };
+ENABLE_BITMASK_OPERATORS(diff::delta::flag);
+ENABLE_BITMASK_OPERATORS(diff::options::flag);
 
 } // namespace cppgit2

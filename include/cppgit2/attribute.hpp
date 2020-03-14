@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/git_exception.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <git2.h>
 #include <string>
 
@@ -49,16 +50,7 @@ public:
     no_system = (1 << 2),
     include_head = (1 << 3)
   };
-
-  friend inline flag operator|(flag a, flag b) {
-    return static_cast<flag>(static_cast<uint32_t>(a) |
-                             static_cast<uint32_t>(b));
-  }
-
-  friend inline flag operator&(flag a, flag b) {
-    return static_cast<flag>(static_cast<uint32_t>(a) &
-                             static_cast<uint32_t>(b));
-  }
 };
+ENABLE_BITMASK_OPERATORS(attribute::flag);
 
 } // namespace cppgit2

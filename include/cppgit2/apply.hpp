@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/diff.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
@@ -62,5 +63,6 @@ public:
     git_apply_options default_options_;
   };
 };
+ENABLE_BITMASK_OPERATORS(apply::options::flag);
 
 }; // namespace cppgit2

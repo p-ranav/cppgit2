@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/git_exception.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/signature.hpp>
@@ -197,5 +198,6 @@ private:
   git_blame *c_ptr_;
   ownership owner_;
 };
+ENABLE_BITMASK_OPERATORS(blame::options::flag);
 
 } // namespace cppgit2

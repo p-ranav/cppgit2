@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/git_exception.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/index.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/strarray.hpp>
@@ -252,5 +253,7 @@ public:
     git_checkout_options default_options_;
   };
 };
+ENABLE_BITMASK_OPERATORS(checkout::notification_flag);
+ENABLE_BITMASK_OPERATORS(checkout::checkout_strategy);
 
 } // namespace cppgit2

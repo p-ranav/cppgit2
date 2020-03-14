@@ -1,4 +1,5 @@
 #pragma once
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/file_mode.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
@@ -315,5 +316,8 @@ private:
   git_index *c_ptr_;
   ownership owner_;
 };
+ENABLE_BITMASK_OPERATORS(index::entry::flag);
+ENABLE_BITMASK_OPERATORS(index::entry::extended_flag);
+ENABLE_BITMASK_OPERATORS(index::add_option);
 
 } // namespace cppgit2

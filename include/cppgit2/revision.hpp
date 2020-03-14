@@ -1,3 +1,4 @@
+#include <cppgit2/bitmask_operators.hpp>
 
 namespace cppgit2 {
 
@@ -23,5 +24,6 @@ enum class sort {
 };
 
 } // namespace revision
+ENABLE_BITMASK_OPERATORS(revision::sort);
 
 } // namespace cppgit2

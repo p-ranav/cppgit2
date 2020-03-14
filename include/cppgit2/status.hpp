@@ -3,6 +3,7 @@
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
 #include <cppgit2/tree.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
@@ -36,16 +37,6 @@ public:
         ignored          = (1u << 14),
         conflicted       = (1u << 15)
     };
-
-    friend inline status_type operator|(status_type a, status_type b) {
-        return static_cast<status_type>(static_cast<uint32_t>(a) |
-                                static_cast<uint32_t>(b));
-    }
-
-    friend inline status_type operator&(status_type a, status_type b) {
-        return static_cast<status_type>(static_cast<uint32_t>(a) &
-                                static_cast<uint32_t>(b));
-    }
 
   // Select the files on which to report status
   enum class show {
@@ -94,16 +85,6 @@ public:
 	  include_unreadable               = (1u << 14),
 	  include_unreadable_as_untracked  = (1u << 15)
     };
-
-    friend inline flag operator|(flag a, flag b) {
-        return static_cast<flag>(static_cast<uint32_t>(a) |
-                                static_cast<uint32_t>(b));
-    }
-
-    friend inline flag operator&(flag a, flag b) {
-        return static_cast<flag>(static_cast<uint32_t>(a) &
-                                static_cast<uint32_t>(b));
-    }
 
     // Flags
     flag flags() const { return static_cast<flag>(c_ptr_->flags); }
@@ -171,5 +152,7 @@ public:
 
 private:
 };
+ENABLE_BITMASK_OPERATORS(status::status_type);
+ENABLE_BITMASK_OPERATORS(status::options::flag);
 
 } // namespace cppgit2
