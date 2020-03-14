@@ -260,7 +260,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 | `git_config_find_system` | `config::locate_global_system_config` |
 | `git_config_find_xdg` | `config::locate_global_xdg_compatible_config`  |
 | `git_config_foreach` | `config::for_each` |
-| `git_config_foreach_match` | **Not implemented** |
+| `git_config_foreach_match` | `config::for_each` |
 | `git_config_free` | `config::~config` |
 | `git_config_get_bool` | `config::value_as_bool` |
 | `git_config_get_entry` | `config::operator[]` |

@@ -217,15 +217,41 @@ size_t config::size() const {
 }
 
 void config::for_each(std::function<void(const entry &)> visitor) {
-  git_config_iterator *iter;
-  git_config_iterator_new(&iter, c_ptr_);
-  git_config_entry *entry_c;
-  int ret;
-  while ((ret = git_config_next(&entry_c, iter)) == 0) {
-    entry payload(entry_c);
-    visitor(payload);
-  }
-  git_config_iterator_free(iter);
+  struct visitor_wrapper {
+    std::function<void(const entry&)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const git_config_entry *	entry,
+                       void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(config::entry(const_cast<git_config_entry *>(entry)));
+    return 0;
+  };
+
+  if (git_config_foreach(c_ptr_, callback_c, (void *)(&wrapper)))
+    throw git_exception();
+}
+
+void config::for_each(const std::string &regexp, std::function<void(const entry &)> visitor) {
+  struct visitor_wrapper {
+    std::function<void(const entry&)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const git_config_entry *	entry,
+                       void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(config::entry(const_cast<git_config_entry *>(entry)));
+    return 0;
+  };
+
+  if (git_config_foreach_match(c_ptr_, regexp.c_str(), callback_c, (void *)(&wrapper)))
+    throw git_exception();
 }
 
 const git_config *config::c_ptr() const { return c_ptr_; }
