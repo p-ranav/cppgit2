@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     // Write README file
     std::ofstream readme;
     readme.open(std::string{argv[1]} + "/README.md");
-    readme << "Hello, World!";
+    readme << "Hello, World!\n";
     readme.close();
 
     // Get repo index and write as tree
