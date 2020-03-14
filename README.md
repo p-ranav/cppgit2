@@ -104,26 +104,26 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_attr_add_macro` | |
-| `git_attr_cache_flush` | |
-| `git_attr_foreach` | |
-| `git_attr_get` | |
-| `git_attr_get_many` | |
-| `git_attr_value` | |
+| `git_attr_add_macro` | `repository::add_attribute_macro` |
+| `git_attr_cache_flush` | `repository::flush_attrobutes_cache` |
+| `git_attr_foreach` | `repository::for_each_attribute` |
+| `git_attr_get` | `repository::lookup_attribute` |
+| `git_attr_get_many` | `repository::lookup_multiple_attributes` |
+| `git_attr_value` | `attribute::value` |
 
 
 ### blame
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_blame_buffer` | |
-| `git_blame_file` | |
-| `git_blame_free` | |
-| `git_blame_get_hunk_byindex` | |
-| `git_blame_get_hunk_byline` | |
-| `git_blame_get_hunk_count` | |
-| `git_blame_init_options` | |
-| `git_blame_options_init` | |
+| `git_blame_buffer` | `blame::get_blame_for_buffer` |
+| `git_blame_file` | `repository::blame_file` |
+| `git_blame_free` | `blame::~blame` |
+| `git_blame_get_hunk_byindex` | `blame::hunk_by_index` |
+| `git_blame_get_hunk_byline` |`blame::hunk_by_line` |
+| `git_blame_get_hunk_count` | `blame::hunk_count` |
+| `git_blame_init_options` | `blame::options::options` |
+| `git_blame_options_init` | `blame::options::options` |
 
 
 ### blob
