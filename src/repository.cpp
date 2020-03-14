@@ -755,8 +755,13 @@ void repository::for_each_commit(std::function<void(const commit &id)> visitor,
   git_revwalk_free(iter);
 }
 
-void repository::add_ondisk_config_file(const cppgit2::config &cfg, const std::string &path, config::priority_level level, bool force) {
-  if (git_config_add_file_ondisk(cfg.c_ptr_, path.c_str(), static_cast<git_config_level_t>(level), c_ptr_, force))
+void repository::add_ondisk_config_file(const cppgit2::config &cfg,
+                                        const std::string &path,
+                                        config::priority_level level,
+                                        bool force) {
+  if (git_config_add_file_ondisk(cfg.c_ptr_, path.c_str(),
+                                 static_cast<git_config_level_t>(level), c_ptr_,
+                                 force))
     throw git_exception();
 }
 
@@ -963,7 +968,8 @@ signature repository::default_signature() const {
   return result;
 }
 
-void repository::apply_stash(size_t index, const stash::apply::options &options) {
+void repository::apply_stash(size_t index,
+                             const stash::apply::options &options) {
   if (git_stash_apply(c_ptr_, index, options.c_ptr()))
     throw git_exception();
 }
@@ -973,16 +979,18 @@ void repository::drop_stash(size_t index) {
     throw git_exception();
 }
 
-void repository::for_each_stash(std::function<void(size_t, const std::string &, const oid &)> visitor) const {
+void repository::for_each_stash(
+    std::function<void(size_t, const std::string &, const oid &)> visitor)
+    const {
   struct visitor_wrapper {
-    std::function<void(size_t, const std::string &, const oid&)> fn;
+    std::function<void(size_t, const std::string &, const oid &)> fn;
   };
 
   visitor_wrapper wrapper;
   wrapper.fn = visitor;
 
-  auto callback_c = [](size_t index, const char * message, const git_oid * stash_id,
-                       void *payload) {
+  auto callback_c = [](size_t index, const char *message,
+                       const git_oid *stash_id, void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     wrapper->fn(index, message, oid(stash_id));
     return 0;
@@ -997,9 +1005,11 @@ void repository::pop_stash(size_t index, const stash::apply::options &options) {
     throw git_exception();
 }
 
-oid repository::save_stash(const signature &stasher, const std::string &message, stash::apply::flag flags) {
+oid repository::save_stash(const signature &stasher, const std::string &message,
+                           stash::apply::flag flags) {
   oid result;
-  if (git_stash_save(result.c_ptr(), c_ptr_, stasher.c_ptr(), message.c_str(), static_cast<uint32_t>(flags)))
+  if (git_stash_save(result.c_ptr(), c_ptr_, stasher.c_ptr(), message.c_str(),
+                     static_cast<uint32_t>(flags)))
     throw git_exception();
   return result;
 }

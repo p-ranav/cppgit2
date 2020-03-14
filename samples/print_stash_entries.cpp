@@ -7,9 +7,11 @@ int main(int argc, char **argv) {
     repository repo;
     repo.open(argv[1]);
 
-    repo.for_each_stash([](size_t index, const std::string &message, const oid &id) {
-      std::cout << index << " [" << id.to_hex_string(8) << "] " << message << std::endl;
-    });
+    repo.for_each_stash(
+        [](size_t index, const std::string &message, const oid &id) {
+          std::cout << index << " [" << id.to_hex_string(8) << "] " << message
+                    << std::endl;
+        });
 
   } else {
     std::cout << "Usage: ./executable <repo_path>\n";

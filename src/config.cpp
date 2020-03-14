@@ -218,14 +218,13 @@ size_t config::size() const {
 
 void config::for_each(std::function<void(const entry &)> visitor) {
   struct visitor_wrapper {
-    std::function<void(const entry&)> fn;
+    std::function<void(const entry &)> fn;
   };
 
   visitor_wrapper wrapper;
   wrapper.fn = visitor;
 
-  auto callback_c = [](const git_config_entry *	entry,
-                       void *payload) {
+  auto callback_c = [](const git_config_entry *entry, void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     wrapper->fn(config::entry(const_cast<git_config_entry *>(entry)));
     return 0;
@@ -235,22 +234,23 @@ void config::for_each(std::function<void(const entry &)> visitor) {
     throw git_exception();
 }
 
-void config::for_each(const std::string &regexp, std::function<void(const entry &)> visitor) {
+void config::for_each(const std::string &regexp,
+                      std::function<void(const entry &)> visitor) {
   struct visitor_wrapper {
-    std::function<void(const entry&)> fn;
+    std::function<void(const entry &)> fn;
   };
 
   visitor_wrapper wrapper;
   wrapper.fn = visitor;
 
-  auto callback_c = [](const git_config_entry *	entry,
-                       void *payload) {
+  auto callback_c = [](const git_config_entry *entry, void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     wrapper->fn(config::entry(const_cast<git_config_entry *>(entry)));
     return 0;
   };
 
-  if (git_config_foreach_match(c_ptr_, regexp.c_str(), callback_c, (void *)(&wrapper)))
+  if (git_config_foreach_match(c_ptr_, regexp.c_str(), callback_c,
+                               (void *)(&wrapper)))
     throw git_exception();
 }
 

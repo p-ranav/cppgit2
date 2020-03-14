@@ -173,7 +173,8 @@ public:
   void for_each(std::function<void(const entry &)> visitor);
 
   // Perform an operation on each config variable matching a regular expression.
-  void for_each(const std::string &regexp, std::function<void(const entry &)> visitor);
+  void for_each(const std::string &regexp,
+                std::function<void(const entry &)> visitor);
 
   // Access libgit2 C ptr
   const git_config *c_ptr() const;

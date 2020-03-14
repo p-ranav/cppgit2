@@ -1,10 +1,10 @@
 #pragma once
 #include <cppgit2/bitmask_operators.hpp>
+#include <cppgit2/checkout.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
 #include <cppgit2/tree.hpp>
-#include <cppgit2/checkout.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
@@ -18,21 +18,21 @@ public:
 
     // Stash apply progression states
     enum class progress {
-	  none = 0,
-	  // loading the stashed data from the object database.
-	  loading_stash,
-	  // the stored index is being analyzed.
-	  analyze_index,
-	  // the modified files are being analyzed.
-	  analyze_modified,
-	  // the untracked and ignored files are being analyzed.
-	  analyze_untracked,
-	  // the untracked files are being written to disk.
-	  checkout_untracked,
-	  // the modified files are being written to disk.
-	  checkout_modified,
-	  // the stash was applied successfully.
-	  done
+      none = 0,
+      // loading the stashed data from the object database.
+      loading_stash,
+      // the stored index is being analyzed.
+      analyze_index,
+      // the modified files are being analyzed.
+      analyze_modified,
+      // the untracked and ignored files are being analyzed.
+      analyze_untracked,
+      // the untracked files are being written to disk.
+      checkout_untracked,
+      // the modified files are being written to disk.
+      checkout_modified,
+      // the stash was applied successfully.
+      done
     };
 
     class options : public libgit2_api {

@@ -489,7 +489,9 @@ public:
    * CONFIG API
    * See git_config_* functions
    */
-  void add_ondisk_config_file(const cppgit2::config &cfg, const std::string &path, config::priority_level level, bool force);
+  void add_ondisk_config_file(const cppgit2::config &cfg,
+                              const std::string &path,
+                              config::priority_level level, bool force);
 
   /*
    * OBJECT API
@@ -617,24 +619,31 @@ public:
    */
 
   // Apply a single stashed state from the stash list.
-  // index is the position within the stash list. 
+  // index is the position within the stash list.
   // -> 0 points to the most recent stashed state.
-  void apply_stash(size_t index, const stash::apply::options &options = stash::apply::options());
+  void
+  apply_stash(size_t index,
+              const stash::apply::options &options = stash::apply::options());
 
   // Remove a single stashed state from the stash list.
-  // index is the position within the stash list. 
+  // index is the position within the stash list.
   // -> 0 points to the most recent stashed state.
   void drop_stash(size_t index);
 
   // Loop over all the stashed states and issue a callback for each one.
-  void for_each_stash(std::function<void(size_t, const std::string &, const oid &)> visitor) const;
+  void for_each_stash(
+      std::function<void(size_t, const std::string &, const oid &)> visitor)
+      const;
 
-  // Apply a single stashed state from the stash list 
+  // Apply a single stashed state from the stash list
   // and remove it from the list if successful.
-  void pop_stash(size_t index, const stash::apply::options &options = stash::apply::options());
+  void
+  pop_stash(size_t index,
+            const stash::apply::options &options = stash::apply::options());
 
   // Save the local modifications to a new stash.
-  oid save_stash(const signature &stasher, const std::string &message, stash::apply::flag flags);
+  oid save_stash(const signature &stasher, const std::string &message,
+                 stash::apply::flag flags);
 
   /*
    * STATUS API

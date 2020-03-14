@@ -6,13 +6,13 @@
 
 namespace cppgit2 {
 
-class push: public libgit2_api {
+class push : public libgit2_api {
 public:
-    class options : public libgit2_api {
+  class options : public libgit2_api {
   public:
     options() {
-      auto ret = git_push_init_options(&default_options_,
-                                         GIT_PUSH_OPTIONS_VERSION);
+      auto ret =
+          git_push_init_options(&default_options_, GIT_PUSH_OPTIONS_VERSION);
       c_ptr_ = &default_options_;
       if (ret != 0)
         throw git_exception();
@@ -25,15 +25,15 @@ public:
     void set_version(unsigned int value) { c_ptr_->version = value; }
 
     // Parallelism
-    // If the transport being used to push to the remote 
-    // requires the creation of a pack file, 
-    // this controls the number of worker threads used by the packbuilder 
-    // when creating that pack file to be sent to the remote. 
-    // If set to 0, the packbuilder will auto-detect the number 
+    // If the transport being used to push to the remote
+    // requires the creation of a pack file,
+    // this controls the number of worker threads used by the packbuilder
+    // when creating that pack file to be sent to the remote.
+    // If set to 0, the packbuilder will auto-detect the number
     // of threads to create. The default value is 1.
     unsigned int pb_parallelism() const { return c_ptr_->pb_parallelism; }
     void set_pb_parallelism(unsigned int value) {
-        c_ptr_->pb_parallelism = value;
+      c_ptr_->pb_parallelism = value;
     }
 
     // Proxy options to use, by default no proxy is used.
@@ -62,4 +62,4 @@ public:
   };
 };
 
-}
+} // namespace cppgit2
