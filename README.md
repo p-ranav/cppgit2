@@ -879,49 +879,49 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_repository_commondir` | |
-| `git_repository_config` | |
-| `git_repository_config_snapshot` | |
-| `git_repository_detach_head` | |
-| `git_repository_discover` | |
+| `git_repository_commondir` | `repository::commondir` |
+| `git_repository_config` | `repository::config` |
+| `git_repository_config_snapshot` | `repository::config_snapshot` |
+| `git_repository_detach_head` | `repository::detach_head` |
+| `git_repository_discover` | `repository::discover_path` |
 `git_repository_fetchhead_foreach` | |
-| `git_repository_free` | |
-| `git_repository_get_namespace` | |
-| `git_repository_hashfile` | |
-| `git_repository_head` | |
-| `git_repository_head_detached` | |
-| `git_repository_head_detached_for_worktree` | |
-| `git_repository_head_for_worktree` | |
-| `git_repository_head_unborn` | |
-| `git_repository_ident` | |
-| `git_repository_index` | |
-| `git_repository_init` | |
+| `git_repository_free` | `repository::~repository` |
+| `git_repository_get_namespace` | `repository::namespace_` |
+| `git_repository_hashfile` | `repository::hashfile` |
+| `git_repository_head` | `repository::head` |
+| `git_repository_head_detached` | `repository::is_head_detached` |
+| `git_repository_head_detached_for_worktree` | `repository::is_head_detached_for_worktree` |
+| `git_repository_head_for_worktree` | `repository::head_for_worktree` |
+| `git_repository_head_unborn` | `repository::is_head_unborn` |
+| `git_repository_ident` | `repository::identity` |
+| `git_repository_index` | `repository::index` |
+| `git_repository_init` | `repository::repository` |
 `git_repository_init_ext` | |
 `git_repository_init_options_init` | |
-| `git_repository_is_bare` | |
-| `git_repository_is_empty` | |
-| `git_repository_is_shallow` | |
-| `git_repository_is_worktree` | |
-| `git_repository_item_path` | |
+| `git_repository_is_bare` | `repository::is_bare` |
+| `git_repository_is_empty` | `repository::is_empty` |
+| `git_repository_is_shallow` | `repository::is_shallow` |
+| `git_repository_is_worktree` | `repository::is_worktree` |
+| `git_repository_item_path` | `repository::path` |
 `git_repository_mergehead_foreach` | |
-| `git_repository_message` | |
-| `git_repository_message_remove` | |
+| `git_repository_message` | `repository::message` |
+| `git_repository_message_remove` | `repository::remove_message` |
 `git_repository_odb` | |
-| `git_repository_open` | |
-| `git_repository_open_bare` | |
+| `git_repository_open` | `repository::open` |
+| `git_repository_open_bare` | `repository::open_bare` |
 `git_repository_open_ext` | |
 `git_repository_open_from_worktree` | |
-| `git_repository_path` | |
+| `git_repository_path` | `repository::path` |
 `git_repository_refdb` | |
-| `git_repository_set_head` | |
-| `git_repository_set_head_detached` | |
+| `git_repository_set_head` | `repository::set_head` |
+| `git_repository_set_head_detached` | `repository::set_head_detached` |
 `git_repository_set_head_detached_from_annotated` | |
-| `git_repository_set_ident` | |
-| `git_repository_set_namespace` | |
-| `git_repository_set_workdir` | |
-| `git_repository_state` | |
-| `git_repository_state_cleanup` | |
-| `git_repository_workdir` | |
+| `git_repository_set_ident` | `repository::set_identity` |
+| `git_repository_set_namespace` | `repository::set_namespace` |
+| `git_repository_set_workdir` | `repository::set_workdir` |
+| `git_repository_state` | `repository::state` |
+| `git_repository_state_cleanup` | `repository::cleanup_state` |
+| `git_repository_workdir` | `repository::workdir` |
 `git_repository_wrap_odb` | |
 
 
