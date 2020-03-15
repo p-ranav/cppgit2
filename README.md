@@ -752,7 +752,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_reference_cmp` | `reference::compare` |
 | `git_reference_create` | `repository::create_reference` |
 | `git_reference_create_matching` | `repository::create_reference` |
-| `git_reference_delete` | `repository::delete_reference` |
+| `git_reference_delete` | `reference::delete_reference` |
 | `git_reference_dup` | `reference::copy` |
 | `git_reference_dwim` | `repository::lookup_reference_by_dwim` |
 | `git_reference_ensure_log` | `repository::ensure_reflog_for_reference` |
@@ -778,7 +778,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_reference_normalize_name` | `reference::normalize_name` |
 | `git_reference_owner` | `reference::owner` |
 | `git_reference_peel` | reference::peel_until` |
-| `git_reference_remove` | `reference::delete_reference` |
+| `git_reference_remove` | `repository::delete_reference` |
 | `git_reference_rename` | `reference::rename` |
 | `git_reference_resolve` | `reference::resolve` |
 | `git_reference_set_target` | `reference::set_target` |
