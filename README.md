@@ -1136,16 +1136,16 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_treebuilder_clear` | |
-| `git_treebuilder_entrycount` | |
-| `git_treebuilder_filter` | |
-| `git_treebuilder_free` | |
-| `git_treebuilder_get` | |
-| `git_treebuilder_insert` | |
-| `git_treebuilder_new` | |
-| `git_treebuilder_remove` | |
-| `git_treebuilder_write` | |
-| `git_treebuilder_write_with_buffer` | |
+| `git_treebuilder_clear` | `tree_builder::clear` |
+| `git_treebuilder_entrycount` | `tree_builder::size` |
+| `git_treebuilder_filter` | `tree_builder::filter` |
+| `git_treebuilder_free` | `tree_builder::~tree_builder` |
+| `git_treebuilder_get` | `tree_builder::operator[]` |
+| `git_treebuilder_insert` | `tree_builder::insert` |
+| `git_treebuilder_new` | `tree_builder::tree_builder` |
+| `git_treebuilder_remove` | `tree_builder::remove` |
+| `git_treebuilder_write` | `tree_builder::write` |
+| `git_treebuilder_write_with_buffer` | `tree_builder::write` |
 
 ### worktree
 
