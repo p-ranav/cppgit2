@@ -338,6 +338,7 @@ public:
   const git_diff *c_ptr() const;
 
 private:
+  friend class pathspec;
   git_diff *c_ptr_;
   ownership owner_;
 };

@@ -674,19 +674,19 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_pathspec_free` | |
-`git_pathspec_match_diff` | |
-`git_pathspec_match_index` | |
-`git_pathspec_match_list_diff_entry` | |
-`git_pathspec_match_list_entry` | |
-`git_pathspec_match_list_entrycount` | |
-`git_pathspec_match_list_failed_entry` | |
-`git_pathspec_match_list_failed_entrycount` | |
-`git_pathspec_match_list_free` | |
-`git_pathspec_match_tree` | |
+`git_pathspec_free` | `pathspec::~pathspec` |
+`git_pathspec_match_diff` | `pathspec::match_diff` |
+`git_pathspec_match_index` | `pathspec::match_index` |
+`git_pathspec_match_list_diff_entry` | `pathspec::match_list::diff_entry` |
+`git_pathspec_match_list_entry` | `pathspec::match_list::entry` |
+`git_pathspec_match_list_entrycount` | `pathspec::match_list::size` |
+`git_pathspec_match_list_failed_entry` | `pathspec::match_list::failed_entry` |
+`git_pathspec_match_list_failed_entrycount` | `pathspec::match_list::failed_entrycount` |
+`git_pathspec_match_list_free` | `pathspec::match_list::~match_list` |
+`git_pathspec_match_tree` | `pathspec::match_free` |
 `git_pathspec_match_workdir` | |
-`git_pathspec_matches_path` | |
-`git_pathspec_new` | |
+`git_pathspec_matches_path` | `pathspec::matches_path` |
+`git_pathspec_new` | `pathspec::compile` |
 
 
 ### proxy

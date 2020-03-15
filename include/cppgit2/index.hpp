@@ -312,6 +312,7 @@ public:
   const git_index *c_ptr() const;
 
 private:
+  friend class pathspec;
   friend class repository;
   git_index *c_ptr_;
   ownership owner_;
