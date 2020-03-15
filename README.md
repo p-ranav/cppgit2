@@ -684,7 +684,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 `git_pathspec_match_list_failed_entrycount` | `pathspec::match_list::failed_entrycount` |
 `git_pathspec_match_list_free` | `pathspec::match_list::~match_list` |
 `git_pathspec_match_tree` | `pathspec::match_free` |
-`git_pathspec_match_workdir` | |
+`git_pathspec_match_workdir` | `pathspec::match_workdir` |
 `git_pathspec_matches_path` | `pathspec::matches_path` |
 `git_pathspec_new` | `pathspec::compile` |
 

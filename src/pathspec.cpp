@@ -1,4 +1,4 @@
-#include <cppgit2/pathspec.hpp>
+#include <cppgit2/repository.hpp>
 using namespace cppgit2;
 
 pathspec::pathspec() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
@@ -35,6 +35,13 @@ pathspec::match_list pathspec::match_index(const index &index, pathspec::flag fl
 pathspec::match_list pathspec::match_tree(const tree &tree, pathspec::flag flags) {
   git_pathspec_match_list ** result_c = (git_pathspec_match_list **)malloc(sizeof(git_pathspec_match_list *));
   if (git_pathspec_match_tree(result_c, tree.c_ptr_, static_cast<uint32_t>(flags), c_ptr_))
+    throw git_exception();
+  return pathspec::match_list(*result_c);
+}
+
+pathspec::match_list pathspec::match_workdir(const repository &repo, pathspec::flag flags) {
+  git_pathspec_match_list ** result_c = (git_pathspec_match_list **)malloc(sizeof(git_pathspec_match_list *));
+  if (git_pathspec_match_workdir(result_c, repo.c_ptr_, static_cast<uint32_t>(flags), c_ptr_))
     throw git_exception();
   return pathspec::match_list(*result_c);
 }

@@ -92,6 +92,9 @@ public:
   // Match a pathspec against files in a tree.
   match_list match_tree(const tree &tree, flag flags);
 
+  // Match a pathspec against the working directory of a repository.
+  match_list match_workdir(const class repository &repo, flag flags);
+
   // Try to match a path against a pathspec
   // Returns true if path matches spec, false if it does not
   bool matches_path(flag flags, const std::string &path) const;

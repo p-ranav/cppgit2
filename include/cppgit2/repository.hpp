@@ -14,6 +14,7 @@
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
+#include <cppgit2/pathspec.hpp>
 #include <cppgit2/reference.hpp>
 #include <cppgit2/reset.hpp>
 #include <cppgit2/revision.hpp>
@@ -744,6 +745,7 @@ public:
                           std::vector<tree::update> updates);
 
 private:
+  friend class pathspec;
   friend class tree_builder;
   git_repository *c_ptr_;
 };
