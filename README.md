@@ -980,24 +980,24 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_signature_default` | |
-| `git_signature_dup` | |
-| `git_signature_free` | |
-| `git_signature_from_buffer` | |
-| `git_signature_new` | |
-| `git_signature_now` | |
+| `git_signature_default` | `repository::default_signature` |
+| `git_signature_dup` | `signature::copy` |
+| `git_signature_free` | `signature::~signature` |
+| `git_signature_from_buffer` | `signature::signature` |
+| `git_signature_new` | `signature::signature` |
+| `git_signature_now` | `signature::signature` |
 
 
 ### stash
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_stash_apply` | |
-| `git_stash_apply_options_init` | |
-| `git_stash_drop` | |
-| `git_stash_foreach` | |
-| `git_stash_pop` | |
-| `git_stash_save` | |
+| `git_stash_apply` | `repository::apply_stash` |
+| `git_stash_apply_options_init` | `stash::options::options` |
+| `git_stash_drop` | `repository::drop_stash` |
+| `git_stash_foreach` | `repository::for_each_stash` |
+| `git_stash_pop` | `repository::pop_stash` |
+| `git_stash_save` | `repository::save_stash` |
 
 
 ### status
