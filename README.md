@@ -399,10 +399,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`giterr_clear` | |
-`giterr_last` | |
-`giterr_set_oom` | |
-`giterr_set_str` | |
+`giterr_clear` | **Not Implemented** |
+`giterr_last` | **Not Implemented** |
+`giterr_set_oom` | **Not Implemented** |
+`giterr_set_str` | **Not Implemented** |
 
 ### graph
 
@@ -418,7 +418,6 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_ignore_add_rule` | `repository::add_ignore_rules` |
 `git_ignore_clear_internal_rules` | `repository::clear_ignore_rules` |
 `git_ignore_path_is_ignored` | `repository::is_path_ignored` |
-
 
 ### index
 
