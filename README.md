@@ -1065,27 +1065,27 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_tag_annotation_create` | |
-| `git_tag_create` | |
-| `git_tag_create_from_buffer` | |
-| `git_tag_create_lightweight` | |
-| `git_tag_delete` | |
-| `git_tag_dup` | |
-| `git_tag_foreach` | |
-| `git_tag_free` | |
-| `git_tag_id` | |
-| `git_tag_list` | |
-| `git_tag_list_match` | |
-| `git_tag_lookup` | |
-| `git_tag_lookup_prefix` | |
-| `git_tag_message` | |
-| `git_tag_name` | |
-| `git_tag_owner` | |
-| `git_tag_peel` | |
-| `git_tag_tagger` | |
-| `git_tag_target` | |
-| `git_tag_target_id` | |
-| `git_tag_target_type` | |
+| `git_tag_annotation_create` | `repository::create_tag_annotation` |
+| `git_tag_create` | `repository::create_tag` |
+| `git_tag_create_from_buffer` | `repository::create_tag` |
+| `git_tag_create_lightweight` | `repository::create_lightweight_tag` |
+| `git_tag_delete` | `repository::delete_tag` |
+| `git_tag_dup` | `tag::copy` |
+| `git_tag_foreach` | `repository::for_each_tag` |
+| `git_tag_free` | `tag::~tag` |
+| `git_tag_id` | `tag::id` |
+| `git_tag_list` | `repository::tags` |
+| `git_tag_list_match` | `repository::tags_that_match` |
+| `git_tag_lookup` | `repository::lookup_tag` |
+| `git_tag_lookup_prefix` | ``repository::lookup_tag` |
+| `git_tag_message` | `tag::message` |
+| `git_tag_name` | `tag::name` |
+| `git_tag_owner` | `tag::owner` |
+| `git_tag_peel` | `tag::peel` |
+| `git_tag_tagger` | `tag::tagger` |
+| `git_tag_target` | `tag::target` |
+| `git_tag_target_id` | `tag::target_id` |
+| `git_tag_target_type` | `tag::target_type` |
 
 ### trace
 
