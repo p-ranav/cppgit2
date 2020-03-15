@@ -1085,7 +1085,7 @@ void repository::delete_remote(const std::string &name) {
     throw git_exception();
 }
 
-strarray repository::remotes() const {
+strarray repository::remote_list() const {
   strarray result;
   if (git_remote_list(&result.c_struct_, c_ptr_))
     throw git_exception();

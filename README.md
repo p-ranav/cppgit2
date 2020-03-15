@@ -831,48 +831,48 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_remote_add_fetch` | |
-`git_remote_add_push` | |
+`git_remote_add_fetch` | `repository::add_fetch_refspec_to_remote` |
+`git_remote_add_push` | `repository::add_push_refspec_to_remote` |
 `git_remote_autotag` | |
 `git_remote_connect` | |
-`git_remote_connected` | |
-`git_remote_create` | |
-`git_remote_create_anonymous` | |
-`git_remote_create_detached` | |
+`git_remote_connected` | `remote::is_connected` |
+`git_remote_create` | `repository::create_remote` |
+`git_remote_create_anonymous` | `repository::create_anonymous_remote` |
+`git_remote_create_detached` | `remote::create_detached_remote` |
 `git_remote_create_options_init` | |
-`git_remote_create_with_fetchspec` | |
+`git_remote_create_with_fetchspec` | `repository::create_remote` |
 `git_remote_create_with_opts` | |
-`git_remote_default_branch` | |
-`git_remote_delete` | |
-`git_remote_disconnect` | |
+`git_remote_default_branch` | `remote::default_branch` |
+`git_remote_delete` | `repository::delete_remote` |
+`git_remote_disconnect` | `remote::disconnect` |
 `git_remote_download` | |
-`git_remote_dup` | |
+`git_remote_dup` | `remote::copy` |
 `git_remote_fetch` | |
-`git_remote_free` | |
-`git_remote_get_fetch_refspecs` | |
-`git_remote_get_push_refspecs` | |
+`git_remote_free` | `remote::~remote` |
+`git_remote_get_fetch_refspecs` | `remote::fetch_refspec` |
+`git_remote_get_push_refspecs` | `remote::push_refspec` |
 `git_remote_get_refspec` | |
 `git_remote_init_callbacks` | |
-`git_remote_is_valid_name` | |
-`git_remote_list` | |
-`git_remote_lookup` | |
+`git_remote_is_valid_name` | `remote::is_valid_name` |
+`git_remote_list` | `repository::remote_list` |
+`git_remote_lookup` | `repository::lookup_remote` |
 `git_remote_ls` | |
-`git_remote_name` | |
-`git_remote_owner` | |
+`git_remote_name` | `remote::name` |
+`git_remote_owner` | `remote::owner` |
 `git_remote_prune` | |
 `git_remote_prune_refs` | |
-`git_remote_push` | |
-`git_remote_pushurl` | |
-`git_remote_refspec_count` | |
-`git_remote_rename` | |
+`git_remote_push` | `remote::push` |
+`git_remote_pushurl` | `remote::push_url` |
+`git_remote_refspec_count` | `remote::size` |
+`git_remote_rename` | `repository::rename_remote` |
 `git_remote_set_autotag` | |
-`git_remote_set_pushurl` | |
-`git_remote_set_url` | |
+`git_remote_set_pushurl` | `repository::set_remote_push_url` |
+`git_remote_set_url` | `repository::set_remote_url` |
 `git_remote_stats` | |
-`git_remote_stop` | |
+`git_remote_stop` | `remote::stop` |
 `git_remote_update_tips` | |
-`git_remote_upload` | |
-`git_remote_url` | |
+`git_remote_upload` | `remote::upload` |
+`git_remote_url` | `remote::url` |
 
 
 ### repository

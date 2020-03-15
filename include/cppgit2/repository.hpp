@@ -680,7 +680,7 @@ public:
   void delete_remote(const std::string &name);
 
   // Get a list of the configured remotes for a repo
-  strarray remotes() const;
+  strarray remote_list() const;
 
   // Get the information for a particular remote
   remote lookup_remote(const std::string &name);
