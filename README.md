@@ -370,10 +370,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_error_clear` | |
+`git_error_clear` | `git_exception::clear` |
 `git_error_last` | `git_exception::git_exception` |
-`git_error_set_oom` | |
-`git_error_set_str` | |
+`git_error_set_oom` | **Not Implemented** |
+`git_error_set_str` | **Not Implemented** |
 
 ### fetch
 
@@ -399,8 +399,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`giterr_clear` | **Not Implemented** |
-`giterr_last` | **Not Implemented** |
+`giterr_clear` | `git_exception::clear` |
+`giterr_last` | `git_exception::git_exception` |
 `giterr_set_oom` | **Not Implemented** |
 `giterr_set_str` | **Not Implemented** |
 

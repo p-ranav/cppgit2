@@ -16,6 +16,8 @@ public:
   virtual ~git_exception() throw() {}
   virtual const char *what() const throw() { return message_.c_str(); }
 
+  static void clear() { git_error_clear(); }
+
 protected:
   std::string message_;
 };
