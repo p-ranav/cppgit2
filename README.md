@@ -760,7 +760,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_reference_foreach_glob` | `repository::for_each_reference_glob` |
 | `git_reference_foreach_name` | `repository::for_each_reference_name` |
 | `git_reference_free` | `reference::~reference` |
-| `git_reference_has_log` | |
+| `git_reference_has_log` | `repository::reference_has_reflog` |
 | `git_reference_is_branch` | `reference::is_branch` |
 | `git_reference_is_note` | `reference::is_note` |
 | `git_reference_is_remote` | `reference::is_remote` |
