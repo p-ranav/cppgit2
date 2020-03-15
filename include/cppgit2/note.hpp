@@ -30,6 +30,7 @@ public:
   const git_note *c_ptr() const;
 
 private:
+  friend class repository;
   git_note *c_ptr_;
   ownership owner_;
 };

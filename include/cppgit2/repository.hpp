@@ -12,6 +12,7 @@
 #include <cppgit2/git_exception.hpp>
 #include <cppgit2/index.hpp>
 #include <cppgit2/libgit2_api.hpp>
+#include <cppgit2/note.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/pathspec.hpp>
@@ -24,6 +25,7 @@
 #include <cppgit2/tree_builder.hpp>
 #include <git2.h>
 #include <string>
+#include <utility>
 
 namespace cppgit2 {
 
@@ -493,6 +495,42 @@ public:
   void add_ondisk_config_file(const cppgit2::config &cfg,
                               const std::string &path,
                               config::priority_level level, bool force);
+
+  /*
+   * NOTE API
+   * See git_note_* functions
+   */
+
+  // Add a note for an object
+  oid create_note(const std::string &notes_ref, 
+    const signature &author, const signature &committer, const oid &id, 
+    const std::string &note, bool force);
+
+  // Add a note for an object from a commit
+  std::pair<oid, oid> create_note(const commit &parent, 
+    const signature &author, const signature &committer, const oid &id, 
+    const std::string &note, bool allow_note_override);
+
+  // Read the note for an object
+  note read_note(const std::string &notes_ref, const oid &id);
+
+  // Read the note for an object from a note commit
+  note read_note(const commit &notes_commit, const oid& id);
+
+  // Remove the note for an object
+  void remove_note(const std::string &notes_ref, 
+    const signature &author, const signature &committer, const oid &id);
+
+  // Remove the note for an object
+  oid remove_note(const commit &notes_commit, const signature &author,
+    const signature &committer, const oid& id);
+
+  // Get the default notes reference for a repository
+  data_buffer detault_notes_reference();
+
+  // Loop over all the notes within a specified namespace and 
+  // issue a callback for each one.
+  void for_each_note(const std::string &notes_ref, std::function<void(const oid&, const oid&)> visitor);
 
   /*
    * OBJECT API

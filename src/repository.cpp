@@ -765,6 +765,81 @@ void repository::add_ondisk_config_file(const cppgit2::config &cfg,
     throw git_exception();
 }
 
+oid repository::create_note(const std::string &notes_ref, 
+  const signature &author, const signature &committer, const oid &id, 
+  const std::string &note, bool force) {
+  oid result;
+  if (git_note_create(result.c_ptr(), c_ptr_, notes_ref.c_str(), author.c_ptr(),
+    committer.c_ptr(), id.c_ptr(), note.c_str(), force))
+    throw git_exception();
+  return result;
+}
+
+std::pair<oid, oid> repository::create_note(const commit &parent, 
+  const signature &author, const signature &committer, const oid &id, 
+  const std::string &note, bool allow_note_override) {
+  oid notes_commit_out, notes_blob_out;
+  if (git_note_commit_create(notes_commit_out.c_ptr(), notes_blob_out.c_ptr(),
+    c_ptr_, parent.c_ptr_, author.c_ptr(), committer.c_ptr(), 
+    id.c_ptr(), note.c_str(), allow_note_override))
+    throw git_exception();
+  return {notes_commit_out, notes_blob_out};
+}
+
+note repository::read_note(const std::string &notes_ref, const oid &id) {
+  note result;
+  if (git_note_read(&result.c_ptr_, c_ptr_, notes_ref.c_str(), id.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+note repository::read_note(const commit &notes_commit, const oid& id) {
+  note result;
+  if (git_note_commit_read(&result.c_ptr_, c_ptr_, notes_commit.c_ptr_, id.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+void repository::remove_note(const std::string &notes_ref, 
+  const signature &author, const signature &committer, const oid &id) {
+  if (git_note_remove(c_ptr_, notes_ref.c_str(), author.c_ptr(), committer.c_ptr(), id.c_ptr()))
+    throw git_exception();
+}
+
+oid repository::remove_note(const commit &notes_commit, const signature &author,
+  const signature &committer, const oid& id) {
+  oid result;
+  if (git_note_commit_remove(result.c_ptr(), c_ptr_, notes_commit.c_ptr_, author.c_ptr(), committer.c_ptr(), id.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+data_buffer repository::detault_notes_reference() {
+  data_buffer result(1024);
+  if (git_note_default_ref(result.c_ptr(), c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+void repository::for_each_note(const std::string &notes_ref, 
+  std::function<void(const oid&, const oid&)> visitor) {
+  struct visitor_wrapper {
+    std::function<void(const oid&, const oid&)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const git_oid *blob_id, const git_oid *annotated_object_id, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(oid(blob_id), oid(annotated_object_id));
+    return 0;
+  };
+
+  if (git_note_foreach(c_ptr_, notes_ref.c_str(), callback_c, (void *)(&wrapper)))
+    throw git_exception();
+}
+
 object repository::lookup_object(const oid &id,
                                  object::object_type type) const {
   object result;
