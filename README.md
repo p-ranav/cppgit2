@@ -433,13 +433,13 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_index_clear` | `index::clear` |
 | `git_index_conflict_add` | `index::add_conflict_entry` |
 | `git_index_conflict_cleanup` | `index::remove_all_conflicts` |
-`git_index_conflict_get` | |
-| `git_index_conflict_iterator_free` | |
-| `git_index_conflict_iterator_new` | |
-| `git_index_conflict_next` | |
+| `git_index_conflict_get` | **Not Implemented** |
+| `git_index_conflict_iterator_free` | `index::for_each_conflict` |
+| `git_index_conflict_iterator_new` | `index::for_each_conflict` |
+| `git_index_conflict_next` | `index::for_each_conflict` |
 | `git_index_conflict_remove` | `index::remove_conflict_entries` |
-| `git_index_entry_is_conflict` | |
-| `git_index_entry_stage` | |
+| `git_index_entry_is_conflict` | `index::entry::is_conflict` |
+| `git_index_entry_stage` | `index::entry::entry_stage` |
 | `git_index_entrycount` | `index::size` |
 | `git_index_find` | `index::find_first` |
 | `git_index_find_prefix` | `index::find_first_matching_prefix` |
@@ -447,12 +447,12 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_index_get_byindex` | `index::operator[]` |
 | `git_index_get_bypath` | `index::entry_in_path` |
 | `git_index_has_conflicts` | `index::has_conflicts` |
-| `git_index_iterator_free` | |
-| `git_index_iterator_new` | |
-| `git_index_iterator_next` | |
-| `git_index_new` | |
-`git_index_open` | |
-`git_index_owner` | |
+| `git_index_iterator_free` | `index::for_each` |
+| `git_index_iterator_new` | `index::for_each` |
+| `git_index_iterator_next` | `index::for_each` |
+| `git_index_new` | `index::index` |
+| `git_index_open` | `index::open` |
+| `git_index_owner` | `index::owner` |
 | `git_index_path` | `index::path` |
 | `git_index_read` | `index::read` |
 | `git_index_read_tree` | `index::read_tree` |

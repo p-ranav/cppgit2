@@ -1,4 +1,4 @@
-#include <cppgit2/index.hpp>
+#include <cppgit2/repository.hpp>
 
 namespace cppgit2 {
 
@@ -249,6 +249,15 @@ oid index::write_tree() {
     throw git_exception();
   return result;
 }
+
+index index::open(const std::string &path) {
+  index result;
+  if (git_index_open(&result.c_ptr_, path.c_str()))
+    throw git_exception();
+  return result;
+}
+
+repository index::owner() const { return repository(git_index_owner(c_ptr_)); }
 
 const git_index *index::c_ptr() const { return c_ptr_; }
 

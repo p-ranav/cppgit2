@@ -129,7 +129,7 @@ public:
     // Return the stage number from a git index entry
     // This entry is calculated from the entry's flag attribute like this:
     // (entry->flags & GIT_INDEX_ENTRY_STAGEMASK) >> GIT_INDEX_ENTRY_STAGESHIFT
-    int get_entry_stage() const { return git_index_entry_stage(c_ptr_); }
+    int entry_stage() const { return git_index_entry_stage(c_ptr_); }
 
     // Return whether the given index entry is a conflict (has a high stage
     // entry). This is simply shorthand for get_entry_stage() > 0.
@@ -307,6 +307,14 @@ public:
   // Write the index as a tree
   // The index must not contain any file in conflict.
   oid write_tree();
+
+  // Create a new bare Git index object as a memory 
+  // representation of the Git index file in 'index_path', 
+  // without a repository to back it.
+  static index open(const std::string &path);
+
+  // Owner repository
+  class repository owner() const;
 
   // Access libgit2 C ptr
   const git_index *c_ptr() const;
