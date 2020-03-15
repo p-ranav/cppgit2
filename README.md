@@ -1004,15 +1004,15 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_status_byindex` | |
-| `git_status_file` | |
-| `git_status_foreach` | |
-| `git_status_foreach_ext` | |
-| `git_status_list_entrycount` | |
-| `git_status_list_free` | |
-| `git_status_list_new` | |
-| `git_status_options_init` | |
-| `git_status_should_ignore` | |
+| `git_status_byindex` | `status::list::operator[]` |
+| `git_status_file` | `repository::status_file` |
+| `git_status_foreach` | `repository::for_each_status` |
+| `git_status_foreach_ext` | `repository::for_each_status` |
+| `git_status_list_entrycount` | `status::list::size` |
+| `git_status_list_free` | `status::list::~list` |
+| `git_status_list_new` | `repository::status_list` |
+| `git_status_options_init` | `status::options::options` |
+| `git_status_should_ignore` | `repository::should_ignore` |
 
 
 ### strarray
