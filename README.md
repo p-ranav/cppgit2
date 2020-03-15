@@ -1077,7 +1077,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_tag_list` | `repository::tags` |
 | `git_tag_list_match` | `repository::tags_that_match` |
 | `git_tag_lookup` | `repository::lookup_tag` |
-| `git_tag_lookup_prefix` | ``repository::lookup_tag` |
+| `git_tag_lookup_prefix` | `repository::lookup_tag` |
 | `git_tag_message` | `tag::message` |
 | `git_tag_name` | `tag::name` |
 | `git_tag_owner` | `tag::owner` |
