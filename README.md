@@ -1108,28 +1108,28 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_tree_create_updated` | |
-| `git_tree_dup` | |
-| `git_tree_entry_byid` | |
-| `git_tree_entry_byindex` | |
-| `git_tree_entry_byname` | |
-| `git_tree_entry_bypath` | |
-| `git_tree_entry_cmp` | |
-| `git_tree_entry_dup` | |
-| `git_tree_entry_filemode` | |
-| `git_tree_entry_filemode_raw` | |
-| `git_tree_entry_free` | |
-| `git_tree_entry_id` | |
-| `git_tree_entry_name` | |
-| `git_tree_entry_to_object` | |
-| `git_tree_entry_type` | |
-| `git_tree_entrycount` | |
-| `git_tree_free` | |
-| `git_tree_id` | |
-| `git_tree_lookup` | |
-| `git_tree_lookup_prefix` | |
-| `git_tree_owner` | |
-| `git_tree_walk` | |
+| `git_tree_create_updated` | `repository::create_updated_tree` |
+| `git_tree_dup` | `tree::copy` |
+| `git_tree_entry_byid` | `tree::lookup_entry_by_id` |
+| `git_tree_entry_byindex` | `tree::lookup_entry_by_index` |
+| `git_tree_entry_byname` | `tree::lookup_entry_by_name` |
+| `git_tree_entry_bypath` | `tree::lookup_entry_by_path` |
+| `git_tree_entry_cmp` | `tree::entry::compare` |
+| `git_tree_entry_dup` | `tree::entry::copy` |
+| `git_tree_entry_filemode` | `tree::entry::filemode` |
+| `git_tree_entry_filemode_raw` | `tree::entry::raw_filemode` |
+| `git_tree_entry_free` | `tree::entry::~entry` |
+| `git_tree_entry_id` | `tree::entry::id` |
+| `git_tree_entry_name` | `tree::entry::filename` |
+| `git_tree_entry_to_object` | `repository::tree_entry_to_object` |
+| `git_tree_entry_type` | `tree::entry::type` |
+| `git_tree_entrycount` | `tree::size` |
+| `git_tree_free` | `tree::~tree` |
+| `git_tree_id` | `tree::id` |
+| `git_tree_lookup` | `repository::lookup_tree` |
+| `git_tree_lookup_prefix` | `repository::lookup_tree` |
+| `git_tree_owner` | `tree::owner` |
+| `git_tree_walk` | `tree::walk` |
 
 
 ### treebuilder
