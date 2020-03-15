@@ -1095,14 +1095,14 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_transaction_commit` | |
-| `git_transaction_free` | |
-| `git_transaction_lock_ref` | |
-| `git_transaction_new` | |
-| `git_transaction_remove` | |
-| `git_transaction_set_reflog` | |
-| `git_transaction_set_symbolic_target` | |
-| `git_transaction_set_target` | |
+| `git_transaction_commit` | `transaction::commit` |
+| `git_transaction_free` | `transaction::~transaction` |
+| `git_transaction_lock_ref` | `transaction::lock_reference` |
+| `git_transaction_new` | `repository::create_transaction` |
+| `git_transaction_remove` | `transaction::remove_reference` |
+| `git_transaction_set_reflog` | `transaction::set_reflog` |
+| `git_transaction_set_symbolic_target` | `transaction::set_symbolic_target` |
+| `git_transaction_set_target` | `transaction::set_target` |
 
 ### tree
 
