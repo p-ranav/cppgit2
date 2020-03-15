@@ -8,6 +8,12 @@
   <img src="img/init_add_commit.png"/>
 </p>
 
+## Contributions
+
+This project is in active development. `libgit2` is constantly evolving with over 750 functions in its public API. A good portion of this is covered in `cppgit2` (See [API Coverage](#api-coverage)).
+
+Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information. Please consider reporting any issues you're facing with library functions. 
+
 ## Build and Integration
 
 Run the following commands to build `cppgit2`. 
@@ -1158,3 +1164,5 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 | `git_worktree_unlock` | |
 | `git_worktree_validate` | |
 
+## License
+The project is available under the [MIT](https://opensource.org/licenses/MIT) license.
