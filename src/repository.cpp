@@ -1046,6 +1046,76 @@ void repository::reset(const annotated_commit &target,
     throw git_exception();
 }
 
+void repository::add_fetch_refspec_to_remote(const std::string &remote,
+                                  const std::string &refspec) {
+  if (git_remote_add_fetch(c_ptr_, remote.c_str(), refspec.c_str()))
+    throw git_exception();
+}
+
+void repository::add_push_refspec_to_remote(const std::string &remote,
+                                const std::string &refspec) {
+  if (git_remote_add_push(c_ptr_, remote.c_str(), refspec.c_str()))
+    throw git_exception();
+}
+
+remote repository::create_remote(const std::string &name, const std::string &url) {
+  remote result;
+  if (git_remote_create(&result.c_ptr_, c_ptr_, name.c_str(), url.c_str()))
+    throw git_exception();
+  return result;
+}
+
+remote repository::create_anonymous_remote(const std::string &url) {
+  remote result;
+  if (git_remote_create_anonymous(&result.c_ptr_, c_ptr_, url.c_str()))
+    throw git_exception();
+  return result;
+}
+
+remote repository::create_remote(const std::string &name, const std::string &url,
+                      const std::string &fetch_refspec) {
+  remote result;
+  if (git_remote_create_with_fetchspec(&result.c_ptr_, c_ptr_, name.c_str(), url.c_str(), fetch_refspec.c_str()))
+    throw git_exception();
+  return result;
+}
+
+void repository::delete_remote(const std::string &name) {
+  if (git_remote_delete(c_ptr_, name.c_str()))
+    throw git_exception();
+}
+
+strarray repository::remotes() const {
+  strarray result;
+  if (git_remote_list(&result.c_struct_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+remote repository::lookup_remote(const std::string &name) {
+  remote result;
+  if (git_remote_lookup(&result.c_ptr_, c_ptr_, name.c_str()))
+    throw git_exception();
+  return result;
+}
+
+strarray repository::rename_remote(const std::string &name, const std::string &new_name) {
+  strarray result;
+  if (git_remote_rename(&result.c_struct_, c_ptr_, name.c_str(), new_name.c_str()))
+    throw git_exception();
+  return result;
+}
+
+void repository::set_remote_push_url(const std::string &remote, const std::string &url) {
+  if (git_remote_set_pushurl(c_ptr_, remote.c_str(), url.c_str()))
+    throw git_exception();
+}
+
+void repository::set_remote_url(const std::string &remote, const std::string &url) {
+  if (git_remote_set_url(c_ptr_, remote.c_str(), url.c_str()))
+    throw git_exception();
+}
+
 signature repository::default_signature() const {
   signature result;
   if (git_signature_default(&result.c_ptr_, c_ptr_))

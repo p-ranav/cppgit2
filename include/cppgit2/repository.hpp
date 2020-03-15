@@ -702,7 +702,7 @@ public:
   void set_remote_push_url(const std::string &remote, const std::string &url);
 
   // Set the remote's url in the configuration
-  void set_remote_url(const std::string &reomte, const std::string &url);
+  void set_remote_url(const std::string &remote, const std::string &url);
 
   /*
    * SIGNATURE API
