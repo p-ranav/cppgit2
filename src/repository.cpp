@@ -765,6 +765,23 @@ void repository::add_ondisk_config_file(const cppgit2::config &cfg,
     throw git_exception();
 }
 
+void repository::add_ignore_rules(const std::string &rules) {
+  if (git_ignore_add_rule(c_ptr_, rules.c_str()))
+    throw git_exception();
+}
+
+void repository::clear_ignore_rules() {
+  if (git_ignore_clear_internal_rules(c_ptr_))
+    throw git_exception();
+}
+
+bool repository::is_path_ignored(const std::string &path) const {
+  int result;
+  if (git_ignore_path_is_ignored(&result, c_ptr_, path.c_str()))
+    throw git_exception();
+  return result;
+}
+
 oid repository::create_note(const std::string &notes_ref,
                             const signature &author, const signature &committer,
                             const oid &id, const std::string &note,

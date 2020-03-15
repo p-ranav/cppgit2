@@ -415,9 +415,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_ignore_add_rule` | |
-`git_ignore_clear_internal_rules` | |
-`git_ignore_path_is_ignored` | |
+`git_ignore_add_rule` | `repository::add_ignore_rules` |
+`git_ignore_clear_internal_rules` | `repository::clear_ignore_rules` |
+`git_ignore_path_is_ignored` | `repository::is_path_ignored` |
 
 
 ### index
@@ -636,7 +636,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_oidarray_free` | |
+`git_oidarray_free` | **Not Implemented** |
 
 
 ### packbuilder
@@ -1018,8 +1018,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_strarray_copy` | |
-| `git_strarray_free` | |
+| `git_strarray_copy` | `strarray::copy` |
+| `git_strarray_free` | `strarray::~strarray` |
 
 
 ### submodule
