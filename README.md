@@ -645,20 +645,20 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | libgit2 | cppgit2:: |
 | --- | --- |
 `git_packbuilder_foreach` | |
-| `git_packbuilder_free` | |
+| `git_packbuilder_free` | `pack_builder::~pack_builder` |
 | `git_packbuilder_hash` | |
 `git_packbuilder_insert` | |
-| `git_packbuilder_insert_commit` | |
-| `git_packbuilder_insert_recur` | |
-| `git_packbuilder_insert_tree` | |
+| `git_packbuilder_insert_commit` | `pack_builder::insert_commit` |
+| `git_packbuilder_insert_recur` | `pack_builder::insert_object_recursively` |
+| `git_packbuilder_insert_tree` | `pack_builder::insert_tree` |
 `git_packbuilder_insert_walk` | |
 `git_packbuilder_new` | |
-| `git_packbuilder_object_count` | |
-| `git_packbuilder_set_callbacks` | |
-| `git_packbuilder_set_threads` | |
+| `git_packbuilder_object_count` | `pack_builder::size` |
+| `git_packbuilder_set_callbacks` | `pack_builder::set_progress_callback` |
+| `git_packbuilder_set_threads` | `pack_builder::set_threads` |
 `git_packbuilder_write` | |
 `git_packbuilder_write_buf` | |
-| `git_packbuilder_written` | |
+| `git_packbuilder_written` | `pack_builder::written` |
 
 
 ### patch
