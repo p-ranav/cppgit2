@@ -572,19 +572,19 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_odb_add_alternate` | |
 `git_odb_add_backend` | |
 `git_odb_add_disk_alternate` | |
-| `git_odb_backend_loose` | |
-| `git_odb_backend_one_pack` | |
-| `git_odb_backend_pack` | |
-| `git_odb_exists` | |
-| `git_odb_exists_prefix` | |
+| `git_odb_backend_loose` | `odb::create_backend_for_loose_objects` |
+| `git_odb_backend_one_pack` | `odb::create_backend_for_one_packfile` |
+| `git_odb_backend_pack` | `odb::create_backend_for_packfiles` |
+| `git_odb_exists` | `odb::exists` |
+| `git_odb_exists_prefix` | `odb::exists` |
 `git_odb_expand_ids` | |
 `git_odb_foreach` | |
-| `git_odb_free` | |
-| `git_odb_get_backend` | |
+| `git_odb_free` | `odb::~odb` |
+| `git_odb_get_backend` | `odb::operator[]` |
 `git_odb_hash` | |
 `git_odb_hashfile` | |
-| `git_odb_new` | |
-| `git_odb_num_backends` | |
+| `git_odb_new` | `odb::odb` |
+| `git_odb_num_backends` | `odb::size` |
 `git_odb_object_data` | |
 `git_odb_object_dup` | |
 `git_odb_object_free` | |
