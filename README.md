@@ -930,9 +930,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_reset` | |
-| `git_reset_default` | |
-| `git_reset_from_annotated` | |
+| `git_reset` | `repository::reset` |
+| `git_reset_default` | `repository::reset_default` |
+| `git_reset_from_annotated` | `repository::reset` |
 
 
 ### revert
