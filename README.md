@@ -21,7 +21,7 @@ mkdir build && cd build
 cmake .. && make
 ```
 
-The build output is in three directories: `include`, `lib`, and `samples`:
+The build output is in four directories: `include`, `lib`, `samples` and `test`:
 
 ```
 include/
