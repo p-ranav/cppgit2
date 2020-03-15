@@ -17,6 +17,7 @@
 #include <cppgit2/oid.hpp>
 #include <cppgit2/pathspec.hpp>
 #include <cppgit2/reference.hpp>
+#include <cppgit2/remote.hpp>
 #include <cppgit2/reset.hpp>
 #include <cppgit2/revision.hpp>
 #include <cppgit2/stash.hpp>
@@ -502,35 +503,37 @@ public:
    */
 
   // Add a note for an object
-  oid create_note(const std::string &notes_ref, 
-    const signature &author, const signature &committer, const oid &id, 
-    const std::string &note, bool force);
+  oid create_note(const std::string &notes_ref, const signature &author,
+                  const signature &committer, const oid &id,
+                  const std::string &note, bool force);
 
   // Add a note for an object from a commit
-  std::pair<oid, oid> create_note(const commit &parent, 
-    const signature &author, const signature &committer, const oid &id, 
-    const std::string &note, bool allow_note_override);
+  std::pair<oid, oid> create_note(const commit &parent, const signature &author,
+                                  const signature &committer, const oid &id,
+                                  const std::string &note,
+                                  bool allow_note_override);
 
   // Read the note for an object
   note read_note(const std::string &notes_ref, const oid &id);
 
   // Read the note for an object from a note commit
-  note read_note(const commit &notes_commit, const oid& id);
+  note read_note(const commit &notes_commit, const oid &id);
 
   // Remove the note for an object
-  void remove_note(const std::string &notes_ref, 
-    const signature &author, const signature &committer, const oid &id);
+  void remove_note(const std::string &notes_ref, const signature &author,
+                   const signature &committer, const oid &id);
 
   // Remove the note for an object
   oid remove_note(const commit &notes_commit, const signature &author,
-    const signature &committer, const oid& id);
+                  const signature &committer, const oid &id);
 
   // Get the default notes reference for a repository
   data_buffer detault_notes_reference();
 
-  // Loop over all the notes within a specified namespace and 
+  // Loop over all the notes within a specified namespace and
   // issue a callback for each one.
-  void for_each_note(const std::string &notes_ref, std::function<void(const oid&, const oid&)> visitor);
+  void for_each_note(const std::string &notes_ref,
+                     std::function<void(const oid &, const oid &)> visitor);
 
   /*
    * OBJECT API
@@ -645,6 +648,61 @@ public:
   // and optionally resets the index and working tree to match.
   void reset(const annotated_commit &target, reset::reset_type reset_type,
              const checkout::options &options = checkout::options());
+
+  /*
+   * REMOTE API
+   * See git_remote_* functions
+   */
+
+  // Add a fetch refspec to the remote's configuration
+  void add_fetch_refspec_to_remote(const std::string &remote,
+                                   const std::string &refspec);
+
+  // Add a push refspec to the remote's configuration
+  void add_push_refspec_to_remote(const std::string &remote,
+                                  const std::string &refspec);
+
+  // Add a remote with the default fetch refspec to the repository's
+  // configuration.
+  remote create_remote(const std::string &name, const std::string &url);
+
+  // Create an anonymous remote
+  remote create_anonymous_remote(const std::string &url);
+
+  // Add a remote with the provided fetch refspec
+  //  to the repository's configuration.
+  remote create_remote(const std::string &name, const std::string &url,
+                       const std::string &fetch_refspec);
+
+  // Delete an existing persisted remote.
+  // All remote-tracking branches and configuration
+  // settings for the remote will be removed.
+  void delete_remote(const std::string &name);
+
+  // Get a list of the configured remotes for a repo
+  strarray remotes() const;
+
+  // Get the information for a particular remote
+  remote lookup_remote(const std::string &name);
+
+  // Give the remote a new name
+  // All remote-tracking branches and configuration settings for the remote are
+  // updated.
+  //
+  // @return:
+  //   non-default refspecs cannot be renamed and will be stored here
+  //   for further processing by the caller. Always free this strarray
+  //   on successful return.
+  strarray rename_remote(const std::string &name, const std::string &new_name);
+
+  // Set the remote's url for pushing in the configuration.
+  // Remote objects already in memory will not be affected.
+  // This assumes the common case of a single-url remote and
+  // will otherwise return an error.
+  void set_remote_push_url(const std::string &remote, const std::string &url);
+
+  // Set the remote's url in the configuration
+  void set_remote_url(const std::string &reomte, const std::string &url);
 
   /*
    * SIGNATURE API
