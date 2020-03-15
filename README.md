@@ -796,19 +796,19 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_reflog_append` | |
-| `git_reflog_delete` | |
-| `git_reflog_drop` | |
-| `git_reflog_entry_byindex` | |
-| `git_reflog_entry_committer` | |
-| `git_reflog_entry_id_new` | |
-| `git_reflog_entry_id_old` | |
-| `git_reflog_entry_message` | |
-| `git_reflog_entrycount` | |
-| `git_reflog_free` | |
-| `git_reflog_read` | |
-| `git_reflog_rename` | |
-| `git_reflog_write` | |
+| `git_reflog_append` | `reflog::append` |
+| `git_reflog_delete` | `repository::delete_reflog` |
+| `git_reflog_drop` | `reflog::remove` |
+| `git_reflog_entry_byindex` | `reflog::operator[]` |
+| `git_reflog_entry_committer` | `reflog::entry::committer` |
+| `git_reflog_entry_id_new` | `reflog::entry::new_id` |
+| `git_reflog_entry_id_old` | `reflog::entry::old_id` |
+| `git_reflog_entry_message` | `reflog::entry::message` |
+| `git_reflog_entrycount` | `reflog::size` |
+| `git_reflog_free` | `reflog::~reflog` |
+| `git_reflog_read` | `repository::read_reflog` |
+| `git_reflog_rename` | `repository::rename_reflog` |
+| `git_reflog_write` | `repository::write_to_disk` |
 
 
 ### refspec
