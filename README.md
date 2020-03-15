@@ -1026,25 +1026,25 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_submodule_add_finalize` | |
+| `git_submodule_add_finalize` | `submodule::resolve_setup` |
 `git_submodule_add_setup` | |
-| `git_submodule_add_to_index` | |
-| `git_submodule_branch` | |
+| `git_submodule_add_to_index` | `submodule::add_to_index` |
+| `git_submodule_branch` | `submodule::branch_name` |
 `git_submodule_clone` | |
-| `git_submodule_fetch_recurse_submodules` | |
+| `git_submodule_fetch_recurse_submodules` | `submodule::recuse_submodules_option` |
 `git_submodule_foreach` | |
-| `git_submodule_free` | |
-| `git_submodule_head_id` | |
-| `git_submodule_ignore` | |
-| `git_submodule_index_id` | |
-| `git_submodule_init` | |
+| `git_submodule_free` | `submodule::~submodule` |
+| `git_submodule_head_id` | `submodule::head_id` |
+| `git_submodule_ignore` | `submodule::ignore_option` |
+| `git_submodule_index_id` | `submodule::index_id` |
+| `git_submodule_init` | `submodule::init` |
 `git_submodule_location` | |
 `git_submodule_lookup` | |
-| `git_submodule_name` | |
+| `git_submodule_name` | `submodule::name` |
 `git_submodule_open` | |
 `git_submodule_owner` | |
-| `git_submodule_path` | |
-| `git_submodule_reload` | |
+| `git_submodule_path` | `submodule::path` |
+| `git_submodule_reload` | `submodule::reload` |
 `git_submodule_repo_init` | |
 `git_submodule_resolve_url` | |
 `git_submodule_set_branch` | |
@@ -1053,11 +1053,11 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_submodule_set_update` | |
 `git_submodule_set_url` | |
 `git_submodule_status` | |
-| `git_submodule_sync` | |
+| `git_submodule_sync` | `submodule::sync` |
 `git_submodule_update` | |
 `git_submodule_update_options_init` | |
-| `git_submodule_update_strategy` | |
-| `git_submodule_url` | |
+| `git_submodule_update_strategy` | `submodule::update_strategy` |
+| `git_submodule_url` | `submodule::url` |
 | `git_submodule_wd_id` | **Not implemented** |
 
 ### tag
