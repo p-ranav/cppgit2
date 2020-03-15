@@ -814,17 +814,17 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_refspec_direction` | |
-`git_refspec_dst` | |
-`git_refspec_dst_matches` | |
-`git_refspec_force` | |
-`git_refspec_free` | |
-`git_refspec_parse` | |
-`git_refspec_rtransform` | |
-`git_refspec_src` | |
-`git_refspec_src_matches` | |
-`git_refspec_string` | |
-`git_refspec_transform` | |
+`git_refspec_direction` | `refspec::direction` |
+`git_refspec_dst` | `refspec::destination` |
+`git_refspec_dst_matches` | `refspec::destination_matches_reference` |
+`git_refspec_force` | `refspec::is_force_update_enabled` |
+`git_refspec_free` | `refspec::~refspec` |
+`git_refspec_parse` | `refspec::parse` |
+`git_refspec_rtransform` | `refspec::transform_target_to_source_reference` |
+`git_refspec_src` | `refspec::source` |
+`git_refspec_src_matches` | `refspec::source_matches_reference` |
+`git_refspec_string` | `refspec::to_string` |
+`git_refspec_transform` | `refspec::transform_reference` |
 
 
 ### remote
