@@ -371,7 +371,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | libgit2 | cppgit2:: |
 | --- | --- |
 `git_error_clear` | |
-`git_error_last` | |
+`git_error_last` | `git_exception::git_exception` |
 `git_error_set_oom` | |
 `git_error_set_str` | |
 
@@ -424,48 +424,48 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_index_add` | |
-| `git_index_add_all` | |
-| `git_index_add_bypath` | |
-| `git_index_add_from_buffer` | |
-| `git_index_caps` | |
-| `git_index_checksum` | |
-| `git_index_clear` | |
-| `git_index_conflict_add` | |
-| `git_index_conflict_cleanup` | |
+| `git_index_add` | `index::add_entry` |
+| `git_index_add_all` | `index::add_entries_that_match` |
+| `git_index_add_bypath` | `index::add_entry_by_path` |
+| `git_index_add_from_buffer` | `index::add_entry_from_buffer` |
+| `git_index_caps` | `index::capability_flags` |
+| `git_index_checksum` | `index::checksum` |
+| `git_index_clear` | `index::clear` |
+| `git_index_conflict_add` | `index::add_conflict_entry` |
+| `git_index_conflict_cleanup` | `index::remove_all_conflicts` |
 `git_index_conflict_get` | |
 | `git_index_conflict_iterator_free` | |
 | `git_index_conflict_iterator_new` | |
 | `git_index_conflict_next` | |
-| `git_index_conflict_remove` | |
+| `git_index_conflict_remove` | `index::remove_conflict_entries` |
 | `git_index_entry_is_conflict` | |
 | `git_index_entry_stage` | |
-| `git_index_entrycount` | |
-| `git_index_find` | |
-| `git_index_find_prefix` | |
-| `git_index_free` | |
-| `git_index_get_byindex` | |
-| `git_index_get_bypath` | |
-| `git_index_has_conflicts` | |
+| `git_index_entrycount` | `index::size` |
+| `git_index_find` | `index::find_first` |
+| `git_index_find_prefix` | `index::find_first_matching_prefix` |
+| `git_index_free` | `index::~index` |
+| `git_index_get_byindex` | `index::operator[]` |
+| `git_index_get_bypath` | `index::entry_in_path` |
+| `git_index_has_conflicts` | `index::has_conflicts` |
 | `git_index_iterator_free` | |
 | `git_index_iterator_new` | |
 | `git_index_iterator_next` | |
 | `git_index_new` | |
 `git_index_open` | |
 `git_index_owner` | |
-| `git_index_path` | |
-| `git_index_read` | |
-| `git_index_read_tree` | |
-| `git_index_remove` | |
-| `git_index_remove_all` | |
-| `git_index_remove_bypath` | |
-| `git_index_remove_directory` | |
-| `git_index_set_caps` | |
-| `git_index_set_version` | |
-| `git_index_update_all` | |
-| `git_index_version` | |
-| `git_index_write` | |
-| `git_index_write_tree` | |
+| `git_index_path` | `index::path` |
+| `git_index_read` | `index::read` |
+| `git_index_read_tree` | `index::read_tree` |
+| `git_index_remove` | `index::remove_entry` |
+| `git_index_remove_all` | `index::remove_entries_that_match` |
+| `git_index_remove_bypath` | `index::remove_entry_by_path` |
+| `git_index_remove_directory` | `index::remove_entries_in_directory` |
+| `git_index_set_caps` | `index::set_index_capabilities` |
+| `git_index_set_version` | `index::set_version` |
+| `git_index_update_all` | `index::update_entries_that_match` |
+| `git_index_version` | `index::version` |
+| `git_index_write` | `index::write` |
+| `git_index_write_tree` | `index::write_tree` |
 | `git_index_write_tree_to` | |
 
 

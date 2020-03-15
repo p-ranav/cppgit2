@@ -58,7 +58,7 @@ index::capability index::capability_flags() const {
   return static_cast<capability>(git_index_caps(c_ptr_));
 }
 
-const oid index::get_checksum() { return oid(git_index_checksum(c_ptr_)); }
+const oid index::checksum() { return oid(git_index_checksum(c_ptr_)); }
 
 void index::clear() {
   if (git_index_clear(c_ptr_))

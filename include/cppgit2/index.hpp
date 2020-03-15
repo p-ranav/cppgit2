@@ -190,7 +190,7 @@ public:
 
   // This checksum is the SHA-1 hash over the index file
   // (except the last 20 bytes which are the checksum itself).
-  const oid get_checksum();
+  const oid checksum();
 
   // Clear the contents (all the entries) of an index object.
   void clear();
