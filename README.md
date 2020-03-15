@@ -749,47 +749,47 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_reference_cmp` | |
-| `git_reference_create` | |
-| `git_reference_create_matching` | |
-| `git_reference_delete` | |
-| `git_reference_dup` | |
-| `git_reference_dwim` | |
-| `git_reference_ensure_log` | |
-| `git_reference_foreach` | |
-| `git_reference_foreach_glob` | |
-| `git_reference_foreach_name` | |
-| `git_reference_free` | |
+| `git_reference_cmp` | `reference::compare` |
+| `git_reference_create` | `repository::create_reference` |
+| `git_reference_create_matching` | `repository::create_reference` |
+| `git_reference_delete` | `repository::delete_reference` |
+| `git_reference_dup` | `reference::copy` |
+| `git_reference_dwim` | `repository::lookup_reference_by_dwim` |
+| `git_reference_ensure_log` | `repository::ensure_reflog_for_reference` |
+| `git_reference_foreach` | `repository::for_each_reference` |
+| `git_reference_foreach_glob` | `repository::for_each_reference_glob` |
+| `git_reference_foreach_name` | `repository::for_each_reference_name` |
+| `git_reference_free` | `reference::~reference` |
 | `git_reference_has_log` | |
-| `git_reference_is_branch` | |
-| `git_reference_is_note` | |
-| `git_reference_is_remote` | |
-| `git_reference_is_tag` | |
-| `git_reference_is_valid_name` | |
-| `git_reference_iterator_free` | |
-| `git_reference_iterator_glob_new` | |
-| `git_reference_iterator_new` | |
-| `git_reference_list` | |
-| `git_reference_lookup` | |
-| `git_reference_name` | |
-| `git_reference_name_to_id` | |
-| `git_reference_next` | |
-| `git_reference_next_name` | |
-| `git_reference_normalize_name` | |
-| `git_reference_owner` | |
-| `git_reference_peel` | |
-| `git_reference_remove` | |
-| `git_reference_rename` | |
-| `git_reference_resolve` | |
-| `git_reference_set_target` | |
-| `git_reference_shorthand` | |
-| `git_reference_symbolic_create` | |
-| `git_reference_symbolic_create_matching` | |
-| `git_reference_symbolic_set_target` | |
-| `git_reference_symbolic_target` | |
-| `git_reference_target` | |
-| `git_reference_target_peel` | |
-| `git_reference_type` | |
+| `git_reference_is_branch` | `reference::is_branch` |
+| `git_reference_is_note` | `reference::is_note` |
+| `git_reference_is_remote` | `reference::is_remote` |
+| `git_reference_is_tag` | `reference::is_tag` |
+| `git_reference_is_valid_name` | `reference::is_valid_name` |
+| `git_reference_iterator_free` | `repository::for_each_reference` |
+| `git_reference_iterator_glob_new` | `repository::for_each_reference_glob` |
+| `git_reference_iterator_new` | `repository::for_each_reference` |
+| `git_reference_list` | `repository::reference_list` |
+| `git_reference_lookup` | `repository::lookup_reference` |
+| `git_reference_name` | `reference::name` |
+| `git_reference_name_to_id` | `repository::reference_name_to_id` |
+| `git_reference_next` | `repository::for_each_reference` |
+| `git_reference_next_name` | `repository::for_each_reference_name` |
+| `git_reference_normalize_name` | `reference::normalize_name` |
+| `git_reference_owner` | `reference::owner` |
+| `git_reference_peel` | reference::peel_until` |
+| `git_reference_remove` | `reference::delete_reference` |
+| `git_reference_rename` | `reference::rename` |
+| `git_reference_resolve` | `reference::resolve` |
+| `git_reference_set_target` | `reference::set_target` |
+| `git_reference_shorthand` | `reference::shorthand_name` |
+| `git_reference_symbolic_create` | `repository::create_symbolic_reference` |
+| `git_reference_symbolic_create_matching` | `repository::create_symbolic_reference` |
+| `git_reference_symbolic_set_target` | `reference::set_symbolic_target` |
+| `git_reference_symbolic_target` | `reference::symbolic_target` |
+| `git_reference_target` | `reference::target` |
+| `git_reference_target_peel` | `reference::peeled_target` |
+| `git_reference_type` | `reference::type` |
 
 
 ### reflog
