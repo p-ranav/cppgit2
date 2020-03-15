@@ -486,10 +486,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | libgit2 | cppgit2:: |
 | --- | --- |
 `git_libgit2_features` | |
-| `git_libgit2_init` | |
+| `git_libgit2_init` | `libgit2_api::libgit2_api` |
 `git_libgit2_opts` | |
-| `git_libgit2_shutdown` | |
-| `git_libgit2_version` | |
+| `git_libgit2_shutdown` | `libgit2_api::~libgit2_api` |
+| `git_libgit2_version` | `libgit2_api::version` |
 
 
 ### merge
@@ -527,20 +527,20 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_note_author` | |
+| `git_note_author` | `note::author` |
 `git_note_commit_create` | |
 `git_note_commit_iterator_new` | |
 `git_note_commit_read` | |
 `git_note_commit_remove` | |
-| `git_note_committer` | |
+| `git_note_committer` | `note::committer` |
 `git_note_create` | |
 `git_note_default_ref` | |
 `git_note_foreach` | |
-| `git_note_free` | |
-| `git_note_id` | |
+| `git_note_free` | `note::~note` |
+| `git_note_id` | `note::id` |
 `git_note_iterator_free` | |
 `git_note_iterator_new` | |
-| `git_note_message` | |
+| `git_note_message` | `note::message` |
 `git_note_next` | |
 `git_note_read` | |
 `git_note_remove` | |
@@ -551,20 +551,19 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | libgit2 | cppgit2:: |
 | --- | --- |
 | `git_object__size` | **Not implemented** |
-| `git_object_dup` | |
-| `git_object_free` | |
-| `git_object_id` | |
-| `git_object_lookup` | |
-| `git_object_lookup_bypath` | |
-| `git_object_lookup_prefix` | |
-| `git_object_owner` | |
-| `git_object_peel` | |
-| `git_object_short_id` | |
-| `git_object_string2type` | |
-| `git_object_type` | |
-| `git_object_type2string` | |
-| `git_object_typeisloose` | |
-
+| `git_object_dup` | `object::copy` |
+| `git_object_free` | `object::~object` |
+| `git_object_id` | `object::id` |
+| `git_object_lookup` | `repository::lookup_object` |
+| `git_object_lookup_bypath` | `repository::lookup_object` |
+| `git_object_lookup_prefix` | `repository::lookup_object` |
+| `git_object_owner` | `object::owner` |
+| `git_object_peel` | `object::peel_until` |
+| `git_object_short_id` | `object::short_id` |
+| `git_object_string2type` | `object::type_from_string` |
+| `git_object_type` | `object::type` |
+| `git_object_type2string` | `object::string_from_type` |
+| `git_object_typeisloose` | `object::is_type_loose` |
 
 ### odb
 
