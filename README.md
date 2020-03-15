@@ -611,26 +611,26 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_oid_cmp` | |
-| `git_oid_cpy` | |
-| `git_oid_equal` | |
-| `git_oid_fmt` | |
-| `git_oid_fromraw` | |
-| `git_oid_fromstr` | |
-| `git_oid_fromstrn` | |
+| `git_oid_cmp` | `oid::compare` |
+| `git_oid_cpy` | `oid::copy` |
+| `git_oid_equal` | `oid::operator==` |
+| `git_oid_fmt` | **Not implemented** |
+| `git_oid_fromraw` | `oid::oid` |
+| `git_oid_fromstr` | `oid::oid` |
+| `git_oid_fromstrn` | `oid::oid` |
 | `git_oid_fromstrp` | **Not implemented** |
-| `git_oid_is_zero` | |
-| `git_oid_iszero` | |
-| `git_oid_ncmp` | |
-| `git_oid_nfmt` | |
-| `git_oid_pathfmt` | |
-| `git_oid_shorten_add` | |
-| `git_oid_shorten_free` | |
-| `git_oid_shorten_new` | |
-| `git_oid_strcmp` | |
-| `git_oid_streq` | |
-| `git_oid_tostr` | |
-| `git_oid_tostr_s` | |
+| `git_oid_is_zero` | `oid::is_zero` |
+| `git_oid_iszero` | `oid::is_zero` |
+| `git_oid_ncmp` | `oid::compare` |
+| `git_oid_nfmt` | **Not implemented** |
+| `git_oid_pathfmt` | `oid::to_path_string` |
+| `git_oid_shorten_add` | `oid::shorten::add` |
+| `git_oid_shorten_free` | `oid::shorten::~shorten` |
+| `git_oid_shorten_new` | `oid::shorten::shorten` |
+| `git_oid_strcmp` | `oid::compare` |
+| `git_oid_streq` | `oid::operator==` |
+| `git_oid_tostr` | `oid::to_hex_string` |
+| `git_oid_tostr_s` | `oid::to_hex_string` |
 
 
 ### oidarray
