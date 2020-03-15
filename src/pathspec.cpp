@@ -12,7 +12,7 @@ pathspec::~pathspec() {
 }
 
 pathspec pathspec::compile(const strarray& paths) {
-  pathspec result;
+  pathspec result(nullptr, ownership::user);
   if (git_pathspec_new(&result.c_ptr_, paths.c_ptr()))
     throw git_exception();
   return result;
