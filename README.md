@@ -1155,16 +1155,16 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 `git_worktree_add` | |
 `git_worktree_add_options_init` | |
-| `git_worktree_free` | |
-| `git_worktree_is_locked` | |
-| `git_worktree_is_prunable` | |
+| `git_worktree_free` | `worktree::~worktree` |
+| `git_worktree_is_locked` | `worktree::is_prunable` |
+| `git_worktree_is_prunable` | `worktree::is_prunable` |
 `git_worktree_list` | |
-| `git_worktree_lock` | |
+| `git_worktree_lock` | `worktree::lock` |
 `git_worktree_lookup` | |
-| `git_worktree_name` | |
+| `git_worktree_name` | `worktree::name` |
 `git_worktree_open_from_repository` | |
-| `git_worktree_path` | |
-| `git_worktree_prune` | |
+| `git_worktree_path` | `worktree::path` |
+| `git_worktree_prune` | `worktree::prune` |
 | `git_worktree_prune_options_init` | |
-| `git_worktree_unlock` | |
-| `git_worktree_validate` | |
+| `git_worktree_unlock` | `worktree::unlock` |
+| `git_worktree_validate` | `worktree::validate` |
