@@ -308,6 +308,9 @@ public:
   // The index must not contain any file in conflict.
   oid write_tree();
 
+  // Write the index as a tree to the given repository
+  oid write_tree_to(const class repository &repo);
+
   // Create a new bare Git index object as a memory 
   // representation of the Git index file in 'index_path', 
   // without a repository to back it.

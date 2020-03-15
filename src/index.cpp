@@ -250,6 +250,13 @@ oid index::write_tree() {
   return result;
 }
 
+oid index::write_tree_to(const repository &repo) {
+  oid result;
+  if (git_index_write_tree_to(result.c_ptr(), c_ptr_, repo.c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 index index::open(const std::string &path) {
   index result;
   if (git_index_open(&result.c_ptr_, path.c_str()))

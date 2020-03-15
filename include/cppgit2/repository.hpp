@@ -745,6 +745,7 @@ public:
                           std::vector<tree::update> updates);
 
 private:
+  friend class index;
   friend class pathspec;
   friend class tree_builder;
   git_repository *c_ptr_;

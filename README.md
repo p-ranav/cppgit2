@@ -466,7 +466,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_index_version` | `index::version` |
 | `git_index_write` | `index::write` |
 | `git_index_write_tree` | `index::write_tree` |
-| `git_index_write_tree_to` | |
+| `git_index_write_tree_to` | `index::write_tree_to` |
 
 
 ### indexer
