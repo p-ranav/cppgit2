@@ -529,7 +529,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 | `git_note_author` | `note::author` |
 | `git_note_commit_create` | `repository::create_note` |
-`git_note_commit_iterator_new` | |
+| `git_note_commit_iterator_new` | **Not Implemented** |
 | `git_note_commit_read` | `repository::read_note` |
 | `git_note_commit_remove` | `repository::remove_note` |
 | `git_note_committer` | `note::committer` |
@@ -538,10 +538,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_note_foreach` | `repository::for_each_note` |
 | `git_note_free` | `note::~note` |
 | `git_note_id` | `note::id` |
-`git_note_iterator_free` | |
-`git_note_iterator_new` | |
+| `git_note_iterator_free` | **Not Implemented** |
+| `git_note_iterator_new` | **Not Implemented** |
 | `git_note_message` | `note::message` |
-`git_note_next` | |
+| `git_note_next` | **Not Implemented** |
 | `git_note_read` | `repository::read_note` |
 | `git_note_remove` | `repository::remove_note` |
 
