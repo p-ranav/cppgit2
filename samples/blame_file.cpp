@@ -4,7 +4,7 @@ using namespace cppgit2;
 
 int main(int argc, char **argv) {
   if (argc == 3) {
-    repository repo(argv[1], false);
+    auto repo = repository::init(argv[1], false);
     auto blame = repo.blame_file(argv[2]);
     auto hunk_count = blame.hunk_count();
     std::cout << "Blame Hunk count: " << hunk_count << std::endl;

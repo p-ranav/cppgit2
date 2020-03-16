@@ -6,7 +6,7 @@ using namespace cppgit2;
 int main(int argc, char **argv) {
   if (argc == 2) {
     // Create new repo
-    repository repo(argv[1], false);
+    auto repo = repository::init(argv[1], false);
 
     // Write README file
     std::ofstream readme;

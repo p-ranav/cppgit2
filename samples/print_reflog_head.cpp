@@ -1,9 +1,9 @@
 #include <cppgit2/repository.hpp>
+using namespace cppgit2;
 
 int main(int argc, char **argv) {
   if (argc == 2) {
-    cppgit2::repository repo;
-    repo.open(argv[1]);
+    auto repo = repository::open(argv[1]);
 
     auto reflog = repo.read_reflog("HEAD");
     for (size_t i = 0; i < reflog.size(); ++i) {

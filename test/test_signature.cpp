@@ -53,3 +53,17 @@ TEST_CASE("Clone signature struct" * test_suite("signature")) {
   REQUIRE(bar.time() == 50);
   REQUIRE(bar.offset() == 3);
 }
+
+TEST_CASE("Interoperatbility with libgit2" * test_suite("signature")) {
+
+  // Construct libgit2 signature
+  git_signature sig;
+  sig.name = (char *)"Foo Bar";
+  sig.email = (char *)"foo.bar@baz.com";
+
+  // Construct cppgit2 wrapper
+  cppgit2::signature sig2(&sig);
+
+  REQUIRE(sig2.name() == std::string(sig.name));
+  REQUIRE(sig2.email() == std::string(sig.email));
+}

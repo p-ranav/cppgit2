@@ -6,6 +6,7 @@
 #include <cppgit2/blob.hpp>
 #include <cppgit2/branch.hpp>
 #include <cppgit2/checkout.hpp>
+#include <cppgit2/clone.hpp>
 #include <cppgit2/commit.hpp>
 #include <cppgit2/config.hpp>
 #include <cppgit2/data_buffer.hpp>
@@ -36,19 +37,22 @@ public:
   // Default construct a git repo
   repository(git_repository *c_ptr = nullptr);
 
-  // Initialize git repository
-  repository(const std::string &path, bool is_bare);
-
   // Free git_repository ptr
   ~repository();
 
+  // Initialize git repository
+  static repository init(const std::string &path, bool is_bare);
+
   // Open a git repository
   // Auto-detects if `path` is normal or bare repo and fails if neither
-  void open(const std::string &path);
+  static repository open(const std::string &path);
 
   // Fast open for bare repositories
   // Useful when hosting repos and need to access them effeciently
-  void open_bare(const std::string &path);
+  static repository open_bare(const std::string &path);
+
+  static repository clone(const std::string &url, const std::string &local_path,
+    const clone::options &options = clone::options());
 
   // Check if a repository is bare
   bool is_bare() const;

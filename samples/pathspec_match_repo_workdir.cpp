@@ -3,8 +3,7 @@ using namespace cppgit2;
 
 int main(int argc, char **argv) {
   if (argc == 3) {
-    repository repo;
-    repo.open(argv[1]);
+    auto repo = repository::open(argv[1]);
 
     auto pathspec = pathspec::compile(std::vector<std::string>{argv[2]});
     auto match_list = pathspec.match_workdir(repo, pathspec::flag::default_);

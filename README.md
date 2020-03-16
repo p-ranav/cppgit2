@@ -268,7 +268,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_clone` | |
+`git_clone` | `repository::clone` |
 `git_clone_options_init` | `clone::options::options` |
 
 
@@ -952,7 +952,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_repository_head_unborn` | `repository::is_head_unborn` |
 | `git_repository_ident` | `repository::identity` |
 | `git_repository_index` | `repository::index` |
-| `git_repository_init` | `repository::repository` |
+| `git_repository_init` | `repository::init` |
 `git_repository_init_ext` | |
 `git_repository_init_options_init` | |
 | `git_repository_is_bare` | `repository::is_bare` |

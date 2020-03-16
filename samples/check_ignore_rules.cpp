@@ -5,8 +5,7 @@ using namespace cppgit2;
 
 int main(int argc, char **argv) {
   if (argc == 3) {
-    repository repo;
-    repo.open(argv[1]);
+    auto repo = repository::open(argv[1]);
 
     std::cout << "Should ignore file " << argv[2] << "? ";
     std::cout << std::boolalpha << repo.should_ignore(argv[2]) << std::endl;

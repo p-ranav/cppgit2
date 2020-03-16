@@ -82,3 +82,19 @@ TEST_CASE("Compare two oids" * test_suite("oid")) {
   oid oid4("f9de900000000000000000000000000000000000");
   REQUIRE(oid1.compare(oid4, 5) == 0);
 }
+
+TEST_CASE("Interoperatbility with libgit2" * test_suite("oid")) {
+  // Construct cppgit2 OID object
+  oid oid1("f9de917ac729414151fdce077d4098cfec9a45a5");
+
+  // Access libgit2 C ptr
+  auto oid1_cptr = oid1.c_ptr();
+
+  // Use the libgit2 C API to format
+  size_t n = 8;
+  char * oid1_formatted = (char *)malloc(sizeof(char) * n);
+  git_oid_tostr(oid1_formatted, n + 1, oid1_cptr);
+
+  // Results are the same
+  REQUIRE(oid1.to_hex_string(8) == std::string(oid1_formatted)); // f9de917
+}

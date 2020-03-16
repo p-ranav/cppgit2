@@ -4,8 +4,7 @@ using namespace cppgit2;
 
 int main(int argc, char **argv) {
   if (argc == 2) {
-    repository repo;
-    repo.open(argv[1]);
+    auto repo = repository::open(argv[1]);
 
     repo.for_each_reference(
         [](const reference &ref) { std::cout << ref.name() << std::endl; });
