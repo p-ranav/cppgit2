@@ -71,6 +71,31 @@ TARGET_LINK_LIBRARIES(my_sample ${CPPGIT2_LIBRARY})
 SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 ```
 
+## Design Notes
+
+### Interoperability with `libgit2`
+
+`cppgit2` aims to be a lightweight wrapper around `libgit2`. Any `cppgit2` data structure that wraps a `libgit2` data structure has a `.c_ptr()` method you can call to access the wrapped `libgit2` C pointer. See below for an example.
+
+```cpp
+// Construct cppgit2 OID object
+oid oid1("f9de917ac729414151fdce077d4098cfec9a45a5");
+
+// Generate hex string representation
+std::string oid1_str = oid1.to_hex_string(8); // f9de917
+
+// Access libgit2 C ptr
+auto oid1_cptr = oid1.c_ptr();
+
+// Use the libgit2 C API to format
+size_t n = 8;
+char * oid1_formatted = (char *)malloc(sizeof(char) * n);
+git_oid_tostr(oid1_formatted, n + 1, oid1_cptr);
+
+// Results are the same
+REQUIRE(oid1_str == std::string(oid1_formatted)); // f9de917
+```
+
 ## Contributions
 
 Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information. 
