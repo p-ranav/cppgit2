@@ -794,42 +794,48 @@ void repository::add_ondisk_config_file(const cppgit2::config &cfg,
 }
 
 diff repository::create_diff_index_to_workdir(const cppgit2::index &index,
-                                  const diff::options &options) {
+                                              const diff::options &options) {
   diff result;
-  if (git_diff_index_to_workdir(&result.c_ptr_, c_ptr_, index.c_ptr_, options.c_ptr()))
+  if (git_diff_index_to_workdir(&result.c_ptr_, c_ptr_, index.c_ptr_,
+                                options.c_ptr()))
     throw git_exception();
   return result;
 }
 
-diff repository::create_diff_tree_to_index(const tree &old_tree, const cppgit2::index &index,
-                                const diff::options &options) {
+diff repository::create_diff_tree_to_index(const tree &old_tree,
+                                           const cppgit2::index &index,
+                                           const diff::options &options) {
   diff result;
-  if (git_diff_tree_to_index(&result.c_ptr_, c_ptr_, old_tree.c_ptr_, index.c_ptr_, options.c_ptr()))
+  if (git_diff_tree_to_index(&result.c_ptr_, c_ptr_, old_tree.c_ptr_,
+                             index.c_ptr_, options.c_ptr()))
     throw git_exception();
   return result;
 }
 
-diff repository::create_diff_tree_to_tree(const tree &old_tree, const tree &new_tree,
-                              const diff::options &options) {
+diff repository::create_diff_tree_to_tree(const tree &old_tree,
+                                          const tree &new_tree,
+                                          const diff::options &options) {
   diff result;
-  if (git_diff_tree_to_tree(&result.c_ptr_, c_ptr_, old_tree.c_ptr_, new_tree.c_ptr_, options.c_ptr()))
+  if (git_diff_tree_to_tree(&result.c_ptr_, c_ptr_, old_tree.c_ptr_,
+                            new_tree.c_ptr_, options.c_ptr()))
     throw git_exception();
   return result;
 }
 
 diff repository::create_diff_tree_to_workdir(const tree &old_tree,
-                                  const diff::options &options) {
+                                             const diff::options &options) {
   diff result;
-  if (git_diff_tree_to_workdir(&result.c_ptr_, c_ptr_, old_tree.c_ptr_, options.c_ptr()))
+  if (git_diff_tree_to_workdir(&result.c_ptr_, c_ptr_, old_tree.c_ptr_,
+                               options.c_ptr()))
     throw git_exception();
   return result;
 }
 
-diff
-repository::create_diff_tree_to_workdir_with_index(const tree &old_tree,
-                                        const diff::options &options) {
+diff repository::create_diff_tree_to_workdir_with_index(
+    const tree &old_tree, const diff::options &options) {
   diff result;
-  if (git_diff_tree_to_workdir_with_index(&result.c_ptr_, c_ptr_, old_tree.c_ptr_, options.c_ptr()))
+  if (git_diff_tree_to_workdir_with_index(&result.c_ptr_, c_ptr_,
+                                          old_tree.c_ptr_, options.c_ptr()))
     throw git_exception();
   return result;
 }
@@ -1207,6 +1213,13 @@ void repository::set_remote_url(const std::string &remote,
                                 const std::string &url) {
   if (git_remote_set_url(c_ptr_, remote.c_str(), url.c_str()))
     throw git_exception();
+}
+
+revwalk repository::create_revwalk() {
+  revwalk result(nullptr, ownership::user);
+  if (git_revwalk_new(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
 }
 
 signature repository::default_signature() const {

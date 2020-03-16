@@ -22,6 +22,7 @@
 #include <cppgit2/remote.hpp>
 #include <cppgit2/reset.hpp>
 #include <cppgit2/revision.hpp>
+#include <cppgit2/revwalk.hpp>
 #include <cppgit2/stash.hpp>
 #include <cppgit2/status.hpp>
 #include <cppgit2/tag.hpp>
@@ -526,26 +527,30 @@ public:
    */
 
   // Create a diff between the repository index and the workdir directory.
-  diff create_diff_index_to_workdir(const cppgit2::index &index,
-                                    const diff::options &options = diff::options(nullptr));
+  diff create_diff_index_to_workdir(
+      const cppgit2::index &index,
+      const diff::options &options = diff::options(nullptr));
 
   // Create a diff between a tree and repository index.
-  diff create_diff_tree_to_index(const tree &old_tree, const cppgit2::index &index,
-                                 const diff::options &options = diff::options(nullptr));
+  diff create_diff_tree_to_index(
+      const tree &old_tree, const cppgit2::index &index,
+      const diff::options &options = diff::options(nullptr));
 
   // Create a diff with the difference between two tree objects.
-  diff create_diff_tree_to_tree(const tree &old_tree, const tree &new_tree,
-                                const diff::options &options = diff::options(nullptr));
+  diff create_diff_tree_to_tree(
+      const tree &old_tree, const tree &new_tree,
+      const diff::options &options = diff::options(nullptr));
 
   // Create a diff between a tree and the working directory.
-  diff create_diff_tree_to_workdir(const tree &old_tree,
-                                   const diff::options &options = diff::options(nullptr));
+  diff create_diff_tree_to_workdir(
+      const tree &old_tree,
+      const diff::options &options = diff::options(nullptr));
 
-  // Create a diff between a tree and the working directory using index data to account for staged
-  // deletes, tracked files, etc.
-  diff
-  create_diff_tree_to_workdir_with_index(const tree &old_tree,
-                                         const diff::options &options = diff::options(nullptr));
+  // Create a diff between a tree and the working directory using index data to
+  // account for staged deletes, tracked files, etc.
+  diff create_diff_tree_to_workdir_with_index(
+      const tree &old_tree,
+      const diff::options &options = diff::options(nullptr));
 
   /*
    * IGNORE API
@@ -783,6 +788,17 @@ public:
 
   // Set the remote's url in the configuration
   void set_remote_url(const std::string &remote, const std::string &url);
+
+  /*
+   * REVWALK API
+   * See git_revwalk_* functions
+   */
+
+  // Allocate a new revision walker to iterate through a repo.
+  //
+  // This revision walker uses a custom memory pool and an internal commit
+  // cache, so it is relatively expensive to allocate.
+  revwalk create_revwalk();
 
   /*
    * SIGNATURE API

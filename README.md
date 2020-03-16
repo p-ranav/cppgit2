@@ -991,24 +991,23 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_revwalk_add_hide_cb` | |
-`git_revwalk_free` | |
-`git_revwalk_hide` | |
-`git_revwalk_hide_glob` | |
-`git_revwalk_hide_head` | |
-`git_revwalk_hide_ref` | |
-`git_revwalk_new` | |
-`git_revwalk_next` | |
-`git_revwalk_push` | |
-`git_revwalk_push_glob` | |
-`git_revwalk_push_head` | |
-`git_revwalk_push_range` | |
-`git_revwalk_push_ref` | |
-`git_revwalk_repository` | |
-`git_revwalk_reset` | |
-`git_revwalk_simplify_first_parent` | |
-`git_revwalk_sorting` | |
-
+`git_revwalk_add_hide_cb` | `revwalk::add_hide_callback` |
+`git_revwalk_free` | `revwalk::~revwalk` |
+`git_revwalk_hide` | `revwalk::hide` |
+`git_revwalk_hide_glob` | `revwalk::hide_glob` |
+`git_revwalk_hide_head` | `revwalk::hide_head` |
+`git_revwalk_hide_ref` | `revwalk::hide_reference` |
+`git_revwalk_new` | `repository::create_revwalk` |
+`git_revwalk_next` | `revwalk::next` |
+`git_revwalk_push` | `revwalk::push` |
+`git_revwalk_push_glob` | `revwalk::push_glob` |
+`git_revwalk_push_head` | `revwalk::push_head` |
+`git_revwalk_push_range` | `revwalk::push_range` |
+`git_revwalk_push_ref` | `revwalk::push_reference` |
+`git_revwalk_repository` | `revwalk::repository` |
+`git_revwalk_reset` | `revwalk::reset` |
+`git_revwalk_simplify_first_parent` | `revwalk::simplify_first_parent` |
+`git_revwalk_sorting` | `revwalk::set_sorting_mode` |
 
 ### signature
 
