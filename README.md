@@ -75,7 +75,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ### Interoperability with `libgit2`
 
-`cppgit2` aims to be a lightweight wrapper around `libgit2`. Most `cppgit2` data structures can be constructed using a `libgit2` C pointer. 
+Most `cppgit2` data structures can be constructed using a `libgit2` C pointer. 
 
 ```cpp
 // Construct libgit2 signature
