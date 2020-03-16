@@ -80,8 +80,8 @@ Most `cppgit2` data structures can be constructed using a `libgit2` C pointer.
 ```cpp
 // Construct libgit2 signature
 git_signature sig;
-sig.name = "Foo Bar";
-sig.email = "foo.bar@baz.com";
+sig.name = (char *)"Foo Bar";
+sig.email = (char *)"foo.bar@baz.com";
 
 // Construct cppgit2 wrapper
 cppgit2::signature sig2(&sig);
