@@ -203,7 +203,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 `git_cherrypick` | |
 `git_cherrypick_commit` | |
-`git_cherrypick_options_init` | |
+`git_cherrypick_options_init` | `cherrypick::options::options` |
 
 
 ### clone
@@ -509,7 +509,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_merge_file_input_init` | |
 `git_merge_file_options_init` | |
 `git_merge_file_result_free` | |
-`git_merge_options_init` | |
+`git_merge_options_init` | `merge::options::options` |
 `git_merge_trees` | |
 
 
