@@ -444,15 +444,15 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_filter_list_apply_to_blob` | |
-`git_filter_list_apply_to_data` | |
-`git_filter_list_apply_to_file` | |
-`git_filter_list_contains` | |
-`git_filter_list_free` | `filter::list::~list` |
-`git_filter_list_load` | |
-`git_filter_list_stream_blob` | |
-`git_filter_list_stream_data` | |
-`git_filter_list_stream_file` | |
+`git_filter_list_apply_to_blob` | **Not Implemented** |
+`git_filter_list_apply_to_data` | **Not Implemented** |
+`git_filter_list_apply_to_file` | **Not Implemented** |
+`git_filter_list_contains` | **Not Implemented** |
+`git_filter_list_free` | **Not Implemented** |
+`git_filter_list_load` | **Not Implemented** |
+`git_filter_list_stream_blob` | **Not Implemented** |
+`git_filter_list_stream_data` | **Not Implemented** |
+`git_filter_list_stream_file` | **Not Implemented** |
 
 ### giterr
 
