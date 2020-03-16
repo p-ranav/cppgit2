@@ -20,6 +20,22 @@ public:
   // Cleanup remote object
   ~remote();
 
+  // Automatic tag following option
+  // Lets us select the --tags option to use.
+  enum class autotag {
+    // Use the setting from the configuration
+    unspecified = 0,
+    // Ask the server for tags pointing to objects we're already downloading.
+    auto_,
+    // Don't ask for any tags beyond the refspecs.
+    none,
+    // Ask for the all the tags.
+    all
+  };
+
+  // Retrieve the tag auto-follow setting
+  autotag autotag_option();
+
   // Check whether the remote's underlying transport
   // is connected to the remote host.
   bool is_connected() const;

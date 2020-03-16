@@ -11,6 +11,10 @@ remote::~remote() {
     git_remote_free(c_ptr_);
 }
 
+remote::autotag remote::autotag_option() {
+  return static_cast<remote::autotag>(git_remote_autotag(c_ptr_));
+}
+
 bool remote::is_connected() const { return git_remote_connected(c_ptr_); }
 
 remote remote::create_detached_remote(const std::string &url) {
