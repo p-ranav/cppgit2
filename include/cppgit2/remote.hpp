@@ -80,11 +80,11 @@ public:
 
   // Create a packfile and send it to the server
   //
-  // Connect to the remote if it hasn't been done yet, 
-  // negotiate with the remote git which objects are missing, 
+  // Connect to the remote if it hasn't been done yet,
+  // negotiate with the remote git which objects are missing,
   // create a packfile with the missing objects and send it.
   void upload(const strarray &refspecs,
-    const push::options &options = push::options());
+              const push::options &options = push::options());
 
   // Get the remote's url
   std::string url() const;

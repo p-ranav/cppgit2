@@ -4,7 +4,7 @@ using namespace cppgit2;
 refspec::refspec() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
 refspec::refspec(git_refspec *c_ptr, ownership owner)
-  : c_ptr_(c_ptr), owner_(owner) {}
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 refspec::~refspec() {
   if (c_ptr_ && owner_ == ownership::user)
@@ -35,7 +35,8 @@ refspec refspec::parse(const std::string &input, bool is_fetch) {
   return result;
 }
 
-data_buffer refspec::transform_target_to_source_reference(const std::string &name) {
+data_buffer
+refspec::transform_target_to_source_reference(const std::string &name) {
   data_buffer result(1024);
   if (git_refspec_rtransform(result.c_ptr(), c_ptr_, name.c_str()))
     throw git_exception();
@@ -63,4 +64,4 @@ data_buffer refspec::transform_reference(const std::string &name) {
   return result;
 }
 
-const git_refspec * refspec::c_ptr() const { return c_ptr_; }
+const git_refspec *refspec::c_ptr() const { return c_ptr_; }

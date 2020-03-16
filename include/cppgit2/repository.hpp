@@ -503,8 +503,8 @@ public:
    */
 
   // Add ignore rules for a repository.
-  //   Text of rules, a la the contents of a .gitignore file. 
-  //   It is okay to have multiple rules in the text; 
+  //   Text of rules, a la the contents of a .gitignore file.
+  //   It is okay to have multiple rules in the text;
   //   if so, each rule should be terminated with a newline.
   //
   // Example usage:
@@ -514,16 +514,16 @@ public:
 
   // Clear ignore rules that were explicitly added.
   //
-  // Resets to the default internal ignore rules. 
-  // This will not turn off rules in .gitignore files 
+  // Resets to the default internal ignore rules.
+  // This will not turn off rules in .gitignore files
   // that actually exist in the filesystem.
   void clear_ignore_rules();
 
   // Test if the ignore rules apply to a given path.
   //
-  // This function checks the ignore rules to see if they 
-  /// would apply to the given file. This indicates if the 
-  // file would be ignored regardless of whether the file is 
+  // This function checks the ignore rules to see if they
+  /// would apply to the given file. This indicates if the
+  // file would be ignored regardless of whether the file is
   // already in the index or committed to the repository.
   bool is_path_ignored(const std::string &path) const;
 

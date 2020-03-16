@@ -3,17 +3,15 @@ using namespace cppgit2;
 
 remote::remote() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
-remote::remote(git_remote *c_ptr, ownership owner) 
-  : c_ptr_(c_ptr), owner_(owner) {}
+remote::remote(git_remote *c_ptr, ownership owner)
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 remote::~remote() {
   if (c_ptr_ && owner_ == ownership::user)
     git_remote_free(c_ptr_);
 }
 
-bool remote::is_connected() const {
-  return git_remote_connected(c_ptr_);
-}
+bool remote::is_connected() const { return git_remote_connected(c_ptr_); }
 
 remote remote::create_detached_remote(const std::string &url) {
   remote result;
@@ -78,9 +76,7 @@ std::string remote::push_url() const {
   return ret ? std::string(ret) : "";
 }
 
-size_t remote::size() const {
-  return git_remote_refspec_count(c_ptr_);
-}
+size_t remote::size() const { return git_remote_refspec_count(c_ptr_); }
 
 void remote::stop() {
   if (git_remote_stop(c_ptr_))

@@ -1,9 +1,9 @@
 #pragma once
-#include <git2.h>
-#include <cppgit2/libgit2_api.hpp>
-#include <cppgit2/data_buffer.hpp>
-#include <cppgit2/ownership.hpp>
 #include <cppgit2/connection_direction.hpp>
+#include <cppgit2/data_buffer.hpp>
+#include <cppgit2/libgit2_api.hpp>
+#include <cppgit2/ownership.hpp>
+#include <git2.h>
 #include <string>
 
 namespace cppgit2 {
@@ -34,7 +34,7 @@ public:
   // Parse a given refspec string
   static refspec parse(const std::string &input, bool is_fetch);
 
-  // Transform a target reference to its 
+  // Transform a target reference to its
   // source reference following the refspec's rules
   data_buffer transform_target_to_source_reference(const std::string &name);
 
@@ -51,11 +51,11 @@ public:
   data_buffer transform_reference(const std::string &name);
 
   // Access to libgit2 C ptr
-  const git_refspec * c_ptr() const;
-  
+  const git_refspec *c_ptr() const;
+
 private:
   ownership owner_;
-  git_refspec * c_ptr_;
+  git_refspec *c_ptr_;
 };
 
-}
+} // namespace cppgit2
