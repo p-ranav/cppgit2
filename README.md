@@ -108,7 +108,7 @@ git_oid_tostr(oid1_formatted, n + 1, oid1_cptr);
 REQUIRE(oid1.to_hex_string(8) == std::string(oid1_formatted)); // f9de917
 ```
 
-## Ownership and Memory Management
+### Ownership and Memory Management
 
 When making calls to the `libgit2` C API, the C layer sometimes allocates memory and returns pointers to data structures that are owned by the user (required to be free'd by the user), and at other times returns a pointer to memory that is managed by the `libgit2` layer. 
 
