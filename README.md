@@ -120,6 +120,13 @@ cppgit2::tree tree1(&tree_cptr, ownership::user);
 
 If the pointer being wrapped is owned by the user, the object's destructor will call `git_<type>_free` on the pointer and clean up properly. If you specify the ownership as `ownership::libgit2`, the pointer is left alone. 
 
+```cpp
+tree::~tree() {
+  if (c_ptr_ && owner_ == ownership::user)
+    git_tree_free(c_ptr_);
+}
+```
+
 ## Contributions
 
 Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information. 
