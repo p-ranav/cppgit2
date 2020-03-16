@@ -440,29 +440,6 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 `git_fetch_options_init` | `fetch::options::options` |
 
-### filter
-
-| libgit2 | cppgit2:: |
-| --- | --- |
-`git_filter_list_apply_to_blob` | **Not Implemented** |
-`git_filter_list_apply_to_data` | **Not Implemented** |
-`git_filter_list_apply_to_file` | **Not Implemented** |
-`git_filter_list_contains` | **Not Implemented** |
-`git_filter_list_free` | **Not Implemented** |
-`git_filter_list_load` | **Not Implemented** |
-`git_filter_list_stream_blob` | **Not Implemented** |
-`git_filter_list_stream_data` | **Not Implemented** |
-`git_filter_list_stream_file` | **Not Implemented** |
-
-### giterr
-
-| libgit2 | cppgit2:: |
-| --- | --- |
-`giterr_clear` | `git_exception::clear` |
-`giterr_last` | `git_exception::git_exception` |
-`giterr_set_oom` | **Not Implemented** |
-`giterr_set_str` | **Not Implemented** |
-
 ### graph
 
 | libgit2 | cppgit2:: |
