@@ -110,9 +110,9 @@ REQUIRE(oid1.to_hex_string(8) == std::string(oid1_formatted)); // f9de917
 
 ### Ownership and Memory Management
 
-When making calls to the `libgit2` C API, the C layer sometimes allocates memory and returns pointers to data structures that are owned by the user (required to be free'd by the user), and at other times returns a pointer to memory that is managed by the `libgit2` layer. 
+`libgit2` sometimes allocates memory and returns pointers to data structures that are owned by the user (required to be free'd by the user), and at other times returns a pointer to memory that is managed by the `libgit2` layer. 
 
-To properly cleanup memory that is owned by the user, use the `ownership` enum to explicitly specify the ownership:
+To properly cleanup memory that is owned by the user, use the `ownership` enum to explicitly specify the ownership when wrapping.
 
 ```cpp
 cppgit2::tree tree1(&tree_cptr, ownership::user);
