@@ -448,7 +448,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_filter_list_apply_to_data` | |
 `git_filter_list_apply_to_file` | |
 `git_filter_list_contains` | |
-`git_filter_list_free` | |
+`git_filter_list_free` | `filter::list::~list` |
 `git_filter_list_load` | |
 `git_filter_list_stream_blob` | |
 `git_filter_list_stream_data` | |
