@@ -97,7 +97,7 @@ Similarly, a `libgit2` C pointer can be extracted from its wrapping `cppgit2` da
 oid oid1("f9de917ac729414151fdce077d4098cfec9a45a5");
 
 // Access libgit2 C ptr
-auto oid1_cptr = oid1.c_ptr();
+const git_oid *oid1_cptr = oid1.c_ptr();
 
 // Use the libgit2 C API to format
 size_t n = 8;
