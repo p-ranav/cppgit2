@@ -211,7 +211,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | libgit2 | cppgit2:: |
 | --- | --- |
 `git_clone` | |
-`git_clone_options_init` | |
+`git_clone_options_init` | `clone::options::options` |
 
 
 ### commit
@@ -379,7 +379,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_fetch_options_init` | |
+`git_fetch_options_init` | `fetch::options::options` |
 
 ### filter
 
