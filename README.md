@@ -130,6 +130,28 @@ tree::~tree() {
 }
 ```
 
+### Error Handling
+
+At the moment, `cppgit2` throws a custom `git_exception` anytime the return value from `libgit2` API indicates an error. Typically `libgit2` functions respond with a return code (0 = good, anything else = error). `git_error_last` holds the most recent error message in case of errors. 
+
+Here's a typical example of a wrapped function:
+
+```cpp
+void repository::delete_reflog(const std::string &name) {
+  if (git_reflog_delete(c_ptr_, name.c_str()))
+    throw git_exception();
+}
+```
+
+where `git_exception` initializes its `what()` message like so:
+
+```cpp
+git_exception() {
+  auto error = git_error_last();
+  message_ = error ? error->message : "unknown error";
+}
+```
+
 ## Contributions
 
 Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information. 
