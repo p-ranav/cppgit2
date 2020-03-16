@@ -96,9 +96,6 @@ Similarly, `libgit2` C pointer can be extracted from a wrapping `cppgit2` data s
 // Construct cppgit2 OID object
 oid oid1("f9de917ac729414151fdce077d4098cfec9a45a5");
 
-// Generate hex string representation
-std::string oid1_str = oid1.to_hex_string(8); // f9de917
-
 // Access libgit2 C ptr
 auto oid1_cptr = oid1.c_ptr();
 
@@ -108,7 +105,7 @@ char * oid1_formatted = (char *)malloc(sizeof(char) * n);
 git_oid_tostr(oid1_formatted, n + 1, oid1_cptr);
 
 // Results are the same
-REQUIRE(oid1_str == std::string(oid1_formatted)); // f9de917
+REQUIRE(oid1.to_hex_string(8) == std::string(oid1_formatted)); // f9de917
 ```
 
 ## Contributions
