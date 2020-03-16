@@ -115,7 +115,7 @@ When making calls to the `libgit2` C API, the C layer sometimes allocates memory
 To properly cleanup memory that is owned by the user, you can use the `ownership` enum to explicitly specify the ownership:
 
 ```cpp
-cppgit2::tree(&tree_cptr, ownership::user);
+cppgit2::tree tree1(&tree_cptr, ownership::user);
 ```
 
 If the pointer being wrapped is owned by the user, the object's destructor will call `git_<type>_free` on the pointer and clean up properly. If you specify the ownership as `ownership::libgit2`, the pointer is left alone. 
