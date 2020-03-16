@@ -108,6 +108,18 @@ git_oid_tostr(oid1_formatted, n + 1, oid1_cptr);
 REQUIRE(oid1.to_hex_string(8) == std::string(oid1_formatted)); // f9de917
 ```
 
+## Ownership and Memory Management
+
+When making calls to the `libgit2` C API, the C layer sometimes allocates memory and returns pointers to data structures that are owned by the user (required to be free'd by the user), and at other times returns a pointer to memory that is managed by the `libgit2` layer. 
+
+To properly cleanup memory that is owned by the user, you can use the `ownership` enum to explicitly specify the ownership:
+
+```cpp
+cppgit2::tree(&tree_cptr, ownership::user);
+```
+
+If the pointer being wrapped is owned by the user, the object's destructor will call `git_<type>_free` on the pointer and clean up properly. If you specify the ownership as `ownership::libgit2`, the pointer is left alone. 
+
 ## Contributions
 
 Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information. 
