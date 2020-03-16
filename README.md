@@ -75,7 +75,22 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ### Interoperability with `libgit2`
 
-`cppgit2` aims to be a lightweight wrapper around `libgit2`. Any `cppgit2` data structure that wraps a `libgit2` data structure has a `.c_ptr()` method you can call to access the wrapped `libgit2` C pointer. See below for an example.
+`cppgit2` aims to be a lightweight wrapper around `libgit2`. Most `cppgit2` data structures can be constructed using a `libgit2` C pointer. 
+
+```cpp
+// Construct libgit2 signature
+git_signature sig;
+sig.name = "Foo Bar";
+sig.email = "foo.bar@baz.com";
+
+// Construct cppgit2 wrapper
+cppgit2::signature sig2(&sig);
+
+REQUIRE(sig2.name() == std::string(sig.name));
+REQUIRE(sig2.email() == std::string(sig.email));
+```
+
+Similarly, any `cppgit2` data structure that wraps a `libgit2` data structure has a `.c_ptr()` method you can call to access the wrapped `libgit2` C pointer. See below for an example.
 
 ```cpp
 // Construct cppgit2 OID object
