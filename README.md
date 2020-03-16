@@ -132,7 +132,7 @@ tree::~tree() {
 
 ### Error Handling
 
-At the moment, `cppgit2` throws a custom `git_exception` anytime the return value from `libgit2` API indicates an error. Typically `libgit2` functions respond with a return code (0 = good, anything else = error). `git_error_last` holds the most recent error message in case of errors. 
+At the moment, `cppgit2` throws a custom `git_exception` anytime the return value from `libgit2` indicates that an error has occurred. Typically `libgit2` functions respond with a return code (0 = good, anything else = error). `git_error_last` holds the most recent error message in case of errors. 
 
 Here's a typical example of a wrapped function:
 
