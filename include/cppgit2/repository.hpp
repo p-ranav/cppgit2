@@ -6,6 +6,7 @@
 #include <cppgit2/blob.hpp>
 #include <cppgit2/branch.hpp>
 #include <cppgit2/checkout.hpp>
+#include <cppgit2/cherrypick.hpp>
 #include <cppgit2/clone.hpp>
 #include <cppgit2/commit.hpp>
 #include <cppgit2/config.hpp>
@@ -52,7 +53,7 @@ public:
   static repository open_bare(const std::string &path);
 
   static repository clone(const std::string &url, const std::string &local_path,
-    const clone::options &options = clone::options());
+                          const clone::options &options = clone::options());
 
   // Check if a repository is bare
   bool is_bare() const;
@@ -444,6 +445,24 @@ public:
   // content of the tree pointed at by the treeish.
   void checkout_tree(const object &treeish,
                      const checkout::options &options = checkout::options());
+
+  /*
+   * CHERRYPICK API
+   * See git_cherrypick_* functions
+   */
+
+  // Cherry-pick the given commit, producing changes in the index and working
+  // directory.
+  void cherrypick_commit(
+      const commit &commit,
+      const cherrypick::options &options = cherrypick::options(nullptr));
+
+  // Cherry-picks the given commit against the given "our" commit, producing an
+  // index that reflects the result of the cherry-pick.
+  cppgit2::index cherrypick_commit(
+      const commit &cherrypick_commit, const commit &our_commit,
+      unsigned int mainline,
+      const merge::options &merge_options = merge::options(nullptr));
 
   /*
    * COMMIT API

@@ -260,8 +260,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_cherrypick` | |
-`git_cherrypick_commit` | |
+`git_cherrypick` | `repository::cherrypick_commit` |
+`git_cherrypick_commit` | `repository::cherrypick_commit` |
 `git_cherrypick_options_init` | `cherrypick::options::options` |
 
 

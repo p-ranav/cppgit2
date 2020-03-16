@@ -92,7 +92,7 @@ TEST_CASE("Interoperatbility with libgit2" * test_suite("oid")) {
 
   // Use the libgit2 C API to format
   size_t n = 8;
-  char * oid1_formatted = (char *)malloc(sizeof(char) * n);
+  char *oid1_formatted = (char *)malloc(sizeof(char) * n);
   git_oid_tostr(oid1_formatted, n + 1, oid1_cptr);
 
   // Results are the same

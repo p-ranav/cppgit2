@@ -30,10 +30,12 @@ repository repository::open_bare(const std::string &path) {
   return result;
 }
 
-repository repository::clone(const std::string &url, const std::string &local_path,
-                       const clone::options &options) {
+repository repository::clone(const std::string &url,
+                             const std::string &local_path,
+                             const clone::options &options) {
   repository result;
-  if (git_clone(&result.c_ptr_, url.c_str(), local_path.c_str(), options.c_ptr()))
+  if (git_clone(&result.c_ptr_, url.c_str(), local_path.c_str(),
+                options.c_ptr()))
     throw git_exception();
   return result;
 }
@@ -641,6 +643,23 @@ void repository::checkout_tree(const object &treeish,
                                const checkout::options &options) {
   if (git_checkout_tree(c_ptr_, treeish.c_ptr(), options.c_ptr()))
     throw git_exception();
+}
+
+void repository::cherrypick_commit(const commit &commit,
+                                   const cherrypick::options &options) {
+  if (git_cherrypick(c_ptr_, commit.c_ptr_, options.c_ptr()))
+    throw git_exception();
+}
+
+cppgit2::index
+repository::cherrypick_commit(const commit &cherrypick_commit,
+                              const commit &our_commit, unsigned int mainline,
+                              const merge::options &merge_options) {
+  cppgit2::index result(nullptr);
+  if (git_cherrypick_commit(&result.c_ptr_, c_ptr_, cherrypick_commit.c_ptr_,
+                            our_commit.c_ptr_, mainline, merge_options.c_ptr()))
+    throw git_exception();
+  return result;
 }
 
 oid repository::create_commit(const std::string &update_ref,
