@@ -90,7 +90,7 @@ REQUIRE(sig2.name() == std::string(sig.name));
 REQUIRE(sig2.email() == std::string(sig.email));
 ```
 
-Similarly, any `cppgit2` data structure that wraps a `libgit2` data structure has a `.c_ptr()` method you can call to access the wrapped `libgit2` C pointer. See below for an example.
+Similarly, `libgit2` C pointer can be extracted from a wrapping `cppgit2` data structure using the `.c_ptr()` method.
 
 ```cpp
 // Construct cppgit2 OID object
