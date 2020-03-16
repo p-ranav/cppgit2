@@ -150,6 +150,8 @@ git_exception() {
   auto error = git_error_last();
   message_ = error ? error->message : "unknown error";
 }
+
+virtual const char *what() const throw() { return message_.c_str(); }
 ```
 
 ## Contributions
