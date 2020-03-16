@@ -793,6 +793,47 @@ void repository::add_ondisk_config_file(const cppgit2::config &cfg,
     throw git_exception();
 }
 
+diff repository::create_diff_index_to_workdir(const cppgit2::index &index,
+                                  const diff::options &options) {
+  diff result;
+  if (git_diff_index_to_workdir(&result.c_ptr_, c_ptr_, index.c_ptr_, options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+diff repository::create_diff_tree_to_index(const tree &old_tree, const cppgit2::index &index,
+                                const diff::options &options) {
+  diff result;
+  if (git_diff_tree_to_index(&result.c_ptr_, c_ptr_, old_tree.c_ptr_, index.c_ptr_, options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+diff repository::create_diff_tree_to_tree(const tree &old_tree, const tree &new_tree,
+                              const diff::options &options) {
+  diff result;
+  if (git_diff_tree_to_tree(&result.c_ptr_, c_ptr_, old_tree.c_ptr_, new_tree.c_ptr_, options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+diff repository::create_diff_tree_to_workdir(const tree &old_tree,
+                                  const diff::options &options) {
+  diff result;
+  if (git_diff_tree_to_workdir(&result.c_ptr_, c_ptr_, old_tree.c_ptr_, options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+diff
+repository::create_diff_tree_to_workdir_with_index(const tree &old_tree,
+                                        const diff::options &options) {
+  diff result;
+  if (git_diff_tree_to_workdir_with_index(&result.c_ptr_, c_ptr_, old_tree.c_ptr_, options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
 void repository::add_ignore_rules(const std::string &rules) {
   if (git_ignore_add_rule(c_ptr_, rules.c_str()))
     throw git_exception();

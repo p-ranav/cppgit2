@@ -339,6 +339,7 @@ public:
 
 private:
   friend class pathspec;
+  friend class repository;
   git_diff *c_ptr_;
   ownership owner_;
 };

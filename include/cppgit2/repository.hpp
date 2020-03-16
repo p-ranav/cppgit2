@@ -521,6 +521,33 @@ public:
                               config::priority_level level, bool force);
 
   /*
+   * DIFF API
+   * See git_diff_* functions
+   */
+
+  // Create a diff between the repository index and the workdir directory.
+  diff create_diff_index_to_workdir(const cppgit2::index &index,
+                                    const diff::options &options = diff::options(nullptr));
+
+  // Create a diff between a tree and repository index.
+  diff create_diff_tree_to_index(const tree &old_tree, const cppgit2::index &index,
+                                 const diff::options &options = diff::options(nullptr));
+
+  // Create a diff with the difference between two tree objects.
+  diff create_diff_tree_to_tree(const tree &old_tree, const tree &new_tree,
+                                const diff::options &options = diff::options(nullptr));
+
+  // Create a diff between a tree and the working directory.
+  diff create_diff_tree_to_workdir(const tree &old_tree,
+                                   const diff::options &options = diff::options(nullptr));
+
+  // Create a diff between a tree and the working directory using index data to account for staged
+  // deletes, tracked files, etc.
+  diff
+  create_diff_tree_to_workdir_with_index(const tree &old_tree,
+                                         const diff::options &options = diff::options(nullptr));
+
+  /*
    * IGNORE API
    * See git_ignore_* functions
    */

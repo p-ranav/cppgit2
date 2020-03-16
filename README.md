@@ -404,7 +404,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_get_delta` | `diff::operator[]` |
 `git_diff_get_stats` | |
 `git_diff_index_to_index` | |
-`git_diff_index_to_workdir` | |
+`git_diff_index_to_workdir` | `repository::create_diff_index_to_workdir` |
 | `git_diff_is_sorted_icase` | `diff::is_sorted_case_sensitive` |
 | `git_diff_merge` | `diff::merge` |
 | `git_diff_num_deltas` | `diff::size` |
@@ -420,10 +420,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_diff_stats_to_buf` | |
 | `git_diff_status_char` | `diff::status_char` |
 | `git_diff_to_buf` | `diff::to_string` |
-`git_diff_tree_to_index` | |
-`git_diff_tree_to_tree` | |
-`git_diff_tree_to_workdir` | |
-`git_diff_tree_to_workdir_with_index` | |
+`git_diff_tree_to_index` | `repository::create_diff_tree_to_index` |
+`git_diff_tree_to_tree` | `repository::create_diff_tree_to_tree` |
+`git_diff_tree_to_workdir` | `repository::create_diff_tree_to_workdir` |
+`git_diff_tree_to_workdir_with_index` | `create_diff_tree_to_workdir_with_index` |
 
 ### error
 
