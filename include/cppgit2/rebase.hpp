@@ -4,6 +4,8 @@
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/signature.hpp>
+#include <cppgit2/merge.hpp>
+#include <cppgit2/checkout.hpp>
 #include <git2.h>
 #include <string>
 
@@ -122,6 +124,78 @@ public:
 
   // Gets the original HEAD ref name for merge rebases.
   std::string original_head_name();
+
+  class options : public libgit2_api {
+  public:
+    options() {
+      auto ret = git_rebase_init_options(&default_options_,
+                                         GIT_REBASE_OPTIONS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    options(git_rebase_options *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Version
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int value) { c_ptr_->version = value; }
+
+    // Quiet?
+    // This will instruct other clients working on this rebase that you
+    // want a quiet rebase experience, which they may choose to provide
+    // in an application-specific manner.
+    bool quiet() const { return c_ptr_->quiet; }
+    void set_quiet(bool quiet) { c_ptr_->quiet = quiet; }
+
+    // This will begin an in-memory rebase, which will allow callers to
+    // step through the rebase operations and commit the rebased changes,
+    // but will not rewind HEAD or update the repository to be in a rebasing
+    // state. This will not interfere with the working directory (if there is
+    // one).
+    bool in_memory() const { return c_ptr_->inmemory; }
+    void set_in_memory(bool value) { c_ptr_->inmemory = value; }
+
+    // Used by `git_rebase_finish`, this is the name of the notes reference used
+    // to rewrite notes for rebased commits when finishing the rebase; if NULL,
+    // the contents of the configuration option `notes.rewriteRef` is examined,
+    // unless the configuration option `notes.rewrite.rebase` is set to false.
+    // If `notes.rewriteRef` is also NULL, notes will not be rewritten.
+    std::string rewrite_notes_ref() const {
+      return c_ptr_->rewrite_notes_ref ? std::string(c_ptr_->rewrite_notes_ref)
+                                       : "";
+    }
+    void set_rewrite_notes_ref(const std::string &value) {
+      c_ptr_->rewrite_notes_ref = value.c_str();
+    }
+
+    // Options to control how trees are merged during `git_rebase_next`.
+    merge::options merge_options() const {
+      return merge::options(&c_ptr_->merge_options);
+    }
+    void set_merge_options(const merge::options &options) {
+      c_ptr_->merge_options = *(options.c_ptr());
+    }
+
+    // Options to control how files are written during `git_rebase_init`, 
+    // `git_rebase_next` and `git_rebase_abort`. Note that a minimum strategy 
+    // of `GIT_CHECKOUT_SAFE` is defaulted in `init` and `next`, and a minimum 
+    // strategy of `GIT_CHECKOUT_FORCE` is defaulted in `abort` to match git 
+    // semantics.
+    checkout::options checkout_options() const {
+      return checkout::options(&c_ptr_->checkout_options);
+    }
+    void set_checkout_options(const checkout::options &options) {
+      c_ptr_->checkout_options = *(options.c_ptr());
+    }
+
+    const git_rebase_options * c_ptr() const { return c_ptr_; }
+
+  private:
+    friend rebase;
+    git_rebase_options *c_ptr_;
+    git_rebase_options default_options_;
+  };
 
 private:
   friend class repository;

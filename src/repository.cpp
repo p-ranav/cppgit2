@@ -969,14 +969,30 @@ object repository::lookup_object(const object &treeish, const std::string &path,
   return result;
 }
 
-refdb repository::create_reference_database() {
+rebase repository::init_rebase(const annotated_commit &branch, 
+  const annotated_commit &upstream, const annotated_commit &onto,
+  const rebase::options &options) {
+  rebase result(nullptr, ownership::user);
+  if (git_rebase_init(&result.c_ptr_, c_ptr_, branch.c_ptr(), upstream.c_ptr(), onto.c_ptr(), options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+rebase repository::open_rebase(const rebase::options &options) {
+  rebase result(nullptr, ownership::user);
+  if (git_rebase_open(&result.c_ptr_, c_ptr_, options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+refdb repository::create_refdb() {
   refdb result;
   if (git_refdb_new(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
 }
 
-refdb repository::open_reference_database() {
+refdb repository::open_refdb() {
   refdb result;
   if (git_refdb_open(&result.c_ptr_, c_ptr_))
     throw git_exception();

@@ -18,6 +18,7 @@
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/pathspec.hpp>
+#include <cppgit2/rebase.hpp>
 #include <cppgit2/refdb.hpp>
 #include <cppgit2/reference.hpp>
 #include <cppgit2/remote.hpp>
@@ -645,6 +646,24 @@ public:
                        object::object_type type) const;
 
   /*
+   * REBASE API
+   * See git_rebase_* functions
+   */
+
+  // Initializes a rebase operation to rebase the changes in branch relative 
+  // to upstream onto another branch. To begin the rebase process, 
+  // call git_rebase_next.
+  //
+  // Owned by user
+  rebase init_rebase(const annotated_commit &branch, 
+    const annotated_commit &upstream, const annotated_commit &onto,
+    const rebase::options &options = rebase::options());
+
+  // Opens an existing rebase that was previously started by either an 
+  // invocation of git_rebase_init or by another client.
+  rebase open_rebase(const rebase::options &options = rebase::options());
+
+  /*
    * REFDB API
    * See git_refdb_* functions
    */
@@ -652,10 +671,10 @@ public:
   // Create a new reference database with no backends.
   // Before the Ref DB can be used for read/writing, a custom database
   // backend must be manually set using git_refdb_set_backend()
-  refdb create_reference_database();
+  refdb create_refdb();
 
   // Create a new reference database and automatically add the default backends:
-  refdb open_reference_database();
+  refdb open_refdb();
 
   /*
    * REFERENCE API

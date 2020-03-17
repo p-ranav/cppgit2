@@ -808,16 +808,16 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_rebase_commit` | `rebase::commit` |
 `git_rebase_finish` | `rebase::finish` |
 `git_rebase_free` | `rebase::~rebase` |
-`git_rebase_init` | |
+`git_rebase_init` | `repository::init_rebase` |
 `git_rebase_inmemory_index` | `rebase::index` |
 `git_rebase_next` | `rebase::next` |
 `git_rebase_onto_id` | `rebase::onto_id` |
 `git_rebase_onto_name` | `rebase::onto_name` |
-`git_rebase_open` | |
+`git_rebase_open` | `repository::open_rebase` |
 `git_rebase_operation_byindex` | `rebase::operator[]` |
 `git_rebase_operation_current` | `rebase::current_operation` |
 `git_rebase_operation_entrycount` | `rebase::size` |
-`git_rebase_options_init` | |
+`git_rebase_options_init` | `rebase::options::options` |
 `git_rebase_orig_head_id` | `rebase::original_head_id` |
 `git_rebase_orig_head_name` | `rebase::original_head_name` |
 

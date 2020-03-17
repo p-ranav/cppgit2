@@ -43,6 +43,7 @@ rebase::operation rebase::next() {
   operation result;
   if (git_rebase_next(&result.c_ptr_, c_ptr_))
     throw git_exception();
+  return result;
 }
 
 oid rebase::onto_id() { return oid(git_rebase_onto_id(c_ptr_)); }
