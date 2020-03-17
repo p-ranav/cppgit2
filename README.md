@@ -570,16 +570,6 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_merge_options_init` | `merge::options::options` |
 `git_merge_trees` | |
 
-
-### message
-
-| libgit2 | cppgit2:: |
-| --- | --- |
-`git_message_prettify` | **Not Implemented** |
-`git_message_trailer_array_free` | **Not Implemented** |
-`git_message_trailers` | **Not Implemented** |
-
-
 ### note
 
 | libgit2 | cppgit2:: |
