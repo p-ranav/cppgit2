@@ -4,7 +4,7 @@ using namespace cppgit2;
 rebase::rebase() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
 rebase::rebase(git_rebase *c_ptr, ownership owner)
-  : c_ptr_(c_ptr), owner_(owner) {}
+    : c_ptr_(c_ptr), owner_(owner) {}
 
 rebase::~rebase() {
   if (c_ptr_ && owner_ == ownership::user)
@@ -17,9 +17,12 @@ void rebase::abort() {
 }
 
 oid rebase::commit(const signature &author, const signature &committer,
-            const std::string &message_encoding, const std::string &message) {
+                   const std::string &message_encoding,
+                   const std::string &message) {
   oid result;
-  if (git_rebase_commit(result.c_ptr(), c_ptr_, author.c_ptr(), committer.c_ptr(), message_encoding.c_str(), message.c_str()))
+  if (git_rebase_commit(result.c_ptr(), c_ptr_, author.c_ptr(),
+                        committer.c_ptr(), message_encoding.c_str(),
+                        message.c_str()))
     throw git_exception();
   return result;
 }
@@ -36,26 +39,30 @@ cppgit2::index rebase::index() {
   return result;
 }
 
-oid rebase::onto_id() {
-  return oid(git_rebase_onto_id(c_ptr_));
+rebase::operation rebase::next() {
+  operation result;
+  if (git_rebase_next(&result.c_ptr_, c_ptr_))
+    throw git_exception();
 }
+
+oid rebase::onto_id() { return oid(git_rebase_onto_id(c_ptr_)); }
 
 std::string rebase::onto_refname() {
   auto ret = git_rebase_onto_name(c_ptr_);
   return ret ? std::string(ret) : "";
 }
 
+rebase::operation rebase::operator[](size_t index) {
+  return operation(git_rebase_operation_byindex(c_ptr_, index));
+}
+
 size_t rebase::current_operation() {
   return git_rebase_operation_current(c_ptr_);
 }
 
-size_t rebase::size() {
-    return git_rebase_operation_entrycount(c_ptr_);
-}
+size_t rebase::size() { return git_rebase_operation_entrycount(c_ptr_); }
 
-oid rebase::original_head_id() {
-  return oid(git_rebase_orig_head_id(c_ptr_));
-}
+oid rebase::original_head_id() { return oid(git_rebase_orig_head_id(c_ptr_)); }
 
 std::string rebase::original_head_name() {
   auto ret = git_rebase_orig_head_name(c_ptr_);
