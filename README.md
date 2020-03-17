@@ -103,7 +103,9 @@ int main(int argc, char **argv) {
   options.set_checkout_branch_name(argv[3]);
 
   // Clone repository
-  auto repo = repository::clone(argv[1], argv[2], options);
+  auto repo = repository::clone(argv[1],   // url
+                                argv[2],   // path
+                                options);  // clone options
     
 }
 ```
