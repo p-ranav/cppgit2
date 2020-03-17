@@ -26,7 +26,7 @@ public:
     return static_cast<revparse::mode>(c_ptr_->flags);
   }
 
-  const git_revspec * c_ptr() const { return c_ptr_; }
+  const git_revspec *c_ptr() const { return c_ptr_; }
 
 private:
   friend class repository;

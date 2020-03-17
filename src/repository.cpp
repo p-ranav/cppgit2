@@ -1226,7 +1226,8 @@ std::pair<object, reference>
 repository::revparse_to_object_and_reference(const std::string &spec) {
   object object_out(nullptr, ownership::user);
   reference reference_out(nullptr, ownership::user);
-  if (git_revparse_ext(&object_out.c_ptr_, &reference_out.c_ptr_, c_ptr_, spec.c_str()))
+  if (git_revparse_ext(&object_out.c_ptr_, &reference_out.c_ptr_, c_ptr_,
+                       spec.c_str()))
     throw git_exception();
   return {object_out, reference_out};
 }
