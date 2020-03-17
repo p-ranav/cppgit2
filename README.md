@@ -96,7 +96,7 @@ Let's say you want to clone a repository and checkout a specific branch. Constru
 #include <iostream>
 using namespace cppgit2;
 
-int main(int argc, char **argv) {
+int main() {
 
   auto url = "https://github.com/fffaraz/awesome-cpp";
   auto branch_name = "gh-pages";
