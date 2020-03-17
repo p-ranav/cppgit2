@@ -81,7 +81,7 @@ To initialize a new repository, simply call `repository::init`.
 #include <cppgit2/repository.hpp>
 using namespace cppgit2;
 
-int main(int argc, char **argv) {
+int main() {
   auto repo = repository::init("hello_world", /* bare = */ false);
 }
 ```
@@ -98,22 +98,18 @@ using namespace cppgit2;
 
 int main(int argc, char **argv) {
 
+  auto url = "https://github.com/fffaraz/awesome-cpp";
+  auto branch_name = "gh-pages";
+  auto path = "awesome_cpp";
+
   // Prepare clone options
   clone::options options;
-  options.set_checkout_branch_name(argv[3]);
+  options.set_checkout_branch_name(branch_name);
 
   // Clone repository
-  auto repo = repository::clone(argv[1],   // url
-                                argv[2],   // path
-                                options);  // clone options
+  auto repo = repository::clone(url, path, options);
     
 }
-```
-
-You can call this program like so:
-
-```bash
-./clone_and_checkout_branch https://github.com/fffaraz/awesome-cpp awesome_cpp gh-pages
 ```
 
 ## Design Notes
