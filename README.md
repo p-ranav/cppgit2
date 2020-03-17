@@ -575,9 +575,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_message_prettify` | |
-`git_message_trailer_array_free` | |
-`git_message_trailers` | |
+`git_message_prettify` | **Not Implemented** |
+`git_message_trailer_array_free` | **Not Implemented** |
+`git_message_trailers` | **Not Implemented** |
 
 
 ### note
