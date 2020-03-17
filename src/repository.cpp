@@ -969,11 +969,13 @@ object repository::lookup_object(const object &treeish, const std::string &path,
   return result;
 }
 
-rebase repository::init_rebase(const annotated_commit &branch, 
-  const annotated_commit &upstream, const annotated_commit &onto,
-  const rebase::options &options) {
+rebase repository::init_rebase(const annotated_commit &branch,
+                               const annotated_commit &upstream,
+                               const annotated_commit &onto,
+                               const rebase::options &options) {
   rebase result(nullptr, ownership::user);
-  if (git_rebase_init(&result.c_ptr_, c_ptr_, branch.c_ptr(), upstream.c_ptr(), onto.c_ptr(), options.c_ptr()))
+  if (git_rebase_init(&result.c_ptr_, c_ptr_, branch.c_ptr(), upstream.c_ptr(),
+                      onto.c_ptr(), options.c_ptr()))
     throw git_exception();
   return result;
 }

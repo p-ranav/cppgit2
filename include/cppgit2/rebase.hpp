@@ -1,11 +1,11 @@
 #pragma once
+#include <cppgit2/checkout.hpp>
 #include <cppgit2/index.hpp>
 #include <cppgit2/libgit2_api.hpp>
+#include <cppgit2/merge.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/signature.hpp>
-#include <cppgit2/merge.hpp>
-#include <cppgit2/checkout.hpp>
 #include <git2.h>
 #include <string>
 
@@ -177,10 +177,10 @@ public:
       c_ptr_->merge_options = *(options.c_ptr());
     }
 
-    // Options to control how files are written during `git_rebase_init`, 
-    // `git_rebase_next` and `git_rebase_abort`. Note that a minimum strategy 
-    // of `GIT_CHECKOUT_SAFE` is defaulted in `init` and `next`, and a minimum 
-    // strategy of `GIT_CHECKOUT_FORCE` is defaulted in `abort` to match git 
+    // Options to control how files are written during `git_rebase_init`,
+    // `git_rebase_next` and `git_rebase_abort`. Note that a minimum strategy
+    // of `GIT_CHECKOUT_SAFE` is defaulted in `init` and `next`, and a minimum
+    // strategy of `GIT_CHECKOUT_FORCE` is defaulted in `abort` to match git
     // semantics.
     checkout::options checkout_options() const {
       return checkout::options(&c_ptr_->checkout_options);
@@ -189,7 +189,7 @@ public:
       c_ptr_->checkout_options = *(options.c_ptr());
     }
 
-    const git_rebase_options * c_ptr() const { return c_ptr_; }
+    const git_rebase_options *c_ptr() const { return c_ptr_; }
 
   private:
     friend rebase;

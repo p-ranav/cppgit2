@@ -650,16 +650,17 @@ public:
    * See git_rebase_* functions
    */
 
-  // Initializes a rebase operation to rebase the changes in branch relative 
-  // to upstream onto another branch. To begin the rebase process, 
+  // Initializes a rebase operation to rebase the changes in branch relative
+  // to upstream onto another branch. To begin the rebase process,
   // call git_rebase_next.
   //
   // Owned by user
-  rebase init_rebase(const annotated_commit &branch, 
-    const annotated_commit &upstream, const annotated_commit &onto,
-    const rebase::options &options = rebase::options());
+  rebase init_rebase(const annotated_commit &branch,
+                     const annotated_commit &upstream,
+                     const annotated_commit &onto,
+                     const rebase::options &options = rebase::options());
 
-  // Opens an existing rebase that was previously started by either an 
+  // Opens an existing rebase that was previously started by either an
   // invocation of git_rebase_init or by another client.
   rebase open_rebase(const rebase::options &options = rebase::options());
 
