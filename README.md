@@ -73,7 +73,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ## Sample Programs
 
-### Initializing a Repository
+### Initialize a Repository
 
 To initialize a new repository, simply call `repository::init`. 
 
