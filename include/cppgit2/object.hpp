@@ -69,6 +69,7 @@ public:
 private:
   friend class reference;
   friend class repository;
+  friend class revspec;
   ownership owner_;
   git_object *c_ptr_;
 };

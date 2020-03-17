@@ -1219,6 +1219,8 @@ revspec repository::revparse(const std::string &spec) {
   revspec result;
   if (git_revparse(result.c_ptr_, c_ptr_, spec.c_str()))
     throw git_exception();
+  result.from_ = object(result.c_ptr_->from, ownership::user);
+  result.to_ = object(result.c_ptr_->to, ownership::user);
   return result;
 }
 
