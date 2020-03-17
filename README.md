@@ -118,7 +118,7 @@ You can open an existing repository with `repository::open`.
 using namespace cppgit2;
 
 int main() {
-  auto path = "~/dev/foo/bar";          // bar contains a .git directory
+  auto path = "~/dev/foo/bar";          // bar must contain a .git directory
   auto repo = repository::open(path);
 }
 ```
@@ -582,12 +582,12 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_indexer_append` | |
-`git_indexer_commit` | |
-`git_indexer_free` | |
-`git_indexer_hash` | |
-`git_indexer_new` | |
-`git_indexer_options_init` | |
+`git_indexer_append` | `indexer::append` |
+`git_indexer_commit` | `indexer::commit` |
+`git_indexer_free` | `indexer::~indexer` |
+`git_indexer_hash` | `indexer::hash` |
+`git_indexer_new` | `indexer::indexer` |
+`git_indexer_options_init` | `indexer::options::options` |
 
 
 ### libgit2

@@ -62,6 +62,7 @@ public:
   const git_odb *c_ptr() const;
 
 private:
+  friend class indexer;
   friend class repository;
   git_odb *c_ptr_;
   ownership owner_;
