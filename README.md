@@ -71,6 +71,36 @@ TARGET_LINK_LIBRARIES(my_sample ${CPPGIT2_LIBRARY})
 SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 ```
 
+## Samples
+
+### Clone Repository and Checkout Branch
+
+Let's say you want to clone a repository and checkout a specific branch. Construct an `options` object using `clone::options`, set the checkout branch name, and then use `repository::clone` to clone the repository. 
+
+```cpp
+// clone_and_checkout_branch.cpp
+#include <cppgit2/repository.hpp>
+#include <iostream>
+using namespace cppgit2;
+
+int main(int argc, char **argv) {
+
+  // Prepare clone options
+  clone::options options;
+  options.set_checkout_branch_name(argv[3]);
+
+  // Clone repository
+  auto repo = repository::clone(std::string{argv[1]}, argv[2], options);
+    
+}
+```
+
+You can call this program like so:
+
+```bash
+./clone_and_checkout_branch https://github.com/fffaraz/awesome-cpp awesome_cpp gh-pages
+```
+
 ## Design Notes
 
 ### Interoperability with `libgit2`
