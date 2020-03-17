@@ -18,6 +18,7 @@
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/pathspec.hpp>
+#include <cppgit2/refdb.hpp>
 #include <cppgit2/reference.hpp>
 #include <cppgit2/remote.hpp>
 #include <cppgit2/reset.hpp>
@@ -642,6 +643,19 @@ public:
   // Path is the relative path from the root object to the desired object
   object lookup_object(const object &treeish, const std::string &path,
                        object::object_type type) const;
+
+  /*
+   * REFDB API
+   * See git_refdb_* functions
+   */
+
+  // Create a new reference database with no backends.
+  // Before the Ref DB can be used for read/writing, a custom database
+  // backend must be manually set using git_refdb_set_backend()
+  refdb create_reference_database();
+
+  // Create a new reference database and automatically add the default backends:
+  refdb open_reference_database();
 
   /*
    * REFERENCE API

@@ -969,6 +969,20 @@ object repository::lookup_object(const object &treeish, const std::string &path,
   return result;
 }
 
+refdb repository::create_reference_database() {
+  refdb result;
+  if (git_refdb_new(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+refdb repository::open_reference_database() {
+  refdb result;
+  if (git_refdb_open(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 reference repository::create_reference(const std::string &name, const oid &id,
                                        bool force,
                                        const std::string &log_message) {

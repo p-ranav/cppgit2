@@ -795,10 +795,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_refdb_compress` | |
-`git_refdb_free` | |
-`git_refdb_new` | |
-`git_refdb_open` | |
+`git_refdb_compress` | `refdb::compress` |
+`git_refdb_free` | `refdb::~refdb` |
+`git_refdb_new` | `repository::create_reference_database` |
+`git_refdb_open` | `repository::open_reference_database` |
 
 
 ### reference
