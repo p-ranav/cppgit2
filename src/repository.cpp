@@ -1215,6 +1215,29 @@ void repository::set_remote_url(const std::string &remote,
     throw git_exception();
 }
 
+revspec repository::revparse(const std::string &spec) {
+  revspec result;
+  if (git_revparse(result.c_ptr_, c_ptr_, spec.c_str()))
+    throw git_exception();
+  return result;
+}
+
+std::pair<object, reference>
+repository::revparse_to_object_and_reference(const std::string &spec) {
+  object object_out(nullptr, ownership::user);
+  reference reference_out(nullptr, ownership::user);
+  if (git_revparse_ext(&object_out.c_ptr_, &reference_out.c_ptr_, c_ptr_, spec.c_str()))
+    throw git_exception();
+  return {object_out, reference_out};
+}
+
+object repository::revparse_to_object(const std::string &spec) {
+  object result(nullptr, ownership::user);
+  if (git_revparse_single(&result.c_ptr_, c_ptr_, spec.c_str()))
+    throw git_exception();
+  return result;
+}
+
 revwalk repository::create_revwalk() {
   revwalk result(nullptr, ownership::user);
   if (git_revwalk_new(&result.c_ptr_, c_ptr_))

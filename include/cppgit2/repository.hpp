@@ -22,6 +22,8 @@
 #include <cppgit2/remote.hpp>
 #include <cppgit2/reset.hpp>
 #include <cppgit2/revision.hpp>
+#include <cppgit2/revparse.hpp>
+#include <cppgit2/revspec.hpp>
 #include <cppgit2/revwalk.hpp>
 #include <cppgit2/stash.hpp>
 #include <cppgit2/status.hpp>
@@ -788,6 +790,25 @@ public:
 
   // Set the remote's url in the configuration
   void set_remote_url(const std::string &remote, const std::string &url);
+
+  /*
+   * REVPARSE API
+   * See git_revparse_* functions
+   */
+
+  // Parse a revision string for from, to, and intent.
+  // See `man gitrevisions` for more information
+  revspec revparse(const std::string &spec);
+
+  // Find a single object and intermediate reference by a revision string.
+  // In some cases (@{<-n>} or <branchname>@{upstream}), the expression may
+  // point to an intermediate reference. When such expressions are being passed
+  // in, reference_out will be valued as well.
+  std::pair<object, reference>
+  revparse_to_object_and_reference(const std::string &spec);
+
+  // Find a single object, as specified by a revision string.
+  object revparse_to_object(const std::string &spec);
 
   /*
    * REVWALK API

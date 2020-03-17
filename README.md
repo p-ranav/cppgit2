@@ -1006,9 +1006,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_revparse` | |
-`git_revparse_ext` | |
-`git_revparse_single` | |
+`git_revparse` | `repository::revparse` |
+`git_revparse_ext` | `repository::revparse_to_object_and_reference` |
+`git_revparse_single` | `repository::revparse_to_object` |
 
 
 ### revwalk

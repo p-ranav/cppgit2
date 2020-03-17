@@ -19,7 +19,7 @@ public:
   static void clear() { git_error_clear(); }
 
 protected:
-  const char * message_;
+  const char *message_;
 };
 
 } // namespace cppgit2

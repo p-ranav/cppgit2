@@ -3,11 +3,14 @@
 
 namespace cppgit2 {
 
-object::object() : c_ptr_(nullptr) {}
+object::object() : c_ptr_(nullptr), owner_(ownership::user) {}
 
-object::object(const git_object *c_ptr) {
-  if (git_object_dup(&c_ptr_, const_cast<git_object *>(c_ptr)))
-    throw git_exception();
+object::object(git_object *c_ptr, ownership owner)
+    : c_ptr_(c_ptr), owner_(owner) {}
+
+object::~object() {
+  if (c_ptr_ && owner_ == ownership::user)
+    git_object_free(c_ptr_);
 }
 
 oid object::id() const { return oid(git_object_id(c_ptr_)->id); }

@@ -2,6 +2,7 @@
 #include <cppgit2/git_exception.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
+#include <cppgit2/ownership.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
@@ -12,7 +13,10 @@ public:
   object();
 
   // Construct from libgit2 C ptr
-  object(const git_object *c_ptr);
+  object(git_object *c_ptr, ownership owner_ = ownership::libgit2);
+
+  // Free git object if owned by user
+  ~object();
 
   // SHA1 hash of this object
   oid id() const;
@@ -65,6 +69,7 @@ public:
 private:
   friend class reference;
   friend class repository;
+  ownership owner_;
   git_object *c_ptr_;
 };
 
