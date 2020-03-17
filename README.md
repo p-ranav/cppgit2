@@ -111,11 +111,13 @@ int main() {
 
 ### Open an existing repository
 
+You can open an existing repository with `repository::open`.
+
 ```cpp
 #include <cppgit2/repository.hpp>
 using namespace cppgit2;
 
-int main(int argc, char **argv) {
+int main() {
   auto path = "~/dev/foo/bar";          // bar contains a .git directory
   auto repo = repository::open(path);
 }
