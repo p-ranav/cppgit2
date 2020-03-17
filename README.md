@@ -75,14 +75,14 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ### Initialize a Repository
 
-To initialize a new repository, simply call `repository::init`. 
+To initialize a new repository, simply call `repository::init(const std::string &path, bool bare)`. 
 
 ```cpp
 #include <cppgit2/repository.hpp>
 using namespace cppgit2;
 
 int main() {
-  auto repo = repository::init("hello_world", /* bare = */ false);
+  auto repo = repository::init("hello_world", false);
 }
 ```
 
