@@ -73,6 +73,19 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ## Sample Programs
 
+### Initializing a Repository
+
+To initialize a new repository, simply call `repository::init`. 
+
+```cpp
+#include <cppgit2/repository.hpp>
+using namespace cppgit2;
+
+int main(int argc, char **argv) {
+  auto repo = repository::init("hello_world", /* bare = */ false);
+}
+```
+
 ### Clone Repository and Checkout Branch
 
 Let's say you want to clone a repository and checkout a specific branch. Construct an `options` object using `clone::options`, set the checkout branch name, and then use `repository::clone` to clone the repository. 
