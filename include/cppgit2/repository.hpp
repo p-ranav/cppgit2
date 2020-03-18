@@ -96,12 +96,12 @@ public:
   // Look for a git repository and return path
   // Method will auto-detect if a repo is bare (if there is a repo)
   //
-  // If across_fs is true, then the lookup will not stop when a 
-  // filesystem device change is detected while exploring parent 
+  // If across_fs is true, then the lookup will not stop when a
+  // filesystem device change is detected while exploring parent
   // directories.
   //
-  // ceiling_dirs: A GIT_PATH_LIST_SEPARATOR separated list of absolute 
-  // symbolic link free paths. The lookup will stop when any of this paths 
+  // ceiling_dirs: A GIT_PATH_LIST_SEPARATOR separated list of absolute
+  // symbolic link free paths. The lookup will stop when any of this paths
   // is reached.
   static std::string discover_path(const std::string &start_path,
                                    bool across_fs,

@@ -6,9 +6,7 @@ int main(int argc, char **argv) {
     // Discover repository path by walking up from argv[1]
     // When a repository is discovered, its .git directory is returned
     // as the result
-    std::cout 
-      << repository::discover_path(argv[1], true, "/")
-      << std::endl;
+    std::cout << repository::discover_path(argv[1], true, "/") << std::endl;
   } else {
     std::cout << "Usage: ./executable <repo_path>\n";
   }
