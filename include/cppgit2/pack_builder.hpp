@@ -1,10 +1,10 @@
 #pragma once
+#include <cppgit2/data_buffer.hpp>
+#include <cppgit2/indexer.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
-#include <cppgit2/indexer.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/revwalk.hpp>
-#include <cppgit2/data_buffer.hpp>
 #include <functional>
 #include <git2.h>
 #include <string>
@@ -23,10 +23,11 @@ public:
   ~pack_builder();
 
   // Create the new pack and pass each object to the callback
-  void for_each_object(std::function<void(void *object_data, size_t object_size)> visitor);
+  void for_each_object(
+      std::function<void(void *object_data, size_t object_size)> visitor);
 
   // Get the packfile's hash
-  // A packfile's name is derived from the sorted hashing of all object names. 
+  // A packfile's name is derived from the sorted hashing of all object names.
   // This is only correct after the packfile has been written.
   oid hash();
 
@@ -64,8 +65,8 @@ public:
   void set_threads(unsigned int num_threads);
 
   // Write the new pack and corresponding index file to path.
-  void write(const std::string &path, unsigned int mode, 
-    std::function<void(const indexer::progress &)> &progress_callback);
+  void write(const std::string &path, unsigned int mode,
+             std::function<void(const indexer::progress &)> &progress_callback);
 
   // Write the contents of the packfile to an in-memory buffer
   data_buffer write_to_buffer();

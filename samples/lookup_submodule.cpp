@@ -4,7 +4,7 @@ using namespace cppgit2;
 
 int main(int argc, char **argv) {
   if (argc == 3) {
-    
+
     auto repo = repository::open(argv[1]);
     auto module = repo.lookup_submodule(argv[2]);
     std::cout << module.name() << " from " << module.url() << std::endl;

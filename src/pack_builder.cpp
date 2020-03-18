@@ -12,7 +12,8 @@ pack_builder::~pack_builder() {
     git_packbuilder_free(c_ptr_);
 }
 
-void pack_builder::for_each_object(std::function<void(void *object_data, size_t object_size)> visitor) {
+void pack_builder::for_each_object(
+    std::function<void(void *object_data, size_t object_size)> visitor) {
   struct visitor_wrapper {
     std::function<void(void *object_data, size_t object_size)> fn;
   };
@@ -30,9 +31,7 @@ void pack_builder::for_each_object(std::function<void(void *object_data, size_t 
     throw git_exception();
 }
 
-oid pack_builder::hash() {
-  return oid(git_packbuilder_hash(c_ptr_));
-}
+oid pack_builder::hash() { return oid(git_packbuilder_hash(c_ptr_)); }
 
 oid pack_builder::id() const { return oid(git_packbuilder_hash(c_ptr_)); }
 
@@ -96,9 +95,10 @@ void pack_builder::set_threads(unsigned int num_threads) {
     throw git_exception();
 }
 
-void pack_builder::write(const std::string &path, unsigned int mode, 
-  std::function<void(const indexer::progress &)> &progress_callback) {
-  
+void pack_builder::write(
+    const std::string &path, unsigned int mode,
+    std::function<void(const indexer::progress &)> &progress_callback) {
+
   struct visitor_wrapper {
     std::function<void(const indexer::progress &)> fn;
   };
@@ -106,13 +106,14 @@ void pack_builder::write(const std::string &path, unsigned int mode,
   visitor_wrapper wrapper;
   wrapper.fn = progress_callback;
 
-  auto callback_c = [](const git_indexer_progress *	stats, void *payload) {
+  auto callback_c = [](const git_indexer_progress *stats, void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     wrapper->fn(indexer::progress(stats));
     return 0;
   };
 
-  if (git_packbuilder_write(c_ptr_, path.c_str(), mode, callback_c, (void *)(&wrapper)))
+  if (git_packbuilder_write(c_ptr_, path.c_str(), mode, callback_c,
+                            (void *)(&wrapper)))
     throw git_exception();
 }
 

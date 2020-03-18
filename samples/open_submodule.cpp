@@ -18,6 +18,8 @@ int main(int argc, char **argv) {
   } else {
     // Example usage: ./samples/repository_open_submodule ../. "ext/libgit2"
     std::cout << "Usage: ./executable <repo_path> <submodule_name_or_path>\n";
-    std::cout << "Example usage: ▶ ./samples/open_submodule ../. \"ext/libgit2\"" << std::endl;
+    std::cout
+        << "Example usage: ▶ ./samples/open_submodule ../. \"ext/libgit2\""
+        << std::endl;
   }
 }
