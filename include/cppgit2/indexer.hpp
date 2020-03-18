@@ -1,8 +1,8 @@
 #pragma once
 #include <cppgit2/libgit2_api.hpp>
+#include <cppgit2/odb.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
-#include <cppgit2/odb.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
@@ -118,8 +118,8 @@ public:
   };
 
   // Create a new indexer instance
-  indexer(const std::string &path, unsigned int mode, const odb &odb, 
-    const indexer::options &options = indexer::options());
+  indexer(const std::string &path, unsigned int mode, const odb &odb,
+          const indexer::options &options = indexer::options());
 
 private:
   friend class repository;

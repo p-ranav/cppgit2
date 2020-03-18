@@ -830,15 +830,17 @@ public:
    * REVERT API
    */
 
-  // Reverts the given commit, producing changes 
+  // Reverts the given commit, producing changes
   // in the index and working directory.
-  void revert_commit(const commit &commit, 
-    const revert::options &options = revert::options());
+  void revert_commit(const commit &commit,
+                     const revert::options &options = revert::options());
 
-  // Reverts the given commit against the given "our" commit, 
+  // Reverts the given commit against the given "our" commit,
   // producing an index that reflects the result of the revert.
-  cppgit2::index revert_commit(const commit &revert_commit, const commit &our_commit,
-    unsigned int mainline, const merge::options &options = merge::options());
+  cppgit2::index
+  revert_commit(const commit &revert_commit, const commit &our_commit,
+                unsigned int mainline,
+                const merge::options &options = merge::options());
 
   /*
    * REVPARSE API

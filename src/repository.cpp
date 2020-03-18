@@ -1247,16 +1247,19 @@ void repository::set_remote_url(const std::string &remote,
     throw git_exception();
 }
 
-void repository::revert_commit(const commit &commit, const revert::options &options) {
+void repository::revert_commit(const commit &commit,
+                               const revert::options &options) {
   if (git_revert(c_ptr_, commit.c_ptr_, options.c_ptr()))
     throw git_exception();
 }
 
-cppgit2::index repository::revert_commit(const commit &revert_commit, const commit &our_commit,
-  unsigned int mainline, const merge::options &options) {
+cppgit2::index repository::revert_commit(const commit &revert_commit,
+                                         const commit &our_commit,
+                                         unsigned int mainline,
+                                         const merge::options &options) {
   cppgit2::index result(nullptr, ownership::user);
   if (git_revert_commit(&result.c_ptr_, c_ptr_, revert_commit.c_ptr_,
-    our_commit.c_ptr_, mainline, options.c_ptr()))
+                        our_commit.c_ptr_, mainline, options.c_ptr()))
     throw git_exception();
   return result;
 }

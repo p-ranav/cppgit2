@@ -1,17 +1,16 @@
 #pragma once
+#include <cppgit2/checkout.hpp>
 #include <cppgit2/libgit2_api.hpp>
+#include <cppgit2/merge.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
-#include <cppgit2/merge.hpp>
-#include <cppgit2/checkout.hpp>
 #include <git2.h>
 
 namespace cppgit2 {
 
 class revert : public libgit2_api {
 public:
-  
-  class options: public libgit2_api {
+  class options : public libgit2_api {
   public:
     options() {
       auto ret = git_revert_init_options(&default_options_,
@@ -54,7 +53,6 @@ public:
     git_revert_options *c_ptr_;
     git_revert_options default_options_;
   };
-
 };
 
-}
+} // namespace cppgit2
