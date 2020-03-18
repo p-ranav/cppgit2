@@ -12,7 +12,6 @@ public:
   class options : public libgit2_api {
   public:
     options() : c_ptr_(nullptr) {
-      git_libgit2_init();
       auto ret =
           git_merge_init_options(&default_options_, GIT_MERGE_OPTIONS_VERSION);
       c_ptr_ = &default_options_;

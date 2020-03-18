@@ -3,6 +3,7 @@
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
+#include <cppgit2/reference.hpp>
 #include <git2.h>
 #include <string>
 #include <utility>
@@ -75,6 +76,42 @@ public:
   // Similar to is_valid but throws exception
   // if worktree is invalid
   bool validate();
+
+  class add_options : public libgit2_api {
+  public:
+    add_options() : c_ptr_(nullptr) {
+      auto ret =
+          git_worktree_add_init_options(&default_options_, GIT_WORKTREE_ADD_OPTIONS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    add_options(git_worktree_add_options *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Version
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int version) { c_ptr_->version = version; }
+
+    // lock newly created worktree
+    bool lock() const { return c_ptr_->lock; }
+    void set_lock(bool value) { c_ptr_->lock = value; }
+
+    // reference to use for the new worktree HEAD
+    cppgit2::reference reference() const {
+      return cppgit2::reference(c_ptr_->ref);
+    }
+    void set_reference(const cppgit2::reference &ref) {
+      c_ptr_->ref = const_cast<git_reference *>(ref.c_ptr());
+    }
+
+    // Access libgit2 C ptr
+    const git_worktree_add_options *c_ptr() const { return c_ptr_; }
+
+  private:
+    git_worktree_add_options *c_ptr_;
+    git_worktree_add_options default_options_;
+  };
 
   // Access libgit2 C ptr
   const git_worktree *c_ptr() const;

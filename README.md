@@ -293,7 +293,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_branch_create` |  `repository::create_branch` |
+| `git_branch_create` | `repository::create_branch` |
 | `git_branch_create_from_annotated` | `repository::create_branch` |
 | `git_branch_delete` | `repository::delete_branch` |
 | `git_branch_is_checked_out` | `repository::is_branched_checked_out` |
