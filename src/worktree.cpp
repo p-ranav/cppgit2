@@ -13,7 +13,7 @@ worktree::~worktree() {
 }
 
 std::pair<bool, std::string> worktree::is_locked() const {
-  data_buffer result(1024);
+  data_buffer result;
   auto ret = git_worktree_is_locked(result.c_ptr(), c_ptr_);
   if (ret > 0) {
     // Locked

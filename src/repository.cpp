@@ -544,7 +544,7 @@ std::string repository::branch_name(const reference &branch) const {
 }
 
 std::string repository::branch_remote_name(const std::string &refname) const {
-  data_buffer result(1024);
+  data_buffer result;
   if (git_branch_remote_name(result.c_ptr(), c_ptr_, refname.c_str()))
     throw git_exception();
   return result.to_string();
@@ -585,7 +585,7 @@ reference repository::branch_upstream(const std::string &local_branch_name) {
 }
 
 std::string repository::branch_upstream_name(const std::string &refname) const {
-  data_buffer result(1024);
+  data_buffer result;
   if (git_branch_upstream_name(result.c_ptr(), c_ptr_, refname.c_str()))
     throw git_exception();
   return result.to_string();
@@ -593,7 +593,7 @@ std::string repository::branch_upstream_name(const std::string &refname) const {
 
 std::string
 repository::branch_upstream_remote(const std::string &refname) const {
-  data_buffer result(1024);
+  data_buffer result;
   if (git_branch_upstream_remote(result.c_ptr(), c_ptr_, refname.c_str()))
     throw git_exception();
   return result.to_string();
@@ -689,7 +689,7 @@ data_buffer repository::create_commit(const signature &author,
                                       const std::string &message,
                                       const tree &tree,
                                       const std::vector<commit> &parents) {
-  data_buffer result(1024);
+  data_buffer result;
   const char *message_encoding_c =
       message_encoding == "" ? NULL : message_encoding.c_str();
   std::vector<const git_commit *> parents_c;
@@ -914,7 +914,7 @@ oid repository::remove_note(const commit &notes_commit, const signature &author,
 }
 
 data_buffer repository::detault_notes_reference() {
-  data_buffer result(1024);
+  data_buffer result;
   if (git_note_default_ref(result.c_ptr(), c_ptr_))
     throw git_exception();
   return result;

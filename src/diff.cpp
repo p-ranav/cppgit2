@@ -70,7 +70,7 @@ char diff::status_char(delta::type status) const {
 
 std::string diff::to_string(diff::format format_type) const {
   // TODO: Check this hardcoded size
-  data_buffer result(1024);
+  data_buffer result;
   if (git_diff_to_buf(result.c_ptr(), c_ptr_,
                       static_cast<git_diff_format_t>(format_type)))
     throw git_exception();

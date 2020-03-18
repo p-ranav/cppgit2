@@ -25,7 +25,7 @@ remote remote::create_detached_remote(const std::string &url) {
 }
 
 data_buffer remote::default_branch() const {
-  data_buffer result(1024);
+  data_buffer result;
   if (git_remote_default_branch(result.c_ptr(), c_ptr_))
     throw git_exception();
   return result;

@@ -3,6 +3,16 @@
 using doctest::test_suite;
 using namespace cppgit2;
 
+TEST_CASE("Construct an empty data_buffer" * test_suite("data_buffer")) {
+  data_buffer foo;
+  REQUIRE(foo.to_string() == "");
+  foo.grow_to_size(5);
+  foo.set_buffer("ABCDE");
+  foo.grow_to_size(10);
+  foo.set_buffer("ABCDEFGHIJ");
+  REQUIRE(foo.to_string() == "ABCDEFGHIJ");
+}
+
 TEST_CASE("Construct data buffer of size `n`" * test_suite("data_buffer")) {
   data_buffer foo(5); // 5 characters
   foo.set_buffer("ABCDE");

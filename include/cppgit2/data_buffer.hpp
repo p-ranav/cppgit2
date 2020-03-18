@@ -10,6 +10,9 @@ namespace cppgit2 {
 
 class data_buffer : public libgit2_api {
 public:
+  // Default construct a data buffer using GIT_BUF_INIT
+  data_buffer();
+
   // Construct buffer of size n
   // Contains a git_buf with char buffer of size n
   data_buffer(size_t n);

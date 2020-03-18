@@ -37,7 +37,7 @@ refspec refspec::parse(const std::string &input, bool is_fetch) {
 
 data_buffer
 refspec::transform_target_to_source_reference(const std::string &name) {
-  data_buffer result(1024);
+  data_buffer result;
   if (git_refspec_rtransform(result.c_ptr(), c_ptr_, name.c_str()))
     throw git_exception();
   return result;
@@ -58,7 +58,7 @@ std::string refspec::to_string() const {
 }
 
 data_buffer refspec::transform_reference(const std::string &name) {
-  data_buffer result(1024);
+  data_buffer result;
   if (git_refspec_transform(result.c_ptr(), c_ptr_, name.c_str()))
     throw git_exception();
   return result;
