@@ -123,6 +123,8 @@ int main() {
 }
 ```
 
+Use `repository::open_bare` to open a bare repository.
+
 ## Design Notes
 
 ### Interoperability with `libgit2`
