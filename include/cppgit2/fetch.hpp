@@ -24,8 +24,8 @@ public:
     options(git_fetch_options *c_ptr) : c_ptr_(c_ptr) {}
 
     // Version
-    unsigned int version() const;
-    void set_version(unsigned int version);
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int version) { c_ptr_->version = version; }
 
     // TODO: Add callbacks to use for this fetch operation
 

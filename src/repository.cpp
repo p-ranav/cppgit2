@@ -1412,15 +1412,18 @@ bool repository::should_ignore(const std::string &path) const {
   return result;
 }
 
-submodule repository::setup_submodule(const std::string &url, const std::string &path,
+submodule repository::setup_submodule(const std::string &url,
+                                      const std::string &path,
                                       bool use_gitlink) {
   submodule result(nullptr, ownership::user);
-  if (git_submodule_add_setup(&result.c_ptr_, c_ptr_, url.c_str(), path.c_str(), use_gitlink))
+  if (git_submodule_add_setup(&result.c_ptr_, c_ptr_, url.c_str(), path.c_str(),
+                              use_gitlink))
     throw git_exception();
   return result;
 }
 
-void repository::for_each_submodule(std::function<void(const submodule &, const std::string &)> visitor) {
+void repository::for_each_submodule(
+    std::function<void(const submodule &, const std::string &)> visitor) {
   // Wrap user-provided visitor funciton in a struct
   struct visitor_wrapper {
     std::function<void(const submodule &, const std::string &)> fn;
@@ -1461,41 +1464,46 @@ data_buffer repository::resolve_submodule_url(const std::string &url) {
 
 void repository::set_submodule_branch(const std::string &submodule_name,
                                       const std::string &branch_name) {
-  if (git_submodule_set_branch(c_ptr_, submodule_name.c_str(), branch_name.c_str()))
+  if (git_submodule_set_branch(c_ptr_, submodule_name.c_str(),
+                               branch_name.c_str()))
     throw git_exception();
 }
 
-void repository::set_submodule_fetch_recurse_option(const std::string &submodule_name,
-                                                    submodule::recurse fetch_recurse_submodules) {
+void repository::set_submodule_fetch_recurse_option(
+    const std::string &submodule_name,
+    submodule::recurse fetch_recurse_submodules) {
   if (git_submodule_set_fetch_recurse_submodules(
-      c_ptr_, submodule_name.c_str(),
-      static_cast<git_submodule_recurse_t>(fetch_recurse_submodules)))
+          c_ptr_, submodule_name.c_str(),
+          static_cast<git_submodule_recurse_t>(fetch_recurse_submodules)))
     throw git_exception();
 }
 
 void repository::set_submodule_ignore_option(const std::string &submodule_name,
                                              submodule::ignore ignore) {
   if (git_submodule_set_ignore(c_ptr_, submodule_name.c_str(),
-                                      static_cast<git_submodule_ignore_t>(ignore)))
+                               static_cast<git_submodule_ignore_t>(ignore)))
     throw git_exception();
 }
 
-void repository::set_submodule_update_option(const std::string &submodule_name,
-                                             submodule::update update) {
+void repository::set_submodule_update_option(
+    const std::string &submodule_name, submodule::update_strategy update) {
   if (git_submodule_set_update(c_ptr_, submodule_name.c_str(),
-                                      static_cast<git_submodule_update_t>(update)))
+                               static_cast<git_submodule_update_t>(update)))
     throw git_exception();
 }
 
 void repository::set_submodule_url(const std::string &submodule_name,
                                    const std::string &submodule_url) {
-  if (git_submodule_set_url(c_ptr_, submodule_name.c_str(), submodule_url.c_str()))
+  if (git_submodule_set_url(c_ptr_, submodule_name.c_str(),
+                            submodule_url.c_str()))
     throw git_exception();
 }
 
-submodule::status repository::submodule_status(const std::string &name, submodule::ignore ignore) {
+submodule::status repository::submodule_status(const std::string &name,
+                                               submodule::ignore ignore) {
   unsigned int result;
-  if (git_submodule_status(&result, c_ptr_, name.c_str(), static_cast<git_submodule_ignore_t>(ignore)))
+  if (git_submodule_status(&result, c_ptr_, name.c_str(),
+                           static_cast<git_submodule_ignore_t>(ignore)))
     throw git_exception();
   return static_cast<submodule::status>(result);
 }

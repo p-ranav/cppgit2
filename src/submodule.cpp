@@ -53,8 +53,9 @@ repository submodule::initialize_repository(bool use_gitlink) {
   return result;
 }
 
-submodule::update submodule::update_strategy() const {
-  return static_cast<submodule::update>(git_submodule_update_strategy(c_ptr_));
+submodule::update_strategy submodule::get_update_strategy() const {
+  return static_cast<submodule::update_strategy>(
+      git_submodule_update_strategy(c_ptr_));
 }
 
 oid submodule::index_id() const { return oid(git_submodule_index_id(c_ptr_)); }
@@ -109,6 +110,18 @@ submodule::status submodule::location_status() const {
   if (git_submodule_location(&result, c_ptr_))
     throw git_exception();
   return static_cast<submodule::status>(result);
+}
+
+repository submodule::clone(const update_options &options) {
+  repository result;
+  if (git_submodule_clone(&result.c_ptr_, c_ptr_, options.c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+void submodule::update(bool init, const update_options &options) {
+  if (git_submodule_update(c_ptr_, init, options.c_ptr_))
+    throw git_exception();
 }
 
 const git_submodule *submodule::c_ptr() const { return c_ptr_; }

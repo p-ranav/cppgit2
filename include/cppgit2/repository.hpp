@@ -959,19 +959,23 @@ public:
 
   // Set up a new git submodule for checkout.
   //
-  // This does "git submodule add" up to the fetch and checkout of the submodule contents. It preps
-  // a new submodule, creates an entry in .gitmodules and creates an empty initialized repository
-  // either at the given path in the working directory or in .git/modules with a gitlink from the
-  // working directory to the new repo.
+  // This does "git submodule add" up to the fetch and checkout of the submodule
+  // contents. It preps a new submodule, creates an entry in .gitmodules and
+  // creates an empty initialized repository either at the given path in the
+  // working directory or in .git/modules with a gitlink from the working
+  // directory to the new repo.
   //
-  // To fully emulate "git submodule add" call this function, then open the submodule repo and
-  // perform the clone step as needed (if you don't need anything custom see
-  // git_submodule_add_clone()). Lastly, call git_submodule_add_finalize() to wrap up adding the new
-  // submodule and .gitmodules to the index to be ready to commit.
-  submodule setup_submodule(const std::string &url, const std::string &path, bool use_gitlink);
+  // To fully emulate "git submodule add" call this function, then open the
+  // submodule repo and perform the clone step as needed (if you don't need
+  // anything custom see git_submodule_add_clone()). Lastly, call
+  // git_submodule_add_finalize() to wrap up adding the new submodule and
+  // .gitmodules to the index to be ready to commit.
+  submodule setup_submodule(const std::string &url, const std::string &path,
+                            bool use_gitlink);
 
   // Iterate over all tracked submodules of a repository.
-  void for_each_submodule(std::function<void(const submodule &, const std::string &)> visitor);
+  void for_each_submodule(
+      std::function<void(const submodule &, const std::string &)> visitor);
 
   // Lookup submodule information by name or path.
   submodule lookup_submodule(const std::string &name);
@@ -980,24 +984,29 @@ public:
   data_buffer resolve_submodule_url(const std::string &url);
 
   // Set the branch for the submodule in the configuration
-  void set_submodule_branch(const std::string &submodule_name, const std::string &branch_name);
+  void set_submodule_branch(const std::string &submodule_name,
+                            const std::string &branch_name);
 
   // Set the fetchRecurseSubmodules rule for a submodule in the configuration
-  void set_submodule_fetch_recurse_option(const std::string &submodule_name,
-                                          submodule::recurse fetch_recurse_submodules);
+  void set_submodule_fetch_recurse_option(
+      const std::string &submodule_name,
+      submodule::recurse fetch_recurse_submodules);
 
   // Set the ignore rule for the submodule in the configuration
-  void set_submodule_ignore_option(const std::string &submodule_name, submodule::ignore ignore);
+  void set_submodule_ignore_option(const std::string &submodule_name,
+                                   submodule::ignore ignore);
 
   // Set the update rule for the submodule in the configuration
   void set_submodule_update_option(const std::string &submodule_name,
-                                   submodule::update update);
+                                   submodule::update_strategy update);
 
   // Set the URL for the submodule in the configuration
-  void set_submodule_url(const std::string &submodule_name, const std::string &submodule_url);
+  void set_submodule_url(const std::string &submodule_name,
+                         const std::string &submodule_url);
 
   // Get the status for a submodule.
-  submodule::status submodule_status(const std::string &name, submodule::ignore ignore);
+  submodule::status submodule_status(const std::string &name,
+                                     submodule::ignore ignore);
 
   /*
    * TAG API
