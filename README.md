@@ -765,20 +765,20 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_patch_free` | |
-`git_patch_from_blob_and_buffer` | |
-`git_patch_from_blobs` | |
-`git_patch_from_buffers` | |
-`git_patch_from_diff` | |
-`git_patch_get_delta` | |
+`git_patch_free` | `patch::~patch` |
+`git_patch_from_blob_and_buffer` | `patch::patch` |
+`git_patch_from_blobs` | `patch::patch` |
+`git_patch_from_buffers` | `patch::patch` |
+`git_patch_from_diff` | `patch::patch` |
+`git_patch_get_delta` | `patch::delta` |
 `git_patch_get_hunk` | |
 `git_patch_get_line_in_hunk` | |
-`git_patch_line_stats` | |
-`git_patch_num_hunks` | |
-`git_patch_num_lines_in_hunk` | |
+`git_patch_line_stats` | `patch::stats` |
+`git_patch_num_hunks` | `patch::num_hunks` |
+`git_patch_num_lines_in_hunk` | `patch::num_lines_in_hunk` |
 `git_patch_print` | |
-`git_patch_size` | |
-`git_patch_to_buf` | |
+`git_patch_size` | `patch::size` |
+`git_patch_to_buf` | `patch::to_buffer` |
 
 
 ### pathspec
