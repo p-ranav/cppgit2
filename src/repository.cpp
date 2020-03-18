@@ -95,7 +95,7 @@ std::string repository::discover_path(const std::string &start_path,
                                       bool across_fs,
                                       const std::string &ceiling_dirs) {
   // TODO: Update this hardcoded size
-  data_buffer buffer(1024);
+  data_buffer buffer;
   if (git_repository_discover(buffer.c_ptr(), start_path.c_str(), across_fs,
                               ceiling_dirs.c_str()))
     throw git_exception();
@@ -186,8 +186,7 @@ cppgit2::index repository::index() const {
 }
 
 std::string repository::path(repository::item item) const {
-  // TODO: Update this hardcoded size
-  data_buffer buffer(1024);
+  data_buffer buffer;
   if (git_repository_item_path(buffer.c_ptr(), c_ptr_,
                                static_cast<git_repository_item_t>(item)))
     throw git_exception();
@@ -195,7 +194,7 @@ std::string repository::path(repository::item item) const {
 }
 
 std::string repository::message() const {
-  data_buffer buffer(1024);
+  data_buffer buffer;
   if (git_repository_message(buffer.c_ptr(), c_ptr_))
     throw git_exception();
   return buffer.to_string();
@@ -721,7 +720,7 @@ oid repository::create_commit(const std::string &commit_content,
 std::pair<data_buffer, data_buffer>
 repository::extract_signature_from_commit(oid id,
                                           const std::string &signature_field) {
-  data_buffer sig(1024), signed_data(1024);
+  data_buffer sig, signed_data;
   if (git_commit_extract_signature(sig.c_ptr(), signed_data.c_ptr(), c_ptr_,
                                    id.c_ptr(), signature_field.c_str()))
     throw git_exception();
