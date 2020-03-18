@@ -30,6 +30,7 @@
 #include <cppgit2/revwalk.hpp>
 #include <cppgit2/stash.hpp>
 #include <cppgit2/status.hpp>
+#include <cppgit2/submodule.hpp>
 #include <cppgit2/tag.hpp>
 #include <cppgit2/tree_builder.hpp>
 #include <cppgit2/worktree.hpp>
@@ -952,6 +953,53 @@ public:
   bool should_ignore(const std::string &path) const;
 
   /*
+   * SUBMODULE API
+   * See git_submodule_* functions
+   */
+
+  // Set up a new git submodule for checkout.
+  //
+  // This does "git submodule add" up to the fetch and checkout of the submodule contents. It preps
+  // a new submodule, creates an entry in .gitmodules and creates an empty initialized repository
+  // either at the given path in the working directory or in .git/modules with a gitlink from the
+  // working directory to the new repo.
+  //
+  // To fully emulate "git submodule add" call this function, then open the submodule repo and
+  // perform the clone step as needed (if you don't need anything custom see
+  // git_submodule_add_clone()). Lastly, call git_submodule_add_finalize() to wrap up adding the new
+  // submodule and .gitmodules to the index to be ready to commit.
+  submodule setup_submodule(const std::string &url, const std::string &path, bool use_gitlink);
+
+  // Iterate over all tracked submodules of a repository.
+  void for_each_submodule(std::function<void(const submodule &, const std::string &)> visitor);
+
+  // Lookup submodule information by name or path.
+  submodule lookup_submodule(const std::string &name);
+
+  // Resolve a submodule url relative to the given repository.
+  data_buffer resolve_submodule_url(const std::string &url);
+
+  // Set the branch for the submodule in the configuration
+  void set_submodule_branch(const std::string &submodule_name, const std::string &branch_name);
+
+  // Set the fetchRecurseSubmodules rule for a submodule in the configuration
+  void set_submodule_fetch_recurse_option(const std::string &submodule_name,
+                                          submodule::recurse fetch_recurse_submodules);
+
+  // Set the ignore rule for the submodule in the configuration
+  void set_submodule_ignore_option(const std::string &submodule_name, submodule::ignore ignore);
+
+  // Set the update rule for the submodule in the configuration
+  void set_submodule_update_option(const std::string &submodule_name,
+                                   submodule::update update);
+
+  // Set the URL for the submodule in the configuration
+  void set_submodule_url(const std::string &submodule_name, const std::string &submodule_url);
+
+  // Get the status for a submodule.
+  submodule::status submodule_status(const std::string &name, submodule::ignore ignore);
+
+  /*
    * TAG API
    * See git_tag_* funcitons
    */
@@ -1047,6 +1095,7 @@ public:
 private:
   friend class index;
   friend class pathspec;
+  friend class submodule;
   friend class tree_builder;
   git_repository *c_ptr_;
 };

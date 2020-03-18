@@ -1127,32 +1127,32 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | libgit2 | cppgit2:: |
 | --- | --- |
 | `git_submodule_add_finalize` | `submodule::resolve_setup` |
-`git_submodule_add_setup` | |
+| `git_submodule_add_setup` | `repository::setup_submodule` |
 | `git_submodule_add_to_index` | `submodule::add_to_index` |
 | `git_submodule_branch` | `submodule::branch_name` |
 `git_submodule_clone` | |
 | `git_submodule_fetch_recurse_submodules` | `submodule::recuse_submodules_option` |
-`git_submodule_foreach` | |
+| `git_submodule_foreach` | `repository::for_each_submodule` |
 | `git_submodule_free` | `submodule::~submodule` |
 | `git_submodule_head_id` | `submodule::head_id` |
 | `git_submodule_ignore` | `submodule::ignore_option` |
 | `git_submodule_index_id` | `submodule::index_id` |
 | `git_submodule_init` | `submodule::init` |
 `git_submodule_location` | |
-`git_submodule_lookup` | |
+| `git_submodule_lookup` | `submodule::lookup_submodule` |
 | `git_submodule_name` | `submodule::name` |
-`git_submodule_open` | |
-`git_submodule_owner` | |
+| `git_submodule_open` | `submodule::open_repository` |
+| `git_submodule_owner` | `submodule::owner` |
 | `git_submodule_path` | `submodule::path` |
 | `git_submodule_reload` | `submodule::reload` |
 `git_submodule_repo_init` | |
-`git_submodule_resolve_url` | |
-`git_submodule_set_branch` | |
-`git_submodule_set_fetch_recurse_submodules` | |
-`git_submodule_set_ignore` | |
-`git_submodule_set_update` | |
-`git_submodule_set_url` | |
-`git_submodule_status` | |
+| `git_submodule_resolve_url` | `repository::resolve_submodule_url` |
+| `git_submodule_set_branch` | `repository::set_submodule_branch` |
+| `git_submodule_set_fetch_recurse_submodules` | `repository::set_submodule_fetch_recurse_option` |
+| `git_submodule_set_ignore` | `repository::set_submodule_ignore_option` |
+| `git_submodule_set_update` | `repository::set_submodule_update_option` |
+| `git_submodule_set_url` | `repository::set_submodule_url` |
+| `git_submodule_status` | `repository::submodule_status` |
 | `git_submodule_sync` | `submodule::sync` |
 `git_submodule_update` | |
 `git_submodule_update_options_init` | |

@@ -1,4 +1,4 @@
-#include <cppgit2/submodule.hpp>
+#include <cppgit2/repository.hpp>
 
 namespace cppgit2 {
 
@@ -71,6 +71,17 @@ std::string submodule::path() const {
 void submodule::reload(bool force) {
   if (git_submodule_reload(c_ptr_, force))
     throw git_exception();
+}
+
+cppgit2::repository submodule::open_repository() {
+  cppgit2::repository result;
+  if (git_submodule_open(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+cppgit2::repository submodule::owner() {
+  return repository(git_submodule_owner(c_ptr_));
 }
 
 void submodule::sync() {

@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/git_exception.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
@@ -92,18 +93,43 @@ public:
   // Reread submodule info from config, index, and HEAD.
   void reload(bool force);
 
+  // Open the repository for a submodule.
+  class repository open_repository();
+
+  // Get the containing repository for a submodule.
+  class repository owner();
+
   // Copy submodule remote info into submodule repo.
   void sync();
 
   // Get the URL for the submodule.
   std::string url() const;
 
+  enum class status {
+    in_head           = (1u << 0),
+    in_index          = (1u << 1),
+    in_config         = (1u << 2),
+    in_wd             = (1u << 3),
+    index_added       = (1u << 4),
+    index_deleted     = (1u << 5),
+    index_modified    = (1u << 6),
+    wd_uninitialized  = (1u << 7),
+    wd_added          = (1u << 8),
+    wd_deleted        = (1u << 9),
+    wd_modified       = (1u << 10),
+    wd_index_modified = (1u << 11),
+    wd_wd_modified    = (1u << 12),
+    wd_untracked      = (1u << 13)
+  };
+
   // Access libgit2 C ptr
   const git_submodule *c_ptr() const;
 
 private:
+  friend class repository;
   git_submodule *c_ptr_;
   ownership owner_;
 };
+ENABLE_BITMASK_OPERATORS(submodule::status);
 
 } // namespace cppgit2
