@@ -1037,8 +1037,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_revert` | |
-`git_revert_commit` | |
+`git_revert` | `repository::revert_commit` |
+`git_revert_commit` | `repository::revert_commit` |
 `git_revert_options_init` | `revert::options::options` |
 
 
