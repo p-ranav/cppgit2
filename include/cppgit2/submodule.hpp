@@ -63,6 +63,14 @@ public:
   // Get the ignore rule that will be used for the submodule.
   ignore ignore_option() const;
 
+  // Set up the subrepository for a submodule in preparation for clone.
+  // This function can be called to init and set up a submodule repository 
+  // from a submodule in preparation to clone it from its remote.
+  //
+  // @param use_gitlink: Should the workdir contain a gitlink to the repo 
+  //                     in .git/modules vs. repo directly in workdir.
+  class repository initialize_repository(bool use_gitlink);
+
   // Submodule update values
   // These values represent settings for the `submodule.$name.update`
   // configuration value which says how to handle `git submodule update` for
@@ -121,6 +129,9 @@ public:
     wd_wd_modified    = (1u << 12),
     wd_untracked      = (1u << 13)
   };
+
+  // Get the locations of submodule information.
+  status location_status() const;
 
   // Access libgit2 C ptr
   const git_submodule *c_ptr() const;

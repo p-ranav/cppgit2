@@ -46,6 +46,13 @@ submodule::ignore submodule::ignore_option() const {
   return static_cast<submodule::ignore>(git_submodule_ignore(c_ptr_));
 }
 
+repository submodule::initialize_repository(bool use_gitlink) {
+  repository result;
+  if (git_submodule_repo_init(&result.c_ptr_, c_ptr_, use_gitlink))
+    throw git_exception();
+  return result;
+}
+
 submodule::update submodule::update_strategy() const {
   return static_cast<submodule::update>(git_submodule_update_strategy(c_ptr_));
 }
@@ -95,6 +102,13 @@ std::string submodule::url() const {
     return std::string(ret);
   else
     return "";
+}
+
+submodule::status submodule::location_status() const {
+  unsigned int result;
+  if (git_submodule_location(&result, c_ptr_))
+    throw git_exception();
+  return static_cast<submodule::status>(result);
 }
 
 const git_submodule *submodule::c_ptr() const { return c_ptr_; }
