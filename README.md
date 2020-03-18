@@ -1039,7 +1039,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 `git_revert` | |
 `git_revert_commit` | |
-`git_revert_options_init` | |
+`git_revert_options_init` | `revert::options::options` |
 
 
 ### revparse
