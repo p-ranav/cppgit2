@@ -765,7 +765,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_patch_free
+`git_patch_free` | |
 `git_patch_from_blob_and_buffer` | |
 `git_patch_from_blobs` | |
 `git_patch_from_buffers` | |
