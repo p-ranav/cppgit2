@@ -4,6 +4,7 @@
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/strarray.hpp>
 #include <cppgit2/reference.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <git2.h>
 #include <string>
 #include <utility>
@@ -113,12 +114,55 @@ public:
     git_worktree_add_options default_options_;
   };
 
+  // Flags which can be passed to git_worktree_prune to alter its
+  // behavior.
+  enum class prune_type {
+    // Prune working tree even if working tree is valid
+	  valid = 1u << 0,
+	  // Prune working tree even if it is locked
+	  locked = 1u << 1,
+	  // Prune checked out working tree
+    tree = 1u << 2,
+  };
+
+  // Worktree prune options structure
+  class prune_options : public libgit2_api {
+    prune_options() : c_ptr_(nullptr) {
+      auto ret =
+          git_worktree_prune_init_options(&default_options_, GIT_WORKTREE_PRUNE_OPTIONS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    prune_options(git_worktree_prune_options *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Version
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int version) { c_ptr_->version = version; }
+
+    // Flags
+    prune_type flags() const { return static_cast<prune_type>(c_ptr_->flags); }
+    void set_flags(prune_type flags) {
+      c_ptr_->flags = static_cast<uint32_t>(flags);
+    }
+
+    // Access libgit2 C ptr
+    const git_worktree_prune_options *c_ptr() const { return c_ptr_; }
+
+  private:
+    git_worktree_prune_options *c_ptr_;
+    git_worktree_prune_options default_options_;
+  };
+
   // Access libgit2 C ptr
   const git_worktree *c_ptr() const;
 
 private:
+  friend class repository;
   git_worktree *c_ptr_;
   ownership owner_;
 };
+ENABLE_BITMASK_OPERATORS(worktree::prune_type);
 
 } // namespace cppgit2

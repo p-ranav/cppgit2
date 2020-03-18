@@ -1252,18 +1252,18 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_worktree_add` | |
-`git_worktree_add_options_init` | |
+| `git_worktree_add` | `repository::add_worktree` |
+| `git_worktree_add_options_init` | `worktree::add_options::add_options` |
 | `git_worktree_free` | `worktree::~worktree` |
 | `git_worktree_is_locked` | `worktree::is_prunable` |
 | `git_worktree_is_prunable` | `worktree::is_prunable` |
-`git_worktree_list` | |
+| `git_worktree_list` | `repository::list_worktrees` |
 | `git_worktree_lock` | `worktree::lock` |
-`git_worktree_lookup` | |
+| `git_worktree_lookup` | `repository::lookup_worktree` |
 | `git_worktree_name` | `worktree::name` |
-`git_worktree_open_from_repository` | |
+| `git_worktree_open_from_repository` | `repository::open_worktree` |
 | `git_worktree_path` | `worktree::path` |
 | `git_worktree_prune` | `worktree::prune` |
-| `git_worktree_prune_options_init` | |
+| `git_worktree_prune_options_init` | `worktree::prune_options::prune_options` |
 | `git_worktree_unlock` | `worktree::unlock` |
 | `git_worktree_validate` | `worktree::validate` |

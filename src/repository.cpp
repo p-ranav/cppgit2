@@ -1545,4 +1545,33 @@ oid repository::create_updated_tree(const tree &baseline,
   return result;
 }
 
+worktree repository::add_worktree(const std::string &name, const std::string &path,
+  const worktree::add_options &options) {
+  worktree result(nullptr, ownership::user);
+  if (git_worktree_add(&result.c_ptr_, c_ptr_, name.c_str(), path.c_str(), options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+strarray repository::list_worktrees() {
+  strarray result;
+  if (git_worktree_list(&result.c_struct_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+worktree repository::lookup_worktree(const std::string &name) {
+  worktree result(nullptr, ownership::user);
+  if (git_worktree_lookup(&result.c_ptr_, c_ptr_, name.c_str()))
+    throw git_exception();
+  return result;
+}
+
+worktree repository::open_worktree() {
+  worktree result(nullptr, ownership::user);
+  if (git_worktree_open_from_repository(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 } // namespace cppgit2
