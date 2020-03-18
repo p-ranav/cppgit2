@@ -338,6 +338,7 @@ public:
   const git_diff *c_ptr() const;
 
 private:
+  friend class patch;
   friend class pathspec;
   friend class repository;
   git_diff *c_ptr_;

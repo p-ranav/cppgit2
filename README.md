@@ -773,7 +773,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 `git_patch_get_delta` | `patch::delta` |
 `git_patch_get_hunk` | |
 `git_patch_get_line_in_hunk` | |
-`git_patch_line_stats` | `patch::stats` |
+`git_patch_line_stats` | `patch::line_stats` |
 `git_patch_num_hunks` | `patch::num_hunks` |
 `git_patch_num_lines_in_hunk` | `patch::num_lines_in_hunk` |
 `git_patch_print` | |

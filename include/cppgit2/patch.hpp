@@ -15,7 +15,7 @@ public:
   patch();
 
   // Construct from libgit2 C ptr
-  patch(git_refspec *c_ptr, ownership owner = ownership::libgit2);
+  patch(git_patch *c_ptr, ownership owner = ownership::libgit2);
 
   // Directly generate a patch from the difference between a blob and a buffer.
   patch(const blob &old_blob, const std::string &old_as_path,
@@ -51,7 +51,7 @@ public:
   //          Count of addition lines in output,
   //          Count of deletion lines in output}
   // This helps imitate a diff --numstat type of output
-  std::tuple<size_t, size_t, size_t> stats() const;
+  std::tuple<size_t, size_t, size_t> line_stats() const;
 
   // Get the number of hunks in a patch
   size_t num_hunks() const;
