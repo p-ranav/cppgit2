@@ -1,10 +1,10 @@
 #pragma once
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
-#include <cppgit2/strarray.hpp>
 #include <cppgit2/reference.hpp>
-#include <cppgit2/bitmask_operators.hpp>
+#include <cppgit2/strarray.hpp>
 #include <git2.h>
 #include <string>
 #include <utility>
@@ -81,8 +81,8 @@ public:
   class add_options : public libgit2_api {
   public:
     add_options() : c_ptr_(nullptr) {
-      auto ret =
-          git_worktree_add_init_options(&default_options_, GIT_WORKTREE_ADD_OPTIONS_VERSION);
+      auto ret = git_worktree_add_init_options(
+          &default_options_, GIT_WORKTREE_ADD_OPTIONS_VERSION);
       c_ptr_ = &default_options_;
       if (ret != 0)
         throw git_exception();
@@ -118,18 +118,18 @@ public:
   // behavior.
   enum class prune_type {
     // Prune working tree even if working tree is valid
-	  valid = 1u << 0,
-	  // Prune working tree even if it is locked
-	  locked = 1u << 1,
-	  // Prune checked out working tree
+    valid = 1u << 0,
+    // Prune working tree even if it is locked
+    locked = 1u << 1,
+    // Prune checked out working tree
     tree = 1u << 2,
   };
 
   // Worktree prune options structure
   class prune_options : public libgit2_api {
     prune_options() : c_ptr_(nullptr) {
-      auto ret =
-          git_worktree_prune_init_options(&default_options_, GIT_WORKTREE_PRUNE_OPTIONS_VERSION);
+      auto ret = git_worktree_prune_init_options(
+          &default_options_, GIT_WORKTREE_PRUNE_OPTIONS_VERSION);
       c_ptr_ = &default_options_;
       if (ret != 0)
         throw git_exception();

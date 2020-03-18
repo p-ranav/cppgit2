@@ -1027,8 +1027,9 @@ public:
    */
 
   // Add a new working tree
-  worktree add_worktree(const std::string &name, const std::string &path,
-    const worktree::add_options &options = worktree::add_options());
+  worktree
+  add_worktree(const std::string &name, const std::string &path,
+               const worktree::add_options &options = worktree::add_options());
 
   // List names of linked working trees
   // Returned array is owned by the user
@@ -1038,8 +1039,8 @@ public:
   worktree lookup_worktree(const std::string &name);
 
   // Open a worktree of a given repository
-  // If a repository is not the main tree but a worktree, 
-  // this function will look up the worktree inside the parent 
+  // If a repository is not the main tree but a worktree,
+  // this function will look up the worktree inside the parent
   // repository and create a new git_worktree structure.
   worktree open_worktree();
 
