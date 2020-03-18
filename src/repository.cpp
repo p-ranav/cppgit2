@@ -968,6 +968,13 @@ object repository::lookup_object(const object &treeish, const std::string &path,
   return result;
 }
 
+pack_builder repository::initialize_pack_builder() {
+  pack_builder result(nullptr, ownership::user);
+  if (git_packbuilder_new(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 rebase repository::init_rebase(const annotated_commit &branch,
                                const annotated_commit &upstream,
                                const annotated_commit &onto,

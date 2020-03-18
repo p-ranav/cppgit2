@@ -104,3 +104,5 @@ void revwalk::simplify_first_parent() {
   if (git_revwalk_simplify_first_parent(c_ptr_))
     throw git_exception();
 }
+
+const git_revwalk *revwalk::c_ptr() const { return c_ptr_; }

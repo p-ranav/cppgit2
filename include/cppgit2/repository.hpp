@@ -17,6 +17,7 @@
 #include <cppgit2/note.hpp>
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
+#include <cppgit2/pack_builder.hpp>
 #include <cppgit2/pathspec.hpp>
 #include <cppgit2/rebase.hpp>
 #include <cppgit2/refdb.hpp>
@@ -659,6 +660,14 @@ public:
   // Path is the relative path from the root object to the desired object
   object lookup_object(const object &treeish, const std::string &path,
                        object::object_type type) const;
+
+  /*
+   * PACKBUILDER API
+   * See git_packbuilder_* functions
+   */
+
+  // Initialize a new packbuilder
+  pack_builder initialize_pack_builder();
 
   /*
    * REBASE API

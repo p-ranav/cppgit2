@@ -93,7 +93,11 @@ public:
   // Simplify the history by first-parent
   void simplify_first_parent();
 
+  // Access libgit2 C ptr
+  const git_revwalk *c_ptr() const;
+
 private:
+  friend class pack_builder;
   friend class repository;
   bool done_;
   ownership owner_;
