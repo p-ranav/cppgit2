@@ -856,6 +856,153 @@ bool repository::is_path_ignored(const std::string &path) const {
   return result;
 }
 
+std::pair<merge::analysis_result, merge::preference>
+repository::analyze_merge(const std::vector<annotated_commit> &their_heads) {
+  git_merge_analysis_t analysis_result;
+  git_merge_preference_t preference;
+
+  std::vector<git_annotated_commit *const *> their_heads_c;
+  size_t num_commits = their_heads.size();
+  for (size_t i = 0; i < num_commits; ++i) {
+    their_heads_c.push_back(&their_heads[i].c_ptr_);
+  }
+
+  if (git_merge_analysis(&analysis_result, &preference, c_ptr_,
+                         (const git_annotated_commit **)their_heads_c.data(),
+                         num_commits))
+    throw git_exception();
+
+  return {static_cast<merge::analysis_result>(analysis_result),
+          static_cast<merge::preference>(preference)};
+}
+
+std::pair<merge::analysis_result, merge::preference>
+repository::analyze_merge(const reference &our_ref,
+                          const std::vector<annotated_commit> &their_heads) {
+  git_merge_analysis_t analysis_result;
+  git_merge_preference_t preference;
+
+  std::vector<git_annotated_commit *const *> their_heads_c;
+  size_t num_commits = their_heads.size();
+  for (size_t i = 0; i < num_commits; ++i) {
+    their_heads_c.push_back(&their_heads[i].c_ptr_);
+  }
+
+  if (git_merge_analysis_for_ref(
+          &analysis_result, &preference, c_ptr_, our_ref.c_ptr_,
+          (const git_annotated_commit **)their_heads_c.data(),
+          their_heads.size()))
+    throw git_exception();
+
+  return {static_cast<merge::analysis_result>(analysis_result),
+          static_cast<merge::preference>(preference)};
+}
+
+oid repository::find_merge_base(const oid &first_commit,
+                                const oid &second_commit) {
+  oid result;
+  if (git_merge_base(result.c_ptr(), c_ptr_, first_commit.c_ptr(),
+                     second_commit.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+oid repository::find_merge_base(const std::vector<oid> &commits) {
+  oid result;
+
+  std::vector<git_oid> commits_c;
+  for (auto &c : commits)
+    commits_c.push_back(c.c_struct_);
+
+  if (git_merge_base_many(result.c_ptr(), c_ptr_, commits.size(),
+                          commits_c.data()))
+    throw git_exception();
+
+  return result;
+}
+
+oid repository::find_merge_base_for_octopus_merge(
+    const std::vector<oid> &commits) {
+  oid result;
+
+  std::vector<git_oid> commits_c;
+  for (auto &c : commits)
+    commits_c.push_back(c.c_struct_);
+
+  if (git_merge_base_octopus(result.c_ptr(), c_ptr_, commits.size(),
+                             commits_c.data()))
+    throw git_exception();
+
+  return result;
+}
+
+std::vector<oid> repository::find_merge_bases(const oid &first_commit,
+                                              const oid &second_commit) {
+  std::vector<oid> result{};
+  git_oidarray result_c;
+  if (git_merge_bases(&result_c, c_ptr_, first_commit.c_ptr(),
+                      second_commit.c_ptr()))
+    throw git_exception();
+
+  for (size_t i = 0; i < result_c.count; ++i) {
+    result.push_back(oid(&result_c.ids[i]));
+  }
+  return result;
+}
+
+std::vector<oid> repository::find_merge_bases(const std::vector<oid> &commits) {
+  std::vector<oid> result{};
+  git_oidarray result_c;
+
+  std::vector<git_oid> commits_c;
+  for (auto &c : commits)
+    commits_c.push_back(c.c_struct_);
+
+  if (git_merge_bases_many(&result_c, c_ptr_, commits.size(), commits_c.data()))
+    throw git_exception();
+
+  for (size_t i = 0; i < result_c.count; ++i) {
+    result.push_back(oid(&result_c.ids[i]));
+  }
+  return result;
+}
+
+void repository::merge_commits(const std::vector<annotated_commit> &their_heads,
+                               const merge::options &merge_options,
+                               const checkout::options &checkout_options) {
+  std::vector<git_annotated_commit *const *> their_heads_c;
+  size_t num_commits = their_heads.size();
+  for (size_t i = 0; i < num_commits; ++i) {
+    their_heads_c.push_back(&their_heads[i].c_ptr_);
+  }
+
+  if (git_merge(c_ptr_, (const git_annotated_commit **)their_heads_c.data(),
+                their_heads.size(), merge_options.c_ptr(),
+                checkout_options.c_ptr()))
+    throw git_exception();
+}
+
+cppgit2::index repository::merge_commits(const commit &our_commit,
+                                         const commit &their_commit,
+                                         const merge::options &merge_options) {
+  cppgit2::index result;
+  if (git_merge_commits(&result.c_ptr_, c_ptr_, our_commit.c_ptr_,
+                        their_commit.c_ptr_, merge_options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+cppgit2::index repository::merge_trees(const tree &ancestor_tree,
+                                       const tree &our_tree,
+                                       const tree &their_tree,
+                                       const merge::options &options) {
+  cppgit2::index result;
+  if (git_merge_trees(&result.c_ptr_, c_ptr_, ancestor_tree.c_ptr_,
+                      our_tree.c_ptr_, their_tree.c_ptr_, options.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
 oid repository::create_note(const std::string &notes_ref,
                             const signature &author, const signature &committer,
                             const oid &id, const std::string &note,

@@ -183,6 +183,37 @@ public:
     git_merge_options *c_ptr_;
     git_merge_options default_options_;
   };
+
+  // The results of `git_merge_analysis` indicate the merge opportunities.
+  enum class analysis_result {
+    // No merge is possible. (Unused.)
+    none,
+    // A "normal" merge; both HEAD and the given merge input have diverged from
+    // their common ancestor. The divergent commits must be merged.
+    normal,
+    // All given merge inputs are reachable from HEAD, meaning the repository is
+    // up-to-date and no merge needs to be performed.
+    up_to_date,
+    // The given merge input is a fast-forward from HEAD and no merge needs to
+    // be performed. Instead, the client can check out the given merge input.
+    fastforward,
+    // The HEAD of the current repository is "unborn" and does not point to a
+    // valid commit. No merge can be performed, but the caller may wish to
+    // simply set HEAD to the target commit(s).
+    unborn
+  };
+
+  // The user's stated preference for merges.
+  enum class preference {
+    // No configuration was found that suggests a preferred behavior for merge.
+    none,
+    // There is a merge.ff=false configuration setting, suggesting that the user
+    // does not want to allow a fast-forward merge.
+    no_fastforward,
+    // There is a merge.ff=only configuration setting, suggesting that the user
+    // only wants fast-forward merges.
+    fastforward_only
+  };
 };
 ENABLE_BITMASK_OPERATORS(merge::options::flag);
 ENABLE_BITMASK_OPERATORS(merge::options::file_flag);

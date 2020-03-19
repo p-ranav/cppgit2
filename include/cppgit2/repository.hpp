@@ -603,6 +603,63 @@ public:
   bool is_path_ignored(const std::string &path) const;
 
   /*
+   * MERGE API
+   * See git_merge_* functions
+   */
+
+  // Analyzes the given branch(es) and determines the opportunities for merging
+  // them into the HEAD of the repository.
+  std::pair<merge::analysis_result, merge::preference>
+  analyze_merge(const std::vector<annotated_commit> &their_heads);
+
+  // Analyzes the given branch(es) and determines the opportunities for merging
+  // them into a reference.
+  std::pair<merge::analysis_result, merge::preference>
+  analyze_merge(const reference &our_ref,
+                const std::vector<annotated_commit> &their_heads);
+
+  // Find a merge base between two commits
+  oid find_merge_base(const oid &first_commit, const oid &second_commit);
+
+  // Find a merge base given a list of commits
+  oid find_merge_base(const std::vector<oid> &commits);
+
+  // Find a merge base in preparation for an octopus merge
+  oid find_merge_base_for_octopus_merge(const std::vector<oid> &commits);
+
+  // Find merge bases between two commits
+  std::vector<oid> find_merge_bases(const oid &first_commit,
+                                    const oid &second_commit);
+
+  // Find all merge bases given a list of commits
+  std::vector<oid> find_merge_bases(const std::vector<oid> &commits);
+
+  // Merges the given commit(s) into HEAD, writing the results into the working
+  // directory. Any changes are staged for commit and any conflicts are written
+  // to the index. Callers should inspect the repository's index after this
+  // completes, resolve any conflicts and prepare a commit.
+  void merge_commits(
+      const std::vector<annotated_commit> &their_heads,
+      const merge::options &merge_options = merge::options(),
+      const checkout::options &checkout_options = checkout::options());
+
+  // Merge two commits, producing a git_index that reflects the result of the
+  // merge. The index may be written as-is to the working directory or checked
+  // out. If the index is to be converted to a tree, the caller should resolve
+  // any conflicts that arose as part of the merge.
+  cppgit2::index
+  merge_commits(const commit &our_commit, const commit &their_commit,
+                const merge::options &merge_options = merge::options());
+
+  // Merge two trees, producing a git_index that reflects the result of the
+  // merge. The index may be written as-is to the working directory or checked
+  // out. If the index is to be converted to a tree, the caller should resolve
+  // any conflicts that arose as part of the merge.
+  cppgit2::index merge_trees(const tree &ancestor_tree, const tree &our_tree,
+                             const tree &their_tree,
+                             const merge::options &options = merge::options());
+
+  /*
    * NOTE API
    * See git_note_* functions
    */

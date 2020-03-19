@@ -101,6 +101,7 @@ public:
   };
 
 private:
+  friend class repository;
   git_oid c_struct_;
 };
 
