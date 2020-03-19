@@ -992,6 +992,16 @@ cppgit2::index repository::merge_commits(const commit &our_commit,
   return result;
 }
 
+merge::file::result repository::merge_file_from_index(
+    const index::entry &ancestor, const index::entry &ours,
+    const index::entry &theirs, const merge::file::options &options) {
+  git_merge_file_result result;
+  if (git_merge_file_from_index(&result, c_ptr_, ancestor.c_ptr(), ours.c_ptr(),
+                                theirs.c_ptr(), options.c_ptr()))
+    throw git_exception();
+  return merge::file::result(&result);
+}
+
 cppgit2::index repository::merge_trees(const tree &ancestor_tree,
                                        const tree &our_tree,
                                        const tree &their_tree,

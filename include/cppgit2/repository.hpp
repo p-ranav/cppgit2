@@ -651,6 +651,15 @@ public:
   merge_commits(const commit &our_commit, const commit &their_commit,
                 const merge::options &merge_options = merge::options());
 
+  // Merge two files as they exist in the index, using the given common ancestor
+  // as the baseline, producing a git_merge_file_result that reflects the merge
+  // result. The git_merge_file_result must be freed with
+  // git_merge_file_result_free.
+  merge::file::result merge_file_from_index(
+      const index::entry &ancestor, const index::entry &ours,
+      const index::entry &theirs,
+      const merge::file::options &options = merge::file::options());
+
   // Merge two trees, producing a git_index that reflects the result of the
   // merge. The index may be written as-is to the working directory or checked
   // out. If the index is to be converted to a tree, the caller should resolve

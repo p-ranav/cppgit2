@@ -616,9 +616,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_merge_bases` | `repository::find_merge_bases` |
 | `git_merge_bases_many` | `repository::find_merge_bases` |
 | `git_merge_commits` | `repository::merge_commits` |
-| `git_merge_file` | |
-| `git_merge_file_from_index` | |
-| `git_merge_file_input_init` | |
+| `git_merge_file` | `merge::merge_files` |
+| `git_merge_file_from_index` | `repository::merge_file_from_index` |
+| `git_merge_file_input_init` | `merge::file::input::input` |
 | `git_merge_file_options_init` | `merge::file::options::options` |
 | `git_merge_file_result_free` | `merge::file::result::~result` |
 | `git_merge_options_init` | `merge::options::options` |

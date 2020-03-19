@@ -73,7 +73,12 @@ public:
     class input : public libgit2_api {
     public:
       // Default construct a merge_file_input struct
-      input();
+      // Initializes a git_merge_file_input with default values. Equivalent to
+      // creating an instance with GIT_MERGE_FILE_INPUT_INIT.
+      input() {
+        if (git_merge_file_input_init(&c_struct_, GIT_MERGE_FILE_INPUT_VERSION))
+          throw git_exception();
+      }
 
       // Construct from libgit2 C ptr
       input(git_merge_file_input *c_ptr) : c_struct_(*c_ptr) {}
@@ -101,6 +106,9 @@ public:
       // File mode of the conflicted file, or `0` to not merge the mode.
       unsigned int mode() const { return c_struct_.mode; }
       void set_mode(unsigned int value) { c_struct_.mode = value; }
+
+      // Access libgit2 C ptr
+      const git_merge_file_input *c_ptr() const { return &c_struct_; }
 
     private:
       git_merge_file_input c_struct_;
@@ -135,6 +143,9 @@ public:
 
       // The length of the merge contents.
       size_t size() const { return c_ptr_->len; }
+
+      // Access libgit2 C ptr
+      const git_merge_file_result *c_ptr() const { return c_ptr_; }
 
     private:
       git_merge_file_result *c_ptr_;
@@ -211,6 +222,9 @@ public:
       void set_marker_size(unsigned short value) {
         c_ptr_->marker_size = value;
       }
+
+      // Access libgit2 C ptr
+      const git_merge_file_options *c_ptr() const { return c_ptr_; }
 
     private:
       git_merge_file_options *c_ptr_;
@@ -367,6 +381,15 @@ public:
     // only wants fast-forward merges.
     fastforward_only
   };
+
+  // Merge two files as they exist in the in-memory data structures, using the
+  // given common ancestor as the baseline, producing a git_merge_file_result
+  // that reflects the merge result. The git_merge_file_result must be freed
+  // with git_merge_file_result_free.
+  static file::result
+  merge_files(const file::input &ancestor, const file::input &ours,
+              const file::input &theirs,
+              const file::options &options = file::options());
 };
 ENABLE_BITMASK_OPERATORS(merge::options::flag);
 ENABLE_BITMASK_OPERATORS(merge::file::flag);
