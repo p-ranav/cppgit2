@@ -158,14 +158,19 @@ public:
       void set_version(unsigned int version) { c_ptr_->version = version; }
 
       // Ancestor Label
+      // Label for the ancestor file side of the conflict which will be
+      // prepended to labels in diff3-format merge files.
       std::string ancestor_label() const {
-        return c_ptr_->ancestor_label ? std::string(c_ptr_->ancestor_label) : "";
+        return c_ptr_->ancestor_label ? std::string(c_ptr_->ancestor_label)
+                                      : "";
       }
       void set_ancestor_label(const std::string &value) {
         c_ptr_->ancestor_label = value.c_str();
       }
 
       // Our Label
+      // Label for our file side of the conflict which will be prepended to
+      // labels in merge files.
       std::string our_label() const {
         return c_ptr_->our_label ? std::string(c_ptr_->our_label) : "";
       }
@@ -174,6 +179,8 @@ public:
       }
 
       // Their Label
+      // Label for their file side of the conflict which will be prepended to
+      // labels in merge files.
       std::string their_label() const {
         return c_ptr_->their_label ? std::string(c_ptr_->their_label) : "";
       }
@@ -198,9 +205,9 @@ public:
       }
 
       // Marker size
-      unsigned short marker_size() const {
-        return c_ptr_->marker_size;
-      }
+      // The size of conflict markers (eg, " < < < < < < < ").
+      // Default is GIT_MERGE_CONFLICT_MARKER_SIZE.
+      unsigned short marker_size() const { return c_ptr_->marker_size; }
       void set_marker_size(unsigned short value) {
         c_ptr_->marker_size = value;
       }
