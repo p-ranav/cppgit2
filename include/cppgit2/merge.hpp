@@ -214,6 +214,45 @@ public:
     // only wants fast-forward merges.
     fastforward_only
   };
+
+  class file : public libgit2_api {
+  public:
+    // Information about file-level merging
+    // Always owned by user
+    class result : public libgit2_api {
+    public:
+      result(git_merge_file_result *c_ptr) : c_ptr_(c_ptr) {}
+
+      ~result() {
+        if (c_ptr_)
+          git_merge_file_result_free(c_ptr_);
+      }
+
+      // True if the output was automerged, false if the output contains
+      // conflict markers.
+      bool automergable() const { return c_ptr_->automergeable; }
+
+      // The path that the resultant merge file should use, or empty if a
+      // filename conflict would occur.
+      std::string path() const {
+        return c_ptr_->path ? std::string(c_ptr_->path) : "";
+      }
+
+      // The mode that the resultant merge file should use.
+      unsigned int mode() const { return c_ptr_->mode; }
+
+      // The contents of the merge
+      std::string ptr() const {
+        return c_ptr_->ptr ? std::string(c_ptr_->path) : "";
+      }
+
+      // The length of the merge contents.
+      size_t size() const { return c_ptr_->len; }
+
+    private:
+      git_merge_file_result *c_ptr_;
+    };
+  };
 };
 ENABLE_BITMASK_OPERATORS(merge::options::flag);
 ENABLE_BITMASK_OPERATORS(merge::options::file_flag);
