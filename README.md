@@ -272,8 +272,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 | `git_blob_create_from_buffer` | `repository::create_blob_from_buffer` |
 | `git_blob_create_from_disk` | `repository::create_blob_from_disk` |
-`git_blob_create_from_stream` | |
-`git_blob_create_from_stream_commit` | |
+| `git_blob_create_from_stream` | |
+| `git_blob_create_from_stream_commit` | |
 | `git_blob_create_from_workdir` | `repository::create_blobf=_from_workdir` |
 | `git_blob_create_fromworkdir` | `repository::create_blobf=_from_workdir` |
 | `git_blob_dup` | `blob::copy` |
@@ -336,17 +336,17 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_cherrypick` | `repository::cherrypick_commit` |
-`git_cherrypick_commit` | `repository::cherrypick_commit` |
-`git_cherrypick_options_init` | `cherrypick::options::options` |
+| `git_cherrypick` | `repository::cherrypick_commit` |
+| `git_cherrypick_commit` | `repository::cherrypick_commit` |
+| `git_cherrypick_options_init` | `cherrypick::options::options` |
 
 
 ### clone
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_clone` | `repository::clone` |
-`git_clone_options_init` | `clone::options::options` |
+| `git_clone` | `repository::clone` |
+| `git_clone_options_init` | `clone::options::options` |
 
 
 ### commit
@@ -355,10 +355,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 | `git_commit_amend` | `commit::amend` |
 | `git_commit_author` | `commit::author` |
-`git_commit_author_with_mailmap` | |
+| `git_commit_author_with_mailmap` | |
 | `git_commit_body` | `commit::body` |
 | `git_commit_committer` | `commit::committer` |
-`git_commit_committer_with_mailmap` | |
+| `git_commit_committer_with_mailmap` | |
 | `git_commit_create` | `repository::create_commit` |
 | `git_commit_create_buffer` | `repository::create_commit` |
 | `git_commit_create_v` | **Not implemented** |
@@ -438,98 +438,98 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_cred_default_new` | |
-`git_cred_free` | |
-`git_cred_get_username` | |
-`git_cred_has_username` | |
-`git_cred_ssh_custom_new` | |
-`git_cred_ssh_interactive_new` | |
-`git_cred_ssh_key_from_agent` | |
-`git_cred_ssh_key_memory_new` | |
-`git_cred_ssh_key_new` | |
-`git_cred_username_new` | |
-`git_cred_userpass` | |
-`git_cred_userpass_plaintext_new` | |
+| `git_cred_default_new` | |
+| `git_cred_free` | |
+| `git_cred_get_username` | |
+| `git_cred_has_username` | |
+| `git_cred_ssh_custom_new` | |
+| `git_cred_ssh_interactive_new` | |
+| `git_cred_ssh_key_from_agent` | |
+| `git_cred_ssh_key_memory_new` | |
+| `git_cred_ssh_key_new` | |
+| `git_cred_username_new` | |
+| `git_cred_userpass` | |
+| `git_cred_userpass_plaintext_new` | |
 
 ### describe
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_describe_commit` | |
-`git_describe_format` | |
-`git_describe_format_options_init` | |
-`git_describe_options_init` | |
-`git_describe_result_free` | |
-`git_describe_workdir` | |
+| `git_describe_commit` | |
+| `git_describe_format` | |
+| `git_describe_format_options_init` | |
+| `git_describe_options_init` | |
+| `git_describe_result_free` | |
+| `git_describe_workdir` | |
 
 ### diff
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_diff_blob_to_buffer` | |
+| `git_diff_blob_to_buffer` | |
 | `git_diff_blobs` | `diff::compare_files` |
-`git_diff_buffers` | |
-`git_diff_commit_as_email` | |
-`git_diff_find_options_init` | |
-`git_diff_find_similar` | |
-`git_diff_foreach` | |
-`git_diff_format_email` | |
-`git_diff_format_email_options_init` | |
+| `git_diff_buffers` | |
+| `git_diff_commit_as_email` | |
+| `git_diff_find_options_init` | |
+| `git_diff_find_similar` | |
+| `git_diff_foreach` | |
+| `git_diff_format_email` | |
+| `git_diff_format_email_options_init` | |
 | `git_diff_free` | `diff::~diff` |
-`git_diff_from_buffer` | |
+| `git_diff_from_buffer` | |
 | `git_diff_get_delta` | `diff::operator[]` |
-`git_diff_get_stats` | |
-`git_diff_index_to_index` | |
-`git_diff_index_to_workdir` | `repository::create_diff_index_to_workdir` |
+| `git_diff_get_stats` | |
+| `git_diff_index_to_index` | |
+| `git_diff_index_to_workdir` | `repository::create_diff_index_to_workdir` |
 | `git_diff_is_sorted_icase` | `diff::is_sorted_case_sensitive` |
 | `git_diff_merge` | `diff::merge` |
 | `git_diff_num_deltas` | `diff::size` |
 | `git_diff_num_deltas_of_type` | `diff::size` |
 | `git_diff_options_init` | `diff::options::options` |
-`git_diff_patchid` | |
-`git_diff_patchid_options_init` | |
-`git_diff_print` | |
-`git_diff_stats_deletions` | |
-`git_diff_stats_files_changed` | |
-`git_diff_stats_free` | |
-`git_diff_stats_insertions` | |
-`git_diff_stats_to_buf` | |
+| `git_diff_patchid` | |
+| `git_diff_patchid_options_init` | |
+| `git_diff_print` | |
+| `git_diff_stats_deletions` | |
+| `git_diff_stats_files_changed` | |
+| `git_diff_stats_free` | |
+| `git_diff_stats_insertions` | |
+| `git_diff_stats_to_buf` | |
 | `git_diff_status_char` | `diff::status_char` |
 | `git_diff_to_buf` | `diff::to_string` |
-`git_diff_tree_to_index` | `repository::create_diff_tree_to_index` |
-`git_diff_tree_to_tree` | `repository::create_diff_tree_to_tree` |
-`git_diff_tree_to_workdir` | `repository::create_diff_tree_to_workdir` |
-`git_diff_tree_to_workdir_with_index` | `create_diff_tree_to_workdir_with_index` |
+| `git_diff_tree_to_index` | `repository::create_diff_tree_to_index` |
+| `git_diff_tree_to_tree` | `repository::create_diff_tree_to_tree` |
+| `git_diff_tree_to_workdir` | `repository::create_diff_tree_to_workdir` |
+| `git_diff_tree_to_workdir_with_index` | `create_diff_tree_to_workdir_with_index` |
 
 ### error
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_error_clear` | `git_exception::clear` |
-`git_error_last` | `git_exception::git_exception` |
-`git_error_set_oom` | **Not Implemented** |
-`git_error_set_str` | **Not Implemented** |
+| `git_error_clear` | `git_exception::clear` |
+| `git_error_last` | `git_exception::git_exception` |
+| `git_error_set_oom` | **Not Implemented** |
+| `git_error_set_str` | **Not Implemented** |
 
 ### fetch
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_fetch_options_init` | `fetch::options::options` |
+| `git_fetch_options_init` | `fetch::options::options` |
 
 ### graph
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_graph_ahead_behind` | |
-`git_graph_descendant_of` | |
+| `git_graph_ahead_behind` | `repository::unique_commits_ahead_behind` |
+| `git_graph_descendant_of` | `repository::is_descendant_of` |
 
 ### ignore
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_ignore_add_rule` | `repository::add_ignore_rules` |
-`git_ignore_clear_internal_rules` | `repository::clear_ignore_rules` |
-`git_ignore_path_is_ignored` | `repository::is_path_ignored` |
+| `git_ignore_add_rule` | `repository::add_ignore_rules` |
+| `git_ignore_clear_internal_rules` | `repository::clear_ignore_rules` |
+| `git_ignore_path_is_ignored` | `repository::is_path_ignored` |
 
 ### index
 
@@ -584,21 +584,21 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_indexer_append` | `indexer::append` |
-`git_indexer_commit` | `indexer::commit` |
-`git_indexer_free` | `indexer::~indexer` |
-`git_indexer_hash` | `indexer::hash` |
-`git_indexer_new` | `indexer::indexer` |
-`git_indexer_options_init` | `indexer::options::options` |
+| `git_indexer_append` | `indexer::append` |
+| `git_indexer_commit` | `indexer::commit` |
+| `git_indexer_free` | `indexer::~indexer` |
+| `git_indexer_hash` | `indexer::hash` |
+| `git_indexer_new` | `indexer::indexer` |
+| `git_indexer_options_init` | `indexer::options::options` |
 
 
 ### libgit2
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_libgit2_features` | |
+| `git_libgit2_features` | |
 | `git_libgit2_init` | `libgit2_api::libgit2_api` |
-`git_libgit2_opts` | |
+| `git_libgit2_opts` | |
 | `git_libgit2_shutdown` | `libgit2_api::~libgit2_api` |
 | `git_libgit2_version` | `libgit2_api::version` |
 
@@ -670,41 +670,41 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_odb_add_alternate` | |
-`git_odb_add_backend` | |
-`git_odb_add_disk_alternate` | |
+| `git_odb_add_alternate` | |
+| `git_odb_add_backend` | |
+| `git_odb_add_disk_alternate` | |
 | `git_odb_backend_loose` | `odb::create_backend_for_loose_objects` |
 | `git_odb_backend_one_pack` | `odb::create_backend_for_one_packfile` |
 | `git_odb_backend_pack` | `odb::create_backend_for_packfiles` |
 | `git_odb_exists` | `odb::exists` |
 | `git_odb_exists_prefix` | `odb::exists` |
-`git_odb_expand_ids` | |
-`git_odb_foreach` | |
+| `git_odb_expand_ids` | |
+| `git_odb_foreach` | |
 | `git_odb_free` | `odb::~odb` |
 | `git_odb_get_backend` | `odb::operator[]` |
-`git_odb_hash` | |
-`git_odb_hashfile` | |
+| `git_odb_hash` | |
+| `git_odb_hashfile` | |
 | `git_odb_new` | `odb::odb` |
 | `git_odb_num_backends` | `odb::size` |
-`git_odb_object_data` | |
-`git_odb_object_dup` | |
-`git_odb_object_free` | |
-`git_odb_object_id` | |
-`git_odb_object_size` | |
-`git_odb_object_type` | |
-`git_odb_open` | |
-`git_odb_open_rstream` | |
-`git_odb_open_wstream` | |
-`git_odb_read` | |
-`git_odb_read_header` | |
-`git_odb_read_prefix` | |
-`git_odb_refresh` | |
-`git_odb_stream_finalize_write` | |
-`git_odb_stream_free` | |
-`git_odb_stream_read` | |
-`git_odb_stream_write` | |
-`git_odb_write` | |
-`git_odb_write_pack` | |
+| `git_odb_object_data` | |
+| `git_odb_object_dup` | |
+| `git_odb_object_free` | |
+| `git_odb_object_id` | |
+| `git_odb_object_size` | |
+| `git_odb_object_type` | |
+| `git_odb_open` | |
+| `git_odb_open_rstream` | |
+| `git_odb_open_wstream` | |
+| `git_odb_read` | |
+| `git_odb_read_header` | |
+| `git_odb_read_prefix` | |
+| `git_odb_refresh` | |
+| `git_odb_stream_finalize_write` | |
+| `git_odb_stream_free` | |
+| `git_odb_stream_read` | |
+| `git_odb_stream_write` | |
+| `git_odb_write` | |
+| `git_odb_write_pack` | |
 
 
 ### oid
@@ -737,7 +737,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_oidarray_free` | **Not Implemented** |
+| `git_oidarray_free` | **Not Implemented** |
 
 
 ### packbuilder
@@ -765,40 +765,39 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_patch_free` | `patch::~patch` |
-`git_patch_from_blob_and_buffer` | `patch::patch` |
-`git_patch_from_blobs` | `patch::patch` |
-`git_patch_from_buffers` | `patch::patch` |
-`git_patch_from_diff` | `patch::patch` |
-`git_patch_get_delta` | `patch::delta` |
-`git_patch_get_hunk` | |
-`git_patch_get_line_in_hunk` | |
-`git_patch_line_stats` | `patch::line_stats` |
-`git_patch_num_hunks` | `patch::num_hunks` |
-`git_patch_num_lines_in_hunk` | `patch::num_lines_in_hunk` |
-`git_patch_print` | |
-`git_patch_size` | `patch::size` |
-`git_patch_to_buf` | `patch::to_buffer` |
+| `git_patch_free` | `patch::~patch` |
+| `git_patch_from_blob_and_buffer` | `patch::patch` |
+| `git_patch_from_blobs` | `patch::patch` |
+| `git_patch_from_buffers` | `patch::patch` |
+| `git_patch_from_diff` | `patch::patch` |
+| `git_patch_get_delta` | `patch::delta` |
+| `git_patch_get_hunk` | |
+| `git_patch_get_line_in_hunk` | |
+| `git_patch_line_stats` | `patch::line_stats` |
+| `git_patch_num_hunks` | `patch::num_hunks` |
+| `git_patch_num_lines_in_hunk` | `patch::num_lines_in_hunk` |
+| `git_patch_print` | |
+| `git_patch_size` | `patch::size` |
+| `git_patch_to_buf` | `patch::to_buffer` |
 
 
 ### pathspec
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_pathspec_free` | `pathspec::~pathspec` |
-`git_pathspec_match_diff` | `pathspec::match_diff` |
-`git_pathspec_match_index` | `pathspec::match_index` |
-`git_pathspec_match_list_diff_entry` | `pathspec::match_list::diff_entry` |
-`git_pathspec_match_list_entry` | `pathspec::match_list::entry` |
-`git_pathspec_match_list_entrycount` | `pathspec::match_list::size` |
-`git_pathspec_match_list_failed_entry` | `pathspec::match_list::failed_entry` |
-`git_pathspec_match_list_failed_entrycount` | `pathspec::match_list::failed_entrycount` |
-`git_pathspec_match_list_free` | `pathspec::match_list::~match_list` |
-`git_pathspec_match_tree` | `pathspec::match_free` |
-`git_pathspec_match_workdir` | `pathspec::match_workdir` |
-`git_pathspec_matches_path` | `pathspec::matches_path` |
-`git_pathspec_new` | `pathspec::compile` |
-
+| `git_pathspec_free` | `pathspec::~pathspec` |
+| `git_pathspec_match_diff` | `pathspec::match_diff` |
+| `git_pathspec_match_index` | `pathspec::match_index` |
+| `git_pathspec_match_list_diff_entry` | `pathspec::match_list::diff_entry` |
+| `git_pathspec_match_list_entry` | `pathspec::match_list::entry` |
+| `git_pathspec_match_list_entrycount` | `pathspec::match_list::size` |
+| `git_pathspec_match_list_failed_entry` | `pathspec::match_list::failed_entry` |
+| `git_pathspec_match_list_failed_entrycount` | `pathspec::match_list::failed_entrycount` |
+| `git_pathspec_match_list_free` | `pathspec::match_list::~match_list` |
+| `git_pathspec_match_tree` | `pathspec::match_free` |
+| `git_pathspec_match_workdir` | `pathspec::match_workdir` |
+| `git_pathspec_matches_path` | `pathspec::matches_path` |
+| `git_pathspec_new` | `pathspec::compile` |
 
 ### proxy
 
@@ -812,37 +811,36 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 | `git_push_options_init` | `push::options::options` |
 
-
 ### rebase
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_rebase_abort` | `rebase::abort` |
-`git_rebase_commit` | `rebase::commit` |
-`git_rebase_finish` | `rebase::finish` |
-`git_rebase_free` | `rebase::~rebase` |
-`git_rebase_init` | `repository::init_rebase` |
-`git_rebase_inmemory_index` | `rebase::index` |
-`git_rebase_next` | `rebase::next` |
-`git_rebase_onto_id` | `rebase::onto_id` |
-`git_rebase_onto_name` | `rebase::onto_name` |
-`git_rebase_open` | `repository::open_rebase` |
-`git_rebase_operation_byindex` | `rebase::operator[]` |
-`git_rebase_operation_current` | `rebase::current_operation` |
-`git_rebase_operation_entrycount` | `rebase::size` |
-`git_rebase_options_init` | `rebase::options::options` |
-`git_rebase_orig_head_id` | `rebase::original_head_id` |
-`git_rebase_orig_head_name` | `rebase::original_head_name` |
+| `git_rebase_abort` | `rebase::abort` |
+| `git_rebase_commit` | `rebase::commit` |
+| `git_rebase_finish` | `rebase::finish` |
+| `git_rebase_free` | `rebase::~rebase` |
+| `git_rebase_init` | `repository::init_rebase` |
+| `git_rebase_inmemory_index` | `rebase::index` |
+| `git_rebase_next` | `rebase::next` |
+| `git_rebase_onto_id` | `rebase::onto_id` |
+| `git_rebase_onto_name` | `rebase::onto_name` |
+| `git_rebase_open` | `repository::open_rebase` |
+| `git_rebase_operation_byindex` | `rebase::operator[]` |
+| `git_rebase_operation_current` | `rebase::current_operation` |
+| `git_rebase_operation_entrycount` | `rebase::size` |
+| `git_rebase_options_init` | `rebase::options::options` |
+| `git_rebase_orig_head_id` | `rebase::original_head_id` |
+| `git_rebase_orig_head_name` | `rebase::original_head_name` |
 
 
 ### refdb
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_refdb_compress` | `refdb::compress` |
-`git_refdb_free` | `refdb::~refdb` |
-`git_refdb_new` | `repository::create_reference_database` |
-`git_refdb_open` | `repository::open_reference_database` |
+| `git_refdb_compress` | `refdb::compress` |
+| `git_refdb_free` | `refdb::~refdb` |
+| `git_refdb_new` | `repository::create_reference_database` |
+| `git_refdb_open` | `repository::open_reference_database` |
 
 
 ### reference
@@ -915,65 +913,65 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_refspec_direction` | `refspec::direction` |
-`git_refspec_dst` | `refspec::destination` |
-`git_refspec_dst_matches` | `refspec::destination_matches_reference` |
-`git_refspec_force` | `refspec::is_force_update_enabled` |
-`git_refspec_free` | `refspec::~refspec` |
-`git_refspec_parse` | `refspec::parse` |
-`git_refspec_rtransform` | `refspec::transform_target_to_source_reference` |
-`git_refspec_src` | `refspec::source` |
-`git_refspec_src_matches` | `refspec::source_matches_reference` |
-`git_refspec_string` | `refspec::to_string` |
-`git_refspec_transform` | `refspec::transform_reference` |
+| `git_refspec_direction` | `refspec::direction` |
+| `git_refspec_dst` | `refspec::destination` |
+| `git_refspec_dst_matches` | `refspec::destination_matches_reference` |
+| `git_refspec_force` | `refspec::is_force_update_enabled` |
+| `git_refspec_free` | `refspec::~refspec` |
+| `git_refspec_parse` | `refspec::parse` |
+| `git_refspec_rtransform` | `refspec::transform_target_to_source_reference` |
+| `git_refspec_src` | `refspec::source` |
+| `git_refspec_src_matches` | `refspec::source_matches_reference` |
+| `git_refspec_string` | `refspec::to_string` |
+| `git_refspec_transform` | `refspec::transform_reference` |
 
 
 ### remote
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_remote_add_fetch` | `repository::add_fetch_refspec_to_remote` |
-`git_remote_add_push` | `repository::add_push_refspec_to_remote` |
-`git_remote_autotag` | |
-`git_remote_connect` | |
-`git_remote_connected` | `remote::is_connected` |
-`git_remote_create` | `repository::create_remote` |
-`git_remote_create_anonymous` | `repository::create_anonymous_remote` |
-`git_remote_create_detached` | `remote::create_detached_remote` |
-`git_remote_create_options_init` | |
-`git_remote_create_with_fetchspec` | `repository::create_remote` |
-`git_remote_create_with_opts` | |
-`git_remote_default_branch` | `remote::default_branch` |
-`git_remote_delete` | `repository::delete_remote` |
-`git_remote_disconnect` | `remote::disconnect` |
-`git_remote_download` | |
-`git_remote_dup` | `remote::copy` |
-`git_remote_fetch` | |
-`git_remote_free` | `remote::~remote` |
-`git_remote_get_fetch_refspecs` | `remote::fetch_refspec` |
-`git_remote_get_push_refspecs` | `remote::push_refspec` |
-`git_remote_get_refspec` | |
-`git_remote_init_callbacks` | |
-`git_remote_is_valid_name` | `remote::is_valid_name` |
-`git_remote_list` | `repository::remote_list` |
-`git_remote_lookup` | `repository::lookup_remote` |
-`git_remote_ls` | |
-`git_remote_name` | `remote::name` |
-`git_remote_owner` | `remote::owner` |
-`git_remote_prune` | |
-`git_remote_prune_refs` | |
-`git_remote_push` | `remote::push` |
-`git_remote_pushurl` | `remote::push_url` |
-`git_remote_refspec_count` | `remote::size` |
-`git_remote_rename` | `repository::rename_remote` |
-`git_remote_set_autotag` | |
-`git_remote_set_pushurl` | `repository::set_remote_push_url` |
-`git_remote_set_url` | `repository::set_remote_url` |
-`git_remote_stats` | |
-`git_remote_stop` | `remote::stop` |
-`git_remote_update_tips` | |
-`git_remote_upload` | `remote::upload` |
-`git_remote_url` | `remote::url` |
+| `git_remote_add_fetch` | `repository::add_fetch_refspec_to_remote` |
+| `git_remote_add_push` | `repository::add_push_refspec_to_remote` |
+| `git_remote_autotag` | |
+| `git_remote_connect` | |
+| `git_remote_connected` | `remote::is_connected` |
+| `git_remote_create` | `repository::create_remote` |
+| `git_remote_create_anonymous` | `repository::create_anonymous_remote` |
+| `git_remote_create_detached` | `remote::create_detached_remote` |
+| `git_remote_create_options_init` | |
+| `git_remote_create_with_fetchspec` | `repository::create_remote` |
+| `git_remote_create_with_opts` | |
+| `git_remote_default_branch` | `remote::default_branch` |
+| `git_remote_delete` | `repository::delete_remote` |
+| `git_remote_disconnect` | `remote::disconnect` |
+| `git_remote_download` | |
+| `git_remote_dup` | `remote::copy` |
+| `git_remote_fetch` | |
+| `git_remote_free` | `remote::~remote` |
+| `git_remote_get_fetch_refspecs` | `remote::fetch_refspec` |
+| `git_remote_get_push_refspecs` | `remote::push_refspec` |
+| `git_remote_get_refspec` | |
+| `git_remote_init_callbacks` | |
+| `git_remote_is_valid_name` | `remote::is_valid_name` |
+| `git_remote_list` | `repository::remote_list` |
+| `git_remote_lookup` | `repository::lookup_remote` |
+| `git_remote_ls` | |
+| `git_remote_name` | `remote::name` |
+| `git_remote_owner` | `remote::owner` |
+| `git_remote_prune` | |
+| `git_remote_prune_refs` | |
+| `git_remote_push` | `remote::push` |
+| `git_remote_pushurl` | `remote::push_url` |
+| `git_remote_refspec_count` | `remote::size` |
+| `git_remote_rename` | `repository::rename_remote` |
+| `git_remote_set_autotag` | |
+| `git_remote_set_pushurl` | `repository::set_remote_push_url` |
+| `git_remote_set_url` | `repository::set_remote_url` |
+| `git_remote_stats` | |
+| `git_remote_stop` | `remote::stop` |
+| `git_remote_update_tips` | |
+| `git_remote_upload` | `remote::upload` |
+| `git_remote_url` | `remote::url` |
 
 
 ### repository
@@ -985,7 +983,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_repository_config_snapshot` | `repository::config_snapshot` |
 | `git_repository_detach_head` | `repository::detach_head` |
 | `git_repository_discover` | `repository::discover_path` |
-`git_repository_fetchhead_foreach` | |
+| `git_repository_fetchhead_foreach` | |
 | `git_repository_free` | `repository::~repository` |
 | `git_repository_get_namespace` | `repository::namespace_` |
 | `git_repository_hashfile` | `repository::hashfile` |
@@ -997,33 +995,33 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_repository_ident` | `repository::identity` |
 | `git_repository_index` | `repository::index` |
 | `git_repository_init` | `repository::init` |
-`git_repository_init_ext` | |
-`git_repository_init_options_init` | |
+| `git_repository_init_ext` | |
+| `git_repository_init_options_init` | |
 | `git_repository_is_bare` | `repository::is_bare` |
 | `git_repository_is_empty` | `repository::is_empty` |
 | `git_repository_is_shallow` | `repository::is_shallow` |
 | `git_repository_is_worktree` | `repository::is_worktree` |
 | `git_repository_item_path` | `repository::path` |
-`git_repository_mergehead_foreach` | |
+| `git_repository_mergehead_foreach` | |
 | `git_repository_message` | `repository::message` |
 | `git_repository_message_remove` | `repository::remove_message` |
-`git_repository_odb` | |
+| `git_repository_odb` | |
 | `git_repository_open` | `repository::open` |
 | `git_repository_open_bare` | `repository::open_bare` |
-`git_repository_open_ext` | |
-`git_repository_open_from_worktree` | |
+| `git_repository_open_ext` | |
+| `git_repository_open_from_worktree` | |
 | `git_repository_path` | `repository::path` |
-`git_repository_refdb` | |
+| `git_repository_refdb` | |
 | `git_repository_set_head` | `repository::set_head` |
 | `git_repository_set_head_detached` | `repository::set_head_detached` |
-`git_repository_set_head_detached_from_annotated` | |
+| `git_repository_set_head_detached_from_annotated` | |
 | `git_repository_set_ident` | `repository::set_identity` |
 | `git_repository_set_namespace` | `repository::set_namespace` |
 | `git_repository_set_workdir` | `repository::set_workdir` |
 | `git_repository_state` | `repository::state` |
 | `git_repository_state_cleanup` | `repository::cleanup_state` |
 | `git_repository_workdir` | `repository::workdir` |
-`git_repository_wrap_odb` | |
+| `git_repository_wrap_odb` | |
 
 
 ### reset
@@ -1039,41 +1037,41 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_revert` | `repository::revert_commit` |
-`git_revert_commit` | `repository::revert_commit` |
-`git_revert_options_init` | `revert::options::options` |
+| `git_revert` | `repository::revert_commit` |
+| `git_revert_commit` | `repository::revert_commit` |
+| `git_revert_options_init` | `revert::options::options` |
 
 
 ### revparse
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_revparse` | `repository::revparse` |
-`git_revparse_ext` | `repository::revparse_to_object_and_reference` |
-`git_revparse_single` | `repository::revparse_to_object` |
+| `git_revparse` | `repository::revparse` |
+| `git_revparse_ext` | `repository::revparse_to_object_and_reference` |
+| `git_revparse_single` | `repository::revparse_to_object` |
 
 
 ### revwalk
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_revwalk_add_hide_cb` | `revwalk::add_hide_callback` |
-`git_revwalk_free` | `revwalk::~revwalk` |
-`git_revwalk_hide` | `revwalk::hide` |
-`git_revwalk_hide_glob` | `revwalk::hide_glob` |
-`git_revwalk_hide_head` | `revwalk::hide_head` |
-`git_revwalk_hide_ref` | `revwalk::hide_reference` |
-`git_revwalk_new` | `repository::create_revwalk` |
-`git_revwalk_next` | `revwalk::next` |
-`git_revwalk_push` | `revwalk::push` |
-`git_revwalk_push_glob` | `revwalk::push_glob` |
-`git_revwalk_push_head` | `revwalk::push_head` |
-`git_revwalk_push_range` | `revwalk::push_range` |
-`git_revwalk_push_ref` | `revwalk::push_reference` |
-`git_revwalk_repository` | `revwalk::repository` |
-`git_revwalk_reset` | `revwalk::reset` |
-`git_revwalk_simplify_first_parent` | `revwalk::simplify_first_parent` |
-`git_revwalk_sorting` | `revwalk::set_sorting_mode` |
+| `git_revwalk_add_hide_cb` | `revwalk::add_hide_callback` |
+| `git_revwalk_free` | `revwalk::~revwalk` |
+| `git_revwalk_hide` | `revwalk::hide` |
+| `git_revwalk_hide_glob` | `revwalk::hide_glob` |
+| `git_revwalk_hide_head` | `revwalk::hide_head` |
+| `git_revwalk_hide_ref` | `revwalk::hide_reference` |
+| `git_revwalk_new` | `repository::create_revwalk` |
+| `git_revwalk_next` | `revwalk::next` |
+| `git_revwalk_push` | `revwalk::push` |
+| `git_revwalk_push_glob` | `revwalk::push_glob` |
+| `git_revwalk_push_head` | `revwalk::push_head` |
+| `git_revwalk_push_range` | `revwalk::push_range` |
+| `git_revwalk_push_ref` | `revwalk::push_reference` |
+| `git_revwalk_repository` | `revwalk::repository` |
+| `git_revwalk_reset` | `revwalk::reset` |
+| `git_revwalk_simplify_first_parent` | `revwalk::simplify_first_parent` |
+| `git_revwalk_sorting` | `revwalk::set_sorting_mode` |
 
 ### signature
 

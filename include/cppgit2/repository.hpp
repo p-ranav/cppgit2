@@ -573,6 +573,24 @@ public:
       const diff::options &options = diff::options(nullptr));
 
   /*
+   * GRAPH API
+   * See git_graph_* functions
+   */
+
+  // Count the number of unique commits between two commit objects
+  //
+  // There is no need for branches containing the commits to have any upstream
+  // relationship, but it helps to think of one as a branch and the other as its
+  // upstream, the ahead and behind values will be what git would report for the
+  // branches.
+  std::pair<size_t, size_t>
+  unique_commits_ahead_behind(const oid &local, const oid &upstream) const;
+
+  // Determine if a commit is the descendant of another commit.
+  // Note that a commit is not considered a descendant of itself, in contrast to git merge-base --is-ancestor.
+  bool is_descendant_of(const oid &commit, const oid& ancestor) const;
+
+  /*
    * IGNORE API
    * See git_ignore_* functions
    */

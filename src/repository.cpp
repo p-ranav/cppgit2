@@ -839,6 +839,19 @@ diff repository::create_diff_tree_to_workdir_with_index(
   return result;
 }
 
+std::pair<size_t, size_t>
+repository::unique_commits_ahead_behind(const oid &local, const oid &upstream) const {
+  size_t ahead, behind;
+  if (git_graph_ahead_behind(&ahead, &behind, c_ptr_, local.c_ptr(),
+                              upstream.c_ptr()))
+    throw git_exception();
+  return {ahead, behind};
+}
+
+bool repository::is_descendant_of(const oid &commit, const oid& ancestor) const {
+  return git_graph_descendant_of(c_ptr_, commit.c_ptr(), ancestor.c_ptr());
+}
+
 void repository::add_ignore_rules(const std::string &rules) {
   if (git_ignore_add_rule(c_ptr_, rules.c_str()))
     throw git_exception();
