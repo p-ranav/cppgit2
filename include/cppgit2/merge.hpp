@@ -217,6 +217,45 @@ public:
 
   class file : public libgit2_api {
   public:
+    // The file inputs to `git_merge_file`. Callers should populate the
+    // `git_merge_file_input` structure with descriptions of the files in each
+    // side of the conflict for use in producing the merge file.
+    class input : public libgit2_api {
+    public:
+      // Default construct a merge_file_input struct
+      input();
+
+      // Construct from libgit2 C ptr
+      input(git_merge_file_input *c_ptr) : c_struct_(*c_ptr) {}
+
+      // Version
+      unsigned int version() const { return c_struct_.version; }
+      void set_version(unsigned int value) { c_struct_.version = value; }
+
+      // Contents of the file.
+      const char *ptr() const { return c_struct_.ptr; }
+      void set_ptr(const char *value) { c_struct_.ptr = value; }
+
+      // Size of the contents pointed to in `ptr`.
+      size_t size() const { return c_struct_.size; }
+      void set_size(size_t value) { c_struct_.size = value; }
+
+      // File name of the conflicted file, or "" to not merge the path.
+      std::string path() const {
+        return c_struct_.path ? std::string(c_struct_.path) : "";
+      }
+      void set_path(const std::string &value) {
+        c_struct_.path = value.c_str();
+      }
+
+      // File mode of the conflicted file, or `0` to not merge the mode.
+      unsigned int mode() const { return c_struct_.mode; }
+      void set_mode(unsigned int value) { c_struct_.mode = value; }
+
+    private:
+      git_merge_file_input c_struct_;
+    };
+
     // Information about file-level merging
     // Always owned by user
     class result : public libgit2_api {
@@ -242,9 +281,7 @@ public:
       unsigned int mode() const { return c_ptr_->mode; }
 
       // The contents of the merge
-      std::string ptr() const {
-        return c_ptr_->ptr ? std::string(c_ptr_->path) : "";
-      }
+      const char *ptr() const { return c_ptr_->ptr; }
 
       // The length of the merge contents.
       size_t size() const { return c_ptr_->len; }
