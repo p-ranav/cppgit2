@@ -451,17 +451,6 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_cred_userpass` | |
 | `git_cred_userpass_plaintext_new` | |
 
-### describe
-
-| libgit2 | cppgit2:: |
-| --- | --- |
-| `git_describe_commit` | |
-| `git_describe_format` | |
-| `git_describe_format_options_init` | |
-| `git_describe_options_init` | |
-| `git_describe_result_free` | |
-| `git_describe_workdir` | |
-
 ### diff
 
 | libgit2 | cppgit2:: |
