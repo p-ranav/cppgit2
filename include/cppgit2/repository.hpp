@@ -587,8 +587,9 @@ public:
   unique_commits_ahead_behind(const oid &local, const oid &upstream) const;
 
   // Determine if a commit is the descendant of another commit.
-  // Note that a commit is not considered a descendant of itself, in contrast to git merge-base --is-ancestor.
-  bool is_descendant_of(const oid &commit, const oid& ancestor) const;
+  // Note that a commit is not considered a descendant of itself, in contrast to
+  // git merge-base --is-ancestor.
+  bool is_descendant_of(const oid &commit, const oid &ancestor) const;
 
   /*
    * IGNORE API
