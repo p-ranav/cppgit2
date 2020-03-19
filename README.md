@@ -607,22 +607,22 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-`git_merge` | `repository::merge_commits` |
-`git_merge_analysis` | `repository::analyze_merge` |
-`git_merge_analysis_for_ref` | `repository::analyze_merge` |
-`git_merge_base` | `repository::find_merge_base` |
-`git_merge_base_many` | `repository::find_merge_bases` |
-`git_merge_base_octopus` | `repository::find_merge_base_for_octopus_merge` |
-`git_merge_bases` | `repository::find_merge_bases` |
-`git_merge_bases_many` | `repository::find_merge_bases` |
-`git_merge_commits` | `repository::merge_commits` |
-`git_merge_file` | |
-`git_merge_file_from_index` | |
-`git_merge_file_input_init` | |
-`git_merge_file_options_init` | |
-`git_merge_file_result_free` | |
-`git_merge_options_init` | `merge::options::options` |
-`git_merge_trees` | `repository::merge_trees` |
+| `git_merge` | `repository::merge_commits` |
+| `git_merge_analysis` | `repository::analyze_merge` |
+| `git_merge_analysis_for_ref` | `repository::analyze_merge` |
+| `git_merge_base` | `repository::find_merge_base` |
+| `git_merge_base_many` | `repository::find_merge_bases` |
+| `git_merge_base_octopus` | `repository::find_merge_base_for_octopus_merge` |
+| `git_merge_bases` | `repository::find_merge_bases` |
+| `git_merge_bases_many` | `repository::find_merge_bases` |
+| `git_merge_commits` | `repository::merge_commits` |
+| `git_merge_file` | |
+| `git_merge_file_from_index` | |
+| `git_merge_file_input_init` | |
+| `git_merge_file_options_init` | `merge::file::options::options` |
+| `git_merge_file_result_free` | `merge::file::result::~result` |
+| `git_merge_options_init` | `merge::options::options` |
+| `git_merge_trees` | `repository::merge_trees` |
 
 ### note
 
