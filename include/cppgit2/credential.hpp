@@ -4,6 +4,8 @@
 #include <git2.h>
 #include <string>
 
+namespace cppgit2 {
+
 // Owned by user, cleaned up in destructor
 class credential : public libgit2_api {
 public:
@@ -67,6 +69,11 @@ public:
   // Check whether a credential object contains username information.
   bool has_username() const;
 
+  // Access libgit2 C ptr
+  const git_credential * c_ptr() const;
+
 private:
   git_credential *c_ptr_;
 };
+
+}

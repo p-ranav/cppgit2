@@ -438,18 +438,18 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_cred_default_new` | |
-| `git_cred_free` | |
-| `git_cred_get_username` | |
-| `git_cred_has_username` | |
+| `git_cred_default_new` | `credential::credential` |
+| `git_cred_free` | `credential::~credential` |
+| `git_cred_get_username` | `credential::username` |
+| `git_cred_has_username` | `credential::has_username` |
 | `git_cred_ssh_custom_new` | |
 | `git_cred_ssh_interactive_new` | |
-| `git_cred_ssh_key_from_agent` | |
+| `git_cred_ssh_key_from_agent` | `credential::credential` |
 | `git_cred_ssh_key_memory_new` | |
-| `git_cred_ssh_key_new` | |
+| `git_cred_ssh_key_new` | `credential::credential` |
 | `git_cred_username_new` | |
 | `git_cred_userpass` | |
-| `git_cred_userpass_plaintext_new` | |
+| `git_cred_userpass_plaintext_new` | `credential::credential` |
 
 ### diff
 
