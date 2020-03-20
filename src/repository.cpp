@@ -1508,6 +1508,11 @@ strarray repository::rename_remote(const std::string &name,
   return result;
 }
 
+void repository::set_remote_autotag(const std::string &remote, fetch::options::autotag option) {
+  if (git_remote_set_autotag(c_ptr_, remote.c_str(), static_cast<git_remote_autotag_option_t>(option)))
+    throw git_exception();
+}
+
 void repository::set_remote_push_url(const std::string &remote,
                                      const std::string &url) {
   if (git_remote_set_pushurl(c_ptr_, remote.c_str(), url.c_str()))

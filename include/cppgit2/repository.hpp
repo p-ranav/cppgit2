@@ -1106,6 +1106,10 @@ public:
   //   on successful return.
   strarray rename_remote(const std::string &name, const std::string &new_name);
 
+  // Set the remote's tag following setting.
+  // The change will be made in the configuration. No loaded remotes will be affected.
+  void set_remote_autotag(const std::string &remote, fetch::options::autotag option);
+
   // Set the remote's url for pushing in the configuration.
   // Remote objects already in memory will not be affected.
   // This assumes the common case of a single-url remote and

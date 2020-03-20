@@ -953,7 +953,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_remote_pushurl` | `remote::push_url` |
 | `git_remote_refspec_count` | `remote::size` |
 | `git_remote_rename` | `repository::rename_remote` |
-| `git_remote_set_autotag` | |
+| `git_remote_set_autotag` | `repository::set_remote_autotag` |
 | `git_remote_set_pushurl` | `repository::set_remote_push_url` |
 | `git_remote_set_url` | `repository::set_remote_url` |
 | `git_remote_stats` | `remote::stats` |
