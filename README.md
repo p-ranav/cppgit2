@@ -297,7 +297,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-Once again, here's the output when running this program against `libgit2` source code.
+Here's the output when running this program against `libgit2` source code.
 
 ```bash
 ▶ ./build/samples/print_branches ext/libgit2
