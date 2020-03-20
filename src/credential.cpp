@@ -28,16 +28,19 @@ credential::credential(const std::string &username) {
 }
 
 credential::credential(const std::string &username,
-             git_credential_ssh_interactive_cb prompt_callback, void *payload) {
+                       git_credential_ssh_interactive_cb prompt_callback,
+                       void *payload) {
   if (git_credential_ssh_interactive_new(&c_ptr_, username.c_str(),
-    prompt_callback, payload))
+                                         prompt_callback, payload))
     throw git_exception();
 }
 
-credential::credential(const std::string &username, const std::string &public_key,
-    git_credential_sign_cb sign_callback, void *payload) {
-  if (git_credential_ssh_custom_new(&c_ptr_, username.c_str(), public_key.c_str(),
-    public_key.size(), sign_callback, payload))
+credential::credential(const std::string &username,
+                       const std::string &public_key,
+                       git_credential_sign_cb sign_callback, void *payload) {
+  if (git_credential_ssh_custom_new(&c_ptr_, username.c_str(),
+                                    public_key.c_str(), public_key.size(),
+                                    sign_callback, payload))
     throw git_exception();
 }
 

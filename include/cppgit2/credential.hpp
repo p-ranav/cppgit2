@@ -29,7 +29,7 @@ public:
 
   // Create a new ssh keyboard-interactive based credential object. The supplied
   // credential parameter will be internally duplicated.
-  // 
+  //
   // Not much wrapping happening here - More or less same signature as libgit2
   credential(const std::string &username,
              git_credential_ssh_interactive_cb prompt_callback, void *payload);
@@ -37,11 +37,12 @@ public:
   // Create an ssh key credential with a custom signing function.
   //
   // This lets you use your own function to sign the challenge.
-  // This function and its credential type is provided for completeness and wraps libssh2_userauth_publickey(), which is undocumented.
+  // This function and its credential type is provided for completeness and
+  // wraps libssh2_userauth_publickey(), which is undocumented.
   //
   // Not much wrapping happening here - More or less same signature as libgit2
   credential(const std::string &username, const std::string &public_key,
-    git_credential_sign_cb sign_callback, void *payload);
+             git_credential_sign_cb sign_callback, void *payload);
 
   // Cleanup credential object
   ~credential();

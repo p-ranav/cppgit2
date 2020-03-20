@@ -30,11 +30,12 @@ repository repository::open_bare(const std::string &path) {
   return result;
 }
 
-repository repository::open_ext(const std::string &path, open_flag flags, 
-    const std::string &ceiling_dirs) {
+repository repository::open_ext(const std::string &path, open_flag flags,
+                                const std::string &ceiling_dirs) {
   repository result(nullptr);
-  if (git_repository_open_ext(&result.c_ptr_, path.c_str(), 
-    static_cast<unsigned int>(flags), ceiling_dirs.c_str()))
+  if (git_repository_open_ext(&result.c_ptr_, path.c_str(),
+                              static_cast<unsigned int>(flags),
+                              ceiling_dirs.c_str()))
     throw git_exception();
   return result;
 }
@@ -122,18 +123,22 @@ std::string repository::discover_path(const std::string &start_path) {
   return discover_path(start_path, false, "");
 }
 
-void repository::for_each_fetch_head(std::function<void(const std::string&, 
-  const std::string&, const oid&, bool)> visitor) {
+void repository::for_each_fetch_head(
+    std::function<void(const std::string &, const std::string &, const oid &,
+                       bool)>
+        visitor) {
   struct visitor_wrapper {
-    std::function<void(const std::string&, 
-  const std::string&, const oid&, bool)> fn;
+    std::function<void(const std::string &, const std::string &, const oid &,
+                       bool)>
+        fn;
   };
 
   visitor_wrapper wrapper;
   wrapper.fn = visitor;
 
   auto callback_c = [](const char *ref_name, const char *remote_url,
-    const git_oid *oid_c, unsigned int is_merge, void *payload) {
+                       const git_oid *oid_c, unsigned int is_merge,
+                       void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     wrapper->fn(ref_name, remote_url, oid(oid_c), is_merge);
     return 0;
@@ -143,9 +148,9 @@ void repository::for_each_fetch_head(std::function<void(const std::string&,
     throw git_exception();
 }
 
-void repository::for_each_merge_head(std::function<void(const oid&)> visitor) {
+void repository::for_each_merge_head(std::function<void(const oid &)> visitor) {
   struct visitor_wrapper {
-    std::function<void(const oid&)> fn;
+    std::function<void(const oid &)> fn;
   };
 
   visitor_wrapper wrapper;
