@@ -73,7 +73,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ## Sample Programs
 
-### Initialize a new repository
+### Initialize a new repository (`git init`)
 
 To initialize a new repository, simply call `repository::init`. If you want to create a bare repository, set the second argument to `true`. 
 
@@ -86,7 +86,7 @@ int main() {
 }
 ```
 
-### Clone a repository and checkout specific branch
+### Clone a repository and checkout specific branch (`git clone --branch`)
 
 Let's say you want to clone a repository and checkout a specific branch. Construct an `options` object using `clone::options`, set the checkout branch name, and then use `repository::clone` to clone the repository. 
 
