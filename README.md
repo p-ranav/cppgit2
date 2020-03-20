@@ -127,7 +127,7 @@ Use `repository::open_bare` to open a bare repository.
 
 ### Create Remote (`git remote`)
 
-`cpp
+```cpp
 #include <cppgit2/diff.hpp>
 #include <cppgit2/repository.hpp>
 #include <iostream>
