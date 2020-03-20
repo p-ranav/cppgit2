@@ -75,7 +75,7 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ### Initialize a new repository (`git init`)
 
-To initialize a new repository, simply call `repository::init`. If you want to create a bare repository, set the second argument to `true`. 
+To initialize a new repository, simply call `repository::init`. 
 
 ```cpp
 #include <cppgit2/repository.hpp>
@@ -85,6 +85,8 @@ int main() {
   auto repo = repository::init("hello_world", false);
 }
 ```
+
+If you want to create a bare repository, set the second argument to `true`. 
 
 ### Clone a repository and checkout specific branch (`git clone --branch`)
 
