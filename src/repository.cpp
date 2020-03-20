@@ -888,10 +888,11 @@ void repository::add_ondisk_config_file(const cppgit2::config &cfg,
 }
 
 diff repository::create_diff_index_to_index(const cppgit2::index &old_index,
-    const cppgit2::index &new_index, const diff::options &options) {
+                                            const cppgit2::index &new_index,
+                                            const diff::options &options) {
   diff result;
-  if (git_diff_index_to_index(&result.c_ptr_, c_ptr_, old_index.c_ptr_, new_index.c_ptr_,
-    options.c_ptr()))
+  if (git_diff_index_to_index(&result.c_ptr_, c_ptr_, old_index.c_ptr_,
+                              new_index.c_ptr_, options.c_ptr()))
     throw git_exception();
   return result;
 }

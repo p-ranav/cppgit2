@@ -729,10 +729,8 @@ public:
 
   // Create a diff with the difference between two index objects.
   diff create_diff_index_to_index(
-    const cppgit2::index &old_index,
-    const cppgit2::index &new_index,
-    const diff::options &options = diff::options(nullptr)
-  );
+      const cppgit2::index &old_index, const cppgit2::index &new_index,
+      const diff::options &options = diff::options(nullptr));
 
   // Create a diff between the repository index and the workdir directory.
   diff create_diff_index_to_workdir(
