@@ -1,9 +1,11 @@
 #pragma once
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/fetch.hpp>
+#include <cppgit2/indexer.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/push.hpp>
+#include <cppgit2/refspec.hpp>
 #include <cppgit2/strarray.hpp>
 #include <git2.h>
 #include <string>
@@ -73,6 +75,9 @@ public:
   // Get the remote's repository
   class repository owner() const;
 
+  // Retrieve the ref-prune setting
+  void prune_references();
+
   // Peform all the steps from a push.
   void push(const strarray &refspecs,
             const push::options &options = push::options());
@@ -84,6 +89,12 @@ public:
 
   // Get the number of refspecs for a remote
   size_t size() const;
+
+  // Get a refspec from the remote
+  refspec operator[](size_t n);
+
+  // Get the statistics structure that is filled in by the fetch operation.
+  indexer::progress stats() const;
 
   // Cancel the operation
   // At certain points in its operation, the network code checks

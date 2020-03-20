@@ -939,7 +939,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_remote_free` | `remote::~remote` |
 | `git_remote_get_fetch_refspecs` | `remote::fetch_refspec` |
 | `git_remote_get_push_refspecs` | `remote::push_refspec` |
-| `git_remote_get_refspec` | |
+| `git_remote_get_refspec` | `remote::operator[]` |
 | `git_remote_init_callbacks` | |
 | `git_remote_is_valid_name` | `remote::is_valid_name` |
 | `git_remote_list` | `repository::remote_list` |
@@ -948,7 +948,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_remote_name` | `remote::name` |
 | `git_remote_owner` | `remote::owner` |
 | `git_remote_prune` | |
-| `git_remote_prune_refs` | |
+| `git_remote_prune_refs` | `remote::prune_references` |
 | `git_remote_push` | `remote::push` |
 | `git_remote_pushurl` | `remote::push_url` |
 | `git_remote_refspec_count` | `remote::size` |
@@ -956,7 +956,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_remote_set_autotag` | |
 | `git_remote_set_pushurl` | `repository::set_remote_push_url` |
 | `git_remote_set_url` | `repository::set_remote_url` |
-| `git_remote_stats` | |
+| `git_remote_stats` | `remote::stats` |
 | `git_remote_stop` | `remote::stop` |
 | `git_remote_update_tips` | |
 | `git_remote_upload` | `remote::upload` |

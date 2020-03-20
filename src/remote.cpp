@@ -81,6 +81,11 @@ repository remote::owner() const {
   return repository(git_remote_owner(c_ptr_));
 }
 
+void remote::prune_references() {
+  if (git_remote_prune_refs(c_ptr_))
+    throw git_exception();
+}
+
 void remote::push(const strarray &refspecs, const push::options &options) {
   if (git_remote_push(c_ptr_, refspecs.c_ptr(), options.c_ptr()))
     throw git_exception();
@@ -92,6 +97,14 @@ std::string remote::push_url() const {
 }
 
 size_t remote::size() const { return git_remote_refspec_count(c_ptr_); }
+
+refspec remote::operator[](size_t n) {
+  return refspec((git_refspec *)git_remote_get_refspec(c_ptr_, n));
+}
+
+indexer::progress remote::stats() const {
+  return indexer::progress(git_remote_stats(c_ptr_));
+}
 
 void remote::stop() {
   if (git_remote_stop(c_ptr_))
