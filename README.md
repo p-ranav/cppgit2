@@ -125,6 +125,71 @@ int main() {
 
 Use `repository::open_bare` to open a bare repository.
 
+### Add and Commit a File
+
+```cpp
+#include <cppgit2/repository.hpp>
+#include <fstream>
+#include <iostream>
+using namespace cppgit2;
+
+int main(int argc, char **argv) {
+  if (argc == 2) {
+    // Create new repo
+    auto repo = repository::init(argv[1], false);
+
+    // Write README file
+    std::ofstream readme;
+    readme.open(std::string{argv[1]} + "/README.md");
+    readme << "Hello, World!";
+    readme.close();
+
+    // Get repo index and write as tree
+    auto index = repo.index();
+    index.add_entry_by_path("README.md");
+    index.write();
+    auto tree_oid = index.write_tree();
+
+    // Prepare signatures
+    auto author = signature("foobar", "foo.bar@baz.com");
+    auto committer = signature("foobar", "foo.bar@baz.com");
+
+    // Create commit
+    auto commit_oid =
+        repo.create_commit("HEAD", author, committer, "utf-8", "Update README",
+                           repo.lookup_tree(tree_oid), {});
+
+    std::cout << "Created commit with ID: " << commit_oid.to_hex_string()
+              << std::endl;
+
+  } else {
+    std::cout << "Usage: ./executable <new_repo_path>\n";
+  }
+}
+```
+
+```bash
+▶ ./commit_file foo
+Created commit with ID: 34614c460ee9dd6a6e56c1a90c5533b7e284b197
+
+▶ cd foo
+
+▶ cat README.md
+Hello, World!
+
+▶ git log --stat
+commit 34614c460ee9dd6a6e56c1a90c5533b7e284b197 (HEAD -> master)
+Author: foobar <foo.bar@baz.com>
+Date:   Thu Mar 19 20:48:07 2020 -0500
+
+    Update README
+
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+ 
+
+```
+
 ### Walk Repository Tree (`git ls-tree`)
 
 ```cpp
