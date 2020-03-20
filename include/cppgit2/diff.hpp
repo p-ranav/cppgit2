@@ -408,13 +408,112 @@ public:
 
   // Accumulate diff statistics for all patches.
   stats diff_stats() const;
-  
+
   // Formatting options for diff e-mail generation
   enum class format_email_flag {
     // Normal patch, the default
     none = 0,
     // Don't insert "[PATCH]" in the subject header
     exclude_subject_patch_marker = (1 << 0)
+  };
+
+  // When producing a binary diff, the binary data returned will be
+  // either the deflated full ("literal") contents of the file, or
+  // the deflated binary delta between the two sides (whichever is
+  // smaller).
+  enum class binary_data_type {
+    none,    // There is no binary delta.
+    literal, // The binary data is the literal contents of the file.
+    delta,   // The binary data is the delta from one side to the other.
+  };
+
+  // The contents of one of the files in a binary diff.
+  class binary_file : public libgit2_api {
+  public:
+    binary_file(const git_diff_binary_file *c_ptr) : c_struct_(*c_ptr) {}
+
+    // The type of binary data for this file
+    binary_data_type type() const {
+      return static_cast<binary_data_type>(c_struct_.type);
+    }
+
+    // The binary data, deflated.
+    const char *data() const { return c_struct_.data; }
+
+    // The length of the binary data.
+    size_t data_length() const { return c_struct_.datalen; }
+
+    // The length of the binary data after inflation.
+    size_t inflated_length() const { return c_struct_.inflatedlen; }
+
+  private:
+    git_diff_binary_file c_struct_;
+  };
+
+  // Structure describing the binary contents of a diff.
+  //
+  // A `binary` file / delta is a file (or pair) for which no text diffs
+  // should be generated. A diff can contain delta entries that are
+  // binary, but no diff content will be output for those files. There is
+  // a base heuristic for binary detection and you can further tune the
+  // behavior with git attributes or diff flags and option settings.
+  class binary : public libgit2_api {
+  public:
+    binary(const git_diff_binary *c_ptr) : c_struct_(*c_ptr) {}
+
+    // Whether there is data in this binary structure or not.
+    //
+    // If this is `true`, then this was produced and included binary content.
+    // If this is `false` then this was generated knowing only that a binary
+    // file changed but without providing the data, probably from a patch
+    // that said `Binary files a/file.txt and b/file.txt differ`.
+    bool contains_data() const { return c_struct_.contains_data; }
+
+    // The contents of the old file.
+    binary_file old_file() const { return binary_file(&c_struct_.old_file); }
+
+    // The contents of the new file.
+    binary_file new_file() const { return binary_file(&c_struct_.new_file); }
+
+  private:
+    git_diff_binary c_struct_;
+  };
+
+  // Structure describing a line (or data span) of a diff.
+  // A line is a range of characters inside a hunk. It could be a context line
+  // (i.e. in both old and new versions), an added line (i.e. only in the new
+  // version), or a removed line (i.e. only in the old version). Unfortunately,
+  // we don't know anything about the encoding of data in the file being diffed,
+  // so we cannot tell you much about the line content. Line data will not be
+  // NUL-byte terminated, however, because it will be just a span of bytes
+  // inside the larger file.
+  class line : public libgit2_api {
+  public:
+    line(git_diff_line *c_ptr) : c_struct_(*c_ptr) {}
+
+    // A git_diff_line_t value 
+    char origin() const { return c_struct_.origin; }
+
+    // Line number in old file or -1 for added line
+    int old_lineno() const { return c_struct_.old_lineno; }
+
+    // Line number in new file or -1 for deleted line
+    int new_lineno() const { return c_struct_.new_lineno; }
+
+    // Number of newline characters in content
+    int num_lines() const { return c_struct_.num_lines; }
+
+    // Number of bytes of data
+    size_t contents_length() const { return c_struct_.content_len; }
+
+    // Offset in the original file to the content
+    git_off_t content_offset() const { return c_struct_.content_offset; }
+
+    // Pointer to diff text, not NUL-byte terminated
+    const char * content() const { return c_struct_.content; }
+
+  private:
+    git_diff_line c_struct_;
   };
 
 private:

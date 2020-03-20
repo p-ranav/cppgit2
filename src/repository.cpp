@@ -888,12 +888,12 @@ void repository::add_ondisk_config_file(const cppgit2::config &cfg,
 }
 
 data_buffer repository::create_diff_commit_as_email(
-    const commit &commit, size_t patch_no, size_t total_patches, 
-    diff::format_email_flag flags, 
-    const diff::options &options) {
+    const commit &commit, size_t patch_no, size_t total_patches,
+    diff::format_email_flag flags, const diff::options &options) {
   data_buffer result;
-  if (git_diff_commit_as_email(result.c_ptr(), c_ptr_, commit.c_ptr_, patch_no, total_patches,
-    static_cast<uint32_t>(flags), options.c_ptr()))
+  if (git_diff_commit_as_email(result.c_ptr(), c_ptr_, commit.c_ptr_, patch_no,
+                               total_patches, static_cast<uint32_t>(flags),
+                               options.c_ptr()))
     throw git_exception();
   return result;
 }

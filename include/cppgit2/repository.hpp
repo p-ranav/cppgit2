@@ -729,10 +729,9 @@ public:
 
   // Create an e-mail ready patch for a commit.
   data_buffer create_diff_commit_as_email(
-    const commit &commit, size_t patch_no, size_t total_patches, 
-    diff::format_email_flag flags, 
-    const diff::options &options = diff::options(nullptr)
-  );
+      const commit &commit, size_t patch_no, size_t total_patches,
+      diff::format_email_flag flags,
+      const diff::options &options = diff::options(nullptr));
 
   // Create a diff with the difference between two index objects.
   diff create_diff_index_to_index(
