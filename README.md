@@ -778,8 +778,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_free` | `diff::~diff` |
 | `git_diff_from_buffer` | `diff::diff` |
 | `git_diff_get_delta` | `diff::operator[]` |
-| `git_diff_get_stats` | |
-| `git_diff_index_to_index` | |
+| `git_diff_get_stats` | `diff::diff_stats` |
+| `git_diff_index_to_index` | `repository::create_diff_index_to_index` |
 | `git_diff_index_to_workdir` | `repository::create_diff_index_to_workdir` |
 | `git_diff_is_sorted_icase` | `diff::is_sorted_case_sensitive` |
 | `git_diff_merge` | `diff::merge` |

@@ -402,8 +402,12 @@ public:
     }
 
   private:
+    friend diff;
     git_diff_stats *c_ptr_;
   };
+
+  // Accumulate diff statistics for all patches.
+  stats diff_stats() const;
 
 private:
   friend class patch;

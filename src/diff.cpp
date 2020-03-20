@@ -84,4 +84,11 @@ std::string diff::to_string(diff::format format_type) const {
 
 const git_diff *diff::c_ptr() const { return c_ptr_; }
 
+diff::stats diff::diff_stats() const {
+  diff::stats result(nullptr);
+  if (git_diff_get_stats(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 } // namespace cppgit2
