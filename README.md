@@ -151,7 +151,7 @@ int main(int argc, char **argv) {
 Running this on the `libgit2` repository yields the following:
 
 ```bash
-./build/samples/print_tags ext/libgit2
+▶ ./build/samples/print_tags ext/libgit2
 [17223902] refs/tags/v0.99.0
 [23f8588d] refs/tags/v0.1.0
 [7064938b] refs/tags/v0.10.0
@@ -162,6 +162,50 @@ Running this on the `libgit2` repository yields the following:
 [3eaf34f4] refs/tags/v0.15.0
 [d286dfec] refs/tags/v0.16.0
 [5b9fac39] refs/tags/v0.17.0
+...
+...
+```
+
+### Print Commits
+
+```cpp
+#include <cppgit2/repository.hpp>
+#include <iostream>
+using namespace cppgit2;
+
+int main(int argc, char **argv) {
+  if (argc == 2) {
+    auto repo = repository::open(argv[1]);
+
+    repo.for_each_commit([](const commit &c) {
+      std::cout << c.id().to_hex_string(8) 
+                << " [" << c.committer().name() << "]"
+                << " " << c.summary() << std::endl;
+    });
+
+  } else {
+    std::cout << "Usage: ./executable <repo_path>\n";
+  }
+}
+```
+Running this on the `libgit2` repository yields the following:
+
+```bash
+▶ ./build/samples/print_commits ext/libgit2
+17223902 [GitHub] Merge pull request #5291 from libgit2/ethomson/0_99
+b31cd05f [GitHub] Merge pull request #5372 from pks-t/pks/release-script
+70062e28 [Patrick Steinhardt] version: update the version number to v0.99
+a552c103 [Patrick Steinhardt] docs: update changelog for v0.99
+1256b462 [GitHub] Merge pull request #5406 from libgit2/pks/azure-fix-arm32
+5254c9bb [GitHub] Merge pull request #5398 from libgit2/pks/valgrind-openssl
+e8660708 [GitHub] Merge pull request #5400 from lhchavez/fix-packfile-fuzzer
+eaa70c6c [Patrick Steinhardt] tests: object: decrease number of concurrent cache accesses
+01a83406 [Patrick Steinhardt] azure: docker: fix ARM builds by replacing gosu(1)
+76b49caf [Patrick Steinhardt] azure: docker: synchronize Xenial/Bionic build instructions
+f9985688 [Patrick Steinhardt] azure: docker: detect errors when building images
+68bfacb1 [Patrick Steinhardt] azure: remove unused Linux setup script
+795a5b2c [lhchavez] fuzzers: Fix the documentation
+0119e57d [Patrick Steinhardt] streams: openssl: switch approach to silence Valgrind errors
 ...
 ...
 ```
