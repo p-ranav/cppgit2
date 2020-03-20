@@ -984,8 +984,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_repository_ident` | `repository::identity` |
 | `git_repository_index` | `repository::index` |
 | `git_repository_init` | `repository::init` |
-| `git_repository_init_ext` | |
-| `git_repository_init_options_init` | |
+| `git_repository_init_ext` | `repository::init_ext` |
+| `git_repository_init_options_init` | `repository::init_options::init_options` |
 | `git_repository_is_bare` | `repository::is_bare` |
 | `git_repository_is_empty` | `repository::is_empty` |
 | `git_repository_is_shallow` | `repository::is_shallow` |

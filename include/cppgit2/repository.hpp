@@ -54,6 +54,105 @@ public:
   // Initialize git repository
   static repository init(const std::string &path, bool is_bare);
 
+  // Option flags for `git_repository_init_ext`
+  enum class init_flag {
+    bare = (1u << 0),
+    no_reinit = (1u << 1),
+    no_dotgit_dir = (1u << 2),
+    mkdir = (1u << 3),
+    mkpath = (1u << 4),
+    external_template = (1u << 5),
+    relative_gitlink = (1u << 6),
+  };
+
+  // mode options for `git_repository_init_ext`
+  enum class init_mode {
+    shared_umask = 0,
+    shared_group = 0002775,
+    shared_all = 0002777,
+  };
+
+  class init_options : public libgit2_api {
+  public:
+    init_options() : c_ptr_(nullptr) {
+      auto ret = git_repository_init_options_init(
+          &default_options_, GIT_REPOSITORY_INIT_OPTIONS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    init_options(git_repository_init_options *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Version
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int version) { c_ptr_->version = version; }
+
+    // Init flags
+    init_flag flags() const { return static_cast<init_flag>(c_ptr_->flags); }
+    void set_flags(init_flag flags) {
+      c_ptr_->flags = static_cast<uint32_t>(flags);
+    }
+
+    // Init mode
+    init_mode mode() const { return static_cast<init_mode>(c_ptr_->mode); }
+    void set_mode(init_mode mode) {
+      c_ptr_->mode = static_cast<uint32_t>(mode);
+    }
+
+    // Workdir path
+    std::string workdir_path() const {
+      return c_ptr_->workdir_path ? std::string(c_ptr_->workdir_path) : "";
+    }
+    void set_workdir_path(const std::string &value) {
+      c_ptr_->workdir_path = value.c_str();
+    }
+
+    // Description
+    std::string description() const {
+      return c_ptr_->description ? std::string(c_ptr_->description) : "";
+    }
+    void set_description(const std::string &value) {
+      c_ptr_->description = value.c_str();
+    }
+
+    // Template path
+    std::string template_path() const {
+      return c_ptr_->template_path ? std::string(c_ptr_->template_path) : "";
+    }
+    void set_template_path(const std::string &value) {
+      c_ptr_->template_path = value.c_str();
+    }
+
+    // Initial head
+    std::string initial_head() const {
+      return c_ptr_->initial_head ? std::string(c_ptr_->initial_head) : "";
+    }
+    void set_initial_head(const std::string &value) {
+      c_ptr_->initial_head = value.c_str();
+    }
+
+    // Origin URL
+    std::string origin_url() const {
+      return c_ptr_->origin_url ? std::string(c_ptr_->origin_url) : "";
+    }
+    void set_origin_url(const std::string &value) {
+      c_ptr_->origin_url = value.c_str();
+    }
+
+    // Access libgit2 C ptr
+    const git_repository_init_options *c_ptr() const { return c_ptr_; }
+
+  private:
+    friend class repository;
+    git_repository_init_options *c_ptr_;
+    git_repository_init_options default_options_;
+  };
+
+  // Create a new Git repository in the given folder with extended controls.
+  static repository init_ext(const std::string &repo_path,
+                             const init_options &options = init_options());
+
   // Open a git repository
   // Auto-detects if `path` is normal or bare repo and fails if neither
   static repository open(const std::string &path);
@@ -1283,6 +1382,7 @@ private:
   friend class tree_builder;
   git_repository *c_ptr_;
 };
+ENABLE_BITMASK_OPERATORS(repository::init_flag);
 ENABLE_BITMASK_OPERATORS(repository::open_flag);
 
 } // namespace cppgit2

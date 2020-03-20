@@ -16,6 +16,15 @@ repository repository::init(const std::string &path, bool is_bare) {
   return result;
 }
 
+repository repository::init_ext(const std::string &repo_path,
+                                const init_options &options) {
+  repository result(nullptr);
+  if (git_repository_init_ext(&result.c_ptr_, repo_path.c_str(),
+                              options.c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 repository repository::open(const std::string &path) {
   repository result(nullptr);
   if (git_repository_open(&result.c_ptr_, path.c_str()))
