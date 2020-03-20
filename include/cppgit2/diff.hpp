@@ -446,6 +446,9 @@ public:
     // The length of the binary data after inflation.
     size_t inflated_length() const { return c_struct_.inflatedlen; }
 
+    // Access libgit2 C ptr
+    const git_diff_binary_file * c_ptr() const { return &c_struct_; }
+
   private:
     git_diff_binary_file c_struct_;
   };
@@ -475,11 +478,15 @@ public:
     // The contents of the new file.
     binary_file new_file() const { return binary_file(&c_struct_.new_file); }
 
+    // Access libgit2 C ptr
+    const git_diff_binary * c_ptr() const { return &c_struct_; }
+
   private:
     git_diff_binary c_struct_;
   };
 
   // Structure describing a line (or data span) of a diff.
+  //
   // A line is a range of characters inside a hunk. It could be a context line
   // (i.e. in both old and new versions), an added line (i.e. only in the new
   // version), or a removed line (i.e. only in the old version). Unfortunately,
@@ -491,7 +498,7 @@ public:
   public:
     line(git_diff_line *c_ptr) : c_struct_(*c_ptr) {}
 
-    // A git_diff_line_t value 
+    // A git_diff_line_t value
     char origin() const { return c_struct_.origin; }
 
     // Line number in old file or -1 for added line
@@ -510,10 +517,49 @@ public:
     git_off_t content_offset() const { return c_struct_.content_offset; }
 
     // Pointer to diff text, not NUL-byte terminated
-    const char * content() const { return c_struct_.content; }
+    const char *content() const { return c_struct_.content; }
+
+    // Access libgit2 C ptr
+    const git_diff_line * c_ptr() const { return &c_struct_; }
 
   private:
     git_diff_line c_struct_;
+  };
+
+  // Structure describing a hunk of a diff.
+  //
+  // A hunk is a span of modified lines in a delta along with some stable
+  // surrounding context. You can configure the amount of context and other
+  // properties of how hunks are generated. Each hunk also comes with a header
+  // that described where it starts and ends in both the old and new versions in
+  // the delta.
+  class hunk : public libgit2_api {
+  public:
+    hunk(git_diff_hunk * c_ptr) : c_struct_(*c_ptr) {}
+
+    // Starting line number in old_file
+    int old_start() const { return c_struct_.old_start; }
+
+    // Number of lines in old_file
+    int old_lines() const { return c_struct_.old_lines; }
+
+    // Starting line number in new_file
+    int new_start() const { return c_struct_.new_start; }
+
+    // Number of lines in new_file
+    int new_lines() const { return c_struct_.new_lines; }
+
+    // Number of bytes in header text
+    size_t header_length() const { return c_struct_.header_len; }
+
+    // Header text, NUL-byte terminated
+    char const * header() const { return &(c_struct_.header[0]); }
+
+    // Access libgit2 C ptr
+    const git_diff_hunk * c_ptr() const { return &c_struct_; }
+    
+  private:
+    git_diff_hunk c_struct_;
   };
 
 private:
