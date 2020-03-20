@@ -769,7 +769,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_blob_to_buffer` | |
 | `git_diff_blobs` | `diff::compare_files` |
 | `git_diff_buffers` | |
-| `git_diff_commit_as_email` | |
+| `git_diff_commit_as_email` | `diff::create_diff_commit_as_email` |
 | `git_diff_find_options_init` | |
 | `git_diff_find_similar` | |
 | `git_diff_foreach` | |

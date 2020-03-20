@@ -408,6 +408,14 @@ public:
 
   // Accumulate diff statistics for all patches.
   stats diff_stats() const;
+  
+  // Formatting options for diff e-mail generation
+  enum class format_email_flag {
+    // Normal patch, the default
+    none = 0,
+    // Don't insert "[PATCH]" in the subject header
+    exclude_subject_patch_marker = (1 << 0)
+  };
 
 private:
   friend class patch;
@@ -418,5 +426,7 @@ private:
 };
 ENABLE_BITMASK_OPERATORS(diff::delta::flag);
 ENABLE_BITMASK_OPERATORS(diff::options::flag);
+ENABLE_BITMASK_OPERATORS(diff::stats::format);
+ENABLE_BITMASK_OPERATORS(diff::format_email_flag);
 
 } // namespace cppgit2
