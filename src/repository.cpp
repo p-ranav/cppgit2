@@ -30,6 +30,22 @@ repository repository::open_bare(const std::string &path) {
   return result;
 }
 
+repository repository::open_ext(const std::string &path, open_flag flags, 
+    const std::string &ceiling_dirs) {
+  repository result(nullptr);
+  if (git_repository_open_ext(&result.c_ptr_, path.c_str(), 
+    static_cast<unsigned int>(flags), ceiling_dirs.c_str()))
+    throw git_exception();
+  return result;
+}
+
+repository repository::open_from_worktree(const worktree &wt) {
+  repository result(nullptr);
+  if (git_repository_open_from_worktree(&result.c_ptr_, wt.c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 repository repository::clone(const std::string &url,
                              const std::string &local_path,
                              const clone::options &options) {
@@ -104,6 +120,45 @@ std::string repository::discover_path(const std::string &start_path,
 
 std::string repository::discover_path(const std::string &start_path) {
   return discover_path(start_path, false, "");
+}
+
+void repository::for_each_fetch_head(std::function<void(const std::string&, 
+  const std::string&, const oid&, bool)> visitor) {
+  struct visitor_wrapper {
+    std::function<void(const std::string&, 
+  const std::string&, const oid&, bool)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const char *ref_name, const char *remote_url,
+    const git_oid *oid_c, unsigned int is_merge, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(ref_name, remote_url, oid(oid_c), is_merge);
+    return 0;
+  };
+
+  if (git_repository_fetchhead_foreach(c_ptr_, callback_c, (void *)(&wrapper)))
+    throw git_exception();
+}
+
+void repository::for_each_merge_head(std::function<void(const oid&)> visitor) {
+  struct visitor_wrapper {
+    std::function<void(const oid&)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const git_oid *oid_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->fn(oid(oid_c));
+    return 0;
+  };
+
+  if (git_repository_mergehead_foreach(c_ptr_, callback_c, (void *)(&wrapper)))
+    throw git_exception();
 }
 
 std::string repository::namespace_() const {
@@ -202,6 +257,20 @@ std::string repository::message() const {
 
 void repository::remove_message() { git_repository_message_remove(c_ptr_); }
 
+cppgit2::odb repository::odb() const {
+  cppgit2::odb result(nullptr, ownership::user);
+  if (git_repository_odb(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
+cppgit2::refdb repository::refdb() const {
+  cppgit2::refdb result(nullptr, ownership::user);
+  if (git_repository_refdb(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 void repository::set_head(const std::string &refname) {
   if (git_repository_set_head(c_ptr_, refname.c_str()))
     throw git_exception();
@@ -209,6 +278,11 @@ void repository::set_head(const std::string &refname) {
 
 void repository::set_head_detached(const oid &commitish) {
   if (git_repository_set_head_detached(c_ptr_, commitish.c_ptr()))
+    throw git_exception();
+}
+
+void repository::set_head_detached(const annotated_commit &commitish) {
+  if (git_repository_set_head_detached_from_annotated(c_ptr_, commitish.c_ptr_))
     throw git_exception();
 }
 
@@ -277,6 +351,13 @@ std::string repository::workdir() const {
   } else {
     throw git_exception("working directory does not exist");
   }
+}
+
+repository repository::wrap_odb(const cppgit2::odb &odb) {
+  repository result(nullptr);
+  if (git_repository_wrap_odb(&result.c_ptr_, odb.c_ptr_))
+    throw git_exception();
+  return result;
 }
 
 const git_repository *repository::c_ptr() const { return c_ptr_; }
@@ -1165,15 +1246,15 @@ rebase repository::open_rebase(const rebase::options &options) {
   return result;
 }
 
-refdb repository::create_refdb() {
-  refdb result;
+cppgit2::refdb repository::create_refdb() {
+  cppgit2::refdb result;
   if (git_refdb_new(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
 }
 
-refdb repository::open_refdb() {
-  refdb result;
+cppgit2::refdb repository::open_refdb() {
+  cppgit2::refdb result;
   if (git_refdb_open(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;

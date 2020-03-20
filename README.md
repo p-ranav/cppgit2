@@ -585,9 +585,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_libgit2_features` | |
+| `git_libgit2_features` | **Not Implemented** |
 | `git_libgit2_init` | `libgit2_api::libgit2_api` |
-| `git_libgit2_opts` | |
+| `git_libgit2_opts` | **Not Implemented** |
 | `git_libgit2_shutdown` | `libgit2_api::~libgit2_api` |
 | `git_libgit2_version` | `libgit2_api::version` |
 
@@ -972,7 +972,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_repository_config_snapshot` | `repository::config_snapshot` |
 | `git_repository_detach_head` | `repository::detach_head` |
 | `git_repository_discover` | `repository::discover_path` |
-| `git_repository_fetchhead_foreach` | |
+| `git_repository_fetchhead_foreach` | `repository::for_each_fetch_head` |
 | `git_repository_free` | `repository::~repository` |
 | `git_repository_get_namespace` | `repository::namespace_` |
 | `git_repository_hashfile` | `repository::hashfile` |
@@ -991,26 +991,26 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_repository_is_shallow` | `repository::is_shallow` |
 | `git_repository_is_worktree` | `repository::is_worktree` |
 | `git_repository_item_path` | `repository::path` |
-| `git_repository_mergehead_foreach` | |
+| `git_repository_mergehead_foreach` | `repository::for_each_merge_head` |
 | `git_repository_message` | `repository::message` |
 | `git_repository_message_remove` | `repository::remove_message` |
-| `git_repository_odb` | |
+| `git_repository_odb` | `repository::odb` |
 | `git_repository_open` | `repository::open` |
 | `git_repository_open_bare` | `repository::open_bare` |
-| `git_repository_open_ext` | |
-| `git_repository_open_from_worktree` | |
+| `git_repository_open_ext` | `repository::open_ext` |
+| `git_repository_open_from_worktree` | `repository::open_from_worktree` |
 | `git_repository_path` | `repository::path` |
-| `git_repository_refdb` | |
+| `git_repository_refdb` | `repository::refdb` |
 | `git_repository_set_head` | `repository::set_head` |
 | `git_repository_set_head_detached` | `repository::set_head_detached` |
-| `git_repository_set_head_detached_from_annotated` | |
+| `git_repository_set_head_detached_from_annotated` | `repository::set_head_detached` |
 | `git_repository_set_ident` | `repository::set_identity` |
 | `git_repository_set_namespace` | `repository::set_namespace` |
 | `git_repository_set_workdir` | `repository::set_workdir` |
 | `git_repository_state` | `repository::state` |
 | `git_repository_state_cleanup` | `repository::cleanup_state` |
 | `git_repository_workdir` | `repository::workdir` |
-| `git_repository_wrap_odb` | |
+| `git_repository_wrap_odb` | `repository::wrap_odb` |
 
 
 ### reset

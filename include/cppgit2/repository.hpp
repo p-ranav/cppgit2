@@ -2,6 +2,7 @@
 #include <cppgit2/annotated_commit.hpp>
 #include <cppgit2/apply.hpp>
 #include <cppgit2/attribute.hpp>
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/blame.hpp>
 #include <cppgit2/blob.hpp>
 #include <cppgit2/branch.hpp>
@@ -61,6 +62,54 @@ public:
   // Useful when hosting repos and need to access them effeciently
   static repository open_bare(const std::string &path);
 
+  enum class open_flag {
+	// Only open the repository if it can be immediately found in the
+	// start_path. Do not walk up from the start_path looking at parent
+	// directories.
+	no_search = (1 << 0),
+
+	// unless this flag is set, open will not continue searching across
+	// filesystem boundaries (i.e. when `st_dev` changes from the `stat`
+	// system call).  for example, searching in a user's home directory at
+	// "/home/user/source/" will not return "/.git/" as the found repo if
+	// "/" is a different filesystem than "/home".
+	cross_fs  = (1 << 1),
+
+	// open repository as a bare repo regardless of core.bare config, and
+	// defer loading config file for faster setup.
+	// unlike `git_repository_open_bare`, this can follow gitlinks.
+	bare      = (1 << 2),
+
+	// do not check for a repository by appending /.git to the start_path;
+	// only open the repository if start_path itself points to the git
+	// directory.
+	no_dotgit = (1 << 3),
+
+	// find and open a git repository, respecting the environment variables
+	// used by the git command-line tools.
+	// if set, `git_repository_open_ext` will ignore the other flags and
+	// the `ceiling_dirs` argument, and will allow a null `path` to use
+	// `git_dir` or search from the current directory.
+	// the search for a repository will respect $git_ceiling_directories and
+	// $git_discovery_across_filesystem.  the opened repository will
+	// respect $git_index_file, $git_namespace, $git_object_directory, and
+	// $git_alternate_object_directories.
+	// in the future, this flag will also cause `git_repository_open_ext`
+	// to respect $git_work_tree and $git_common_dir; currently,
+	// `git_repository_open_ext` with this flag will error out if either
+	// $git_work_tree or $git_common_dir is set.
+	from_env  = (1 << 4),  
+  };
+
+  // Find and open a repository with extended controls.
+  static repository open_ext(const std::string &path, open_flag flags, 
+    const std::string &ceiling_dirs);
+
+  // Open working tree as a repository
+  // Open the working directory of the working tree as a 
+  // normal repository that can then be worked on.
+  static repository open_from_worktree(const worktree &wt);
+
   static repository clone(const std::string &url, const std::string &local_path,
                           const clone::options &options = clone::options());
 
@@ -111,6 +160,15 @@ public:
                                    const std::string &ceiling_dirs);
 
   static std::string discover_path(const std::string &start_path);
+
+  // Invoke 'visitor' for each entry in the given FETCH_HEAD file.
+  // See git_repository_fetchhead_foreach_cb
+  void for_each_fetch_head(std::function<void(const std::string&, 
+    const std::string&, const oid&, bool)> visitor);
+
+  // If a merge is in progress, invoke 'visitor' 
+  // for each commit ID in the MERGE_HEAD file.
+  void for_each_merge_head(std::function<void(const oid&)> visitor);
 
   // Currently active namespace for this repo
   std::string namespace_() const;
@@ -182,6 +240,15 @@ public:
   // the file after you create the commit.
   std::string message() const;
 
+  // Get the Object Database for this repository.
+  cppgit2::odb odb() const;
+
+  // Get the Reference Database Backend for this repository.
+  // If a custom refsdb has not been set, the default database for the 
+  // repository will be returned (the one that manipulates loose and packed 
+  // references in the .git directory).
+  cppgit2::refdb refdb() const;
+
   // Remove the message that the above message() call retrieves.
   void remove_message();
 
@@ -190,6 +257,12 @@ public:
 
   // Make the repository HEAD directly point to the Commit.
   void set_head_detached(const oid &commitish);
+
+  // Make the repository HEAD directly point to the Commit.
+  // This behaves like git_repository_set_head_detached() but takes an 
+  // annotated commit, which lets you specify which extended sha syntax 
+  // string was specified by a user, allowing for more exact reflog messages.
+  void set_head_detached(const annotated_commit &commitish);
 
   // Set the identity to be used for writing reflogs
   void set_identity(const std::string &name, const std::string &email);
@@ -234,6 +307,10 @@ public:
 
   // Get the path of the working directory for this repository
   std::string workdir() const;
+
+  // Create a "fake" repository to wrap an object database
+  // Create a repository object to wrap an object database to be used with the API when all you have is an object database. This doesn't have any paths associated with it, so use with care.
+  static repository wrap_odb(const cppgit2::odb &odb);
 
   // Access to libgit2 C ptr
   const git_repository *c_ptr() const;
@@ -781,10 +858,10 @@ public:
   // Create a new reference database with no backends.
   // Before the Ref DB can be used for read/writing, a custom database
   // backend must be manually set using git_refdb_set_backend()
-  refdb create_refdb();
+  cppgit2::refdb create_refdb();
 
   // Create a new reference database and automatically add the default backends:
-  refdb open_refdb();
+  cppgit2::refdb open_refdb();
 
   /*
    * REFERENCE API
@@ -1202,5 +1279,6 @@ private:
   friend class tree_builder;
   git_repository *c_ptr_;
 };
+ENABLE_BITMASK_OPERATORS(repository::open_flag);
 
 } // namespace cppgit2
