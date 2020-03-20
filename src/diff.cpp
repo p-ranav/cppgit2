@@ -6,6 +6,11 @@ diff::diff() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 
 diff::diff(git_diff *c_ptr, ownership owner) : c_ptr_(c_ptr), owner_(owner) {}
 
+diff::diff(const std::string &buffer) {
+  if (git_diff_from_buffer(&c_ptr_, buffer.c_str(), buffer.size()))
+    throw git_exception();
+}
+
 diff::~diff() {
   if (c_ptr_ && owner_ == ownership::user)
     git_diff_free(c_ptr_);

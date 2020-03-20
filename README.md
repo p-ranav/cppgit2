@@ -776,7 +776,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_format_email` | |
 | `git_diff_format_email_options_init` | |
 | `git_diff_free` | `diff::~diff` |
-| `git_diff_from_buffer` | |
+| `git_diff_from_buffer` | `diff::diff` |
 | `git_diff_get_delta` | `diff::operator[]` |
 | `git_diff_get_stats` | |
 | `git_diff_index_to_index` | |

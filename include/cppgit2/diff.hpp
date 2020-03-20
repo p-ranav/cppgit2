@@ -15,8 +15,22 @@ namespace cppgit2 {
 
 class diff : public libgit2_api {
 public:
+  // Default construct a diff object
   diff();
+
+  // Construct from libgit2 C ptr
   diff(git_diff *c_ptr, ownership owner = ownership::libgit2);
+
+  // Read the contents of a git patch file into a git_diff object.
+  // The diff object produced is similar to the one that would be produced if
+  // you actually produced it computationally by comparing two trees, however
+  // there may be subtle differences. For example, a patch file likely contains
+  // abbreviated object IDs, so the object IDs in a git_diff_delta produced by
+  // this function will also be abbreviated.
+  diff(const std::string &buffer);
+
+  // Cleanup diff
+  // Free if owned by user
   ~diff();
 
   class delta : public libgit2_api {
@@ -336,6 +350,24 @@ public:
 
   // Access libgit2 C ptr
   const git_diff *c_ptr() const;
+
+  // This is an opaque structure which is allocated by `git_diff_get_stats`. You
+  // are responsible for releasing the object memory when done, using the
+  // `git_diff_stats_free()` function.
+  //
+  // Owned by user
+  class stats : public libgit2_api {
+  public:
+    stats(git_diff_stats *c_ptr) : c_ptr_(c_ptr) {}
+
+    ~stats() {
+      if (c_ptr_)
+        git_diff_stats_free(c_ptr_);
+    }
+
+  private:
+    git_diff_stats *c_ptr_;
+  };
 
 private:
   friend class patch;
