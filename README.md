@@ -242,6 +242,56 @@ Running this on the `libgit2` repository yields the following:
 ...
 ```
 
+### Print Branches (`git branch`)
+
+```cpp
+#include <cppgit2/repository.hpp>
+#include <iostream>
+using namespace cppgit2;
+
+int main(int argc, char **argv) {
+  if (argc == 2) {
+    auto repo = repository::open(argv[1]);
+
+    std::cout << "Local branches:\n";
+    repo.for_each_branch(
+        [](const reference &ref) {
+          std::cout << "* " << ref.name() << std::endl;
+        },
+        branch::branch_type::local);
+
+    std::cout << "Remote branches:\n";
+    repo.for_each_branch(
+        [](const reference &ref) {
+          std::cout << "* " << ref.name() << std::endl;
+        },
+        branch::branch_type::remote);
+
+  } else {
+    std::cout << "Usage: ./executable <repo_path>\n";
+  }
+}
+```
+
+Once again, here's the output when running this program against `libgit2` source code.
+
+```bash
+▶ ./build/samples/print_branches ext/libgit2
+Local branches:
+* refs/heads/master
+Remote branches:
+* refs/remotes/origin/ethomson/checkout_pathspecs
+* refs/remotes/origin/gh-pages
+* refs/remotes/origin/HEAD
+* refs/remotes/origin/maint/v0.99
+* refs/remotes/origin/master
+* refs/remotes/origin/pks/coverity-fix-sudo
+* refs/remotes/origin/bindings/libgit2sharp/020_2
+...
+...
+...
+```
+
 ### Print Commits (`git log`)
 
 ```cpp
