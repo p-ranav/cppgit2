@@ -1,7 +1,6 @@
 #pragma once
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/proxy.hpp>
-#include <cppgit2/remote.hpp>
 #include <cppgit2/strarray.hpp>
 #include <git2.h>
 #include <string>
@@ -55,14 +54,27 @@ public:
     bool update_fetchhead() const { return c_ptr_->update_fetchhead; }
     void set_update_fetchhead(bool value) { c_ptr_->update_fetchhead = value; }
 
+    // Automatic tag following option
+    // Lets us select the --tags option to use.
+    enum class autotag {
+      // Use the setting from the configuration
+      unspecified = 0,
+      // Ask the server for tags pointing to objects we're already downloading.
+      auto_,
+      // Don't ask for any tags beyond the refspecs.
+      none,
+      // Ask for the all the tags.
+      all
+    };
+
     // Download tags
     // Determines how to behave regarding tags on the remote, such as
     // auto-downloading tags for objects we're downloading or downloading all of
     // them. The default is to auto-follow tags.
-    remote::autotag download_tags_option() const {
-      return static_cast<remote::autotag>(c_ptr_->download_tags);
+    autotag download_tags_option() const {
+      return static_cast<autotag>(c_ptr_->download_tags);
     }
-    void set_download_tags_option(remote::autotag download_tags) {
+    void set_download_tags_option(autotag download_tags) {
       c_ptr_->download_tags =
           static_cast<git_remote_autotag_option_t>(download_tags);
     }

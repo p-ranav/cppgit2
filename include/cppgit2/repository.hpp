@@ -12,6 +12,7 @@
 #include <cppgit2/commit.hpp>
 #include <cppgit2/config.hpp>
 #include <cppgit2/data_buffer.hpp>
+#include <cppgit2/fetch.hpp>
 #include <cppgit2/git_exception.hpp>
 #include <cppgit2/index.hpp>
 #include <cppgit2/libgit2_api.hpp>

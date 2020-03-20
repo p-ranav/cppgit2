@@ -933,9 +933,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_remote_default_branch` | `remote::default_branch` |
 | `git_remote_delete` | `repository::delete_remote` |
 | `git_remote_disconnect` | `remote::disconnect` |
-| `git_remote_download` | |
+| `git_remote_download` | `remote::download` |
 | `git_remote_dup` | `remote::copy` |
-| `git_remote_fetch` | |
+| `git_remote_fetch` | `remote::fetch` |
 | `git_remote_free` | `remote::~remote` |
 | `git_remote_get_fetch_refspecs` | `remote::fetch_refspec` |
 | `git_remote_get_push_refspecs` | `remote::push_refspec` |

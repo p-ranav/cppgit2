@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/data_buffer.hpp>
+#include <cppgit2/fetch.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/push.hpp>
@@ -20,25 +21,17 @@ public:
   // Cleanup remote object
   ~remote();
 
-  // Automatic tag following option
-  // Lets us select the --tags option to use.
-  enum class autotag {
-    // Use the setting from the configuration
-    unspecified = 0,
-    // Ask the server for tags pointing to objects we're already downloading.
-    auto_,
-    // Don't ask for any tags beyond the refspecs.
-    none,
-    // Ask for the all the tags.
-    all
-  };
-
   // Retrieve the tag auto-follow setting
-  autotag autotag_option();
+  fetch::options::autotag autotag_option();
 
   // Check whether the remote's underlying transport
   // is connected to the remote host.
   bool is_connected() const;
+
+  // Create a copy of an existing remote.
+  // All internal strings are also duplicated.
+  // Callbacks are not duplicated.
+  remote copy() const;
 
   // Create a remote without a connected local repo
   // You can use this when you have a URL instead of a remote's name.
@@ -55,10 +48,13 @@ public:
   // Disconnect from the remote
   void disconnect();
 
-  // Create a copy of an existing remote.
-  // All internal strings are also duplicated.
-  // Callbacks are not duplicated.
-  remote copy() const;
+  // Download and index the packfile
+  void download(const strarray &refspecs,
+                const fetch::options &options = fetch::options());
+
+  // Download new data and update tips
+  void fetch(const strarray &refspecs, const std::string &reflog_message,
+             const fetch::options &options = fetch::options());
 
   // Get the remote's list of fetch refspecs
   // The memory is owned by the user and should be freed

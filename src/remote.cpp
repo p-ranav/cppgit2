@@ -11,11 +11,18 @@ remote::~remote() {
     git_remote_free(c_ptr_);
 }
 
-remote::autotag remote::autotag_option() {
-  return static_cast<remote::autotag>(git_remote_autotag(c_ptr_));
+fetch::options::autotag remote::autotag_option() {
+  return static_cast<fetch::options::autotag>(git_remote_autotag(c_ptr_));
 }
 
 bool remote::is_connected() const { return git_remote_connected(c_ptr_); }
+
+remote remote::copy() const {
+  remote result;
+  if (git_remote_dup(&result.c_ptr_, c_ptr_))
+    throw git_exception();
+  return result;
+}
 
 remote remote::create_detached_remote(const std::string &url) {
   remote result;
@@ -36,11 +43,15 @@ void remote::disconnect() {
     throw git_exception();
 }
 
-remote remote::copy() const {
-  remote result;
-  if (git_remote_dup(&result.c_ptr_, c_ptr_))
+void remote::download(const strarray &refspecs, const fetch::options &options) {
+  if (git_remote_download(c_ptr_, refspecs.c_ptr(), options.c_ptr()))
     throw git_exception();
-  return result;
+}
+
+void remote::fetch(const strarray &refspecs, const std::string &reflog_message,
+             const fetch::options &options) {
+  if (git_remote_fetch(c_ptr_, refspecs.c_ptr(), options.c_ptr(), reflog_message.c_str()))
+    throw git_exception();
 }
 
 strarray remote::fetch_refspec() const {
