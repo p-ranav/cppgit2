@@ -125,7 +125,7 @@ int main() {
 
 Use `repository::open_bare` to open a bare repository.
 
-### Add and Commit a File
+### Add and Commit a File (`git add`, `git commit`)
 
 ```cpp
 #include <cppgit2/repository.hpp>
