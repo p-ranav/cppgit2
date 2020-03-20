@@ -125,7 +125,7 @@ int main() {
 
 Use `repository::open_bare` to open a bare repository.
 
-### Print Repository Tags
+### Print Repository Tags (`git tag`)
 
 The `repository` class has a number of `for_each_` methods that you can use to iterate over objects. Here's an example that iterates over all the tags in the repository, printing the name and OID hash for each tag.
 
@@ -166,7 +166,7 @@ Running this on the `libgit2` repository yields the following:
 ...
 ```
 
-### Print Commits
+### Print Commits (`git log`)
 
 ```cpp
 #include <cppgit2/repository.hpp>
