@@ -171,6 +171,7 @@ int main(int argc, char **argv) {
 Running this program on the cppgit2 repository yields the following:
 
 ```bash
+▶ cd cppgit2
 ▶ ./build/samples/walk_tree .
  - blob [ae28a6af] .clang-format
  - blob [e4bbfcd3] .gitignore
