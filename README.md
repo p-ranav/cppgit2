@@ -136,9 +136,9 @@ int main(int argc, char **argv) {
   if (argc == 2) {
     auto repo = repository::open(argv[1]);
 
-    auto index = repo.index();
-    auto tree_oid = index.write_tree();
-    auto tree = repo.lookup_tree(tree_oid);
+    auto head = repo.head();
+    auto head_commit = repo.lookup_commit(head.target());
+    auto tree = head_commit.tree();
 
     tree.walk(tree::traversal_mode::preorder,
               [](const std::string &root, const tree::entry &entry) {
