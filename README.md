@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
     readme << "Hello, World!";
     readme.close();
 
-    // Get repo index and write as tree
+    // Stage README.md
     auto index = repo.index();
     index.add_entry_by_path("README.md");
     index.write();
