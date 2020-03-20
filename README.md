@@ -125,6 +125,47 @@ int main() {
 
 Use `repository::open_bare` to open a bare repository.
 
+### Print Repository Tags
+
+The `repository` class has a number of `for_each_` methods that you can use to iterate over objects. Here's an example that iterates over all the tags in the repository, printing the name and OID hash for each tag.
+
+```cpp
+#include <cppgit2/repository.hpp>
+#include <iostream>
+using namespace cppgit2;
+
+int main(int argc, char **argv) {
+  if (argc == 2) {
+    auto repo = repository::open(argv[1]);
+
+    repo.for_each_tag([](const std::string &name, const oid &id) {
+      std::cout << "[" << id.to_hex_string(8) << "] " << name << std::endl;
+    });
+
+  } else {
+    std::cout << "Usage: ./executable <repo_path>\n";
+  }
+}
+```
+
+Running this on the `libgit2` repository yields the following:
+
+```bash
+./build/samples/print_tags ext/libgit2
+[17223902] refs/tags/v0.99.0
+[23f8588d] refs/tags/v0.1.0
+[7064938b] refs/tags/v0.10.0
+[6dcb09b5] refs/tags/v0.11.0
+[40774549] refs/tags/v0.12.0
+[37172582] refs/tags/v0.13.0
+[52e50c1a] refs/tags/v0.14.0
+[3eaf34f4] refs/tags/v0.15.0
+[d286dfec] refs/tags/v0.16.0
+[5b9fac39] refs/tags/v0.17.0
+...
+...
+```
+
 ## Design Notes
 
 ### Interoperability with `libgit2`
