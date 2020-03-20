@@ -125,6 +125,80 @@ int main() {
 
 Use `repository::open_bare` to open a bare repository.
 
+### Walk Repository Tree (`git ls-tree`)
+
+```cpp
+#include <cppgit2/repository.hpp>
+#include <iostream>
+using namespace cppgit2;
+
+int main(int argc, char **argv) {
+  if (argc == 2) {
+    auto repo = repository::open(argv[1]);
+
+    auto index = repo.index();
+    auto tree_oid = index.write_tree();
+    auto tree = repo.lookup_tree(tree_oid);
+
+    tree.walk(tree::traversal_mode::preorder,
+              [](const std::string &root, const tree::entry &entry) {
+                auto type = entry.type();
+                std::string type_string{""};
+                switch (type) {
+                case object::object_type::blob:
+                  type_string = " - blob";
+                  break;
+                case object::object_type::tree:
+                  type_string = "tree";
+                  break;
+                case object::object_type::commit:
+                  type_string = " - commit";
+                  break;
+                default:
+                  type_string = "other";
+                  break;
+                }
+                std::cout << type_string << " [" << entry.id().to_hex_string(8)
+                          << "] " << entry.filename() << std::endl;
+              });
+
+  } else {
+    std::cout << "Usage: ./executable <repo_path>\n";
+  }
+}
+```
+
+Running this program on the cppgit2 repository yields the following:
+
+```bash
+▶ ./build/samples/walk_tree .
+ - blob [ae28a6af] .clang-format
+ - blob [e4bbfcd3] .gitignore
+ - blob [7f2703f2] .gitmodules
+ - blob [3ed1714f] CMakeLists.txt
+ - blob [f6857659] README.md
+ - blob [9f435d50] clang-format.bash
+tree [4352ee62] ext
+ - commit [17223902] libgit2
+tree [7eed768f] img
+ - blob [d0fa9dbe] init_add_commit.png
+ - blob [dc19ed13] logo.png
+tree [4d47c532] include
+tree [c9adc194] cppgit2
+ - blob [ca1b6723] annotated_commit.hpp
+ - blob [4f168526] apply.hpp
+ - blob [79ac5ed9] attribute.hpp
+ - blob [5bf06b5a] bitmask_operators.hpp
+ - blob [10546242] blame.hpp
+ - blob [1a9107ab] blob.hpp
+ - blob [2bce809e] branch.hpp
+ - blob [a56ff9cd] checkout.hpp
+ - blob [37bd0139] cherrypick.hpp
+ - blob [c30215b9] clone.hpp
+...
+...
+...
+```
 ### Print Repository Tags (`git tag`)
 
 The `repository` class has a number of `for_each_` methods that you can use to iterate over objects. Here's an example that iterates over all the tags in the repository, printing the name and OID hash for each tag.
@@ -162,6 +236,7 @@ Running this on the `libgit2` repository yields the following:
 [3eaf34f4] refs/tags/v0.15.0
 [d286dfec] refs/tags/v0.16.0
 [5b9fac39] refs/tags/v0.17.0
+...
 ...
 ...
 ```
@@ -206,6 +281,7 @@ f9985688 [Patrick Steinhardt] azure: docker: detect errors when building images
 68bfacb1 [Patrick Steinhardt] azure: remove unused Linux setup script
 795a5b2c [lhchavez] fuzzers: Fix the documentation
 0119e57d [Patrick Steinhardt] streams: openssl: switch approach to silence Valgrind errors
+...
 ...
 ...
 ```
