@@ -91,7 +91,6 @@ int main() {
 Let's say you want to clone a repository and checkout a specific branch. Construct an `options` object using `clone::options`, set the checkout branch name, and then use `repository::clone` to clone the repository. 
 
 ```cpp
-// clone_and_checkout_branch.cpp
 #include <cppgit2/repository.hpp>
 using namespace cppgit2;
 
@@ -128,7 +127,6 @@ Use `repository::open_bare` to open a bare repository.
 ### Create Remote (`git remote`)
 
 ```cpp
-#include <cppgit2/diff.hpp>
 #include <cppgit2/repository.hpp>
 #include <iostream>
 using namespace cppgit2;
