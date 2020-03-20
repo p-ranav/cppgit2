@@ -365,6 +365,42 @@ public:
         git_diff_stats_free(c_ptr_);
     }
 
+    // Get the total number of deletions in a diff
+    size_t deletions() const { return git_diff_stats_deletions(c_ptr_); }
+
+    // Get the total number of files changed in a diff
+    size_t files_changed() const {
+      return git_diff_stats_files_changed(c_ptr_);
+    }
+
+    // Get the total number of insertions in a diff
+    size_t insertions() const { return git_diff_stats_insertions(c_ptr_); }
+
+    // Formatting options for diff stats
+    enum class format {
+      // No stats
+      none = 0,
+      // Full statistics, equivalent of `--stat`
+      full = (1u << 0),
+      // Short statistics, equivalent of `--shortstat`
+      short_ = (1u << 1),
+      // Number statistics, equivalent of `--numstat`
+      number = (1u << 2),
+      // Extended header information such as creations, renames and mode
+      // changes, equivalent of `--summary`
+      include_summary = (1u << 3)
+    };
+
+    // Print diff statistics to a git_buf.
+    data_buffer to_buffer(format format, size_t width) {
+      data_buffer result;
+      if (git_diff_stats_to_buf(result.c_ptr(), c_ptr_,
+                                static_cast<git_diff_stats_format_t>(format),
+                                width))
+        throw git_exception();
+      return result;
+    }
+
   private:
     git_diff_stats *c_ptr_;
   };

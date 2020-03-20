@@ -789,11 +789,11 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_patchid` | |
 | `git_diff_patchid_options_init` | |
 | `git_diff_print` | |
-| `git_diff_stats_deletions` | |
-| `git_diff_stats_files_changed` | |
-| `git_diff_stats_free` | |
-| `git_diff_stats_insertions` | |
-| `git_diff_stats_to_buf` | |
+| `git_diff_stats_deletions` | `diff::stats::deletions` |
+| `git_diff_stats_files_changed` | `diff::stats::files_changed` |
+| `git_diff_stats_free` | `diff::stats::~stats` |
+| `git_diff_stats_insertions` | `diff::stats::insertions` |
+| `git_diff_stats_to_buf` | `diff::stats::to_buffer` |
 | `git_diff_status_char` | `diff::status_char` |
 | `git_diff_to_buf` | `diff::to_string` |
 | `git_diff_tree_to_index` | `repository::create_diff_tree_to_index` |
