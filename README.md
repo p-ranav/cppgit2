@@ -666,10 +666,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 | `git_commit_amend` | `commit::amend` |
 | `git_commit_author` | `commit::author` |
-| `git_commit_author_with_mailmap` | |
+| `git_commit_author_with_mailmap` | **Not implemented** |
 | `git_commit_body` | `commit::body` |
 | `git_commit_committer` | `commit::committer` |
-| `git_commit_committer_with_mailmap` | |
+| `git_commit_committer_with_mailmap` | **Not implemented** |
 | `git_commit_create` | `repository::create_commit` |
 | `git_commit_create_buffer` | `repository::create_commit` |
 | `git_commit_create_v` | **Not implemented** |
