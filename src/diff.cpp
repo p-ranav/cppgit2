@@ -333,4 +333,11 @@ void diff::find_similar(const find_options &options) {
     throw git_exception();
 }
 
+oid diff::patchid(const patchid_options &options) {
+  oid result;
+  if (git_diff_patchid(result.c_ptr(), c_ptr_, options.c_ptr_))
+    throw git_exception();
+  return result;
+}
+
 } // namespace cppgit2

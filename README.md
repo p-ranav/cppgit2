@@ -786,8 +786,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_num_deltas` | `diff::size` |
 | `git_diff_num_deltas_of_type` | `diff::size` |
 | `git_diff_options_init` | `diff::options::options` |
-| `git_diff_patchid` | |
-| `git_diff_patchid_options_init` | |
+| `git_diff_patchid` | `diff::patchid` |
+| `git_diff_patchid_options_init` | `diff::patchid_options::patchid_options` |
 | `git_diff_print` | `diff::print` |
 | `git_diff_stats_deletions` | `diff::stats::deletions` |
 | `git_diff_stats_files_changed` | `diff::stats::files_changed` |

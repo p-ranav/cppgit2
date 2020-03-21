@@ -422,14 +422,15 @@ public:
   class format_email_options : public libgit2_api {
   public:
     format_email_options() : c_ptr_(nullptr) {
-      auto ret = git_diff_format_email_init_options(&default_options_,
-                                            GIT_DIFF_FORMAT_EMAIL_OPTIONS_VERSION);
+      auto ret = git_diff_format_email_init_options(
+          &default_options_, GIT_DIFF_FORMAT_EMAIL_OPTIONS_VERSION);
       c_ptr_ = &default_options_;
       if (ret != 0)
         throw git_exception();
     }
 
-    format_email_options(git_diff_format_email_options *c_ptr) : c_ptr_(c_ptr) {}
+    format_email_options(git_diff_format_email_options *c_ptr)
+        : c_ptr_(c_ptr) {}
 
     // Version
     unsigned int version() const { return c_ptr_->version; }
@@ -453,27 +454,25 @@ public:
 
     // id to use for the commit
     oid id() const { return oid(c_ptr_->id); }
-    void set_id(const oid &id) {
-      c_ptr_->id = id.c_ptr();
-    }
+    void set_id(const oid &id) { c_ptr_->id = id.c_ptr(); }
 
     // Summary of the change
-    std::string summary() const { return c_ptr_->summary ? std::string(c_ptr_->summary) : ""; }
+    std::string summary() const {
+      return c_ptr_->summary ? std::string(c_ptr_->summary) : "";
+    }
     void set_summary(const std::string &value) {
       c_ptr_->summary = value.c_str();
     }
 
     // Commit message's body
-    std::string body() const { return c_ptr_->body ? std::string(c_ptr_->body) : ""; }
-    void set_body(const std::string &value) {
-      c_ptr_->body = value.c_str();
+    std::string body() const {
+      return c_ptr_->body ? std::string(c_ptr_->body) : "";
     }
+    void set_body(const std::string &value) { c_ptr_->body = value.c_str(); }
 
     // Author of the change
     signature author() const { return signature(c_ptr_->author); }
-    void set_author(const signature &sig) {
-      c_ptr_->author = sig.c_ptr();
-    }
+    void set_author(const signature &sig) { c_ptr_->author = sig.c_ptr(); }
 
     // Access libgit2 C ptr
     const git_diff_format_email_options *c_ptr() const { return c_ptr_; }
@@ -484,7 +483,8 @@ public:
   };
 
   // Create an e-mail ready patch from a diff.
-  data_buffer format_email(const format_email_options &options = format_email_options());
+  data_buffer
+  format_email(const format_email_options &options = format_email_options());
 
   // When producing a binary diff, the binary data returned will be
   // either the deflated full ("literal") contents of the file, or
@@ -848,6 +848,35 @@ public:
   // requested, break modified files into add/remove pairs if the amount of
   // change is above a threshold.
   void find_similar(const find_options &options = find_options());
+
+  // Patch ID options structure
+  class patchid_options : public libgit2_api {
+  public:
+    patchid_options() : c_ptr_(nullptr) {
+      auto ret = git_diff_patchid_init_options(
+          &default_options_, GIT_DIFF_PATCHID_OPTIONS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    patchid_options(git_diff_patchid_options *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Version
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int version) { c_ptr_->version = version; }
+
+    // Access libgit2 C ptr
+    const git_diff_patchid_options *c_ptr() const { return c_ptr_; }
+
+  private:
+    friend diff;
+    git_diff_patchid_options *c_ptr_;
+    git_diff_patchid_options default_options_;
+  };
+
+  // Calculate the patch ID for the given patch.
+  oid patchid(const patchid_options &options = patchid_options());
 
 private:
   friend class patch;
