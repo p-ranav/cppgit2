@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://travis-ci.com/p-ranav/cppgit2">
     <img src="https://api.travis-ci.com/p-ranav/cppgit2.svg?token=haZMYySrhmkE9vsJse61&branch=master" alt="ci status"/>
-  </a> -->
+  </a>
   <a href="https://en.wikipedia.org/wiki/C%2B%2B11">
     <img src="https://img.shields.io/badge/C%2B%2B-11-blue.svg" alt="standard"/>
   </a>
