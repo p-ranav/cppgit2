@@ -40,6 +40,7 @@
 #include <git2.h>
 #include <string>
 #include <utility>
+#include <functional>
 
 namespace cppgit2 {
 

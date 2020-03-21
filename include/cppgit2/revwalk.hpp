@@ -4,6 +4,7 @@
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <git2.h>
+#include <functional>
 
 namespace cppgit2 {
 

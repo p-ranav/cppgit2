@@ -6,6 +6,7 @@
 #include <git2.h>
 #include <string>
 #include <tuple>
+#include <functional>
 
 namespace cppgit2 {
 
