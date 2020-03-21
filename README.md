@@ -1233,8 +1233,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 | `git_remote_add_fetch` | `repository::add_fetch_refspec_to_remote` |
 | `git_remote_add_push` | `repository::add_push_refspec_to_remote` |
-| `git_remote_autotag` | **Not Implemented** |
-| `git_remote_connect` | **Not Implemented** |
+| `git_remote_autotag` | `remote::autotag_option` |
+| `git_remote_connect` | `remote::connect` |
 | `git_remote_connected` | `remote::is_connected` |
 | `git_remote_create` | `repository::create_remote` |
 | `git_remote_create_anonymous` | `repository::create_anonymous_remote` |

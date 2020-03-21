@@ -17,6 +17,16 @@ fetch::options::autotag remote::autotag_option() {
 
 bool remote::is_connected() const { return git_remote_connected(c_ptr_); }
 
+void remote::connect(connection_direction direction,
+                     const callbacks &remote_callbacks,
+                     const proxy::options &proxy_options,
+                     const strarray &custom_headers) {
+  if (git_remote_connect(c_ptr_, static_cast<git_direction>(direction),
+                         remote_callbacks.c_ptr(), proxy_options.c_ptr(),
+                         custom_headers.c_ptr()))
+    throw git_exception();
+}
+
 cppgit2::repository remote::create_options::repository() const {
   return cppgit2::repository(c_ptr_->repository);
 }

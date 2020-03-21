@@ -1,5 +1,6 @@
 #pragma once
 #include <cppgit2/bitmask_operators.hpp>
+#include <cppgit2/connection_direction.hpp>
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/fetch.hpp>
 #include <cppgit2/indexer.hpp>
@@ -30,6 +31,35 @@ public:
   // Check whether the remote's underlying transport
   // is connected to the remote host.
   bool is_connected() const;
+
+  class callbacks : public libgit2_api {
+  public:
+    callbacks() : c_ptr_(nullptr) {
+      auto ret = git_remote_init_callbacks(&default_options_,
+                                           GIT_REMOTE_CALLBACKS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    callbacks(git_remote_callbacks *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Access libgit2 C ptr
+    const git_remote_callbacks *c_ptr() const { return c_ptr_; }
+
+  private:
+    git_remote_callbacks *c_ptr_;
+    git_remote_callbacks default_options_;
+  };
+
+  // Open a connection to a remote
+  // The transport is selected based on the URL. The direction argument is due
+  // to a limitation of the git protocol (over TCP or SSH) which starts up a
+  // specific binary which can only do the one or the other.
+  void connect(connection_direction direction,
+               const callbacks &remote_callbacks = callbacks(),
+               const proxy::options &proxy_options = proxy::options(),
+               const strarray &custom_headers = strarray(nullptr));
 
   // Remote creation options flags
   enum class create_flag {
