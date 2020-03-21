@@ -28,7 +28,7 @@ tree::entry tree::lookup_entry_by_name(const std::string &filename) const {
 }
 
 tree::entry tree::lookup_entry_by_path(const std::string &path) const {
-  tree::entry result;
+  tree::entry result(nullptr, ownership::user);
   result.owner_ = ownership::user;
   if (git_tree_entry_bypath(&result.c_ptr_, c_ptr_, path.c_str()))
     throw git_exception();
@@ -38,7 +38,7 @@ tree::entry tree::lookup_entry_by_path(const std::string &path) const {
 oid tree::id() const { return oid(git_tree_id(c_ptr_)); }
 
 tree tree::copy() const {
-  tree result;
+  tree result(nullptr, ownership::user);
   if (git_tree_dup(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;

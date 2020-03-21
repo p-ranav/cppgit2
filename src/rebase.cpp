@@ -33,7 +33,7 @@ void rebase::finish(const signature &sig) {
 }
 
 cppgit2::index rebase::index() {
-  cppgit2::index result;
+  cppgit2::index result(nullptr, ownership::user);
   if (git_rebase_inmemory_index(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;

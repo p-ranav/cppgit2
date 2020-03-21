@@ -259,7 +259,7 @@ oid index::write_tree_to(const repository &repo) {
 }
 
 index index::open(const std::string &path) {
-  index result;
+  index result(nullptr, ownership::user);
   if (git_index_open(&result.c_ptr_, path.c_str()))
     throw git_exception();
   return result;

@@ -29,7 +29,7 @@ bool refspec::is_force_update_enabled() const {
 }
 
 refspec refspec::parse(const std::string &input, bool is_fetch) {
-  refspec result;
+  refspec result(nullptr, ownership::user);
   if (git_refspec_parse(&result.c_ptr_, input.c_str(), is_fetch))
     throw git_exception();
   return result;

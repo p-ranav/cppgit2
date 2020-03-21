@@ -23,7 +23,7 @@ std::string object::short_id() const {
 }
 
 object object::copy() const {
-  object result;
+  object result(nullptr, ownership::user);
   if (git_object_dup(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
@@ -35,7 +35,7 @@ std::string object::object_type_to_string(object_type type) {
 }
 
 object object::peel_until(object_type target_type) {
-  object result;
+  object result(nullptr, ownership::user);
   if (git_object_peel(&result.c_ptr_, c_ptr_,
                       static_cast<git_object_t>(target_type)))
     throw git_exception();

@@ -36,14 +36,14 @@ void remote::create_options::set_repository(const cppgit2::repository &repo) {
 }
 
 remote remote::copy() const {
-  remote result;
+  remote result(nullptr, ownership::user);
   if (git_remote_dup(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
 }
 
 remote remote::create_detached_remote(const std::string &url) {
-  remote result;
+  remote result(nullptr, ownership::user);
   if (git_remote_create_detached(&result.c_ptr_, url.c_str()))
     throw git_exception();
   return result;
@@ -51,7 +51,7 @@ remote remote::create_detached_remote(const std::string &url) {
 
 remote remote::create_remote(const std::string &url,
                              const create_options &options) {
-  remote result;
+  remote result(nullptr, ownership::user);
   if (git_remote_create_with_opts(&result.c_ptr_, url.c_str(), options.c_ptr()))
     throw git_exception();
   return result;

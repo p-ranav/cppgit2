@@ -52,21 +52,21 @@ std::string config::locate_global_xdg_compatible_config() {
 }
 
 config config::new_config() {
-  config result;
+  config result(nullptr, ownership::user);
   if (git_config_new(&result.c_ptr_))
     throw git_exception();
   return result;
 }
 
 config config::open_default_config() {
-  config result;
+  config result(nullptr, ownership::user);
   if (git_config_open_default(&result.c_ptr_))
     throw git_exception();
   return result;
 }
 
 config config::open_global_config(config &conf) {
-  config result;
+  config result(nullptr, ownership::user);
   if (git_config_open_global(&result.c_ptr_, conf.c_ptr_))
     throw git_exception();
   return result;
@@ -74,7 +74,7 @@ config config::open_global_config(config &conf) {
 
 config config::open_config_at_level(const config &parent,
                                     priority_level level) {
-  config result;
+  config result(nullptr, ownership::user);
   if (git_config_open_level(&result.c_ptr_, parent.c_ptr(),
                             static_cast<git_config_level_t>(level)))
     throw git_exception();
@@ -82,7 +82,7 @@ config config::open_config_at_level(const config &parent,
 }
 
 config::entry config::operator[](const std::string &name) {
-  config::entry result;
+  config::entry result(nullptr, ownership::user);
   if (git_config_get_entry(&result.c_ptr_, c_ptr_, name.c_str()))
     throw git_exception();
   return result;
@@ -199,7 +199,7 @@ std::string config::parse_path(const std::string &value) {
 }
 
 config config::snapshot() {
-  config result;
+  config result(nullptr, ownership::user);
   if (git_config_snapshot(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;

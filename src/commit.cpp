@@ -41,7 +41,7 @@ signature commit::committer() const {
 }
 
 commit commit::copy() const {
-  commit result;
+  commit result(nullptr, ownership::user);
   if (git_commit_dup(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;

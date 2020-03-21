@@ -100,14 +100,14 @@ std::string repository::commondir() const {
 }
 
 cppgit2::config repository::config() const {
-  cppgit2::config result;
+  cppgit2::config result(nullptr, ownership::user);
   if (git_repository_config(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
 }
 
 cppgit2::config repository::config_snapshot() const {
-  cppgit2::config result;
+  cppgit2::config result(nullptr, ownership::user);
   if (git_repository_config_snapshot(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
@@ -198,14 +198,14 @@ oid repository::hashfile(const std::string &path, object::object_type type) {
 }
 
 reference repository::head() const {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_repository_head(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
 }
 
 reference repository::head_for_worktree(const std::string &name) const {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_repository_head_for_worktree(&result.c_ptr_, c_ptr_, name.c_str()))
     throw git_exception();
   return result;
@@ -382,7 +382,7 @@ annotated_commit
 repository::create_annotated_commit(const std::string &branch_name,
                                     const std::string &remote_url,
                                     const oid &id) {
-  annotated_commit result;
+  annotated_commit result(nullptr, ownership::user);
   if (git_annotated_commit_from_fetchhead(&result.c_ptr_, c_ptr_,
                                           branch_name.c_str(),
                                           remote_url.c_str(), id.c_ptr()))
@@ -392,7 +392,7 @@ repository::create_annotated_commit(const std::string &branch_name,
 
 annotated_commit
 repository::create_annotated_commit(const std::string &revspec) {
-  annotated_commit result;
+  annotated_commit result(nullptr, ownership::user);
   if (git_annotated_commit_from_revspec(&result.c_ptr_, c_ptr_,
                                         revspec.c_str()))
     throw git_exception();
@@ -400,14 +400,14 @@ repository::create_annotated_commit(const std::string &revspec) {
 }
 
 annotated_commit repository::create_annotated_commit(const reference &ref) {
-  annotated_commit result;
+  annotated_commit result(nullptr, ownership::user);
   if (git_annotated_commit_from_ref(&result.c_ptr_, c_ptr_, ref.c_ptr()))
     throw git_exception();
   return result;
 }
 
 annotated_commit repository::lookup_annotated_commit(const oid &id) {
-  annotated_commit result;
+  annotated_commit result(nullptr, ownership::user);
   if (git_annotated_commit_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
     throw git_exception();
   return result;
@@ -505,7 +505,7 @@ repository::lookup_multiple_attributes(attribute::flag flags,
 
 blame repository::blame_file(const std::string &path,
                              blame::options options) const {
-  blame result;
+  blame result(nullptr, ownership::user);
   if (git_blame_file(&result.c_ptr_, c_ptr_, path.c_str(), options.c_ptr_))
     throw git_exception();
   return result;
@@ -751,7 +751,7 @@ cppgit2::index
 repository::cherrypick_commit(const commit &cherrypick_commit,
                               const commit &our_commit, unsigned int mainline,
                               const merge::options &merge_options) {
-  cppgit2::index result(nullptr);
+  cppgit2::index result(nullptr, ownership::user);
   if (git_cherrypick_commit(&result.c_ptr_, c_ptr_, cherrypick_commit.c_ptr_,
                             our_commit.c_ptr_, mainline, merge_options.c_ptr()))
     throw git_exception();
@@ -825,14 +825,14 @@ repository::extract_signature_from_commit(oid id,
 }
 
 commit repository::lookup_commit(const oid &id) {
-  commit result;
+  commit result(nullptr, ownership::user);
   if (git_commit_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
     throw git_exception();
   return result;
 }
 
 commit repository::lookup_commit(const oid &id, size_t length) {
-  commit result;
+  commit result(nullptr, ownership::user);
   if (git_commit_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
     throw git_exception();
   return result;
@@ -903,7 +903,7 @@ data_buffer repository::create_diff_commit_as_email(
 diff repository::create_diff_index_to_index(const cppgit2::index &old_index,
                                             const cppgit2::index &new_index,
                                             const diff::options &options) {
-  diff result;
+  diff result(nullptr, ownership::user);
   if (git_diff_index_to_index(&result.c_ptr_, c_ptr_, old_index.c_ptr_,
                               new_index.c_ptr_, options.c_ptr()))
     throw git_exception();
@@ -912,7 +912,7 @@ diff repository::create_diff_index_to_index(const cppgit2::index &old_index,
 
 diff repository::create_diff_index_to_workdir(const cppgit2::index &index,
                                               const diff::options &options) {
-  diff result;
+  diff result(nullptr, ownership::user);
   if (git_diff_index_to_workdir(&result.c_ptr_, c_ptr_, index.c_ptr_,
                                 options.c_ptr()))
     throw git_exception();
@@ -922,7 +922,7 @@ diff repository::create_diff_index_to_workdir(const cppgit2::index &index,
 diff repository::create_diff_tree_to_index(const tree &old_tree,
                                            const cppgit2::index &index,
                                            const diff::options &options) {
-  diff result;
+  diff result(nullptr, ownership::user);
   if (git_diff_tree_to_index(&result.c_ptr_, c_ptr_, old_tree.c_ptr_,
                              index.c_ptr_, options.c_ptr()))
     throw git_exception();
@@ -932,7 +932,7 @@ diff repository::create_diff_tree_to_index(const tree &old_tree,
 diff repository::create_diff_tree_to_tree(const tree &old_tree,
                                           const tree &new_tree,
                                           const diff::options &options) {
-  diff result;
+  diff result(nullptr, ownership::user);
   if (git_diff_tree_to_tree(&result.c_ptr_, c_ptr_, old_tree.c_ptr_,
                             new_tree.c_ptr_, options.c_ptr()))
     throw git_exception();
@@ -941,7 +941,7 @@ diff repository::create_diff_tree_to_tree(const tree &old_tree,
 
 diff repository::create_diff_tree_to_workdir(const tree &old_tree,
                                              const diff::options &options) {
-  diff result;
+  diff result(nullptr, ownership::user);
   if (git_diff_tree_to_workdir(&result.c_ptr_, c_ptr_, old_tree.c_ptr_,
                                options.c_ptr()))
     throw git_exception();
@@ -950,7 +950,7 @@ diff repository::create_diff_tree_to_workdir(const tree &old_tree,
 
 diff repository::create_diff_tree_to_workdir_with_index(
     const tree &old_tree, const diff::options &options) {
-  diff result;
+  diff result(nullptr, ownership::user);
   if (git_diff_tree_to_workdir_with_index(&result.c_ptr_, c_ptr_,
                                           old_tree.c_ptr_, options.c_ptr()))
     throw git_exception();
@@ -1120,7 +1120,7 @@ void repository::merge_commits(const std::vector<annotated_commit> &their_heads,
 cppgit2::index repository::merge_commits(const commit &our_commit,
                                          const commit &their_commit,
                                          const merge::options &merge_options) {
-  cppgit2::index result;
+  cppgit2::index result(nullptr, ownership::user);
   if (git_merge_commits(&result.c_ptr_, c_ptr_, our_commit.c_ptr_,
                         their_commit.c_ptr_, merge_options.c_ptr()))
     throw git_exception();
@@ -1141,7 +1141,7 @@ cppgit2::index repository::merge_trees(const tree &ancestor_tree,
                                        const tree &our_tree,
                                        const tree &their_tree,
                                        const merge::options &options) {
-  cppgit2::index result;
+  cppgit2::index result(nullptr, ownership::user);
   if (git_merge_trees(&result.c_ptr_, c_ptr_, ancestor_tree.c_ptr_,
                       our_tree.c_ptr_, their_tree.c_ptr_, options.c_ptr()))
     throw git_exception();
@@ -1173,14 +1173,14 @@ repository::create_note(const commit &parent, const signature &author,
 }
 
 note repository::read_note(const std::string &notes_ref, const oid &id) {
-  note result;
+  note result(nullptr, ownership::user);
   if (git_note_read(&result.c_ptr_, c_ptr_, notes_ref.c_str(), id.c_ptr()))
     throw git_exception();
   return result;
 }
 
 note repository::read_note(const commit &notes_commit, const oid &id) {
-  note result;
+  note result(nullptr, ownership::user);
   if (git_note_commit_read(&result.c_ptr_, c_ptr_, notes_commit.c_ptr_,
                            id.c_ptr()))
     throw git_exception();
@@ -1235,7 +1235,7 @@ void repository::for_each_note(
 
 object repository::lookup_object(const oid &id,
                                  object::object_type type) const {
-  object result;
+  object result(nullptr, ownership::user);
   if (git_object_lookup(&result.c_ptr_, c_ptr_, id.c_ptr(),
                         static_cast<git_object_t>(type)))
     throw git_exception();
@@ -1244,7 +1244,7 @@ object repository::lookup_object(const oid &id,
 
 object repository::lookup_object(const oid &id, size_t length,
                                  object::object_type type) const {
-  object result;
+  object result(nullptr, ownership::user);
   if (git_object_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length,
                                static_cast<git_object_t>(type)))
     throw git_exception();
@@ -1253,7 +1253,7 @@ object repository::lookup_object(const oid &id, size_t length,
 
 object repository::lookup_object(const object &treeish, const std::string &path,
                                  object::object_type type) const {
-  object result;
+  object result(nullptr, ownership::user);
   if (git_object_lookup_bypath(&result.c_ptr_, treeish.c_ptr_, path.c_str(),
                                static_cast<git_object_t>(type)))
     throw git_exception();
@@ -1286,14 +1286,14 @@ rebase repository::open_rebase(const rebase::options &options) {
 }
 
 cppgit2::refdb repository::create_refdb() {
-  cppgit2::refdb result;
+  cppgit2::refdb result(nullptr, ownership::user);
   if (git_refdb_new(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
 }
 
 cppgit2::refdb repository::open_refdb() {
-  cppgit2::refdb result;
+  cppgit2::refdb result(nullptr, ownership::user);
   if (git_refdb_open(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
@@ -1302,7 +1302,7 @@ cppgit2::refdb repository::open_refdb() {
 reference repository::create_reference(const std::string &name, const oid &id,
                                        bool force,
                                        const std::string &log_message) {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_create(&result.c_ptr_, c_ptr_, name.c_str(), id.c_ptr(),
                            force, log_message.c_str()))
     throw git_exception();
@@ -1312,7 +1312,7 @@ reference repository::create_reference(const std::string &name, const oid &id,
 reference repository::create_reference(const std::string &name, const oid &id,
                                        bool force, const oid &current_id,
                                        const std::string &log_message) {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_create_matching(&result.c_ptr_, c_ptr_, name.c_str(),
                                     id.c_ptr(), force, current_id.c_ptr(),
                                     log_message.c_str()))
@@ -1327,7 +1327,7 @@ void repository::delete_reference(const std::string &refname) {
 
 reference
 repository::lookup_reference_by_dwim(const std::string &shorthand_name) const {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_dwim(&result.c_ptr_, c_ptr_, shorthand_name.c_str()))
     throw git_exception();
   return result;
@@ -1350,7 +1350,7 @@ strarray repository::reference_list() const {
 }
 
 reference repository::lookup_reference(const std::string &refname) const {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_lookup(&result.c_ptr_, c_ptr_, refname.c_str()))
     throw git_exception();
   return result;
@@ -1367,7 +1367,7 @@ reference
 repository::create_symbolic_reference(const std::string &name,
                                       const std::string &target, bool force,
                                       const std::string &log_message) {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_symbolic_create(&result.c_ptr_, c_ptr_, name.c_str(),
                                     target.c_str(), force, log_message.c_str()))
     throw git_exception();
@@ -1377,7 +1377,7 @@ repository::create_symbolic_reference(const std::string &name,
 reference repository::create_symbolic_reference(
     const std::string &name, const std::string &target, bool force,
     const std::string &current_value, const std::string &log_message) {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_symbolic_create_matching(
           &result.c_ptr_, c_ptr_, name.c_str(), target.c_str(), force,
           current_value.c_str(), log_message.c_str()))
@@ -1434,7 +1434,7 @@ void repository::delete_reflog(const std::string &name) {
 }
 
 reflog repository::read_reflog(const std::string &name) {
-  reflog result;
+  reflog result(nullptr, ownership::user);
   if (git_reflog_read(&result.c_ptr_, c_ptr_, name.c_str()))
     throw git_exception();
   return result;
@@ -1482,14 +1482,14 @@ void repository::add_push_refspec_to_remote(const std::string &remote,
 
 remote repository::create_remote(const std::string &name,
                                  const std::string &url) {
-  remote result;
+  remote result(nullptr, ownership::user);
   if (git_remote_create(&result.c_ptr_, c_ptr_, name.c_str(), url.c_str()))
     throw git_exception();
   return result;
 }
 
 remote repository::create_anonymous_remote(const std::string &url) {
-  remote result;
+  remote result(nullptr, ownership::user);
   if (git_remote_create_anonymous(&result.c_ptr_, c_ptr_, url.c_str()))
     throw git_exception();
   return result;
@@ -1498,7 +1498,7 @@ remote repository::create_anonymous_remote(const std::string &url) {
 remote repository::create_remote(const std::string &name,
                                  const std::string &url,
                                  const std::string &fetch_refspec) {
-  remote result;
+  remote result(nullptr, ownership::user);
   if (git_remote_create_with_fetchspec(&result.c_ptr_, c_ptr_, name.c_str(),
                                        url.c_str(), fetch_refspec.c_str()))
     throw git_exception();
@@ -1518,7 +1518,7 @@ strarray repository::remote_list() const {
 }
 
 remote repository::lookup_remote(const std::string &name) {
-  remote result;
+  remote result(nullptr, ownership::user);
   if (git_remote_lookup(&result.c_ptr_, c_ptr_, name.c_str()))
     throw git_exception();
   return result;
@@ -1705,7 +1705,7 @@ void repository::for_each_status(
 }
 
 status::list repository::status_list(const status::options &options) {
-  status::list result;
+  status::list result(nullptr, ownership::user);
   if (git_status_list_new(&result.c_ptr_, c_ptr_, options.c_ptr()))
     throw git_exception();
   return result;
@@ -1891,14 +1891,14 @@ strarray repository::tags_that_match(const std::string &pattern) const {
 }
 
 tag repository::lookup_tag(const oid &id) const {
-  tag result;
+  tag result(nullptr, ownership::user);
   if (git_tag_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
     throw git_exception();
   return result;
 }
 
 tag repository::lookup_tag(const oid &id, size_t length) const {
-  tag result;
+  tag result(nullptr, ownership::user);
   if (git_tag_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
     throw git_exception();
   return result;
@@ -1912,21 +1912,21 @@ transaction repository::create_transaction() {
 }
 
 object repository::tree_entry_to_object(const tree::entry &entry) {
-  object result;
+  object result(nullptr, ownership::user);
   if (git_tree_entry_to_object(&result.c_ptr_, c_ptr_, entry.c_ptr()))
     throw git_exception();
   return result;
 }
 
 tree repository::lookup_tree(const oid &id) {
-  tree result;
+  tree result(nullptr, ownership::user);
   if (git_tree_lookup(&result.c_ptr_, c_ptr_, id.c_ptr()))
     throw git_exception();
   return result;
 }
 
 tree repository::lookup_tree(const oid &id, size_t length) {
-  tree result;
+  tree result(nullptr, ownership::user);
   if (git_tree_lookup_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
     throw git_exception();
   return result;

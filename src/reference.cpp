@@ -74,7 +74,7 @@ repository reference::owner() const {
 }
 
 object reference::peel_until(object::object_type type) {
-  object result;
+  object result(nullptr, ownership::user);
   if (git_reference_peel(&result.c_ptr_, c_ptr_,
                          static_cast<git_object_t>(type)))
     throw git_exception();
@@ -83,7 +83,7 @@ object reference::peel_until(object::object_type type) {
 
 reference reference::rename(const std::string &new_name, bool force,
                             const std::string &log_message) {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_rename(&result.c_ptr_, c_ptr_, new_name.c_str(), force,
                            log_message.c_str()))
     throw git_exception();
@@ -98,7 +98,7 @@ reference reference::resolve() {
 }
 
 reference reference::set_target(const oid &id, const std::string &log_message) {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_set_target(&result.c_ptr_, c_ptr_, id.c_ptr(),
                                log_message.c_str()))
     throw git_exception();
@@ -107,7 +107,7 @@ reference reference::set_target(const oid &id, const std::string &log_message) {
 
 reference reference::set_symbolic_target(const std::string &target,
                                          const std::string &log_message) {
-  reference result;
+  reference result(nullptr, ownership::user);
   if (git_reference_symbolic_set_target(&result.c_ptr_, c_ptr_, target.c_str(),
                                         log_message.c_str()))
     throw git_exception();
