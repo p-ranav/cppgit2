@@ -22,7 +22,8 @@ void print_signature(const std::string &header, const signature &sig) {
     << "<" << sig.email() << "> "
     << sig.time() << " "
     << sign;
-  std::cout << std::setw(2) << hours << minutes << std::endl;
+  std::cout << std::setfill('0') << std::setw(2) << hours;
+  std::cout << std::setfill('0') << std::setw(2) << minutes << std::endl;
 }
 
 // Printing out a blob is simple, get the contents and print
@@ -36,16 +37,17 @@ void show_tree(const tree &tree) {
   for (size_t i = 0; i < tree.size(); ++i) {
     auto entry = tree.lookup_entry_by_index(i);
 
-    std::cout << std::oct << std::setw(6) << static_cast<git_filemode_t>(entry.filemode());
+    std::cout << std::setfill('0') << 
+        std::oct << std::setw(6) << static_cast<git_filemode_t>(entry.filemode());
     std::cout << " " << object::object_type_to_string(entry.type())
-        << " " << tree.id().to_hex_string() 
+        << " " << entry.id().to_hex_string() 
         << "\t" << entry.filename() << std::endl;
   }
 }
 
 // Commits and tags have a few interesting fields in their header.
 void show_commit(const commit &commit) {
-  std::cout << "tree " << commit.id().to_hex_string() << std::endl;
+  std::cout << "tree " << commit.tree_id().to_hex_string() << std::endl;
 
   for (size_t i = 0; i < commit.parent_count(); ++i)
     std::cout << "parent " << commit.parent_id(i).to_hex_string() << std::endl;
