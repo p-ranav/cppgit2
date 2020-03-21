@@ -52,7 +52,8 @@ void odb::for_each(std::function<void(const oid &)> visitor) {
     throw git_exception();
 }
 
-oid odb::hash(const void *data, size_t length, cppgit2::object::object_type type) {
+oid odb::hash(const void *data, size_t length,
+              cppgit2::object::object_type type) {
   oid result;
   if (git_odb_hash(result.c_ptr(), data, length,
                    static_cast<git_object_t>(type)))
@@ -88,7 +89,8 @@ odb::read_header(const oid &id) const {
   git_object_t object_type_out;
   if (git_odb_read_header(&length_out, &object_type_out, c_ptr_, id.c_ptr()))
     throw git_exception();
-  return {length_out, static_cast<cppgit2::object::object_type>(object_type_out)};
+  return {length_out,
+          static_cast<cppgit2::object::object_type>(object_type_out)};
 }
 
 odb::object odb::read_prefix(const oid &id, size_t length) const {
@@ -96,6 +98,11 @@ odb::object odb::read_prefix(const oid &id, size_t length) const {
   if (git_odb_read_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
     throw git_exception();
   return result;
+}
+
+void odb::refresh() {
+  if (git_odb_refresh(c_ptr_))
+    throw git_exception();
 }
 
 size_t odb::size() const { return git_odb_num_backends(c_ptr_); }

@@ -90,14 +90,16 @@ public:
   // Determine the object-ID (sha1 hash) of a data buffer
   // The resulting SHA-1 OID will be the identifier for the data buffer as if
   // the data buffer it were to written to the ODB.
-  static oid hash(const void *data, size_t length, cppgit2::object::object_type type);
+  static oid hash(const void *data, size_t length,
+                  cppgit2::object::object_type type);
 
   // Read a file from disk and fill a git_oid with the object id that the file
   // would have if it were written to the Object Database as an object of the
   // given type (w/o applying filters). Similar functionality to git.git's git
   // hash-object without the -w flag, however, with the --no-filters flag. If
   // you need filters, see git_repository_hashfile.
-  static oid hash_file(const std::string &path, cppgit2::object::object_type type);
+  static oid hash_file(const std::string &path,
+                       cppgit2::object::object_type type);
 
   // Lookup an ODB backend object by index
   backend operator[](size_t index) const;
@@ -123,43 +125,68 @@ public:
     }
 
     // Return the data of an ODB object
-    // This is the uncompressed, raw data as read from the ODB, without the leading header.
-    // This pointer is owned by the object and shall not be free'd.
-    const void * data() const { return git_odb_object_data(c_ptr_); }
-    
+    // This is the uncompressed, raw data as read from the ODB, without the
+    // leading header. This pointer is owned by the object and shall not be
+    // free'd.
+    const void *data() const { return git_odb_object_data(c_ptr_); }
+
     // Return the OID of an ODB object
     // This is the OID from which the object was read from
     const oid id() const { return oid(git_odb_object_id(c_ptr_)); }
 
     // Return the size of an ODB object
-    // This is the real size of the data buffer, not the actual size of the object.
+    // This is the real size of the data buffer, not the actual size of the
+    // object.
     size_t size() const { return git_odb_object_size(c_ptr_); }
 
     // Return the type of an ODB object
-    cppgit2::object::object_type type() const { return static_cast<cppgit2::object::object_type>(git_odb_object_type(c_ptr_)); }
+    cppgit2::object::object_type type() const {
+      return static_cast<cppgit2::object::object_type>(
+          git_odb_object_type(c_ptr_));
+    }
 
     // Access libgit2 C ptr
     const git_odb_object *c_ptr() const { return c_ptr_; }
 
   private:
     friend odb;
-    git_odb_object * c_ptr_;
+    git_odb_object *c_ptr_;
   };
 
   // Read an object from the database.
-  // This method queries all available ODB backends trying to read the given OID.
+  // This method queries all available ODB backends trying to read the given
+  // OID.
   object read(const oid &id) const;
 
-  // Read the header of an object from the database, without reading its full contents.
-  // Returns {header_length, object_type}
-  // The header includes the length and the type of an object.
-  // Note that most backends do not support reading only the header of an object, so the whole object will be read and then the header will be returned.
-  std::pair<size_t, cppgit2::object::object_type> read_header(const oid &id) const;
+  // Read the header of an object from the database, without reading its full
+  // contents. Returns {header_length, object_type} The header includes the
+  // length and the type of an object. Note that most backends do not support
+  // reading only the header of an object, so the whole object will be read and
+  // then the header will be returned.
+  std::pair<size_t, cppgit2::object::object_type>
+  read_header(const oid &id) const;
 
   // Read an object from the database, given a prefix of its identifier.
-  // 
-  // This method queries all available ODB backends trying to match the 'len' first hexadecimal characters of the 'short_id'. The remaining (GIT_OID_HEXSZ-len)*4 bits of 'short_id' must be 0s. 'len' must be at least GIT_OID_MINPREFIXLEN, and the prefix must be long enough to identify a unique object in all the backends; the method will fail otherwise.
+  //
+  // This method queries all available ODB backends trying to match the 'len'
+  // first hexadecimal characters of the 'short_id'. The remaining
+  // (GIT_OID_HEXSZ-len)*4 bits of 'short_id' must be 0s. 'len' must be at least
+  // GIT_OID_MINPREFIXLEN, and the prefix must be long enough to identify a
+  // unique object in all the backends; the method will fail otherwise.
   object read_prefix(const oid &id, size_t length) const;
+
+  // Refresh the object database to load newly added files.
+  //
+  // If the object databases have changed on disk while the library is running,
+  // this function will force a reload of the underlying indexes.
+  //
+  // Use this function when you're confident that an external application has
+  // tampered with the ODB.
+  //
+  // NOTE that it is not necessary to call this function at all. The library
+  // will automatically attempt to refresh the ODB when a lookup fails, to see
+  // if the looked up object exists on disk but hasn't been loaded yet.
+  void refresh();
 
   // Get the number of ODB backend objects
   size_t size() const;
