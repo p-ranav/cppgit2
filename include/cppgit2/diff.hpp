@@ -595,6 +595,40 @@ public:
                                 const diff::line &)>
                  line_callback);
 
+  // Directly run a diff between a blob and a buffer.
+  static void diff_blob_to_buffer(
+      const blob &old_blob, const std::string &old_as_path,
+      const char *new_buffer, size_t new_buffer_length,
+      const std::string &new_as_path,
+      const diff::options &options = diff::options(nullptr),
+      std::function<void(const diff::delta &, float)> file_callback = {},
+      std::function<void(const diff::delta &, const diff::binary &)>
+          binary_callback = {},
+      std::function<void(const diff::delta &, const diff::hunk &)>
+          hunk_callback = {},
+      std::function<void(const diff::delta &, const diff::hunk &,
+                         const diff::line &)>
+          line_callback = {});
+
+  // Directly run a diff between two buffers.
+  //
+  // Even more than with git_diff_blobs, comparing two buffer lacks context, so
+  // the git_diff_file parameters to the callbacks will be faked a la the rules
+  // for git_diff_blobs().
+  static void diff_between_buffers(
+      const void *old_buffer, size_t old_buffer_length,
+      const std::string &old_as_path, const void *new_buffer,
+      size_t new_buffer_length, const std::string &new_as_path,
+      const diff::options &options = diff::options(nullptr),
+      std::function<void(const diff::delta &, float)> file_callback = {},
+      std::function<void(const diff::delta &, const diff::binary &)>
+          binary_callback = {},
+      std::function<void(const diff::delta &, const diff::hunk &)>
+          hunk_callback = {},
+      std::function<void(const diff::delta &, const diff::hunk &,
+                         const diff::line &)>
+          line_callback = {});
+
 private:
   friend class patch;
   friend class pathspec;

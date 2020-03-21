@@ -183,4 +183,142 @@ void diff::print(diff::format format,
     throw git_exception();
 }
 
+void diff::diff_blob_to_buffer(
+    const blob &old_blob, const std::string &old_as_path,
+    const char *new_buffer, size_t new_buffer_length,
+    const std::string &new_as_path, const diff::options &options,
+    std::function<void(const diff::delta &, float)> file_callback,
+    std::function<void(const diff::delta &, const diff::binary &)>
+        binary_callback,
+    std::function<void(const diff::delta &, const diff::hunk &)> hunk_callback,
+    std::function<void(const diff::delta &, const diff::hunk &,
+                       const diff::line &)>
+        line_callback) {
+
+  // Prepare wrapper to pass to C API
+  struct visitor_wrapper {
+    std::function<void(const diff::delta &, float)> file_callback;
+    std::function<void(const diff::delta &, const diff::binary &)>
+        binary_callback;
+    std::function<void(const diff::delta &, const diff::hunk &)> hunk_callback;
+    std::function<void(const diff::delta &, const diff::hunk &,
+                       const diff::line &)>
+        line_callback;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.file_callback = file_callback;
+  wrapper.binary_callback = binary_callback;
+  wrapper.hunk_callback = hunk_callback;
+  wrapper.line_callback = line_callback;
+
+  auto file_callback_c = [](const git_diff_delta *delta_c, float progress,
+                            void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->file_callback(delta(delta_c), progress);
+    return 0;
+  };
+
+  auto binary_callback_c = [](const git_diff_delta *delta_c,
+                              const git_diff_binary *binary_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    if (wrapper->binary_callback)
+      wrapper->binary_callback(delta(delta_c), binary(binary_c));
+    return 0;
+  };
+
+  auto hunk_callback_c = [](const git_diff_delta *delta_c,
+                            const git_diff_hunk *hunk_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    if (wrapper->hunk_callback)
+      wrapper->hunk_callback(delta(delta_c), hunk(hunk_c));
+    return 0;
+  };
+
+  auto line_callback_c = [](const git_diff_delta *delta_c,
+                            const git_diff_hunk *hunk_c,
+                            const git_diff_line *line_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    if (wrapper->line_callback)
+      wrapper->line_callback(delta(delta_c), hunk(hunk_c), line(line_c));
+    return 0;
+  };
+
+  if (git_diff_blob_to_buffer(old_blob.c_ptr(), old_as_path.c_str(), new_buffer,
+                              new_buffer_length, new_as_path.c_str(),
+                              options.c_ptr(), file_callback_c,
+                              binary_callback_c, hunk_callback_c,
+                              line_callback_c, (void *)(&wrapper)))
+    throw git_exception();
+}
+
+void diff::diff_between_buffers(
+    const void *old_buffer, size_t old_buffer_length,
+    const std::string &old_as_path, const void *new_buffer,
+    size_t new_buffer_length, const std::string &new_as_path,
+    const diff::options &options,
+    std::function<void(const diff::delta &, float)> file_callback,
+    std::function<void(const diff::delta &, const diff::binary &)>
+        binary_callback,
+    std::function<void(const diff::delta &, const diff::hunk &)> hunk_callback,
+    std::function<void(const diff::delta &, const diff::hunk &,
+                       const diff::line &)>
+        line_callback) {
+
+  // Prepare wrapper to pass to C API
+  struct visitor_wrapper {
+    std::function<void(const diff::delta &, float)> file_callback;
+    std::function<void(const diff::delta &, const diff::binary &)>
+        binary_callback;
+    std::function<void(const diff::delta &, const diff::hunk &)> hunk_callback;
+    std::function<void(const diff::delta &, const diff::hunk &,
+                       const diff::line &)>
+        line_callback;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.file_callback = file_callback;
+  wrapper.binary_callback = binary_callback;
+  wrapper.hunk_callback = hunk_callback;
+  wrapper.line_callback = line_callback;
+
+  auto file_callback_c = [](const git_diff_delta *delta_c, float progress,
+                            void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    wrapper->file_callback(delta(delta_c), progress);
+    return 0;
+  };
+
+  auto binary_callback_c = [](const git_diff_delta *delta_c,
+                              const git_diff_binary *binary_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    if (wrapper->binary_callback)
+      wrapper->binary_callback(delta(delta_c), binary(binary_c));
+    return 0;
+  };
+
+  auto hunk_callback_c = [](const git_diff_delta *delta_c,
+                            const git_diff_hunk *hunk_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    if (wrapper->hunk_callback)
+      wrapper->hunk_callback(delta(delta_c), hunk(hunk_c));
+    return 0;
+  };
+
+  auto line_callback_c = [](const git_diff_delta *delta_c,
+                            const git_diff_hunk *hunk_c,
+                            const git_diff_line *line_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    if (wrapper->line_callback)
+      wrapper->line_callback(delta(delta_c), hunk(hunk_c), line(line_c));
+    return 0;
+  };
+
+  if (git_diff_buffers(old_buffer, old_buffer_length, old_as_path.c_str(),
+                       new_buffer, new_buffer_length, new_as_path.c_str(),
+                       options.c_ptr(), file_callback_c, binary_callback_c,
+                       hunk_callback_c, line_callback_c, (void *)(&wrapper)))
+    throw git_exception();
+}
+
 } // namespace cppgit2
