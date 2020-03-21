@@ -1,4 +1,5 @@
 #include <cppgit2/diff.hpp>
+#include <functional>
 
 namespace cppgit2 {
 

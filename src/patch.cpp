@@ -1,5 +1,6 @@
 #include <cppgit2/patch.hpp>
 using namespace cppgit2;
+#include <functional>
 
 patch::patch() : c_ptr_(nullptr), owner_(ownership::libgit2) {}
 

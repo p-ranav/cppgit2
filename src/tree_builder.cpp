@@ -1,4 +1,5 @@
 #include <cppgit2/tree_builder.hpp>
+#include <functional>
 
 namespace cppgit2 {
 

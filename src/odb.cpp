@@ -1,5 +1,6 @@
 #include <cppgit2/odb.hpp>
 using namespace cppgit2;
+#include <functional>
 
 odb::odb() : c_ptr_(nullptr), owner_(ownership::user) {
   git_odb_new(&c_ptr_); // owned by user

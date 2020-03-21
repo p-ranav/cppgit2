@@ -1,4 +1,5 @@
 #include <cppgit2/config.hpp>
+#include <functional>
 
 namespace cppgit2 {
 

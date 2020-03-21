@@ -1,5 +1,6 @@
 #include <cppgit2/repository.hpp>
 using namespace cppgit2;
+#include <functional>
 
 revwalk::revwalk()
     : done_(false), c_ptr_(nullptr), owner_(ownership::libgit2) {}
