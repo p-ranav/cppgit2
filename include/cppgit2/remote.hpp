@@ -150,7 +150,7 @@ public:
 
   // Download new data and update tips
   void fetch(const strarray &refspecs, const std::string &reflog_message,
-             const fetch::options &options = fetch::options());
+             const cppgit2::fetch::options &options = cppgit2::fetch::options());
 
   // Get the remote's list of fetch refspecs
   // The memory is owned by the user and should be freed
@@ -230,7 +230,7 @@ public:
 
   // Update the tips to the new state
   void update_tips(const callbacks &remote_callbacks, bool update_fetchhead,
-                   fetch::options::autotag download_tags,
+                   cppgit2::fetch::options::autotag download_tags,
                    const std::string &reflog_message);
 
   // Create a packfile and send it to the server
