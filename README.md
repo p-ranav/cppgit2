@@ -8,6 +8,27 @@
   <img src="img/init_add_commit.png"/>
 </p>
 
+## Table of Contents
+
+*   [Build and Integration](#build-and-integration)
+*   [Sample Programs](#sample-programs)
+    *   [Initialize a new repository (`git init`)](#initialize-a-new-repository-git-init)
+    *   [Clone a repository and checkout specific branch (`git clone --branch`)](#clone-a-repository-and-checkout-specific-branch-git-clone---branch)
+    *   [Open an existing repository](#open-an-existing-repository)
+    *   [Add and Commit a File (`git add`, `git commit`)](#add-and-commit-a-file-git-add-git-commit)
+    *   [Walk Repository Tree (`git ls-tree`)](#walk-repository-tree-git-ls-tree)
+    *   [Print Branches (`git branch`)](#print-branches-git-branch)
+    *   [Print Commits (`git log`)](#print-commits-git-log)
+    *   [Print Repository Tags (`git tag`)](#print-commits-git-log)
+    *   [Inspect Repository Objects (`git cat-file (-s|-p|-t)`)](#inspect-repository-objects-git-cat-file)
+*   [Design Notes](#design-notes)
+    *   [Interoperability with libgit2](#interoperability-with-libgit2)
+    *   [Ownership and Memory Management](#ownership-and-memory-management)
+    *   [Error Handling](#error-handling)
+*   [Contributing](#contributing)
+*   [License](#license)
+*   [API Coverage](#api-coverage)
+
 ## Build and Integration
 
 Run the following commands to build `cppgit2`. 
@@ -702,7 +723,7 @@ git_exception() {
 virtual const char *what() const throw() { return message_; }
 ```
 
-## Contributions
+## Contributing
 
 `cppgit2` is in active development. `libgit2` is constantly evolving with over 750 functions in its public API. A good portion of this is covered in `cppgit2` (See [API Coverage](#api-coverage)). However, there is much room for improvement - in terms of code quality, tests, and samples. 
 
