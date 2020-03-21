@@ -321,4 +321,9 @@ void diff::diff_between_buffers(
     throw git_exception();
 }
 
+void diff::find_similar(const find_options &options) {
+  if (git_diff_find_similar(c_ptr_, options.c_ptr()))
+    throw git_exception();
+}
+
 } // namespace cppgit2

@@ -770,8 +770,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_blobs` | `diff::compare_files` |
 | `git_diff_buffers` | `diff::diff_between_buffers` |
 | `git_diff_commit_as_email` | `diff::create_diff_commit_as_email` |
-| `git_diff_find_options_init` | |
-| `git_diff_find_similar` | |
+| `git_diff_find_options_init` | `diff::find_options::find_options` |
+| `git_diff_find_similar` | `diff::find_similar` |
 | `git_diff_foreach` | `diff::for_each` |
 | `git_diff_format_email` | |
 | `git_diff_format_email_options_init` | |

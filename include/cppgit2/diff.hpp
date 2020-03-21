@@ -629,6 +629,155 @@ public:
                          const diff::line &)>
           line_callback = {});
 
+  // Flags to control the behavior of diff rename/copy detection.
+  enum class find_flag {
+    // obey `diff.renames`. overridden by any other git_diff_find_... flag.
+    by_config = 0,
+
+    // look for renames? (`--find-renames`)
+    renames = (1u << 0),
+
+    // consider old side of modified for renames? (`--break-rewrites=n`) */
+    renames_from_rewrites = (1u << 1),
+
+    // look for copies? (a la `--find-copies`). */
+    copies = (1u << 2),
+
+    // consider unmodified as copy sources? (`--find-copies-harder`).
+    //
+    // for this to work correctly, use git_diff_include_unmodified when
+    // the initial `git_diff` is being generated.
+    copies_from_unmodified = (1u << 3),
+
+    // mark significant rewrites for split (`--break-rewrites=/m`) */
+    rewrites = (1u << 4),
+    // actually split large rewrites into delete/add pairs */
+    break_rewrites = (1u << 5),
+    // mark rewrites for split and break into delete/add pairs */
+    and_break_rewrites = (rewrites | break_rewrites),
+
+    // find renames/copies for untracked items in working directory.
+    //
+    // for this to work correctly, use git_diff_include_untracked when the
+    // initial `git_diff` is being generated (and obviously the diff must
+    // be against the working directory for this to make sense).
+    for_untracked = (1u << 6),
+
+    // turn on all finding features. */
+    all = (0x0ff),
+
+    // measure similarity ignoring leading whitespace (default) */
+    ignore_leading_whitespace = 0,
+    // measure similarity ignoring all whitespace */
+    ignore_whitespace = (1u << 12),
+    // measure similarity including all data */
+    dont_ignore_whitespace = (1u << 13),
+    // measure similarity only by comparing shas (fast and cheap) */
+    exact_match_only = (1u << 14),
+
+    // do not break rewrites unless they contribute to a rename.
+    //
+    // normally, git_diff_find_and_break_rewrites will measure the self-
+    // similarity of modified files and split the ones that have changed a
+    // lot into a delete / add pair.  then the sides of that pair will be
+    // considered candidates for rename and copy detection.
+    //
+    // if you add this flag in and the split pair is *not* used for an
+    // actual rename or copy, then the modified record will be restored to
+    // a regular modified record instead of being split.
+    break_rewrites_for_renames_only = (1u << 15),
+
+    // remove any unmodified deltas after find_similar is done.
+    //
+    // using git_diff_find_copies_from_unmodified to emulate the
+    // --find-copies-harder behavior requires building a diff with the
+    // git_diff_include_unmodified flag.  if you do not want unmodified
+    // records in the final result, pass this flag to have them removed.
+    remove_unmodified = (1u << 16),
+  };
+
+  class find_options : public libgit2_api {
+  public:
+    find_options() : c_ptr_(nullptr) {
+      auto ret = git_diff_find_init_options(&default_options_,
+                                            GIT_DIFF_FIND_OPTIONS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    find_options(git_diff_find_options *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Version
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int version) { c_ptr_->version = version; }
+
+    // Flags
+    // Combination of git_diff_find_t values (default GIT_DIFF_FIND_BY_CONFIG).
+    // NOTE: if you don't explicitly set this, `diff.renames` could be set
+    // to false, resulting in `git_diff_find_similar` doing nothing.
+    find_flag flags() const { return static_cast<find_flag>(c_ptr_->flags); }
+    void set_flags(find_flag value) {
+      c_ptr_->flags = static_cast<uint32_t>(value);
+    }
+
+    // Threshold above which similar files will be considered renames.
+    // This is equivalent to the -M option. Defaults to 50.
+    uint16_t rename_threshold() const { return c_ptr_->rename_threshold; }
+    void set_rename_threshold(uint16_t value) {
+      c_ptr_->rename_threshold = value;
+    }
+
+    // Threshold below which similar files will be eligible to be a rename
+    // source. This is equivalent to the first part of the -B option. Defaults
+    // to 50.
+    uint16_t rename_from_rewrite_threshold() const {
+      return c_ptr_->rename_from_rewrite_threshold;
+    }
+    void set_rename_from_rewrite_threshold(uint16_t value) {
+      c_ptr_->rename_from_rewrite_threshold = value;
+    }
+
+    // Threshold above which similar files will be considered copies.
+    // This is equivalent to the -C option. Defaults to 50.
+    uint16_t copy_threshold() const { return c_ptr_->copy_threshold; }
+    void set_copy_threshold(uint16_t value) { c_ptr_->copy_threshold = value; }
+
+    // Threshold below which similar files will be split into a delete/add pair.
+    // This is equivalent to the last part of the -B option. Defaults to 60.
+    uint16_t break_rewrite_threshold() const {
+      return c_ptr_->break_rewrite_threshold;
+    }
+    void set_break_rewrite_threshold(uint16_t value) {
+      c_ptr_->break_rewrite_threshold = value;
+    }
+
+    // Maximum number of matches to consider for a particular file.
+    //
+    // This is a little different from the `-l` option from Git because we
+    // will still process up to this many matches before abandoning the search.
+    // Defaults to 200.
+    size_t rename_limit() const { return c_ptr_->rename_limit; }
+    void set_rename_limit(size_t value) { c_ptr_->rename_limit = value; }
+
+    // TODO: Add diff_simiarity_metric
+
+    // Access libgit2 C ptr
+    const git_diff_find_options *c_ptr() const { return c_ptr_; }
+
+  private:
+    git_diff_find_options *c_ptr_;
+    git_diff_find_options default_options_;
+  };
+
+  // Transform a diff marking file renames, copies, etc.
+  //
+  // This modifies a diff in place, replacing old entries that look like renames
+  // or copies with new entries reflecting those changes. This also will, if
+  // requested, break modified files into add/remove pairs if the amount of
+  // change is above a threshold.
+  void find_similar(const find_options &options = find_options());
+
 private:
   friend class patch;
   friend class pathspec;
@@ -640,5 +789,6 @@ ENABLE_BITMASK_OPERATORS(diff::delta::flag);
 ENABLE_BITMASK_OPERATORS(diff::options::flag);
 ENABLE_BITMASK_OPERATORS(diff::stats::format);
 ENABLE_BITMASK_OPERATORS(diff::format_email_flag);
+ENABLE_BITMASK_OPERATORS(diff::find_flag);
 
 } // namespace cppgit2
