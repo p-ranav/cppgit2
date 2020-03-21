@@ -40,7 +40,7 @@
     *   [Error Handling](#error-handling)
 *   [Contributing](#contributing)
 *   [License](#license)
-*   [Version Compatability](#version-compatability)
+*   [Version Compatibility](#version-compatibility)
 *   [API Coverage](#api-coverage)
 
 ## Build and Integration
@@ -745,7 +745,7 @@ Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md)
 ## License
 The project is available under the [MIT](https://opensource.org/licenses/MIT) license.
 
-## Version Compatability
+## Version Compatibility
 
 | libgit2 | cppgit2 |
 | --- | --- |
