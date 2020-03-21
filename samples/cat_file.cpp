@@ -17,11 +17,8 @@ void print_signature(const std::string &header, const signature &sig) {
   auto hours = offset / 60;
   auto minutes = offset % 60;
 
-  std::cout << header << " "
-    << sig.name() << " "
-    << "<" << sig.email() << "> "
-    << sig.time() << " "
-    << sign;
+  std::cout << header << " " << sig.name() << " "
+            << "<" << sig.email() << "> " << sig.time() << " " << sign;
   std::cout << std::setfill('0') << std::setw(2) << hours;
   std::cout << std::setfill('0') << std::setw(2) << minutes << std::endl;
 }
@@ -37,11 +34,11 @@ void show_tree(const tree &tree) {
   for (size_t i = 0; i < tree.size(); ++i) {
     auto entry = tree.lookup_entry_by_index(i);
 
-    std::cout << std::setfill('0') << 
-        std::oct << std::setw(6) << static_cast<git_filemode_t>(entry.filemode());
-    std::cout << " " << object::object_type_to_string(entry.type())
-        << " " << entry.id().to_hex_string() 
-        << "\t" << entry.filename() << std::endl;
+    std::cout << std::setfill('0') << std::oct << std::setw(6)
+              << static_cast<git_filemode_t>(entry.filemode());
+    std::cout << " " << object::object_type_to_string(entry.type()) << " "
+              << entry.id().to_hex_string() << "\t" << entry.filename()
+              << std::endl;
   }
 }
 
@@ -62,7 +59,8 @@ void show_commit(const commit &commit) {
 
 void show_tag(const tag &tag) {
   std::cout << "object " << tag.id().to_hex_string() << std::endl;
-  std::cout << "type " << object::object_type_to_string(tag.target_type()) << std::endl;
+  std::cout << "type " << object::object_type_to_string(tag.target_type())
+            << std::endl;
   std::cout << "tag " << tag.name() << std::endl;
   print_signature("tagger", tag.tagger());
 
@@ -90,32 +88,32 @@ int main(int argc, char **argv) {
     auto revision_str = argv[2];
     auto object = repo.revparse_to_object(revision_str);
 
-    switch(action) {
+    switch (action) {
     case actions::type:
-        std::cout << object::object_type_to_string(object.type()) << std::endl;
-        break;
+      std::cout << object::object_type_to_string(object.type()) << std::endl;
+      break;
     case actions::size:
-        std::cout << repo.odb().read(object.id()).size() << std::endl;
-        break;
+      std::cout << repo.odb().read(object.id()).size() << std::endl;
+      break;
     case actions::pretty:
-        switch(object.type()) {
-            case object::object_type::blob:
-                show_blob(object.as_blob());
-                break;
-            case object::object_type::commit:
-                show_commit(object.as_commit());
-                break;
-            case object::object_type::tree:
-                show_tree(object.as_tree());
-                break;
-            case object::object_type::tag:
-                show_tag(object.as_tag());
-                break;
-            default:
-                std::cout << "unknown " << revision_str << std::endl;
-                break;
-        }
+      switch (object.type()) {
+      case object::object_type::blob:
+        show_blob(object.as_blob());
         break;
+      case object::object_type::commit:
+        show_commit(object.as_commit());
+        break;
+      case object::object_type::tree:
+        show_tree(object.as_tree());
+        break;
+      case object::object_type::tag:
+        show_tag(object.as_tag());
+        break;
+      default:
+        std::cout << "unknown " << revision_str << std::endl;
+        break;
+      }
+      break;
     }
 
   } else {
