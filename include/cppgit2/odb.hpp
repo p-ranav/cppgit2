@@ -6,9 +6,9 @@
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
 #include <git2.h>
+#include <tuple>
 #include <utility>
 #include <vector>
-#include <tuple>
 
 namespace cppgit2 {
 
@@ -39,6 +39,25 @@ public:
     friend class odb;
     git_odb_backend *c_ptr_;
   };
+
+  // Add a custom backend to an existing Object DB; this backend will work as an
+  // alternate.
+  //
+  // Alternate backends are always checked for objects after all the main
+  // backends have been exhausted. The backends are checked in relative
+  // ordering, based on the value of the priority parameter. Writing is disabled
+  // on alternate backends.
+  void add_alternate_backend(const backend &backend, int priority);
+
+  // Add a custom backend to an existing Object DB
+  // The backends are checked in relative ordering, based on the value of the priority parameter.
+  void add_backend(const backend &backend, int priority);
+
+  // Add an on-disk alternate to an existing Object DB.
+  // Note that the added path must point to an objects, not to a full repository, to use it as an alternate store.
+  // Alternate backends are always checked for objects after all the main backends have been exhausted.
+  // Writing is disabled on alternate backends.
+  void add_disk_alternate_backend(const std::string &path);
 
   // Create a backend for loose objects
   static backend
@@ -298,7 +317,8 @@ public:
   // all backends.
   //
   // Returns {stream, length of object, type of object}
-  std::tuple<stream, size_t, cppgit2::object::object_type> open_rstream(const oid &id);
+  std::tuple<stream, size_t, cppgit2::object::object_type>
+  open_rstream(const oid &id);
 
   // Open a stream to write an object into the ODB
   // The type and final length of the object must be specified when opening the
@@ -306,7 +326,10 @@ public:
   // be effective until git_odb_stream_finalize_write is called and returns
   // without an error
   stream open_wstream(cppgit2::object::object_size size,
-                             cppgit2::object::object_type type);
+                      cppgit2::object::object_type type);
+
+  // Write an object directly into the ODB
+  oid write(const void *data, size_t length, cppgit2::object::object_type type);
 
   // Access libgit2 C ptr
   const git_odb *c_ptr() const;

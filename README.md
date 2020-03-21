@@ -971,9 +971,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 
 | libgit2 | cppgit2:: |
 | --- | --- |
-| `git_odb_add_alternate` | |
-| `git_odb_add_backend` | |
-| `git_odb_add_disk_alternate` | |
+| `git_odb_add_alternate` | `odb::add_alternate_backend` |
+| `git_odb_add_backend` | `odb::add_backend` |
+| `git_odb_add_disk_alternate` | `odb::add_disk_alternate_backend` |
 | `git_odb_backend_loose` | `odb::create_backend_for_loose_objects` |
 | `git_odb_backend_one_pack` | `odb::create_backend_for_one_packfile` |
 | `git_odb_backend_pack` | `odb::create_backend_for_packfiles` |
@@ -1004,8 +1004,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_odb_stream_free` | `odb::stream::~stream` |
 | `git_odb_stream_read` | `odb::stream::read` |
 | `git_odb_stream_write` | `odb::stream::write` |
-| `git_odb_write` | |
-| `git_odb_write_pack` | |
+| `git_odb_write` | `odb::write` |
+| `git_odb_write_pack` | **Not Implemented** |
 
 
 ### oid

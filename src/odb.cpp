@@ -12,6 +12,21 @@ odb::~odb() {
     git_odb_free(c_ptr_);
 }
 
+void odb::add_alternate_backend(const backend &backend, int priority) {
+  if (git_odb_add_alternate(c_ptr_, backend.c_ptr_, priority))
+    throw git_exception();
+}
+
+void odb::add_backend(const backend &backend, int priority) {
+  if (git_odb_add_backend(c_ptr_, backend.c_ptr_, priority))
+    throw git_exception();
+}
+
+void odb::add_disk_alternate_backend(const std::string &path) {
+  if (git_odb_add_disk_alternate(c_ptr_, path.c_str()))
+    throw git_exception();
+}
+
 odb::backend
 odb::create_backend_for_loose_objects(const std::string &objects_dir,
                                       int compression_level, bool do_fsync,
@@ -141,7 +156,8 @@ odb odb::open(const std::string &objects_dir) {
   return result;
 }
 
-std::tuple<odb::stream, size_t, cppgit2::object::object_type> odb::open_rstream(const oid &id) {
+std::tuple<odb::stream, size_t, cppgit2::object::object_type>
+odb::open_rstream(const oid &id) {
   stream result(nullptr);
   size_t length;
   git_object_t type;
@@ -151,10 +167,20 @@ std::tuple<odb::stream, size_t, cppgit2::object::object_type> odb::open_rstream(
 }
 
 odb::stream odb::open_wstream(cppgit2::object::object_size size,
-                            cppgit2::object::object_type type) {
+                              cppgit2::object::object_type type) {
   stream result(nullptr);
-  if (git_odb_open_wstream(&result.c_ptr_, c_ptr_, static_cast<git_object_size_t>(size), 
-    static_cast<git_object_t>(type)))
+  if (git_odb_open_wstream(&result.c_ptr_, c_ptr_,
+                           static_cast<git_object_size_t>(size),
+                           static_cast<git_object_t>(type)))
+    throw git_exception();
+  return result;
+}
+
+oid odb::write(const void *data, size_t length,
+               cppgit2::object::object_type type) {
+  oid result;
+  if (git_odb_write(result.c_ptr(), c_ptr_, data, length,
+                    static_cast<git_object_t>(type)))
     throw git_exception();
   return result;
 }
