@@ -229,8 +229,9 @@ public:
   void stop();
 
   // Update the tips to the new state
-  void update_tips(const callbacks &remote_callbacks, bool update_fetchhead, 
-    fetch::options::autotag download_tags, const std::string &reflog_message);
+  void update_tips(const callbacks &remote_callbacks, bool update_fetchhead,
+                   fetch::options::autotag download_tags,
+                   const std::string &reflog_message);
 
   // Create a packfile and send it to the server
   //

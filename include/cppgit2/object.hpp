@@ -39,6 +39,9 @@ public:
     ref_delta = 7
   };
 
+  // object tyoe to string
+  static std::string object_type_to_string(object_type type);
+
   using object_size = git_object_size_t;
 
   // Recursively peel until an object of the specified type is met
@@ -62,16 +65,30 @@ public:
   // Get owner repository
   class repository owner() const;
 
-  git_object *c_ptr() { return c_ptr_; }
+  // Cast to blob
+  // Throws git_exception if object is not a blob
+  class blob as_blob();
 
+  // Cast to commit
+  // Throws git_exception if object is not a commit
+  class commit as_commit();
+
+  // Cast to tree
+  // Throws git_exception if object is not a tree
+  class tree as_tree();
+
+  // Cast to tag
+  // Throws git_exception if object is not a tag
+  class tag as_tag();
+
+  // Access libgit2 C ptr
   const git_object *c_ptr() const { return c_ptr_; }
-
-  git_object **c_ptr_ptr() { return &c_ptr_; }
 
 private:
   friend class reference;
   friend class repository;
   friend class revspec;
+  friend class tag;
   ownership owner_;
   git_object *c_ptr_;
 };

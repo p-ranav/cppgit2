@@ -29,6 +29,11 @@ object object::copy() const {
   return result;
 }
 
+std::string object::object_type_to_string(object_type type) {
+  auto ret = git_object_type2string(static_cast<git_object_t>(type));
+  return ret ? std::string(ret) : "";
+}
+
 object object::peel_until(object_type target_type) {
   object result;
   if (git_object_peel(&result.c_ptr_, c_ptr_,
@@ -59,6 +64,34 @@ bool object::is_type_loose(object_type type) {
 
 repository object::owner() const {
   return repository(git_object_owner(c_ptr_));
+}
+
+blob object::as_blob() {
+  if (type() == object::object_type::blob)
+    return blob((git_blob *)c_ptr_);
+  else
+    throw git_exception("object is not a blob");
+}
+
+commit object::as_commit() {
+  if (type() == object::object_type::commit)
+    return commit((git_commit *)c_ptr_);
+  else
+    throw git_exception("object is not a commit");
+}
+
+tree object::as_tree() {
+  if (type() == object::object_type::tree)
+    return tree((git_tree *)c_ptr_);
+  else
+    throw git_exception("object is not a tree");
+}
+
+tag object::as_tag() {
+  if (type() == object::object_type::tag)
+    return tag((git_tag *)c_ptr_);
+  else
+    throw git_exception("object is not a tag");
 }
 
 } // namespace cppgit2

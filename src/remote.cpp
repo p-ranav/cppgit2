@@ -100,8 +100,8 @@ bool remote::is_valid_name(const std::string &name) {
 }
 
 std::vector<remote::head> remote::reference_advertisement_list() {
-  const git_remote_head * head_ptr = nullptr;
-  const git_remote_head ** head_ptr_ptr = &head_ptr;
+  const git_remote_head *head_ptr = nullptr;
+  const git_remote_head **head_ptr_ptr = &head_ptr;
   size_t size = 0;
   if (git_remote_ls(&head_ptr_ptr, &size, c_ptr_))
     throw git_exception();
@@ -156,10 +156,14 @@ void remote::stop() {
     throw git_exception();
 }
 
-void remote::update_tips(const callbacks &remote_callbacks, bool update_fetchhead, 
-  fetch::options::autotag download_tags, const std::string &reflog_message) {
-  if (git_remote_update_tips(c_ptr_, remote_callbacks.c_ptr(), update_fetchhead, 
-    static_cast<git_remote_autotag_option_t>(download_tags), reflog_message.c_str()))
+void remote::update_tips(const callbacks &remote_callbacks,
+                         bool update_fetchhead,
+                         fetch::options::autotag download_tags,
+                         const std::string &reflog_message) {
+  if (git_remote_update_tips(
+          c_ptr_, remote_callbacks.c_ptr(), update_fetchhead,
+          static_cast<git_remote_autotag_option_t>(download_tags),
+          reflog_message.c_str()))
     throw git_exception();
 }
 

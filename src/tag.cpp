@@ -37,7 +37,7 @@ std::string tag::name() const {
 
 object tag::peel() const {
   object result;
-  if (git_tag_peel(result.c_ptr_ptr(), c_ptr_))
+  if (git_tag_peel(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
 }
@@ -46,7 +46,7 @@ signature tag::tagger() const { return signature(git_tag_tagger(c_ptr_)); }
 
 object tag::target() const {
   object result;
-  if (git_tag_target(result.c_ptr_ptr(), c_ptr_))
+  if (git_tag_target(&result.c_ptr_, c_ptr_))
     throw git_exception();
   return result;
 }
