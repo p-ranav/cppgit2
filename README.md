@@ -583,8 +583,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 | `git_blob_create_from_buffer` | `repository::create_blob_from_buffer` |
 | `git_blob_create_from_disk` | `repository::create_blob_from_disk` |
-| `git_blob_create_from_stream` | |
-| `git_blob_create_from_stream_commit` | |
+| `git_blob_create_from_stream` | **Not implemented** |
+| `git_blob_create_from_stream_commit` | **Not implemented** |
 | `git_blob_create_from_workdir` | `repository::create_blobf=_from_workdir` |
 | `git_blob_create_fromworkdir` | `repository::create_blobf=_from_workdir` |
 | `git_blob_dup` | `blob::copy` |
