@@ -138,9 +138,28 @@ public:
     // Return the type of an ODB object
     cppgit2::object::object_type type() const { return static_cast<cppgit2::object::object_type>(git_odb_object_type(c_ptr_)); }
 
+    // Access libgit2 C ptr
+    const git_odb_object *c_ptr() const { return c_ptr_; }
+
   private:
+    friend odb;
     git_odb_object * c_ptr_;
   };
+
+  // Read an object from the database.
+  // This method queries all available ODB backends trying to read the given OID.
+  object read(const oid &id) const;
+
+  // Read the header of an object from the database, without reading its full contents.
+  // Returns {header_length, object_type}
+  // The header includes the length and the type of an object.
+  // Note that most backends do not support reading only the header of an object, so the whole object will be read and then the header will be returned.
+  std::pair<size_t, cppgit2::object::object_type> read_header(const oid &id) const;
+
+  // Read an object from the database, given a prefix of its identifier.
+  // 
+  // This method queries all available ODB backends trying to match the 'len' first hexadecimal characters of the 'short_id'. The remaining (GIT_OID_HEXSZ-len)*4 bits of 'short_id' must be 0s. 'len' must be at least GIT_OID_MINPREFIXLEN, and the prefix must be long enough to identify a unique object in all the backends; the method will fail otherwise.
+  object read_prefix(const oid &id, size_t length) const;
 
   // Get the number of ODB backend objects
   size_t size() const;

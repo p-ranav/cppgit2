@@ -75,6 +75,29 @@ odb::backend odb::operator[](size_t index) const {
   return result;
 }
 
+odb::object odb::read(const oid &id) const {
+  odb::object result(nullptr);
+  if (git_odb_read(&result.c_ptr_, c_ptr_, id.c_ptr()))
+    throw git_exception();
+  return result;
+}
+
+std::pair<size_t, cppgit2::object::object_type>
+odb::read_header(const oid &id) const {
+  size_t length_out;
+  git_object_t object_type_out;
+  if (git_odb_read_header(&length_out, &object_type_out, c_ptr_, id.c_ptr()))
+    throw git_exception();
+  return {length_out, static_cast<cppgit2::object::object_type>(object_type_out)};
+}
+
+odb::object odb::read_prefix(const oid &id, size_t length) const {
+  odb::object result(nullptr);
+  if (git_odb_read_prefix(&result.c_ptr_, c_ptr_, id.c_ptr(), length))
+    throw git_exception();
+  return result;
+}
+
 size_t odb::size() const { return git_odb_num_backends(c_ptr_); }
 
 odb::backend
