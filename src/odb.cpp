@@ -12,6 +12,15 @@ odb::~odb() {
     git_odb_free(c_ptr_);
 }
 
+void odb::expand_ids(const std::vector<expand_id> &ids) {
+  std::vector<git_odb_expand_id> ids_c;
+  for (auto &id : ids)
+    ids_c.push_back(id.c_struct_);
+
+  if (git_odb_expand_ids(c_ptr_, ids_c.data(), ids.size()))
+    throw git_exception();
+}
+
 bool odb::exists(const oid &id) const {
   return git_odb_exists(c_ptr_, id.c_ptr());
 }
@@ -41,6 +50,22 @@ void odb::for_each(std::function<void(const oid &)> visitor) {
 
   if (git_odb_foreach(c_ptr_, callback_c, (void *)(&wrapper)))
     throw git_exception();
+}
+
+oid odb::hash(const void *data, size_t length, object::object_type type) {
+  oid result;
+  if (git_odb_hash(result.c_ptr(), data, length,
+                   static_cast<git_object_t>(type)))
+    throw git_exception();
+  return result;
+}
+
+oid odb::hash_file(const std::string &path, object::object_type type) {
+  oid result;
+  if (git_odb_hashfile(result.c_ptr(), path.c_str(),
+                       static_cast<git_object_t>(type)))
+    throw git_exception();
+  return result;
 }
 
 odb::backend odb::operator[](size_t index) const {

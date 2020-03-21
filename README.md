@@ -979,12 +979,12 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_odb_backend_pack` | `odb::create_backend_for_packfiles` |
 | `git_odb_exists` | `odb::exists` |
 | `git_odb_exists_prefix` | `odb::exists` |
-| `git_odb_expand_ids` | |
+| `git_odb_expand_ids` | `odb::expand_ids` |
 | `git_odb_foreach` | `odb::for_each` |
 | `git_odb_free` | `odb::~odb` |
 | `git_odb_get_backend` | `odb::operator[]` |
-| `git_odb_hash` | |
-| `git_odb_hashfile` | |
+| `git_odb_hash` | `odb::hash` |
+| `git_odb_hashfile` | `odb::hash_file` |
 | `git_odb_new` | `odb::odb` |
 | `git_odb_num_backends` | `odb::size` |
 | `git_odb_object_data` | |
