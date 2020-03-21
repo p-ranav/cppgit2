@@ -5,6 +5,7 @@
 #include <cppgit2/diff.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
+#include <cppgit2/signature.hpp>
 #include <cppgit2/strarray.hpp>
 #include <git2.h>
 #include <string>
@@ -417,6 +418,74 @@ public:
     exclude_subject_patch_marker = (1 << 0)
   };
 
+  // Options for controlling the formatting of the generated e-mail.
+  class format_email_options : public libgit2_api {
+  public:
+    format_email_options() : c_ptr_(nullptr) {
+      auto ret = git_diff_format_email_init_options(&default_options_,
+                                            GIT_DIFF_FORMAT_EMAIL_OPTIONS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    format_email_options(git_diff_format_email_options *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Version
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int version) { c_ptr_->version = version; }
+
+    // Flags
+    format_email_flag flags() const {
+      return static_cast<format_email_flag>(c_ptr_->flags);
+    }
+    void set_flags(format_email_flag flags) {
+      c_ptr_->flags = static_cast<uint32_t>(flags);
+    }
+
+    // This patch number
+    size_t patch_no() const { return c_ptr_->patch_no; }
+    void set_patch_no(size_t value) { c_ptr_->patch_no = value; }
+
+    // Total number of patches in this series
+    size_t total_patches() const { return c_ptr_->total_patches; }
+    void set_total_patches(size_t value) { c_ptr_->total_patches = value; }
+
+    // id to use for the commit
+    oid id() const { return oid(c_ptr_->id); }
+    void set_id(const oid &id) {
+      c_ptr_->id = id.c_ptr();
+    }
+
+    // Summary of the change
+    std::string summary() const { return c_ptr_->summary ? std::string(c_ptr_->summary) : ""; }
+    void set_summary(const std::string &value) {
+      c_ptr_->summary = value.c_str();
+    }
+
+    // Commit message's body
+    std::string body() const { return c_ptr_->body ? std::string(c_ptr_->body) : ""; }
+    void set_body(const std::string &value) {
+      c_ptr_->body = value.c_str();
+    }
+
+    // Author of the change
+    signature author() const { return signature(c_ptr_->author); }
+    void set_author(const signature &sig) {
+      c_ptr_->author = sig.c_ptr();
+    }
+
+    // Access libgit2 C ptr
+    const git_diff_format_email_options *c_ptr() const { return c_ptr_; }
+
+  private:
+    git_diff_format_email_options *c_ptr_;
+    git_diff_format_email_options default_options_;
+  };
+
+  // Create an e-mail ready patch from a diff.
+  data_buffer format_email(const format_email_options &options = format_email_options());
+
   // When producing a binary diff, the binary data returned will be
   // either the deflated full ("literal") contents of the file, or
   // the deflated binary delta between the two sides (whichever is
@@ -696,6 +765,8 @@ public:
     remove_unmodified = (1u << 16),
   };
 
+  // Control behavior of rename and copy detection
+  // These options mostly mimic parameters that can be passed to git-diff.
   class find_options : public libgit2_api {
   public:
     find_options() : c_ptr_(nullptr) {

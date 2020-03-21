@@ -773,8 +773,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_find_options_init` | `diff::find_options::find_options` |
 | `git_diff_find_similar` | `diff::find_similar` |
 | `git_diff_foreach` | `diff::for_each` |
-| `git_diff_format_email` | |
-| `git_diff_format_email_options_init` | |
+| `git_diff_format_email` | `diff::format_email` |
+| `git_diff_format_email_options_init` | `diff::format_email_options::format_email_options()` |
 | `git_diff_free` | `diff::~diff` |
 | `git_diff_from_buffer` | `diff::diff` |
 | `git_diff_get_delta` | `diff::operator[]` |
