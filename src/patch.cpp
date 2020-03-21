@@ -52,6 +52,23 @@ diff::delta patch::delta() const {
   return diff::delta(git_patch_get_delta(c_ptr_));
 }
 
+std::pair<diff::hunk, size_t> patch::hunk(size_t hunk_index) const {
+  diff::hunk hunk_result(nullptr);
+  auto hunk_result_ptr = hunk_result.c_ptr();
+  size_t lines_in_hunk;
+  if (git_patch_get_hunk(&hunk_result_ptr, &lines_in_hunk, c_ptr_, hunk_index))
+    throw git_exception();
+  return {hunk_result, lines_in_hunk};
+}
+
+diff::line patch::line_in_hunk(size_t hunk_index, size_t line_of_hunk) const {
+  diff::line result(nullptr);
+  auto result_ptr = result.c_ptr();
+  if (git_patch_get_line_in_hunk(&result_ptr, c_ptr_, hunk_index, line_of_hunk))
+    throw git_exception();
+  return result;
+}
+
 std::tuple<size_t, size_t, size_t> patch::line_stats() const {
   size_t context_lines = 0, addition_lines = 0, deletion_lines = 0;
   if (git_patch_line_stats(&context_lines, &addition_lines, &deletion_lines,
@@ -64,6 +81,33 @@ size_t patch::num_hunks() const { return git_patch_num_hunks(c_ptr_); }
 
 size_t patch::num_lines_in_hunk(size_t hunk_index) const {
   return git_patch_num_lines_in_hunk(c_ptr_, hunk_index);
+}
+
+void patch::print(std::function<void(const diff::delta &, const diff::hunk &,
+                                const diff::line &)>
+                 line_callback) {
+
+  // Prepare wrapper to pass to C API
+  struct visitor_wrapper {
+    std::function<void(const diff::delta &, const diff::hunk &,
+                       const diff::line &)>
+        line_callback;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.line_callback = line_callback;
+
+  auto line_callback_c = [](const git_diff_delta *delta_c,
+                            const git_diff_hunk *hunk_c,
+                            const git_diff_line *line_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    if (wrapper->line_callback)
+      wrapper->line_callback(diff::delta(delta_c), diff::hunk(hunk_c), diff::line(line_c));
+    return 0;
+  };
+
+  if (git_patch_print(c_ptr_, line_callback_c, (void *)(&wrapper)))
+    throw git_exception();
 }
 
 size_t patch::size(bool include_context, bool include_hunk_headers,

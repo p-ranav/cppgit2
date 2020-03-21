@@ -46,6 +46,13 @@ public:
   // This delta points to internal data, owned by libgit2
   diff::delta delta() const;
 
+  // Get the information about a hunk in a patch
+  // Returns a pair of results: {hunk, lines_in_hunk}
+  std::pair<diff::hunk, size_t> hunk(size_t hunk_index) const;
+
+  // Get data about a line in a hunk of a patch.
+  diff::line line_in_hunk(size_t hunk_index, size_t line_of_hunk) const;
+
   // Get line counts of each type in a patch.
   // Returns {Count of context lines in output,
   //          Count of addition lines in output,
@@ -58,6 +65,11 @@ public:
 
   // Get the number of lines in a hunk.
   size_t num_lines_in_hunk(size_t hunk_index) const;
+
+  // Serialize the patch to text via callback.
+  void print(std::function<void(const diff::delta &, const diff::hunk &,
+                                const diff::line &)>
+                 line_callback);
 
   // Look up size of patch diff data in bytes
   //
