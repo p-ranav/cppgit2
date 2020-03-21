@@ -437,6 +437,188 @@ $ ./build/samples/print_tags ext/libgit2
 ...
 ```
 
+### Inspect Repository Objects (`git cat-file`)
+
+Here's a ~125 line simplified implementation of `git cat-file` with `cppgit2`
+
+```cpp
+#include <cppgit2/repository.hpp>
+#include <cstdio>
+#include <iomanip>
+#include <iostream>
+using namespace cppgit2;
+
+void print_signature(const std::string &header, const signature &sig) {
+  char sign;
+  auto offset = sig.offset();
+  if (offset < 0) {
+    sign = '-';
+    offset = -offset;
+  } else {
+    sign = '+';
+  }
+
+  auto hours = offset / 60;
+  auto minutes = offset % 60;
+
+  std::cout << header << " "
+    << sig.name() << " "
+    << "<" << sig.email() << "> "
+    << sig.time() << " "
+    << sign;
+  std::cout << std::setfill('0') << std::setw(2) << hours;
+  std::cout << std::setfill('0') << std::setw(2) << minutes << std::endl;
+}
+
+// Printing out a blob is simple, get the contents and print
+void show_blob(const blob &blob) {
+  std::fwrite(blob.raw_contents(), blob.raw_size(), 1, stdout);
+}
+
+// Show each entry with its type, id and attributes
+void show_tree(const tree &tree) {
+  size_t count = tree.size();
+  for (size_t i = 0; i < tree.size(); ++i) {
+    auto entry = tree.lookup_entry_by_index(i);
+
+    std::cout << std::setfill('0') << 
+        std::oct << std::setw(6) << static_cast<git_filemode_t>(entry.filemode());
+    std::cout << " " << object::object_type_to_string(entry.type())
+        << " " << entry.id().to_hex_string() 
+        << "\t" << entry.filename() << std::endl;
+  }
+}
+
+// Commits and tags have a few interesting fields in their header.
+void show_commit(const commit &commit) {
+  std::cout << "tree " << commit.tree_id().to_hex_string() << std::endl;
+
+  for (size_t i = 0; i < commit.parent_count(); ++i)
+    std::cout << "parent " << commit.parent_id(i).to_hex_string() << std::endl;
+
+  print_signature("author", commit.author());
+  print_signature("committer", commit.committer());
+
+  auto message = commit.message();
+  if (!message.empty())
+    std::cout << "\n" << message << std::endl;
+}
+
+void show_tag(const tag &tag) {
+  std::cout << "object " << tag.id().to_hex_string() << std::endl;
+  std::cout << "type " << object::object_type_to_string(tag.target_type()) << std::endl;
+  std::cout << "tag " << tag.name() << std::endl;
+  print_signature("tagger", tag.tagger());
+
+  auto tag_message = tag.message();
+  if (!tag_message.empty())
+    std::cout << "\n" << tag_message << std::endl;
+}
+
+int main(int argc, char **argv) {
+  if (argc == 3) {
+    auto repo_path = repository::discover_path(".");
+    auto repo = repository::open(repo_path);
+
+    enum class actions { size, type, pretty };
+    actions action;
+
+    if (strncmp(argv[1], "-s", 2) == 0) {
+      action = actions::size;
+    } else if (strncmp(argv[1], "-t", 2) == 0) {
+      action = actions::type;
+    } else if (strncmp(argv[1], "-p", 2) == 0) {
+      action = actions::pretty;
+    }
+
+    auto revision_str = argv[2];
+    auto object = repo.revparse_to_object(revision_str);
+
+    switch(action) {
+    case actions::type:
+        std::cout << object::object_type_to_string(object.type()) << std::endl;
+        break;
+    case actions::size:
+        std::cout << repo.odb().read(object.id()).size() << std::endl;
+        break;
+    case actions::pretty:
+        switch(object.type()) {
+            case object::object_type::blob:
+                show_blob(object.as_blob());
+                break;
+            case object::object_type::commit:
+                show_commit(object.as_commit());
+                break;
+            case object::object_type::tree:
+                show_tree(object.as_tree());
+                break;
+            case object::object_type::tag:
+                show_tag(object.as_tag());
+                break;
+            default:
+                std::cout << "unknown " << revision_str << std::endl;
+                break;
+        }
+        break;
+    }
+
+  } else {
+    std::cout << "Usage: ./executable (-s | -t | -p) <object>\n";
+  }
+}
+```
+
+Running this sample on one of the `libgit2` commits yields the following:
+
+```bash
+$ ./cat_file -p 01a8340662749943f3917505dc8ca65006495bec
+tree 83d9bef2675178eeb3aa61d17e5c8b0f7b0ec1de
+parent 76b49caf6a208e44d19c84caa6d42389f0de6194
+author Patrick Steinhardt <ps@pks.im> 1582035643 +0100
+committer Patrick Steinhardt <ps@pks.im> 1582040632 +0100
+
+azure: docker: fix ARM builds by replacing gosu(1)
+
+Our nightly builds are currently failing due to our ARM-based jobs.
+These jobs crash immediately when entering the Docker container with a
+exception thrown by Go's language runtime. As we're able to successfully
+builds the Docker images in previous steps, it's unlikely to be a bug in
+Docker itself. Instead, this exception is thrown by gosu(1), which is a
+Go-based utility to drop privileges and run by our entrypoint.
+
+Fix the issue by dropping gosu(1) in favor of sudo(1).
+
+$ ./cat_file -p 83d9bef2675178eeb3aa61d17e5c8b0f7b0ec1de
+100644 blob fd8430bc864cfcd5f10e5590f8a447e01b942bfe	.HEADER
+100644 blob 34c5e9234ec18c69a16828dbc9633a95f0253fe9	.editorconfig
+100644 blob 176a458f94e0ea5272ce67c36bf30b6be9caf623	.gitattributes
+040000 tree e8bfe5af39579a7e4898bb23f3a76a72c368cee6	.github
+100644 blob dec3dca06c8fdc1dd7d426bb148b7f99355eaaed	.gitignore
+100644 blob 0b16a7e1f1a368d5ca42d580ba2256d1faecddb8	.mailmap
+100644 blob 784bab3ee7da6133af679cae7527c4fe4a99b949	AUTHORS
+100644 blob 8765a97b5b120259dd59262865ce166f382c0f9e	CMakeLists.txt
+100644 blob c0f61fb9158945f7b41abfd640630c914b2eb8d9	COPYING
+100644 blob 9dafffec02ef8d9cf8b97f547444f989ddbfa298	README.md
+100644 blob f98eebf505a37f756e0ad9d7cc4744397368c436	SECURITY.md
+100644 blob bf733273b8cd8b601aaee9a5c10d099a7f6a87e2	api.docurium
+100644 blob 2b593dd2cc2c2c252548c7fae4d469c11dd08430	azure-pipelines.yml
+040000 tree d9aba7f7d7e9651c176df311dd0489e89266b2b4	azure-pipelines
+040000 tree 64e8fd349c9c1dd20f810c22c4e62fe52aab5f18	cmake
+040000 tree 5c640a5abe072362ca4bbcf66ef66617c0be0466	deps
+040000 tree c84b6d0def9b4b790ece70c7ee68aa3fdf6caa85	docs
+040000 tree f852bee8c6bcc3e456f19aff773079eb30abf747	examples
+040000 tree 37aaf5d4a9fb0d89d2716236c49474030e36dc93	fuzzers
+100644 blob 905bdd24fa23c4d1a03e400a2ae8ecc639769da3	git.git-authors
+040000 tree 7fdd111f708aad900604883ce1c161daf64ebb2d	include
+100644 blob d33f31c303663dbdbb4baed08ec3cd6c83116367	package.json
+040000 tree 97afcc9b6e4ca91001aadf8a3414d043f22918cf	script
+040000 tree a08bd8a57d619b736ad2c300614b36ead8d0a333	src
+040000 tree dcf5925f8bbda8062ef26ca427c5110868a7f041	tests
+
+$ ./cat_file -s 8765a97b5b120259dd59262865ce166f382c0f9e
+11957
+```
+
 ## Design Notes
 
 ### Interoperability with `libgit2`
