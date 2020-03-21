@@ -460,7 +460,7 @@ $ ./build/samples/print_tags ext/libgit2
 
 ### Inspect Repository Objects (`git cat-file`)
 
-Here's a ~125 line simplified implementation of `git cat-file` with `cppgit2`
+Here's a simplified implementation of `git cat-file` with `cppgit2`
 
 ```cpp
 #include <cppgit2/repository.hpp>
@@ -482,11 +482,8 @@ void print_signature(const std::string &header, const signature &sig) {
   auto hours = offset / 60;
   auto minutes = offset % 60;
 
-  std::cout << header << " "
-    << sig.name() << " "
-    << "<" << sig.email() << "> "
-    << sig.time() << " "
-    << sign;
+  std::cout << header << " " << sig.name() << " " << "<" << sig.email() << "> "
+    << sig.time() << " " << sign;
   std::cout << std::setfill('0') << std::setw(2) << hours;
   std::cout << std::setfill('0') << std::setw(2) << minutes << std::endl;
 }
@@ -591,7 +588,7 @@ int main(int argc, char **argv) {
 
 Running this sample on one of the `libgit2` commits yields the following:
 
-```bash
+```
 $ ./cat_file -p 01a8340662749943f3917505dc8ca65006495bec
 tree 83d9bef2675178eeb3aa61d17e5c8b0f7b0ec1de
 parent 76b49caf6a208e44d19c84caa6d42389f0de6194
@@ -608,9 +605,7 @@ Docker itself. Instead, this exception is thrown by gosu(1), which is a
 Go-based utility to drop privileges and run by our entrypoint.
 
 Fix the issue by dropping gosu(1) in favor of sudo(1).
-```
 
-```bash
 $ ./cat_file -p 83d9bef2675178eeb3aa61d17e5c8b0f7b0ec1de
 100644 blob fd8430bc864cfcd5f10e5590f8a447e01b942bfe	.HEADER
 100644 blob 34c5e9234ec18c69a16828dbc9633a95f0253fe9	.editorconfig
@@ -637,9 +632,7 @@ $ ./cat_file -p 83d9bef2675178eeb3aa61d17e5c8b0f7b0ec1de
 040000 tree 97afcc9b6e4ca91001aadf8a3414d043f22918cf	script
 040000 tree a08bd8a57d619b736ad2c300614b36ead8d0a333	src
 040000 tree dcf5925f8bbda8062ef26ca427c5110868a7f041	tests
-```
 
-```bash
 $ ./cat_file -s 8765a97b5b120259dd59262865ce166f382c0f9e
 11957
 ```
