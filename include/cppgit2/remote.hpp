@@ -149,8 +149,9 @@ public:
                 const fetch::options &options = fetch::options());
 
   // Download new data and update tips
-  void fetch_data(const strarray &refspecs, const std::string &reflog_message,
-             const cppgit2::fetch::options &options = cppgit2::fetch::options());
+  void fetch_data(
+      const strarray &refspecs, const std::string &reflog_message,
+      const cppgit2::fetch::options &options = cppgit2::fetch::options());
 
   // Get the remote's list of fetch refspecs
   // The memory is owned by the user and should be freed

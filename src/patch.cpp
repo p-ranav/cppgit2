@@ -59,7 +59,7 @@ std::pair<diff::hunk, size_t> patch::hunk(size_t hunk_index) const {
   size_t lines_in_hunk;
   if (git_patch_get_hunk(&hunk_result_ptr, &lines_in_hunk, c_ptr_, hunk_index))
     throw git_exception();
-  return {hunk_result, lines_in_hunk};
+  return std::pair<diff::hunk, size_t>{hunk_result, lines_in_hunk};
 }
 
 diff::line patch::line_in_hunk(size_t hunk_index, size_t line_of_hunk) const {
@@ -75,7 +75,8 @@ std::tuple<size_t, size_t, size_t> patch::line_stats() const {
   if (git_patch_line_stats(&context_lines, &addition_lines, &deletion_lines,
                            c_ptr_))
     throw git_exception();
-  return {context_lines, addition_lines, deletion_lines};
+  return std::tuple<size_t, size_t, size_t>{context_lines, addition_lines,
+                                            deletion_lines};
 }
 
 size_t patch::num_hunks() const { return git_patch_num_hunks(c_ptr_); }

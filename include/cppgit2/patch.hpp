@@ -3,10 +3,10 @@
 #include <cppgit2/diff.hpp>
 #include <cppgit2/libgit2_api.hpp>
 #include <cppgit2/ownership.hpp>
+#include <functional>
 #include <git2.h>
 #include <string>
 #include <tuple>
-#include <functional>
 
 namespace cppgit2 {
 

@@ -18,12 +18,12 @@ std::pair<bool, std::string> worktree::is_locked() const {
   if (ret > 0) {
     // Locked
     if (result.c_ptr()->size) // size > 0 => reason available
-      return {true, result.to_string()};
+      return std::pair<bool, std::string>{true, result.to_string()};
     else
-      return {true, ""};
+      return std::pair<bool, std::string>{true, ""};
   } else if (ret == 0) {
     // Not locked
-    return {false, ""};
+    return std::pair<bool, std::string>{false, ""};
   } else {
     throw git_exception();
   }

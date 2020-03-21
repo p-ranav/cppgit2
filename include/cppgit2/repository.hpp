@@ -37,10 +37,10 @@
 #include <cppgit2/tag.hpp>
 #include <cppgit2/tree_builder.hpp>
 #include <cppgit2/worktree.hpp>
+#include <functional>
 #include <git2.h>
 #include <string>
 #include <utility>
-#include <functional>
 
 namespace cppgit2 {
 

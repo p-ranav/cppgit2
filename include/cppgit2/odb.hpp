@@ -5,11 +5,11 @@
 #include <cppgit2/object.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
+#include <functional>
 #include <git2.h>
 #include <tuple>
 #include <utility>
 #include <vector>
-#include <functional>
 
 namespace cppgit2 {
 

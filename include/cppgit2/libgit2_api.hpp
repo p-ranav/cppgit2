@@ -17,7 +17,7 @@ public:
     int major, minor, revision;
     if (git_libgit2_version(&major, &minor, &revision))
       throw git_exception();
-    return {major, minor, revision};
+    return std::tuple<int, int, int>{major, minor, revision};
   }
 };
 

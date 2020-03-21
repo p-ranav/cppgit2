@@ -3,8 +3,8 @@
 #include <cppgit2/odb.hpp>
 #include <cppgit2/oid.hpp>
 #include <cppgit2/ownership.hpp>
-#include <git2.h>
 #include <functional>
+#include <git2.h>
 
 namespace cppgit2 {
 

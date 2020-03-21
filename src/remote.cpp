@@ -74,8 +74,9 @@ void remote::download(const strarray &refspecs, const fetch::options &options) {
     throw git_exception();
 }
 
-void remote::fetch_data(const strarray &refspecs, const std::string &reflog_message,
-                   const fetch::options &options) {
+void remote::fetch_data(const strarray &refspecs,
+                        const std::string &reflog_message,
+                        const fetch::options &options) {
   if (git_remote_fetch(c_ptr_, refspecs.c_ptr(), options.c_ptr(),
                        reflog_message.c_str()))
     throw git_exception();

@@ -132,8 +132,8 @@ odb::read_header(const oid &id) const {
   git_object_t object_type_out;
   if (git_odb_read_header(&length_out, &object_type_out, c_ptr_, id.c_ptr()))
     throw git_exception();
-  return {length_out,
-          static_cast<cppgit2::object::object_type>(object_type_out)};
+  return std::pair<size_t, cppgit2::object::object_type>{
+      length_out, static_cast<cppgit2::object::object_type>(object_type_out)};
 }
 
 odb::object odb::read_prefix(const oid &id, size_t length) const {
@@ -164,7 +164,8 @@ odb::open_rstream(const oid &id) {
   git_object_t type;
   if (git_odb_open_rstream(&result.c_ptr_, &length, &type, c_ptr_, id.c_ptr()))
     throw git_exception();
-  return {result, length, static_cast<cppgit2::object::object_type>(type)};
+  return std::tuple<odb::stream, size_t, cppgit2::object::object_type>{
+      result, length, static_cast<cppgit2::object::object_type>(type)};
 }
 
 odb::stream odb::open_wstream(cppgit2::object::object_size size,

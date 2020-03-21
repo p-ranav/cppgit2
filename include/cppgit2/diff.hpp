@@ -7,11 +7,11 @@
 #include <cppgit2/ownership.hpp>
 #include <cppgit2/signature.hpp>
 #include <cppgit2/strarray.hpp>
+#include <functional>
 #include <git2.h>
 #include <string>
 #include <utility>
 #include <vector>
-#include <functional>
 
 namespace cppgit2 {
 

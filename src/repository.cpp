@@ -245,7 +245,8 @@ std::pair<std::string, std::string> repository::identity() const {
   const char *name_c, *email_c;
   if (git_repository_ident(&name_c, &email_c, c_ptr_))
     throw git_exception();
-  return {name_c ? name_c : "", email_c ? email_c : ""};
+  return std::pair<std::string, std::string>{name_c ? name_c : "",
+                                             email_c ? email_c : ""};
 }
 
 cppgit2::index repository::index() const {
@@ -820,7 +821,7 @@ repository::extract_signature_from_commit(oid id,
   if (git_commit_extract_signature(sig.c_ptr(), signed_data.c_ptr(), c_ptr_,
                                    id.c_ptr(), signature_field.c_str()))
     throw git_exception();
-  return {sig, signed_data};
+  return std::pair<data_buffer, data_buffer>{sig, signed_data};
 }
 
 commit repository::lookup_commit(const oid &id) {
@@ -963,7 +964,7 @@ repository::unique_commits_ahead_behind(const oid &local,
   if (git_graph_ahead_behind(&ahead, &behind, c_ptr_, local.c_ptr(),
                              upstream.c_ptr()))
     throw git_exception();
-  return {ahead, behind};
+  return std::pair<size_t, size_t>{ahead, behind};
 }
 
 bool repository::is_descendant_of(const oid &commit,
@@ -1004,8 +1005,9 @@ repository::analyze_merge(const std::vector<annotated_commit> &their_heads) {
                          num_commits))
     throw git_exception();
 
-  return {static_cast<merge::analysis_result>(analysis_result),
-          static_cast<merge::preference>(preference)};
+  return std::pair<merge::analysis_result, merge::preference>{
+      static_cast<merge::analysis_result>(analysis_result),
+      static_cast<merge::preference>(preference)};
 }
 
 std::pair<merge::analysis_result, merge::preference>
@@ -1026,8 +1028,9 @@ repository::analyze_merge(const reference &our_ref,
           their_heads.size()))
     throw git_exception();
 
-  return {static_cast<merge::analysis_result>(analysis_result),
-          static_cast<merge::preference>(preference)};
+  return std::pair<merge::analysis_result, merge::preference>{
+      static_cast<merge::analysis_result>(analysis_result),
+      static_cast<merge::preference>(preference)};
 }
 
 oid repository::find_merge_base(const oid &first_commit,
@@ -1166,7 +1169,7 @@ repository::create_note(const commit &parent, const signature &author,
                              committer.c_ptr(), id.c_ptr(), note.c_str(),
                              allow_note_override))
     throw git_exception();
-  return {notes_commit_out, notes_blob_out};
+  return std::pair<oid, oid>{notes_commit_out, notes_blob_out};
 }
 
 note repository::read_note(const std::string &notes_ref, const oid &id) {
@@ -1582,7 +1585,7 @@ repository::revparse_to_object_and_reference(const std::string &spec) {
   if (git_revparse_ext(&object_out.c_ptr_, &reference_out.c_ptr_, c_ptr_,
                        spec.c_str()))
     throw git_exception();
-  return {object_out, reference_out};
+  return std::pair<object, reference>{object_out, reference_out};
 }
 
 object repository::revparse_to_object(const std::string &spec) {

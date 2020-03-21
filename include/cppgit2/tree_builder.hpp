@@ -8,7 +8,6 @@
 #include <functional>
 #include <git2.h>
 #include <string>
-#include <functional>
 
 namespace cppgit2 {
 
