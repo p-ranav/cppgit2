@@ -999,7 +999,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_odb_read` | `odb::read` |
 | `git_odb_read_header` | `odb::read_header` |
 | `git_odb_read_prefix` | `odb::read_prefix` |
-| `git_odb_refresh` | |
+| `git_odb_refresh` | `odb::refresh` |
 | `git_odb_stream_finalize_write` | `odb::stream::finalize_write` |
 | `git_odb_stream_free` | `odb::stream::~stream` |
 | `git_odb_stream_read` | `odb::stream::read` |
