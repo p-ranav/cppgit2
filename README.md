@@ -149,11 +149,11 @@ int main(int argc, char **argv) {
 ```
 
 ```bash
-▶ ./create_remote foo
+$ ./create_remote foo
 
-▶ cd foo
+$ cd foo
 
-▶ git remote -v
+$ git remote -v
 origin	https://github.com/p-ranav/test (fetch)
 origin	https://github.com/p-ranav/test (push)
 ```
@@ -202,15 +202,15 @@ int main(int argc, char **argv) {
 ```
 
 ```bash
-▶ ./commit_file foo
+$ ./commit_file foo
 Created commit with ID: 34614c460ee9dd6a6e56c1a90c5533b7e284b197
 
-▶ cd foo
+$ cd foo
 
-▶ cat README.md
+$ cat README.md
 Hello, World!
 
-▶ git log --stat
+$ git log --stat
 commit 34614c460ee9dd6a6e56c1a90c5533b7e284b197 (HEAD -> master)
 Author: foobar <foo.bar@baz.com>
 Date:   Thu Mar 19 20:48:07 2020 -0500
@@ -269,8 +269,9 @@ int main(int argc, char **argv) {
 Running this program on the cppgit2 repository yields the following:
 
 ```bash
-▶ cd cppgit2
-▶ ./build/samples/walk_tree .
+$ cd cppgit2
+
+$ ./build/samples/walk_tree .
  - blob [ae28a6af] .clang-format
  - blob [e4bbfcd3] .gitignore
  - blob [7f2703f2] .gitmodules
@@ -333,7 +334,7 @@ int main(int argc, char **argv) {
 Here's the output when running this program against `libgit2` source code.
 
 ```bash
-▶ ./build/samples/print_branches ext/libgit2
+$ ./build/samples/print_branches ext/libgit2
 Local branches:
 * refs/heads/master
 Remote branches:
@@ -374,7 +375,7 @@ int main(int argc, char **argv) {
 Running this on the `libgit2` repository yields the following:
 
 ```bash
-▶ ./build/samples/print_commits ext/libgit2
+$ ./build/samples/print_commits ext/libgit2
 17223902 [GitHub] Merge pull request #5291 from libgit2/ethomson/0_99
 b31cd05f [GitHub] Merge pull request #5372 from pks-t/pks/release-script
 70062e28 [Patrick Steinhardt] version: update the version number to v0.99
@@ -420,7 +421,7 @@ int main(int argc, char **argv) {
 Running this on the `libgit2` repository yields the following:
 
 ```bash
-▶ ./build/samples/print_tags ext/libgit2
+$ ./build/samples/print_tags ext/libgit2
 [17223902] refs/tags/v0.99.0
 [23f8588d] refs/tags/v0.1.0
 [7064938b] refs/tags/v0.10.0
