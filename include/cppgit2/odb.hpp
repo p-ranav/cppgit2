@@ -25,13 +25,33 @@ public:
 
   class backend : public libgit2_api {
   public:
+    // Default construct an ODB backend
     backend() : c_ptr_(nullptr) {}
+
+    // Construct from libgit2 C ptr
     backend(git_odb_backend *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Access libgit2 C ptr
+    const git_odb_backend *c_ptr() const { return c_ptr_; }
 
   private:
     friend class odb;
     git_odb_backend *c_ptr_;
   };
+
+  // Create a backend for loose objects
+  static backend
+  create_backend_for_loose_objects(const std::string &objects_dir,
+                                   int compression_level, bool do_fsync,
+                                   unsigned int dir_mode, file_mode mode);
+
+  // Create a backend out of a single packfile
+  // index_file is the path to the packfile's .idx file
+  static backend create_backend_for_one_packfile(const std::string &index_file);
+
+  // Create a backend for the packfiles.
+  // objects_dir is the Git repository's objects directory
+  static backend create_backend_for_packfiles(const std::string &objects_dir);
 
   // The information about object IDs to query in `git_odb_expand_ids`, which
   // will be populated upon return.
@@ -191,19 +211,77 @@ public:
   // Get the number of ODB backend objects
   size_t size() const;
 
-  // Create a backend for loose objects
-  static backend
-  create_backend_for_loose_objects(const std::string &objects_dir,
-                                   int compression_level, bool do_fsync,
-                                   unsigned int dir_mode, file_mode mode);
+  // A stream to read/write from the ODB
+  class stream : public libgit2_api {
+  public:
+    // Construct from libgit2 C ptr
+    stream(git_odb_stream *c_ptr) : c_ptr_(c_ptr) {}
 
-  // Create a backend out of a single packfile
-  // index_file is the path to the packfile's .idx file
-  static backend create_backend_for_one_packfile(const std::string &index_file);
+    // Clean up stream
+    ~stream() {
+      if (c_ptr_)
+        git_odb_stream_free(c_ptr_);
+    }
 
-  // Create a backend for the packfiles.
-  // objects_dir is the Git repository's objects directory
-  static backend create_backend_for_packfiles(const std::string &objects_dir);
+    // Backend
+    odb::backend backend() const { return c_ptr_->backend; }
+    void set_backend(const odb::backend &backend) {
+      c_ptr_->backend = backend.c_ptr_;
+    }
+
+    // Mode
+    unsigned int mode() const { return c_ptr_->mode; }
+    void set_mode(unsigned int value) { c_ptr_->mode = value; }
+
+    // Hash context
+    void *hash_ctx() const { return c_ptr_->hash_ctx; }
+    void set_hash_ctx(void *ctx) { c_ptr_->hash_ctx = ctx; }
+
+    // Declared size
+    cppgit2::object::object_size declared_size() const {
+      return c_ptr_->declared_size;
+    }
+    void set_declared_size(cppgit2::object::object_size value) {
+      c_ptr_->declared_size = value;
+    }
+
+    // Received bytes
+    cppgit2::object::object_size received_bytes() const {
+      return c_ptr_->received_bytes;
+    }
+    void set_received_bytes(cppgit2::object::object_size value) {
+      c_ptr_->received_bytes = value;
+    }
+
+    // Finish writing to an odb stream
+    // The object will take its final name and will be available to the odb.
+    // This method will fail if the total number of received bytes differs from
+    // the size declared with git_odb_open_wstream()
+    oid finalize_write() {
+      oid result;
+      if (git_odb_stream_finalize_write(result.c_ptr(), c_ptr_))
+        throw git_exception();
+      return result;
+    }
+
+    // Read from an odb stream
+    // Most backends don't implement streaming reads
+    void read(char *buffer, size_t length) {
+      if (git_odb_stream_read(c_ptr_, buffer, length))
+        throw git_exception();
+    }
+
+    // Write to an odb stream
+    // This method will fail if the total number of received bytes exceeds the
+    // size declared with git_odb_open_wstream()
+    void write(const char *buffer, size_t length) {
+      if (git_odb_stream_write(c_ptr_, buffer, length))
+        throw git_exception();
+    }
+
+  private:
+    git_odb_stream *c_ptr_;
+  };
 
   // Access libgit2 C ptr
   const git_odb *c_ptr() const;

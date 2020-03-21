@@ -39,6 +39,8 @@ public:
     ref_delta = 7
   };
 
+  using object_size = git_object_size_t;
+
   // Recursively peel until an object of the specified type is met
   object peel_until(object_type target);
 

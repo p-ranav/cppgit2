@@ -12,6 +12,33 @@ odb::~odb() {
     git_odb_free(c_ptr_);
 }
 
+odb::backend
+odb::create_backend_for_loose_objects(const std::string &objects_dir,
+                                      int compression_level, bool do_fsync,
+                                      unsigned int dir_mode, file_mode mode) {
+  odb::backend result;
+  if (git_odb_backend_loose(&result.c_ptr_, objects_dir.c_str(),
+                            compression_level, do_fsync, dir_mode,
+                            static_cast<unsigned int>(mode)))
+    throw git_exception();
+  return result;
+}
+
+odb::backend
+odb::create_backend_for_one_packfile(const std::string &index_file) {
+  odb::backend result;
+  if (git_odb_backend_one_pack(&result.c_ptr_, index_file.c_str()))
+    throw git_exception();
+  return result;
+}
+
+odb::backend odb::create_backend_for_packfiles(const std::string &objects_dir) {
+  odb::backend result;
+  if (git_odb_backend_pack(&result.c_ptr_, objects_dir.c_str()))
+    throw git_exception();
+  return result;
+}
+
 void odb::expand_ids(const std::vector<expand_id> &ids) {
   std::vector<git_odb_expand_id> ids_c;
   for (auto &id : ids)
@@ -106,33 +133,6 @@ void odb::refresh() {
 }
 
 size_t odb::size() const { return git_odb_num_backends(c_ptr_); }
-
-odb::backend
-odb::create_backend_for_loose_objects(const std::string &objects_dir,
-                                      int compression_level, bool do_fsync,
-                                      unsigned int dir_mode, file_mode mode) {
-  odb::backend result;
-  if (git_odb_backend_loose(&result.c_ptr_, objects_dir.c_str(),
-                            compression_level, do_fsync, dir_mode,
-                            static_cast<unsigned int>(mode)))
-    throw git_exception();
-  return result;
-}
-
-odb::backend
-odb::create_backend_for_one_packfile(const std::string &index_file) {
-  odb::backend result;
-  if (git_odb_backend_one_pack(&result.c_ptr_, index_file.c_str()))
-    throw git_exception();
-  return result;
-}
-
-odb::backend odb::create_backend_for_packfiles(const std::string &objects_dir) {
-  odb::backend result;
-  if (git_odb_backend_pack(&result.c_ptr_, objects_dir.c_str()))
-    throw git_exception();
-  return result;
-}
 
 // Access libgit2 C ptr
 const git_odb *odb::c_ptr() const { return c_ptr_; }

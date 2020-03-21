@@ -1000,10 +1000,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_odb_read_header` | `odb::read_header` |
 | `git_odb_read_prefix` | `odb::read_prefix` |
 | `git_odb_refresh` | |
-| `git_odb_stream_finalize_write` | |
-| `git_odb_stream_free` | |
-| `git_odb_stream_read` | |
-| `git_odb_stream_write` | |
+| `git_odb_stream_finalize_write` | `odb::stream::finalize_write` |
+| `git_odb_stream_free` | `odb::stream::~stream` |
+| `git_odb_stream_read` | `odb::stream::read` |
+| `git_odb_stream_write` | `odb::stream::write` |
 | `git_odb_write` | |
 | `git_odb_write_pack` | |
 
