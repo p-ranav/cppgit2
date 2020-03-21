@@ -10,9 +10,7 @@ ADD_SUBDIRECTORY(ext/libgit2 ${CMAKE_BINARY_DIR}/lib)
 INCLUDE(CMakePackageConfigHelpers)
 
 # Sources for cppgit2
-FILE(GLOB CPPGIT2_SOURCES
-  "src/*.cpp"
-  )
+FILE(GLOB CPPGIT2_SOURCES "src/*.cpp")
 
 # Version information
 SET(CPPGIT2_VERSION_MAJOR 0)
