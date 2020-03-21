@@ -134,5 +134,30 @@ void odb::refresh() {
 
 size_t odb::size() const { return git_odb_num_backends(c_ptr_); }
 
+odb odb::open(const std::string &objects_dir) {
+  odb result(nullptr, ownership::user);
+  if (git_odb_open(&result.c_ptr_, objects_dir.c_str()))
+    throw git_exception();
+  return result;
+}
+
+std::tuple<odb::stream, size_t, cppgit2::object::object_type> odb::open_rstream(const oid &id) {
+  stream result(nullptr);
+  size_t length;
+  git_object_t type;
+  if (git_odb_open_rstream(&result.c_ptr_, &length, &type, c_ptr_, id.c_ptr()))
+    throw git_exception();
+  return {result, length, static_cast<cppgit2::object::object_type>(type)};
+}
+
+odb::stream odb::open_wstream(cppgit2::object::object_size size,
+                            cppgit2::object::object_type type) {
+  stream result(nullptr);
+  if (git_odb_open_wstream(&result.c_ptr_, c_ptr_, static_cast<git_object_size_t>(size), 
+    static_cast<git_object_t>(type)))
+    throw git_exception();
+  return result;
+}
+
 // Access libgit2 C ptr
 const git_odb *odb::c_ptr() const { return c_ptr_; }

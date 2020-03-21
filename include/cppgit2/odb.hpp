@@ -8,6 +8,7 @@
 #include <git2.h>
 #include <utility>
 #include <vector>
+#include <tuple>
 
 namespace cppgit2 {
 
@@ -280,8 +281,32 @@ public:
     }
 
   private:
+    friend odb;
     git_odb_stream *c_ptr_;
   };
+
+  // Create a new object database and automatically add the two default
+  // backends:
+  static odb open(const std::string &objects_dir);
+
+  // Open a stream to read an object from the ODB
+  //
+  // Note that most backends do not support streaming reads because they store
+  // their objects as compressed/delta'ed blobs.
+  //
+  // It's recommended to use git_odb_read instead, which is assured to work on
+  // all backends.
+  //
+  // Returns {stream, length of object, type of object}
+  std::tuple<stream, size_t, cppgit2::object::object_type> open_rstream(const oid &id);
+
+  // Open a stream to write an object into the ODB
+  // The type and final length of the object must be specified when opening the
+  // stream. The returned stream will be of type GIT_STREAM_WRONLY, and it won't
+  // be effective until git_odb_stream_finalize_write is called and returns
+  // without an error
+  stream open_wstream(cppgit2::object::object_size size,
+                             cppgit2::object::object_type type);
 
   // Access libgit2 C ptr
   const git_odb *c_ptr() const;
