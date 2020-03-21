@@ -38,10 +38,10 @@
     *   [Interoperability with libgit2](#interoperability-with-libgit2)
     *   [Ownership and Memory Management](#ownership-and-memory-management)
     *   [Error Handling](#error-handling)
-*   [Contributing](#contributing)
-*   [License](#license)
 *   [Version Compatibility](#version-compatibility)
 *   [API Coverage](#api-coverage)
+*   [Contributing](#contributing)
+*   [License](#license)
 
 ## Build and Integration
 
@@ -735,15 +735,6 @@ git_exception() {
 
 virtual const char *what() const throw() { return message_; }
 ```
-
-## Contributing
-
-`cppgit2` is in active development. `libgit2` is constantly evolving with over 750 functions in its public API. A good portion of this is covered in `cppgit2` (See [API Coverage](#api-coverage)). However, there is much room for improvement - in terms of code quality, tests, and samples. 
-
-Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information. If you notice any bugs while using/reviewing `cppgit2`, please report them. Suggestions w.r.t improving the code quality are also welcome.
-
-## License
-The project is available under the [MIT](https://opensource.org/licenses/MIT) license.
 
 ## Version Compatibility
 
@@ -1788,3 +1779,12 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_worktree_prune_options_init` | `worktree::prune_options::prune_options` |
 | `git_worktree_unlock` | `worktree::unlock` |
 | `git_worktree_validate` | `worktree::validate` |
+
+## Contributing
+
+`cppgit2` is in active development. `libgit2` is constantly evolving with over 750 functions in its public API. A good portion of this is covered in `cppgit2` (See [API Coverage](#api-coverage)). However, there is much room for improvement - in terms of code quality, tests, and samples. 
+
+Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information. If you notice any bugs while using/reviewing `cppgit2`, please report them. Suggestions w.r.t improving the code quality are also welcome.
+
+## License
+The project is available under the [MIT](https://opensource.org/licenses/MIT) license.
