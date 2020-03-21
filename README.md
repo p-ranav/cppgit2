@@ -2,6 +2,19 @@
   <img height="100" src="img/logo.png"/>  
 </p>
 
+<p align="center">
+  <!-- <a href="https://travis-ci.com/p-ranav/cppgit2">
+    <img src="https://travis-ci.com/p-ranav/tabulate.svg?token=haZMYySrhmkE9vsJse61&branch=master" alt="ci status"/>
+  </a> -->
+  <a href="https://en.wikipedia.org/wiki/C%2B%2B11">
+    <img src="https://img.shields.io/badge/C%2B%2B-11-blue.svg" alt="standard"/>
+  </a>
+  <a href="https://github.com/p-ranav/tabulate/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="license"/>
+  </a>
+  <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" alt="version"/>
+</p>
+
 `cppgit2` is a `libgit2` wrapper library for use in modern C++ `( >= C++11)`. See the [Build and Integration](#build-and-integration) section for details on how to build and integrate `cppgit2` in your projects.
 
 <p align="center">
