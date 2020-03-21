@@ -94,6 +94,8 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ## Sample Programs
 
+This section presents some simple examples illustrating various `cppgit2` features. You can find the full set of available examples in the `/samples` directory. Samples are still a work-in-progress. Pull requests are welcome here. 
+
 ### Initialize a new repository (`git init`)
 
 To initialize a new repository, simply call `repository::init`. 
