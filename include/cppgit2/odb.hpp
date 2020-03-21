@@ -38,6 +38,9 @@ public:
   // abbreviated object ID. If true, a valid OID is returned
   oid exists(const oid &id, size_t length) const;
 
+  // List all objects available in the database
+  void for_each(std::function<void(const oid&)> visitor);
+
   // Lookup an ODB backend object by index
   backend operator[](size_t index) const;
 

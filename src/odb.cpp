@@ -23,6 +23,26 @@ oid odb::exists(const oid &id, size_t length) const {
   return result;
 }
 
+void odb::for_each(std::function<void(const oid&)> visitor) {
+  // Prepare wrapper to pass to C API
+  struct visitor_wrapper {
+    std::function<void(const oid&)> fn;
+  };
+
+  visitor_wrapper wrapper;
+  wrapper.fn = visitor;
+
+  auto callback_c = [](const git_oid *oid_c, void *payload) {
+    auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
+    if (wrapper->fn)
+      wrapper->fn(oid(oid_c));
+    return 0;
+  };
+
+  if (git_odb_foreach(c_ptr_, callback_c, (void *)(&wrapper)))
+    throw git_exception();
+}
+
 odb::backend odb::operator[](size_t index) const {
   odb::backend result;
   if (git_odb_get_backend(&result.c_ptr_, c_ptr_, index))
