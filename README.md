@@ -608,7 +608,9 @@ Docker itself. Instead, this exception is thrown by gosu(1), which is a
 Go-based utility to drop privileges and run by our entrypoint.
 
 Fix the issue by dropping gosu(1) in favor of sudo(1).
+```
 
+```bash
 $ ./cat_file -p 83d9bef2675178eeb3aa61d17e5c8b0f7b0ec1de
 100644 blob fd8430bc864cfcd5f10e5590f8a447e01b942bfe	.HEADER
 100644 blob 34c5e9234ec18c69a16828dbc9633a95f0253fe9	.editorconfig
@@ -635,7 +637,9 @@ $ ./cat_file -p 83d9bef2675178eeb3aa61d17e5c8b0f7b0ec1de
 040000 tree 97afcc9b6e4ca91001aadf8a3414d043f22918cf	script
 040000 tree a08bd8a57d619b736ad2c300614b36ead8d0a333	src
 040000 tree dcf5925f8bbda8062ef26ca427c5110868a7f041	tests
+```
 
+```bash
 $ ./cat_file -s 8765a97b5b120259dd59262865ce166f382c0f9e
 11957
 ```
