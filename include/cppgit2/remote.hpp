@@ -183,12 +183,11 @@ public:
     git_remote_head c_struct_;
   };
 
-  // Get the remote's list of push refspecs
-  // The memory is owned by the user and should be freed
-  strarray push_refspec() const;
-
   // Ensure the remote name is well-formed.
   static bool is_valid_name(const std::string &name);
+
+  // Get the remote repository's reference advertisement list
+  std::vector<head> reference_advertisement_list();
 
   // Get the remote's name
   std::string name() const;
@@ -196,12 +195,19 @@ public:
   // Get the remote's repository
   class repository owner() const;
 
+  // Prune tracking refs that are no longer present on remote
+  void prune(const callbacks &remote_callbacks = callbacks());
+
   // Retrieve the ref-prune setting
   void prune_references();
 
   // Peform all the steps from a push.
   void push(const strarray &refspecs,
             const push::options &options = push::options());
+
+  // Get the remote's list of push refspecs
+  // The memory is owned by the user and should be freed
+  strarray push_refspec() const;
 
   // Get the remote's url for pushing
   // If url.*.pushInsteadOf has been configured for this URL,
@@ -221,6 +227,10 @@ public:
   // At certain points in its operation, the network code checks
   // whether the operation has been cancelled and if so stops the operation.
   void stop();
+
+  // Update the tips to the new state
+  void update_tips(const callbacks &remote_callbacks, bool update_fetchhead, 
+    fetch::options::autotag download_tags, const std::string &reflog_message);
 
   // Create a packfile and send it to the server
   //

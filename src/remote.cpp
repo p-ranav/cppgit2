@@ -99,6 +99,19 @@ bool remote::is_valid_name(const std::string &name) {
   return git_remote_is_valid_name(name.c_str());
 }
 
+std::vector<remote::head> remote::reference_advertisement_list() {
+  const git_remote_head * head_ptr = nullptr;
+  const git_remote_head ** head_ptr_ptr = &head_ptr;
+  size_t size = 0;
+  if (git_remote_ls(&head_ptr_ptr, &size, c_ptr_))
+    throw git_exception();
+
+  std::vector<head> result;
+  for (size_t i = 0; i < size; ++i)
+    result.push_back(head(&head_ptr[i]));
+  return result;
+}
+
 std::string remote::name() const {
   auto ret = git_remote_name(c_ptr_);
   return ret ? std::string(ret) : "";
@@ -106,6 +119,11 @@ std::string remote::name() const {
 
 repository remote::owner() const {
   return repository(git_remote_owner(c_ptr_));
+}
+
+void remote::prune(const callbacks &remote_callbacks) {
+  if (git_remote_prune(c_ptr_, remote_callbacks.c_ptr()))
+    throw git_exception();
 }
 
 void remote::prune_references() {
@@ -135,6 +153,13 @@ indexer::progress remote::stats() const {
 
 void remote::stop() {
   if (git_remote_stop(c_ptr_))
+    throw git_exception();
+}
+
+void remote::update_tips(const callbacks &remote_callbacks, bool update_fetchhead, 
+  fetch::options::autotag download_tags, const std::string &reflog_message) {
+  if (git_remote_update_tips(c_ptr_, remote_callbacks.c_ptr(), update_fetchhead, 
+    static_cast<git_remote_autotag_option_t>(download_tags), reflog_message.c_str()))
     throw git_exception();
 }
 
