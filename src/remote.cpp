@@ -17,6 +17,14 @@ fetch::options::autotag remote::autotag_option() {
 
 bool remote::is_connected() const { return git_remote_connected(c_ptr_); }
 
+cppgit2::repository remote::create_options::repository() const {
+  return cppgit2::repository(c_ptr_->repository);
+}
+
+void remote::create_options::set_repository(const cppgit2::repository &repo) {
+  c_ptr_->repository = repo.c_ptr_;
+}
+
 remote remote::copy() const {
   remote result;
   if (git_remote_dup(&result.c_ptr_, c_ptr_))
@@ -27,6 +35,13 @@ remote remote::copy() const {
 remote remote::create_detached_remote(const std::string &url) {
   remote result;
   if (git_remote_create_detached(&result.c_ptr_, url.c_str()))
+    throw git_exception();
+  return result;
+}
+
+remote remote::create_remote(const std::string &url, const create_options &options) {
+  remote result;
+  if (git_remote_create_with_opts(&result.c_ptr_, url.c_str(), options.c_ptr()))
     throw git_exception();
   return result;
 }

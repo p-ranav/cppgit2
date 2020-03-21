@@ -1,4 +1,5 @@
 #pragma once
+#include <cppgit2/bitmask_operators.hpp>
 #include <cppgit2/data_buffer.hpp>
 #include <cppgit2/fetch.hpp>
 #include <cppgit2/indexer.hpp>
@@ -30,6 +31,56 @@ public:
   // is connected to the remote host.
   bool is_connected() const;
 
+  // Remote creation options flags
+  enum class create_flag {
+    // Ignore the repository apply.insteadOf configuration
+    skip_insteadof = (1 << 0),
+    // Don't build a fetchspec from the name if none is set
+    default_fetchspec = (1 << 1)
+  };
+
+  class create_options : public libgit2_api {
+  public:
+    create_options() : c_ptr_(nullptr) {
+      auto ret =
+          git_remote_create_init_options(&default_options_, GIT_REMOTE_CREATE_OPTIONS_VERSION);
+      c_ptr_ = &default_options_;
+      if (ret != 0)
+        throw git_exception();
+    }
+
+    create_options(git_remote_create_options *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Version
+    unsigned int version() const { return c_ptr_->version; }
+    void set_version(unsigned int version) { c_ptr_->version = version; }
+
+    // Repository
+    class repository repository() const;
+    void set_repository(const class repository &repo);
+
+    // Name
+    std::string name() const { return c_ptr_->name ? std::string(c_ptr_->name) : ""; }
+    void set_name(const std::string &name) { c_ptr_->name = name.c_str(); }
+
+    // Fetchspec
+    std::string fetchspec() const { return c_ptr_->fetchspec ? std::string(c_ptr_->fetchspec) : ""; }
+    void set_fetchspec(const std::string &fetchspec) { c_ptr_->fetchspec = fetchspec.c_str(); }
+
+    // Flags
+    create_flag flags() const { return static_cast<create_flag>(c_ptr_->flags); }
+    void set_flags(const create_flag &flags) {
+      c_ptr_->flags = static_cast<unsigned int>(flags);
+    }
+
+    // Access libgit2 C ptr
+    const git_remote_create_options *c_ptr() const { return c_ptr_; }
+
+  private:
+    git_remote_create_options *c_ptr_;
+    git_remote_create_options default_options_;
+  };
+
   // Create a copy of an existing remote.
   // All internal strings are also duplicated.
   // Callbacks are not duplicated.
@@ -42,6 +93,11 @@ public:
   // a detached remote will not consider any repo configuration
   // values (such as instead of url substitutions).
   static remote create_detached_remote(const std::string &url);
+
+  // Create a remote, with options.
+  // This function allows more fine-grained control over the remote creation.
+  static remote create_remote(const std::string &url, 
+    const create_options &options = create_options());
 
   // Retrieve the name of the remote's default branch
   // This function must only be called after connecting.
@@ -117,5 +173,6 @@ private:
   ownership owner_;
   git_remote *c_ptr_;
 };
+ENABLE_BITMASK_OPERATORS(remote::create_flag);
 
 } // namespace cppgit2

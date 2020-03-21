@@ -1239,9 +1239,9 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_remote_create` | `repository::create_remote` |
 | `git_remote_create_anonymous` | `repository::create_anonymous_remote` |
 | `git_remote_create_detached` | `remote::create_detached_remote` |
-| `git_remote_create_options_init` | |
+| `git_remote_create_options_init` | `remote::create_options::create_options` |
 | `git_remote_create_with_fetchspec` | `repository::create_remote` |
-| `git_remote_create_with_opts` | |
+| `git_remote_create_with_opts` | `remote::create_remote` |
 | `git_remote_default_branch` | `remote::default_branch` |
 | `git_remote_delete` | `repository::delete_remote` |
 | `git_remote_disconnect` | `remote::disconnect` |
