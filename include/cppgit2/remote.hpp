@@ -42,8 +42,8 @@ public:
   class create_options : public libgit2_api {
   public:
     create_options() : c_ptr_(nullptr) {
-      auto ret =
-          git_remote_create_init_options(&default_options_, GIT_REMOTE_CREATE_OPTIONS_VERSION);
+      auto ret = git_remote_create_init_options(
+          &default_options_, GIT_REMOTE_CREATE_OPTIONS_VERSION);
       c_ptr_ = &default_options_;
       if (ret != 0)
         throw git_exception();
@@ -60,15 +60,23 @@ public:
     void set_repository(const class repository &repo);
 
     // Name
-    std::string name() const { return c_ptr_->name ? std::string(c_ptr_->name) : ""; }
+    std::string name() const {
+      return c_ptr_->name ? std::string(c_ptr_->name) : "";
+    }
     void set_name(const std::string &name) { c_ptr_->name = name.c_str(); }
 
     // Fetchspec
-    std::string fetchspec() const { return c_ptr_->fetchspec ? std::string(c_ptr_->fetchspec) : ""; }
-    void set_fetchspec(const std::string &fetchspec) { c_ptr_->fetchspec = fetchspec.c_str(); }
+    std::string fetchspec() const {
+      return c_ptr_->fetchspec ? std::string(c_ptr_->fetchspec) : "";
+    }
+    void set_fetchspec(const std::string &fetchspec) {
+      c_ptr_->fetchspec = fetchspec.c_str();
+    }
 
     // Flags
-    create_flag flags() const { return static_cast<create_flag>(c_ptr_->flags); }
+    create_flag flags() const {
+      return static_cast<create_flag>(c_ptr_->flags);
+    }
     void set_flags(const create_flag &flags) {
       c_ptr_->flags = static_cast<unsigned int>(flags);
     }
@@ -96,8 +104,8 @@ public:
 
   // Create a remote, with options.
   // This function allows more fine-grained control over the remote creation.
-  static remote create_remote(const std::string &url, 
-    const create_options &options = create_options());
+  static remote create_remote(const std::string &url,
+                              const create_options &options = create_options());
 
   // Retrieve the name of the remote's default branch
   // This function must only be called after connecting.
@@ -117,6 +125,33 @@ public:
   // Get the remote's list of fetch refspecs
   // The memory is owned by the user and should be freed
   strarray fetch_refspec() const;
+
+  // Description of a reference advertised by a remote server, given out on `ls`
+  // calls.
+  class head : public libgit2_api {
+  public:
+    head(const git_remote_head *c_ptr) : c_struct_(*c_ptr) {}
+
+    bool local() const { return c_struct_.local; }
+
+    oid id() const { return oid(&c_struct_.oid); }
+
+    oid lid() const { return oid(&c_struct_.loid); }
+
+    std::string name() const {
+      return c_struct_.name ? std::string(c_struct_.name) : "";
+    }
+
+    // If the server send a symref mapping for this ref, this will point to the
+    // target.
+    std::string symref_target() const {
+      return c_struct_.symref_target ? std::string(c_struct_.symref_target)
+                                     : "";
+    }
+
+  private:
+    git_remote_head c_struct_;
+  };
 
   // Get the remote's list of push refspecs
   // The memory is owned by the user and should be freed

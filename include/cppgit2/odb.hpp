@@ -50,12 +50,14 @@ public:
   void add_alternate_backend(const backend &backend, int priority);
 
   // Add a custom backend to an existing Object DB
-  // The backends are checked in relative ordering, based on the value of the priority parameter.
+  // The backends are checked in relative ordering, based on the value of the
+  // priority parameter.
   void add_backend(const backend &backend, int priority);
 
   // Add an on-disk alternate to an existing Object DB.
-  // Note that the added path must point to an objects, not to a full repository, to use it as an alternate store.
-  // Alternate backends are always checked for objects after all the main backends have been exhausted.
+  // Note that the added path must point to an objects, not to a full
+  // repository, to use it as an alternate store. Alternate backends are always
+  // checked for objects after all the main backends have been exhausted.
   // Writing is disabled on alternate backends.
   void add_disk_alternate_backend(const std::string &path);
 

@@ -39,7 +39,8 @@ remote remote::create_detached_remote(const std::string &url) {
   return result;
 }
 
-remote remote::create_remote(const std::string &url, const create_options &options) {
+remote remote::create_remote(const std::string &url,
+                             const create_options &options) {
   remote result;
   if (git_remote_create_with_opts(&result.c_ptr_, url.c_str(), options.c_ptr()))
     throw git_exception();

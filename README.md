@@ -1233,8 +1233,8 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | --- | --- |
 | `git_remote_add_fetch` | `repository::add_fetch_refspec_to_remote` |
 | `git_remote_add_push` | `repository::add_push_refspec_to_remote` |
-| `git_remote_autotag` | |
-| `git_remote_connect` | |
+| `git_remote_autotag` | **Not Implemented** |
+| `git_remote_connect` | **Not Implemented** |
 | `git_remote_connected` | `remote::is_connected` |
 | `git_remote_create` | `repository::create_remote` |
 | `git_remote_create_anonymous` | `repository::create_anonymous_remote` |
@@ -1256,10 +1256,10 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_remote_is_valid_name` | `remote::is_valid_name` |
 | `git_remote_list` | `repository::remote_list` |
 | `git_remote_lookup` | `repository::lookup_remote` |
-| `git_remote_ls` | |
+| `git_remote_ls` | **Not Implemented** |
 | `git_remote_name` | `remote::name` |
 | `git_remote_owner` | `remote::owner` |
-| `git_remote_prune` | |
+| `git_remote_prune` | **Not Implemented** |
 | `git_remote_prune_refs` | `remote::prune_references` |
 | `git_remote_push` | `remote::push` |
 | `git_remote_pushurl` | `remote::push_url` |
