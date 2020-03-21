@@ -980,7 +980,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_odb_exists` | `odb::exists` |
 | `git_odb_exists_prefix` | `odb::exists` |
 | `git_odb_expand_ids` | |
-| `git_odb_foreach` | |
+| `git_odb_foreach` | `odb::for_each` |
 | `git_odb_free` | `odb::~odb` |
 | `git_odb_get_backend` | `odb::operator[]` |
 | `git_odb_hash` | |

@@ -23,10 +23,10 @@ oid odb::exists(const oid &id, size_t length) const {
   return result;
 }
 
-void odb::for_each(std::function<void(const oid&)> visitor) {
+void odb::for_each(std::function<void(const oid &)> visitor) {
   // Prepare wrapper to pass to C API
   struct visitor_wrapper {
-    std::function<void(const oid&)> fn;
+    std::function<void(const oid &)> fn;
   };
 
   visitor_wrapper wrapper;

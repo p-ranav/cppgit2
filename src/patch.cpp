@@ -84,8 +84,8 @@ size_t patch::num_lines_in_hunk(size_t hunk_index) const {
 }
 
 void patch::print(std::function<void(const diff::delta &, const diff::hunk &,
-                                const diff::line &)>
-                 line_callback) {
+                                     const diff::line &)>
+                      line_callback) {
 
   // Prepare wrapper to pass to C API
   struct visitor_wrapper {
@@ -102,7 +102,8 @@ void patch::print(std::function<void(const diff::delta &, const diff::hunk &,
                             const git_diff_line *line_c, void *payload) {
     auto wrapper = reinterpret_cast<visitor_wrapper *>(payload);
     if (wrapper->line_callback)
-      wrapper->line_callback(diff::delta(delta_c), diff::hunk(hunk_c), diff::line(line_c));
+      wrapper->line_callback(diff::delta(delta_c), diff::hunk(hunk_c),
+                             diff::line(line_c));
     return 0;
   };
 
