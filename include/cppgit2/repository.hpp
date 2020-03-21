@@ -244,7 +244,7 @@ public:
   cppgit2::config config_snapshot() const;
 
   // Detach the HEAD
-  void detach_head();
+  void detach_head() const;
 
   // Look for a git repository and return path
   // Method will auto-detect if a repo is bare (if there is a repo)
@@ -267,21 +267,21 @@ public:
   void for_each_fetch_head(
       std::function<void(const std::string &, const std::string &, const oid &,
                          bool)>
-          visitor);
+          visitor) const;
 
   // If a merge is in progress, invoke 'visitor'
   // for each commit ID in the MERGE_HEAD file.
-  void for_each_merge_head(std::function<void(const oid &)> visitor);
+  void for_each_merge_head(std::function<void(const oid &)> visitor) const;
 
   // Currently active namespace for this repo
   std::string namespace_() const;
 
   // Calculate hash of file using repo filtering rules
   oid hashfile(const std::string &path, object::object_type type,
-               const std::string &as_path);
+               const std::string &as_path) const;
 
   // hashfile overload that uses as_path = path
-  oid hashfile(const std::string &path, object::object_type type);
+  oid hashfile(const std::string &path, object::object_type type) const;
 
   // Retrieve and resolve the reference pointed at by HEAD.
   reference head() const;
@@ -353,40 +353,40 @@ public:
   cppgit2::refdb refdb() const;
 
   // Remove the message that the above message() call retrieves.
-  void remove_message();
+  void remove_message() const;
 
   // Make the repository HEAD point to the specified reference.
-  void set_head(const std::string &refname);
+  void set_head(const std::string &refname) const;
 
   // Make the repository HEAD directly point to the Commit.
-  void set_head_detached(const oid &commitish);
+  void set_head_detached(const oid &commitish) const;
 
   // Make the repository HEAD directly point to the Commit.
   // This behaves like git_repository_set_head_detached() but takes an
   // annotated commit, which lets you specify which extended sha syntax
   // string was specified by a user, allowing for more exact reflog messages.
-  void set_head_detached(const annotated_commit &commitish);
+  void set_head_detached(const annotated_commit &commitish) const;
 
   // Set the identity to be used for writing reflogs
-  void set_identity(const std::string &name, const std::string &email);
+  void set_identity(const std::string &name, const std::string &email) const;
 
   // Unset the identity used for writing reflogs
   // When unset, the identity will be taken from the repository's configuration.
-  void unset_identity();
+  void unset_identity() const;
 
   // Sets the active namespace for this Git Repository
   // This should not include the refs folder, e.g. to namespace all
   // references under `refs/namespaces/foo/`, use `foo` as the namespace.
-  void set_namespace(const std::string &nmspace);
+  void set_namespace(const std::string &nmspace) const;
 
   // Set the path to the working directory for this repository
   // The working directory doesn't need to be the same one that contains the
   // .git folder for this repository.
-  void set_workdir(const std::string &workdir, bool update_gitlink);
+  void set_workdir(const std::string &workdir, bool update_gitlink) const;
 
   // Remove all the metadata associated with an ongoing command like merge,
   // revert, cherry-pick, etc. For example: MERGE_HEAD, MERGE_MSG, etc.
-  void cleanup_state();
+  void cleanup_state() const;
 
   enum class repository_state {
     unknown,                 // maps to git_repository_state() of -1
@@ -428,18 +428,18 @@ public:
   // Creates an annotated_commit from the given fetch head data
   annotated_commit create_annotated_commit(const std::string &branch_name,
                                            const std::string &remote_url,
-                                           const oid &id);
+                                           const oid &id) const;
 
   // Create annotated commit from revspec
   // (the extended sha syntax string to use to lookup the commit)
-  annotated_commit create_annotated_commit(const std::string &revspec);
+  annotated_commit create_annotated_commit(const std::string &revspec) const;
 
   // Creates an annotated_commit from the given reference (
   // (used to lookup the git_annotated_commit)
-  annotated_commit create_annotated_commit(const reference &ref);
+  annotated_commit create_annotated_commit(const reference &ref) const;
 
   // Lookup annotated_commit from the given commit id
-  annotated_commit lookup_annotated_commit(const oid &id);
+  annotated_commit lookup_annotated_commit(const oid &id) const;
 
   /*
    * Apply API
@@ -449,11 +449,11 @@ public:
   // Apply a git_diff to the given repository, making changes directly in the
   // working directory, the index, or both.
   void apply_diff(const diff &diff, apply::location location,
-                  const apply::options &options = apply::options());
+                  const apply::options &options = apply::options()) const;
 
   // Apply a git_diff to a git_tree, and return the resulting image as an index.
   cppgit2::index apply_diff(const tree &preimage, const diff &diff,
-                            const apply::options &options = apply::options());
+                            const apply::options &options = apply::options()) const;
 
   /*
    * Attributes API
@@ -465,7 +465,7 @@ public:
   // of the repository (plus the build-in "binary" macro). This function allows
   // you to add others. For example, to add the default macro, you would call:
   //     repo.add_attributes_macro("binary", "-diff -crlf");
-  void add_attributes_macro(const std::string &name, const std::string &values);
+  void add_attributes_macro(const std::string &name, const std::string &values) const;
 
   // Flush the gitattributes cache.
   //
@@ -473,16 +473,16 @@ public:
   // no longer match the cached contents of memory. This will cause the
   // attributes files to be reloaded the next time that an attribute access
   // function is called.
-  void flush_attributes_cache();
+  void flush_attributes_cache() const;
 
   // Loop over all the git attributes for a path.
   void for_each_attribute(
       attribute::flag flags, const std::string &path,
-      std::function<void(const std::string &, const std::string &)> visitor);
+      std::function<void(const std::string &, const std::string &)> visitor) const;
 
   // Look up the value of one git attribute for path.
   std::string lookup_attribute(attribute::flag flags, const std::string &path,
-                               const std::string &name);
+                               const std::string &name) const;
 
   // Look up a list of git attributes for path.
   // Use this if you have a known list of attributes that you want to look up in
@@ -494,7 +494,7 @@ public:
   //      "my/fun/file.c", { "crlf", "diff", "foo" });
   std::vector<std::string>
   lookup_multiple_attributes(attribute::flag flags, const std::string &path,
-                             const std::vector<std::string> &names);
+                             const std::vector<std::string> &names) const;
 
   /*
    * BLAME API
@@ -509,14 +509,14 @@ public:
    */
 
   // Write an in-memory buffer to the ODB as a blob
-  oid create_blob_from_buffer(const std::string &buffer);
+  oid create_blob_from_buffer(const std::string &buffer) const;
 
   // Read a file from the filesystem and write its content to the Object
   // Database as a loose blob
-  oid create_blob_from_disk(const std::string &path);
+  oid create_blob_from_disk(const std::string &path) const;
   // Read a file from the working folder of a repository
   // and write it to the Object Database as a loose blob
-  oid create_blob_from_workdir(const std::string &relative_path);
+  oid create_blob_from_workdir(const std::string &relative_path) const;
 
   // Lookup a blob object from a repository.
   blob lookup_blob(const oid &id) const;
@@ -532,20 +532,20 @@ public:
 
   // Create a new branch pointing at a target commit
   reference create_branch(const std::string &branch_name, const commit &target,
-                          bool force);
+                          bool force) const;
 
   // Create a new branch pointing at a target commit
   // Takes an annotated commit, which lets you specify which extended
   // sha syntax string was specified by a user, allowing for more exact reflog
   // messages.
   reference create_branch(const std::string &branch_name,
-                          const annotated_commit &commit, bool force);
+                          const annotated_commit &commit, bool force) const;
 
   // Delete an existing branch given its name
-  void delete_branch(const reference &ref);
+  void delete_branch(const reference &ref) const;
   void
   delete_branch(const std::string &branch_name,
-                branch::branch_type branch_type = branch::branch_type::local);
+                branch::branch_type branch_type = branch::branch_type::local) const;
 
   // Determine if any HEAD points to the current branch
   bool is_branch_checked_out(const reference &ref) const;
@@ -553,7 +553,7 @@ public:
   // Determine if any HEAD points to the current branch
   bool is_branch_checked_out(
       const std::string &branch_name,
-      branch::branch_type branch_type = branch::branch_type::local);
+      branch::branch_type branch_type = branch::branch_type::local) const;
 
   // Determine if HEAD points to the given branch
   bool is_head_pointing_to_branch(const reference &ref) const;
@@ -561,17 +561,17 @@ public:
   // Determine if HEAD points to the given branch
   bool is_head_pointing_to_branch(
       const std::string &branch_name,
-      branch::branch_type branch_type = branch::branch_type::local);
+      branch::branch_type branch_type = branch::branch_type::local) const;
 
   // Move/rename an existing local branch reference.
   reference rename_branch(const reference &ref,
-                          const std::string &new_branch_name, bool force);
+                          const std::string &new_branch_name, bool force) const;
 
   // Move/rename an existing local branch reference.
   reference
   rename_branch(const std::string &branch_name,
                 const std::string &new_branch_name, bool force,
-                branch::branch_type branch_type = branch::branch_type::local);
+                branch::branch_type branch_type = branch::branch_type::local) const;
 
   // Get the branch name
   std::string branch_name(const reference &branch) const;
@@ -585,23 +585,23 @@ public:
 
   // Set a branch's upstream branch
   void set_branch_upstream(const reference &ref,
-                           const std::string &upstream_name);
+                           const std::string &upstream_name) const;
 
   // Set a branch's upstream branch
   void set_branch_upstream(const std::string &branch_name,
-                           const std::string &upstream_name);
+                           const std::string &upstream_name) const;
 
   // Unset the branch's upstream branch
-  void unset_branch_upstream(const reference &ref);
+  void unset_branch_upstream(const reference &ref) const;
 
   // Unset the branch's upstream branch
-  void unset_branch_upstream(const std::string &branch_name);
+  void unset_branch_upstream(const std::string &branch_name) const;
 
   // Get the upstream of a branch
   reference branch_upstream(const reference &local_branch) const;
 
   // Get the upstream of a branch
-  reference branch_upstream(const std::string &local_branch_name);
+  reference branch_upstream(const std::string &local_branch_name) const;
   // Get the upstream name of a branch
   //
   // Given a local branch, this will return its remote-tracking branch
@@ -620,12 +620,12 @@ public:
   //
   // The branch name will be checked for validity.
   reference lookup_branch(const std::string &branch_name,
-                          branch::branch_type branch_type);
+                          branch::branch_type branch_type) const;
 
   // Run visitor function for each branch in the repository
   void
   for_each_branch(std::function<void(const reference &)> visitor,
-                  branch::branch_type branch_type = branch::branch_type::local);
+                  branch::branch_type branch_type = branch::branch_type::local) const;
 
   /*
    * CHECKOUT API
@@ -636,18 +636,18 @@ public:
   // the content of the commit pointed at by HEAD.
   //
   // NOTE: repository must be non-bare
-  void checkout_head(const checkout::options &options = checkout::options());
+  void checkout_head(const checkout::options &options = checkout::options()) const;
 
   // Updates files in the working tree to match the content of the index.
   //
   // NOTE: repository must be non-bare
   void checkout_index(const cppgit2::index &index,
-                      const checkout::options &options = checkout::options());
+                      const checkout::options &options = checkout::options()) const;
 
   // Updates files in the index and working tree to match the
   // content of the tree pointed at by the treeish.
   void checkout_tree(const object &treeish,
-                     const checkout::options &options = checkout::options());
+                     const checkout::options &options = checkout::options()) const;
 
   /*
    * CHERRYPICK API
@@ -658,14 +658,14 @@ public:
   // directory.
   void cherrypick_commit(
       const commit &commit,
-      const cherrypick::options &options = cherrypick::options(nullptr));
+      const cherrypick::options &options = cherrypick::options(nullptr)) const;
 
   // Cherry-picks the given commit against the given "our" commit, producing an
   // index that reflects the result of the cherry-pick.
   cppgit2::index cherrypick_commit(
       const commit &cherrypick_commit, const commit &our_commit,
       unsigned int mainline,
-      const merge::options &merge_options = merge::options(nullptr));
+      const merge::options &merge_options = merge::options(nullptr)) const;
 
   /*
    * COMMIT API
@@ -677,30 +677,30 @@ public:
                     const signature &committer,
                     const std::string &message_encoding,
                     const std::string &message, const tree &tree,
-                    const std::vector<commit> &parents);
+                    const std::vector<commit> &parents) const;
 
   // Create a commit and write it into a buffer
   data_buffer create_commit(const signature &author, const signature &committer,
                             const std::string &message_encoding,
                             const std::string &message, const tree &tree,
-                            const std::vector<commit> &parents);
+                            const std::vector<commit> &parents) const;
 
   // Create a commit object from the given buffer and signature
   oid create_commit(const std::string &commit_content,
                     const std::string &signature = "",
-                    const std::string &signature_field = "gpgsig");
+                    const std::string &signature_field = "gpgsig") const;
 
   // Extract the signature from a commit
   std::pair<data_buffer, data_buffer>
   extract_signature_from_commit(oid id,
-                                const std::string &signature_field = "gpgsig");
+                                const std::string &signature_field = "gpgsig") const;
 
   // Lookup a commit object from a repository.
-  commit lookup_commit(const oid &id);
+  commit lookup_commit(const oid &id) const;
 
   // Lookup a commit object from a repository given a prefix (short ID)
   commit lookup_commit(const oid &id,
-                       size_t length /* length of short identifier*/);
+                       size_t length /* length of short identifier*/) const;
 
   // The following for_each methods are convenience versions of
   // for_each_revision where the commit (instead of the oid) is passed to the
@@ -708,12 +708,12 @@ public:
 
   // Run operation for each commit in the repository
   void for_each_commit(std::function<void(const commit &id)> visitor,
-                       revision::sort sort_ordering = revision::sort::none);
+                       revision::sort sort_ordering = revision::sort::none) const;
 
   // Run operation for each commit in the repository
   void for_each_commit(std::function<void(const commit &id)> visitor,
                        const commit &start_from,
-                       revision::sort sort_ordering = revision::sort::none);
+                       revision::sort sort_ordering = revision::sort::none) const;
 
   /*
    * CONFIG API
@@ -721,7 +721,7 @@ public:
    */
   void add_ondisk_config_file(const cppgit2::config &cfg,
                               const std::string &path,
-                              config::priority_level level, bool force);
+                              config::priority_level level, bool force) const;
 
   /*
    * DIFF API
@@ -732,38 +732,38 @@ public:
   data_buffer create_diff_commit_as_email(
       const commit &commit, size_t patch_no, size_t total_patches,
       diff::format_email_flag flags,
-      const diff::options &options = diff::options(nullptr));
+      const diff::options &options = diff::options(nullptr)) const;
 
   // Create a diff with the difference between two index objects.
   diff create_diff_index_to_index(
       const cppgit2::index &old_index, const cppgit2::index &new_index,
-      const diff::options &options = diff::options(nullptr));
+      const diff::options &options = diff::options(nullptr)) const;
 
   // Create a diff between the repository index and the workdir directory.
   diff create_diff_index_to_workdir(
       const cppgit2::index &index,
-      const diff::options &options = diff::options(nullptr));
+      const diff::options &options = diff::options(nullptr)) const;
 
   // Create a diff between a tree and repository index.
   diff create_diff_tree_to_index(
       const tree &old_tree, const cppgit2::index &index,
-      const diff::options &options = diff::options(nullptr));
+      const diff::options &options = diff::options(nullptr)) const;
 
   // Create a diff with the difference between two tree objects.
   diff create_diff_tree_to_tree(
       const tree &old_tree, const tree &new_tree,
-      const diff::options &options = diff::options(nullptr));
+      const diff::options &options = diff::options(nullptr)) const;
 
   // Create a diff between a tree and the working directory.
   diff create_diff_tree_to_workdir(
       const tree &old_tree,
-      const diff::options &options = diff::options(nullptr));
+      const diff::options &options = diff::options(nullptr)) const;
 
   // Create a diff between a tree and the working directory using index data to
   // account for staged deletes, tracked files, etc.
   diff create_diff_tree_to_workdir_with_index(
       const tree &old_tree,
-      const diff::options &options = diff::options(nullptr));
+      const diff::options &options = diff::options(nullptr)) const;
 
   /*
    * GRAPH API
@@ -797,14 +797,14 @@ public:
   // Example usage:
   //   repo.add_ignore_rules("*.c/ with space");
   // This would add three rules to the ignores.
-  void add_ignore_rules(const std::string &rules);
+  void add_ignore_rules(const std::string &rules) const;
 
   // Clear ignore rules that were explicitly added.
   //
   // Resets to the default internal ignore rules.
   // This will not turn off rules in .gitignore files
   // that actually exist in the filesystem.
-  void clear_ignore_rules();
+  void clear_ignore_rules() const;
 
   // Test if the ignore rules apply to a given path.
   //
@@ -822,29 +822,29 @@ public:
   // Analyzes the given branch(es) and determines the opportunities for merging
   // them into the HEAD of the repository.
   std::pair<merge::analysis_result, merge::preference>
-  analyze_merge(const std::vector<annotated_commit> &their_heads);
+  analyze_merge(const std::vector<annotated_commit> &their_heads) const;
 
   // Analyzes the given branch(es) and determines the opportunities for merging
   // them into a reference.
   std::pair<merge::analysis_result, merge::preference>
   analyze_merge(const reference &our_ref,
-                const std::vector<annotated_commit> &their_heads);
+                const std::vector<annotated_commit> &their_heads) const;
 
   // Find a merge base between two commits
-  oid find_merge_base(const oid &first_commit, const oid &second_commit);
+  oid find_merge_base(const oid &first_commit, const oid &second_commit) const;
 
   // Find a merge base given a list of commits
-  oid find_merge_base(const std::vector<oid> &commits);
+  oid find_merge_base(const std::vector<oid> &commits) const;
 
   // Find a merge base in preparation for an octopus merge
-  oid find_merge_base_for_octopus_merge(const std::vector<oid> &commits);
+  oid find_merge_base_for_octopus_merge(const std::vector<oid> &commits) const;
 
   // Find merge bases between two commits
   std::vector<oid> find_merge_bases(const oid &first_commit,
-                                    const oid &second_commit);
+                                    const oid &second_commit) const;
 
   // Find all merge bases given a list of commits
-  std::vector<oid> find_merge_bases(const std::vector<oid> &commits);
+  std::vector<oid> find_merge_bases(const std::vector<oid> &commits) const;
 
   // Merges the given commit(s) into HEAD, writing the results into the working
   // directory. Any changes are staged for commit and any conflicts are written
@@ -853,7 +853,7 @@ public:
   void merge_commits(
       const std::vector<annotated_commit> &their_heads,
       const merge::options &merge_options = merge::options(),
-      const checkout::options &checkout_options = checkout::options());
+      const checkout::options &checkout_options = checkout::options()) const;
 
   // Merge two commits, producing a git_index that reflects the result of the
   // merge. The index may be written as-is to the working directory or checked
@@ -861,7 +861,7 @@ public:
   // any conflicts that arose as part of the merge.
   cppgit2::index
   merge_commits(const commit &our_commit, const commit &their_commit,
-                const merge::options &merge_options = merge::options());
+                const merge::options &merge_options = merge::options()) const;
 
   // Merge two files as they exist in the index, using the given common ancestor
   // as the baseline, producing a git_merge_file_result that reflects the merge
@@ -870,7 +870,7 @@ public:
   merge::file::result merge_file_from_index(
       const index::entry &ancestor, const index::entry &ours,
       const index::entry &theirs,
-      const merge::file::options &options = merge::file::options());
+      const merge::file::options &options = merge::file::options()) const;
 
   // Merge two trees, producing a git_index that reflects the result of the
   // merge. The index may be written as-is to the working directory or checked
@@ -878,7 +878,7 @@ public:
   // any conflicts that arose as part of the merge.
   cppgit2::index merge_trees(const tree &ancestor_tree, const tree &our_tree,
                              const tree &their_tree,
-                             const merge::options &options = merge::options());
+                             const merge::options &options = merge::options()) const;
 
   /*
    * NOTE API
@@ -888,35 +888,35 @@ public:
   // Add a note for an object
   oid create_note(const std::string &notes_ref, const signature &author,
                   const signature &committer, const oid &id,
-                  const std::string &note, bool force);
+                  const std::string &note, bool force) const;
 
   // Add a note for an object from a commit
   std::pair<oid, oid> create_note(const commit &parent, const signature &author,
                                   const signature &committer, const oid &id,
                                   const std::string &note,
-                                  bool allow_note_override);
+                                  bool allow_note_override) const;
 
   // Read the note for an object
-  note read_note(const std::string &notes_ref, const oid &id);
+  note read_note(const std::string &notes_ref, const oid &id) const;
 
   // Read the note for an object from a note commit
-  note read_note(const commit &notes_commit, const oid &id);
+  note read_note(const commit &notes_commit, const oid &id) const;
 
   // Remove the note for an object
   void remove_note(const std::string &notes_ref, const signature &author,
-                   const signature &committer, const oid &id);
+                   const signature &committer, const oid &id) const;
 
   // Remove the note for an object
   oid remove_note(const commit &notes_commit, const signature &author,
-                  const signature &committer, const oid &id);
+                  const signature &committer, const oid &id) const;
 
   // Get the default notes reference for a repository
-  data_buffer detault_notes_reference();
+  data_buffer detault_notes_reference() const;
 
   // Loop over all the notes within a specified namespace and
   // issue a callback for each one.
   void for_each_note(const std::string &notes_ref,
-                     std::function<void(const oid &, const oid &)> visitor);
+                     std::function<void(const oid &, const oid &)> visitor) const;
 
   /*
    * OBJECT API
@@ -945,7 +945,7 @@ public:
    */
 
   // Initialize a new packbuilder
-  pack_builder initialize_pack_builder();
+  pack_builder initialize_pack_builder() const;
 
   /*
    * REBASE API
@@ -960,11 +960,11 @@ public:
   rebase init_rebase(const annotated_commit &branch,
                      const annotated_commit &upstream,
                      const annotated_commit &onto,
-                     const rebase::options &options = rebase::options());
+                     const rebase::options &options = rebase::options()) const;
 
   // Opens an existing rebase that was previously started by either an
   // invocation of git_rebase_init or by another client.
-  rebase open_rebase(const rebase::options &options = rebase::options());
+  rebase open_rebase(const rebase::options &options = rebase::options()) const;
 
   /*
    * REFDB API
@@ -974,10 +974,10 @@ public:
   // Create a new reference database with no backends.
   // Before the Ref DB can be used for read/writing, a custom database
   // backend must be manually set using git_refdb_set_backend()
-  cppgit2::refdb create_refdb();
+  cppgit2::refdb create_refdb() const;
 
   // Create a new reference database and automatically add the default backends:
-  cppgit2::refdb open_refdb();
+  cppgit2::refdb open_refdb() const;
 
   /*
    * REFERENCE API
@@ -986,18 +986,18 @@ public:
 
   // Create a new direct reference.
   reference create_reference(const std::string &name, const oid &id, bool force,
-                             const std::string &log_message);
+                             const std::string &log_message) const;
 
   // Conditionally create new direct reference
   reference create_reference(const std::string &name, const oid &id, bool force,
                              const oid &current_id,
-                             const std::string &log_message);
+                             const std::string &log_message) const;
 
   // Delete an existing reference by name
-  void delete_reference(const std::string &refname);
+  void delete_reference(const std::string &refname) const;
 
   // Ensure there is a reflog for a particular reference.
-  void ensure_reflog_for_reference(const std::string &refname);
+  void ensure_reflog_for_reference(const std::string &refname) const;
 
   // Check if a reflog exists for the specified reference.
   bool reference_has_reflog(const std::string &refname) const;
@@ -1018,26 +1018,26 @@ public:
   // Create a new symbolic reference.
   reference create_symbolic_reference(const std::string &name,
                                       const std::string &target, bool force,
-                                      const std::string &log_message);
+                                      const std::string &log_message) const;
 
   // Conditionally create a new symbolic reference.
   reference create_symbolic_reference(const std::string &name,
                                       const std::string &target, bool force,
                                       const std::string &current_value,
-                                      const std::string &log_message);
+                                      const std::string &log_message) const;
 
   // Perform a callback on each reference in the repository.
-  void for_each_reference(std::function<void(const reference &)> visitor);
+  void for_each_reference(std::function<void(const reference &)> visitor) const;
 
   // Callback used to iterate over reference names
   void
-  for_each_reference_name(std::function<void(const std::string &)> visitor);
+  for_each_reference_name(std::function<void(const std::string &)> visitor) const;
 
   // Perform a callback on each reference in the repository
   // whose name matches the given pattern.
   void
   for_each_reference_glob(const std::string &glob,
-                          std::function<void(const std::string &)> visitor);
+                          std::function<void(const std::string &)> visitor) const;
 
   /*
    * REFLOG API
@@ -1045,13 +1045,13 @@ public:
    */
 
   // Delete the reflog for the given reference
-  void delete_reflog(const std::string &name);
+  void delete_reflog(const std::string &name) const;
 
   // Read the reflog for the given reference
-  reflog read_reflog(const std::string &name);
+  reflog read_reflog(const std::string &name) const;
 
   // Rename a reflog
-  void rename_reflog(const std::string &old_name, const std::string &name);
+  void rename_reflog(const std::string &old_name, const std::string &name) const;
 
   /*
    * RESET API
@@ -1061,16 +1061,16 @@ public:
   // Sets the current head to the specified commit oid
   // and optionally resets the index and working tree to match.
   void reset(const object &target, reset::reset_type reset_type,
-             const checkout::options &options = checkout::options());
+             const checkout::options &options = checkout::options()) const;
 
   // Updates some entries in the index from the target commit tree.
   void reset_default(const object &target,
-                     const std::vector<std::string> &pathspecs);
+                     const std::vector<std::string> &pathspecs) const;
 
   // Sets the current head to the specified annotated commit oid
   // and optionally resets the index and working tree to match.
   void reset(const annotated_commit &target, reset::reset_type reset_type,
-             const checkout::options &options = checkout::options());
+             const checkout::options &options = checkout::options()) const;
 
   /*
    * REMOTE API
@@ -1079,34 +1079,34 @@ public:
 
   // Add a fetch refspec to the remote's configuration
   void add_fetch_refspec_to_remote(const std::string &remote,
-                                   const std::string &refspec);
+                                   const std::string &refspec) const;
 
   // Add a push refspec to the remote's configuration
   void add_push_refspec_to_remote(const std::string &remote,
-                                  const std::string &refspec);
+                                  const std::string &refspec) const;
 
   // Add a remote with the default fetch refspec to the repository's
   // configuration.
-  remote create_remote(const std::string &name, const std::string &url);
+  remote create_remote(const std::string &name, const std::string &url) const;
 
   // Create an anonymous remote
-  remote create_anonymous_remote(const std::string &url);
+  remote create_anonymous_remote(const std::string &url) const;
 
   // Add a remote with the provided fetch refspec
   //  to the repository's configuration.
   remote create_remote(const std::string &name, const std::string &url,
-                       const std::string &fetch_refspec);
+                       const std::string &fetch_refspec) const;
 
   // Delete an existing persisted remote.
   // All remote-tracking branches and configuration
   // settings for the remote will be removed.
-  void delete_remote(const std::string &name);
+  void delete_remote(const std::string &name) const;
 
   // Get a list of the configured remotes for a repo
   strarray remote_list() const;
 
   // Get the information for a particular remote
-  remote lookup_remote(const std::string &name);
+  remote lookup_remote(const std::string &name) const;
 
   // Give the remote a new name
   // All remote-tracking branches and configuration settings for the remote are
@@ -1116,22 +1116,22 @@ public:
   //   non-default refspecs cannot be renamed and will be stored here
   //   for further processing by the caller. Always free this strarray
   //   on successful return.
-  strarray rename_remote(const std::string &name, const std::string &new_name);
+  strarray rename_remote(const std::string &name, const std::string &new_name) const;
 
   // Set the remote's tag following setting.
   // The change will be made in the configuration. No loaded remotes will be
   // affected.
   void set_remote_autotag(const std::string &remote,
-                          fetch::options::autotag option);
+                          fetch::options::autotag option) const;
 
   // Set the remote's url for pushing in the configuration.
   // Remote objects already in memory will not be affected.
   // This assumes the common case of a single-url remote and
   // will otherwise return an error.
-  void set_remote_push_url(const std::string &remote, const std::string &url);
+  void set_remote_push_url(const std::string &remote, const std::string &url) const;
 
   // Set the remote's url in the configuration
-  void set_remote_url(const std::string &remote, const std::string &url);
+  void set_remote_url(const std::string &remote, const std::string &url) const;
 
   /*
    * REVERT API
@@ -1140,14 +1140,14 @@ public:
   // Reverts the given commit, producing changes
   // in the index and working directory.
   void revert_commit(const commit &commit,
-                     const revert::options &options = revert::options());
+                     const revert::options &options = revert::options()) const;
 
   // Reverts the given commit against the given "our" commit,
   // producing an index that reflects the result of the revert.
   cppgit2::index
   revert_commit(const commit &revert_commit, const commit &our_commit,
                 unsigned int mainline,
-                const merge::options &options = merge::options());
+                const merge::options &options = merge::options()) const;
 
   /*
    * REVPARSE API
@@ -1156,17 +1156,17 @@ public:
 
   // Parse a revision string for from, to, and intent.
   // See `man gitrevisions` for more information
-  revspec revparse(const std::string &spec);
+  revspec revparse(const std::string &spec) const;
 
   // Find a single object and intermediate reference by a revision string.
   // In some cases (@{<-n>} or <branchname>@{upstream}), the expression may
   // point to an intermediate reference. When such expressions are being passed
   // in, reference_out will be valued as well.
   std::pair<object, reference>
-  revparse_to_object_and_reference(const std::string &spec);
+  revparse_to_object_and_reference(const std::string &spec) const;
 
   // Find a single object, as specified by a revision string.
-  object revparse_to_object(const std::string &spec);
+  object revparse_to_object(const std::string &spec) const;
 
   /*
    * REVWALK API
@@ -1177,7 +1177,7 @@ public:
   //
   // This revision walker uses a custom memory pool and an internal commit
   // cache, so it is relatively expensive to allocate.
-  revwalk create_revwalk();
+  revwalk create_revwalk() const;
 
   /*
    * SIGNATURE API
@@ -1195,12 +1195,12 @@ public:
   // -> 0 points to the most recent stashed state.
   void
   apply_stash(size_t index,
-              const stash::apply::options &options = stash::apply::options());
+              const stash::apply::options &options = stash::apply::options()) const;
 
   // Remove a single stashed state from the stash list.
   // index is the position within the stash list.
   // -> 0 points to the most recent stashed state.
-  void drop_stash(size_t index);
+  void drop_stash(size_t index) const;
 
   // Loop over all the stashed states and issue a callback for each one.
   void for_each_stash(
@@ -1211,11 +1211,11 @@ public:
   // and remove it from the list if successful.
   void
   pop_stash(size_t index,
-            const stash::apply::options &options = stash::apply::options());
+            const stash::apply::options &options = stash::apply::options()) const;
 
   // Save the local modifications to a new stash.
   oid save_stash(const signature &stasher, const std::string &message,
-                 stash::apply::flag flags);
+                 stash::apply::flag flags) const;
 
   /*
    * STATUS API
@@ -1227,15 +1227,15 @@ public:
 
   // Gather file statuses and run a callback for each one.
   void for_each_status(
-      std::function<void(const std::string &, status::status_type)> visitor);
+      std::function<void(const std::string &, status::status_type)> visitor) const;
 
   // Gather file status information and run callbacks as requested.
   void for_each_status(
       const status::options &options,
-      std::function<void(const std::string &, status::status_type)> visitor);
+      std::function<void(const std::string &, status::status_type)> visitor) const;
 
   // Gather file status information and populate the git_status_list.
-  status::list status_list(const status::options &options = status::options());
+  status::list status_list(const status::options &options = status::options()) const;
 
   // Test if the ignore rules apply to a given file.
   // Returns false if the file is not ignored, 1 if it is
@@ -1264,42 +1264,42 @@ public:
   // git_submodule_add_finalize() to wrap up adding the new submodule and
   // .gitmodules to the index to be ready to commit.
   submodule setup_submodule(const std::string &url, const std::string &path,
-                            bool use_gitlink);
+                            bool use_gitlink) const;
 
   // Iterate over all tracked submodules of a repository.
   void for_each_submodule(
-      std::function<void(const submodule &, const std::string &)> visitor);
+      std::function<void(const submodule &, const std::string &)> visitor) const;
 
   // Lookup submodule information by name or path.
-  submodule lookup_submodule(const std::string &name);
+  submodule lookup_submodule(const std::string &name) const;
 
   // Resolve a submodule url relative to the given repository.
-  data_buffer resolve_submodule_url(const std::string &url);
+  data_buffer resolve_submodule_url(const std::string &url) const;
 
   // Set the branch for the submodule in the configuration
   void set_submodule_branch(const std::string &submodule_name,
-                            const std::string &branch_name);
+                            const std::string &branch_name) const;
 
   // Set the fetchRecurseSubmodules rule for a submodule in the configuration
   void set_submodule_fetch_recurse_option(
       const std::string &submodule_name,
-      submodule::recurse fetch_recurse_submodules);
+      submodule::recurse fetch_recurse_submodules) const;
 
   // Set the ignore rule for the submodule in the configuration
   void set_submodule_ignore_option(const std::string &submodule_name,
-                                   submodule::ignore ignore);
+                                   submodule::ignore ignore) const;
 
   // Set the update rule for the submodule in the configuration
   void set_submodule_update_option(const std::string &submodule_name,
-                                   submodule::update_strategy update);
+                                   submodule::update_strategy update) const;
 
   // Set the URL for the submodule in the configuration
   void set_submodule_url(const std::string &submodule_name,
-                         const std::string &submodule_url);
+                         const std::string &submodule_url) const;
 
   // Get the status for a submodule.
   submodule::status submodule_status(const std::string &name,
-                                     submodule::ignore ignore);
+                                     submodule::ignore ignore) const;
 
   /*
    * TAG API
@@ -1309,26 +1309,26 @@ public:
   // Create a new tag in the object database pointing to a git_object
   oid create_tag_annotation(const std::string &tag_name, const object &target,
                             const signature &tagger,
-                            const std::string &message);
+                            const std::string &message) const;
 
   // Create a new tag in the repository from an object
   oid create_tag(const std::string &tag_name, const object &target,
                  const signature &tagger, const std::string &message,
-                 bool force);
+                 bool force) const;
 
   // Create a new tag in the repository from a buffer
-  oid create_tag(const std::string &buffer, bool force);
+  oid create_tag(const std::string &buffer, bool force) const;
 
   // Create a new lightweight tag pointing at a target object
   oid create_lightweight_tag(const std::string &tag_name, const object &target,
-                             bool force);
+                             bool force) const;
 
   // Delete an existing tag reference.
-  void delete_tag(const std::string &tag_name);
+  void delete_tag(const std::string &tag_name) const;
 
   // Callback used to iterate over tags
   void
-  for_each_tag(std::function<void(const std::string &, const oid &)> visitor);
+  for_each_tag(std::function<void(const std::string &, const oid &)> visitor) const;
 
   // Fill a list with all the tags in the Repository
   // The string array will be filled with the names of the matching tags;
@@ -1350,7 +1350,7 @@ public:
    * TRANSACTION API
    * See git_transaction_* functions
    */
-  transaction create_transaction();
+  transaction create_transaction() const;
 
   /*
    * TREE API
@@ -1358,18 +1358,18 @@ public:
    */
 
   // Convert a tree entry to the git_object it points to.
-  object tree_entry_to_object(const tree::entry &entry);
+  object tree_entry_to_object(const tree::entry &entry) const;
 
   // Lookup a tree object from the repository.
-  tree lookup_tree(const oid &id);
+  tree lookup_tree(const oid &id) const;
 
   // Lookup a tree object from the repository, given a prefix of its identifier
   // (short id).
-  tree lookup_tree(const oid &id, size_t length);
+  tree lookup_tree(const oid &id, size_t length) const;
 
   // Create a tree based on another one with the specified modifications
   oid create_updated_tree(const tree &baseline,
-                          std::vector<tree::update> updates);
+                          std::vector<tree::update> updates) const;
 
   /*
    * WORKTREE API
@@ -1379,20 +1379,20 @@ public:
   // Add a new working tree
   worktree
   add_worktree(const std::string &name, const std::string &path,
-               const worktree::add_options &options = worktree::add_options());
+               const worktree::add_options &options = worktree::add_options()) const;
 
   // List names of linked working trees
   // Returned array is owned by the user
-  strarray list_worktrees();
+  strarray list_worktrees() const;
 
   // Lookup a working tree by its name for a given repository
-  worktree lookup_worktree(const std::string &name);
+  worktree lookup_worktree(const std::string &name) const;
 
   // Open a worktree of a given repository
   // If a repository is not the main tree but a worktree,
   // this function will look up the worktree inside the parent
   // repository and create a new git_worktree structure.
-  worktree open_worktree();
+  worktree open_worktree() const;
 
 private:
   friend class index;

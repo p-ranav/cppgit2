@@ -149,7 +149,7 @@ public:
                 const fetch::options &options = fetch::options());
 
   // Download new data and update tips
-  void fetch_data(
+  void fetch_(
       const strarray &refspecs, const std::string &reflog_message,
       const cppgit2::fetch::options &options = cppgit2::fetch::options());
 

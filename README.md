@@ -1460,7 +1460,7 @@ virtual const char *what() const throw() { return message_; }
 | `git_remote_disconnect` | `remote::disconnect` |
 | `git_remote_download` | `remote::download` |
 | `git_remote_dup` | `remote::copy` |
-| `git_remote_fetch` | `remote::fetch_data` |
+| `git_remote_fetch` | `remote::fetch_` |
 | `git_remote_free` | `remote::~remote` |
 | `git_remote_get_fetch_refspecs` | `remote::fetch_refspec` |
 | `git_remote_get_push_refspecs` | `remote::push_refspec` |
