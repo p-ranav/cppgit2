@@ -772,7 +772,7 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_diff_commit_as_email` | `diff::create_diff_commit_as_email` |
 | `git_diff_find_options_init` | |
 | `git_diff_find_similar` | |
-| `git_diff_foreach` | `diff::foreach` |
+| `git_diff_foreach` | `diff::for_each` |
 | `git_diff_format_email` | |
 | `git_diff_format_email_options_init` | |
 | `git_diff_free` | `diff::~diff` |
