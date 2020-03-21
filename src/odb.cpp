@@ -52,7 +52,7 @@ void odb::for_each(std::function<void(const oid &)> visitor) {
     throw git_exception();
 }
 
-oid odb::hash(const void *data, size_t length, object::object_type type) {
+oid odb::hash(const void *data, size_t length, cppgit2::object::object_type type) {
   oid result;
   if (git_odb_hash(result.c_ptr(), data, length,
                    static_cast<git_object_t>(type)))
@@ -60,7 +60,7 @@ oid odb::hash(const void *data, size_t length, object::object_type type) {
   return result;
 }
 
-oid odb::hash_file(const std::string &path, object::object_type type) {
+oid odb::hash_file(const std::string &path, cppgit2::object::object_type type) {
   oid result;
   if (git_odb_hashfile(result.c_ptr(), path.c_str(),
                        static_cast<git_object_t>(type)))

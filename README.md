@@ -987,12 +987,12 @@ The project is available under the [MIT](https://opensource.org/licenses/MIT) li
 | `git_odb_hashfile` | `odb::hash_file` |
 | `git_odb_new` | `odb::odb` |
 | `git_odb_num_backends` | `odb::size` |
-| `git_odb_object_data` | |
-| `git_odb_object_dup` | |
-| `git_odb_object_free` | |
-| `git_odb_object_id` | |
-| `git_odb_object_size` | |
-| `git_odb_object_type` | |
+| `git_odb_object_data` | `odb::object::data` |
+| `git_odb_object_dup` | `odb::object::copy` |
+| `git_odb_object_free` | `odb::object::~object` |
+| `git_odb_object_id` | `odb::object::id` |
+| `git_odb_object_size` | `odb::object::size` |
+| `git_odb_object_type` | `odb::object::type` |
 | `git_odb_open` | |
 | `git_odb_open_rstream` | |
 | `git_odb_open_wstream` | |

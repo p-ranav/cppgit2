@@ -51,10 +51,10 @@ public:
 
     // The (optional) type of the object to search for; leave as `0` or set to
     // `GIT_OBJECT_ANY` to query for any object matching the ID.
-    object::object_type type() const {
-      return static_cast<object::object_type>(c_struct_.type);
+    cppgit2::object::object_type type() const {
+      return static_cast<cppgit2::object::object_type>(c_struct_.type);
     }
-    void set_type(object::object_type type) {
+    void set_type(cppgit2::object::object_type type) {
       c_struct_.type = static_cast<git_object_t>(type);
     }
 
@@ -90,17 +90,57 @@ public:
   // Determine the object-ID (sha1 hash) of a data buffer
   // The resulting SHA-1 OID will be the identifier for the data buffer as if
   // the data buffer it were to written to the ODB.
-  static oid hash(const void *data, size_t length, object::object_type type);
+  static oid hash(const void *data, size_t length, cppgit2::object::object_type type);
 
   // Read a file from disk and fill a git_oid with the object id that the file
   // would have if it were written to the Object Database as an object of the
   // given type (w/o applying filters). Similar functionality to git.git's git
   // hash-object without the -w flag, however, with the --no-filters flag. If
   // you need filters, see git_repository_hashfile.
-  static oid hash_file(const std::string &path, object::object_type type);
+  static oid hash_file(const std::string &path, cppgit2::object::object_type type);
 
   // Lookup an ODB backend object by index
   backend operator[](size_t index) const;
+
+  // An object read from the ODB
+  class object : public libgit2_api {
+  public:
+    // Construct from libgit2 C ptr
+    object(git_odb_object *c_ptr) : c_ptr_(c_ptr) {}
+
+    // Cleanup ODB object
+    ~object() {
+      if (c_ptr_)
+        git_odb_object_free(c_ptr_);
+    }
+
+    // Create a copy of an odb_object
+    object copy() const {
+      object result(nullptr);
+      if (git_odb_object_dup(&result.c_ptr_, c_ptr_))
+        throw git_exception();
+      return result;
+    }
+
+    // Return the data of an ODB object
+    // This is the uncompressed, raw data as read from the ODB, without the leading header.
+    // This pointer is owned by the object and shall not be free'd.
+    const void * data() const { return git_odb_object_data(c_ptr_); }
+    
+    // Return the OID of an ODB object
+    // This is the OID from which the object was read from
+    const oid id() const { return oid(git_odb_object_id(c_ptr_)); }
+
+    // Return the size of an ODB object
+    // This is the real size of the data buffer, not the actual size of the object.
+    size_t size() const { return git_odb_object_size(c_ptr_); }
+
+    // Return the type of an ODB object
+    cppgit2::object::object_type type() const { return static_cast<cppgit2::object::object_type>(git_odb_object_type(c_ptr_)); }
+
+  private:
+    git_odb_object * c_ptr_;
+  };
 
   // Get the number of ODB backend objects
   size_t size() const;
