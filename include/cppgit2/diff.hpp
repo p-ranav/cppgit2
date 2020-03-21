@@ -496,7 +496,7 @@ public:
   // inside the larger file.
   class line : public libgit2_api {
   public:
-    line(git_diff_line *c_ptr) : c_struct_(*c_ptr) {}
+    line(const git_diff_line *c_ptr) : c_struct_(*c_ptr) {}
 
     // A git_diff_line_t value
     char origin() const { return c_struct_.origin; }
@@ -511,7 +511,7 @@ public:
     int num_lines() const { return c_struct_.num_lines; }
 
     // Number of bytes of data
-    size_t contents_length() const { return c_struct_.content_len; }
+    size_t content_length() const { return c_struct_.content_len; }
 
     // Offset in the original file to the content
     git_off_t content_offset() const { return c_struct_.content_offset; }
@@ -535,7 +535,7 @@ public:
   // the delta.
   class hunk : public libgit2_api {
   public:
-    hunk(git_diff_hunk * c_ptr) : c_struct_(*c_ptr) {}
+    hunk(const git_diff_hunk * c_ptr) : c_struct_(*c_ptr) {}
 
     // Starting line number in old_file
     int old_start() const { return c_struct_.old_start; }
@@ -557,10 +557,18 @@ public:
 
     // Access libgit2 C ptr
     const git_diff_hunk * c_ptr() const { return &c_struct_; }
-    
+
   private:
     git_diff_hunk c_struct_;
   };
+
+  // Loop over all deltas in a diff issuing callbacks.
+  // 
+  void for_each(std::function<void(const diff::delta &, float)> file_callback,
+    std::function<void(const diff::delta &, const diff::binary &)> binary_callback = {},
+    std::function<void(const diff::delta &, const diff::hunk &)> hunk_callback = {},
+    std::function<void(const diff::delta &, const diff::hunk &, const diff::line &)> line_callback = {}
+  );
 
 private:
   friend class patch;
