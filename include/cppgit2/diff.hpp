@@ -447,7 +447,7 @@ public:
     size_t inflated_length() const { return c_struct_.inflatedlen; }
 
     // Access libgit2 C ptr
-    const git_diff_binary_file * c_ptr() const { return &c_struct_; }
+    const git_diff_binary_file *c_ptr() const { return &c_struct_; }
 
   private:
     git_diff_binary_file c_struct_;
@@ -479,7 +479,7 @@ public:
     binary_file new_file() const { return binary_file(&c_struct_.new_file); }
 
     // Access libgit2 C ptr
-    const git_diff_binary * c_ptr() const { return &c_struct_; }
+    const git_diff_binary *c_ptr() const { return &c_struct_; }
 
   private:
     git_diff_binary c_struct_;
@@ -520,7 +520,7 @@ public:
     const char *content() const { return c_struct_.content; }
 
     // Access libgit2 C ptr
-    const git_diff_line * c_ptr() const { return &c_struct_; }
+    const git_diff_line *c_ptr() const { return &c_struct_; }
 
   private:
     git_diff_line c_struct_;
@@ -535,7 +535,7 @@ public:
   // the delta.
   class hunk : public libgit2_api {
   public:
-    hunk(const git_diff_hunk * c_ptr) : c_struct_(*c_ptr) {}
+    hunk(const git_diff_hunk *c_ptr) : c_struct_(*c_ptr) {}
 
     // Starting line number in old_file
     int old_start() const { return c_struct_.old_start; }
@@ -553,22 +553,47 @@ public:
     size_t header_length() const { return c_struct_.header_len; }
 
     // Header text, NUL-byte terminated
-    char const * header() const { return &(c_struct_.header[0]); }
+    char const *header() const { return &(c_struct_.header[0]); }
 
     // Access libgit2 C ptr
-    const git_diff_hunk * c_ptr() const { return &c_struct_; }
+    const git_diff_hunk *c_ptr() const { return &c_struct_; }
 
   private:
     git_diff_hunk c_struct_;
   };
 
   // Loop over all deltas in a diff issuing callbacks.
-  // 
+  //
+  // @param file_callback: Callback function to make per file in the diff.
+  // @param binary_callback: Optional callback to make for binary files.
+  // @param hunk_callback: Optional callback to make per hunk of text diff. This
+  // callback is called to describe a range of lines in the diff. It will not be
+  // issued for binary files.
+  // @param line_callback: Optional callback to make per line of diff text. This
+  // same callback will be made for context lines, added, and removed lines, and
+  // even for a deleted trailing newline.
+  //
+  // This will iterate through all of the files described in a diff. You should
+  // provide a file callback to learn about each file.
+  //
+  // The "hunk" and "line" callbacks are optional, and the text diff of the
+  // files will only be calculated if they are not NULL. Of course, these
+  // callbacks will not be invoked for binary files on the diff or for files
+  // whose only changed is a file mode change.
   void for_each(std::function<void(const diff::delta &, float)> file_callback,
-    std::function<void(const diff::delta &, const diff::binary &)> binary_callback = {},
-    std::function<void(const diff::delta &, const diff::hunk &)> hunk_callback = {},
-    std::function<void(const diff::delta &, const diff::hunk &, const diff::line &)> line_callback = {}
-  );
+                std::function<void(const diff::delta &, const diff::binary &)>
+                    binary_callback = {},
+                std::function<void(const diff::delta &, const diff::hunk &)>
+                    hunk_callback = {},
+                std::function<void(const diff::delta &, const diff::hunk &,
+                                   const diff::line &)>
+                    line_callback = {});
+
+  // Iterate over a diff generating formatted text output.
+  void print(diff::format format,
+             std::function<void(const diff::delta &, const diff::hunk &,
+                                const diff::line &)>
+                 line_callback);
 
 private:
   friend class patch;

@@ -13,34 +13,34 @@ int main(int argc, char **argv) {
     diff.for_each(
         // File Callback
         [](const diff::delta &delta, float progress) {
-            auto status = delta.status();
+          auto status = delta.status();
 
-            switch(status) {
-            case diff::delta::type::added:
-                std::cout << "Added " << delta.new_file().path() << std::endl;
-                break;
-            case diff::delta::type::deleted:
-                std::cout << "Deleted " << delta.new_file().path() << std::endl;
-                break;
-            case diff::delta::type::modified:
-                std::cout << "Modified " << delta.new_file().path() << std::endl;
-                break;
-            case diff::delta::type::renamed:
-                std::cout << "Renamed " << delta.old_file().path() << " -> " << 
-                delta.new_file().path() << std::endl;
-                break;
-            case diff::delta::type::copied:
-                std::cout << "Copied " << delta.new_file().path() << std::endl;
-                break;
-            case diff::delta::type::untracked:
-                std::cout << "Untracked " << delta.new_file().path() << std::endl;
-                break;
-            default:
-                break;
-            }
+          switch (status) {
+          case diff::delta::type::added:
+            std::cout << "Added " << delta.new_file().path() << std::endl;
+            break;
+          case diff::delta::type::deleted:
+            std::cout << "Deleted " << delta.new_file().path() << std::endl;
+            break;
+          case diff::delta::type::modified:
+            std::cout << "Modified " << delta.new_file().path() << std::endl;
+            break;
+          case diff::delta::type::renamed:
+            std::cout << "Renamed " << delta.old_file().path() << " -> "
+                      << delta.new_file().path() << std::endl;
+            break;
+          case diff::delta::type::copied:
+            std::cout << "Copied " << delta.new_file().path() << std::endl;
+            break;
+          case diff::delta::type::untracked:
+            std::cout << "Untracked " << delta.new_file().path() << std::endl;
+            break;
+          default:
+            break;
+          }
         }
-        // TODO: add the 3 other callbacks - binary_callback, hunk_callback, line_callback
-        // and prepare a nice diff view
+        // TODO: add the 3 other callbacks - binary_callback, hunk_callback,
+        // line_callback and prepare a nice diff view
     );
 
   } else {
