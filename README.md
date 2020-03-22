@@ -700,7 +700,7 @@ To properly cleanup memory that is owned by the user, use the `ownership` enum t
 cppgit2::tree tree1(&tree_cptr, ownership::user);
 ```
 
-If the pointer being wrapped is owned by the user, the object's destructor will call `git_<type>_free` on the pointer and clean up properly. If you specify the ownership as `ownership::libgit2`, the pointer is left alone. 
+If the pointer being wrapped is owned by the user, the class destructor will call `git_<type>_free` on the pointer and clean up properly. If you specify the ownership as `ownership::libgit2`, the pointer is left alone. 
 
 ```cpp
 tree::tree(git_tree *c_ptr, ownership owner = ownership::libgit2) 
