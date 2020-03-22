@@ -17,8 +17,6 @@
 
 `cppgit2` is a `libgit2` wrapper library for use in modern C++ `( >= C++11)`. See the [Build and Integration](#build-and-integration) section for details on how to build and integrate `cppgit2` in your projects. 
 
-`cppgit2` is in active development. `libgit2` is constantly evolving with over 750 functions in its public API. A good portion of this is covered in `cppgit2` (See [API Coverage](#api-coverage)). However, there is much room for improvement - in terms of code quality, tests, and samples. 
-
 <p align="center">
   <img src="img/init_add_commit.png"/>
 </p>
