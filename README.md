@@ -15,7 +15,9 @@
   <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" alt="version"/>
 </p>
 
-`cppgit2` is a `libgit2` wrapper library for use in modern C++ `( >= C++11)`. See the [Build and Integration](#build-and-integration) section for details on how to build and integrate `cppgit2` in your projects.
+`cppgit2` is a `libgit2` wrapper library for use in modern C++ `( >= C++11)`. See the [Build and Integration](#build-and-integration) section for details on how to build and integrate `cppgit2` in your projects. 
+
+`cppgit2` is in active development. `libgit2` is constantly evolving with over 750 functions in its public API. A good portion of this is covered in `cppgit2` (See [API Coverage](#api-coverage)). However, there is much room for improvement - in terms of code quality, tests, and samples. 
 
 <p align="center">
   <img src="img/init_add_commit.png"/>
@@ -1781,8 +1783,6 @@ virtual const char *what() const throw() { return message_; }
 | `git_worktree_validate` | `worktree::validate` |
 
 ## Contributing
-
-`cppgit2` is in active development. `libgit2` is constantly evolving with over 750 functions in its public API. A good portion of this is covered in `cppgit2` (See [API Coverage](#api-coverage)). However, there is much room for improvement - in terms of code quality, tests, and samples. 
 
 Contributions are welcome, have a look at the [CONTRIBUTING.md](CONTRIBUTING.md) document for more information. If you notice any bugs while using/reviewing `cppgit2`, please report them. Suggestions w.r.t improving the code quality are also welcome.
 
