@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="100" src="img/logo.png"/>  
+  <img height="100" src="img/logo.png"/>
 </p>
 
 <p align="center">
@@ -15,11 +15,33 @@
   <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" alt="version"/>
 </p>
 
-`cppgit2` is a `libgit2` wrapper library for use in modern C++ `( >= C++11)`. See the [Build and Integration](#build-and-integration) section for details on how to build and integrate `cppgit2` in your projects. 
+`cppgit2` is a `libgit2` wrapper library for use in modern C++ `( >= C++11)`. See the [Build and Integration](#build-and-integration) section for details on how to build and integrate `cppgit2` in your projects.
 
-<p align="center">
-  <img src="img/init_add_commit.png"/>
-</p>
+```cpp
+// Create new repo
+std::string repo_name = "my_project";
+auto repo = repository::init(repo_name, false);
+
+// Write README file
+std::string file_name = "README.md";
+auto readme = std::ofstream(repo_name + "/" + file_name);
+readme << "Hello, World!\n";
+readme.close();
+
+// Stage README.md
+auto index = repo.index();
+index.add_entry_by_path(file_name);
+index.write();
+
+// Prepare signatures
+auto author = signature("foobar", "foo.bar@baz.com");
+auto committer = author;
+
+// Create commit
+auto tree_oid = index.write_tree();
+repo.create_commit("HEAD", author, committer, "utf-8", "Update README",
+    repo.lookup_tree(tree_oid), {});
+```
 
 ## Table of Contents
 
@@ -45,7 +67,7 @@
 
 ## Build and Integration
 
-Run the following commands to build `cppgit2`. 
+Run the following commands to build `cppgit2`.
 
 **NOTE**: This also builds `libgit2` from source. `libgit2` is a submodule in the `ext/` directory that points to a stable release commit, e.g., [v0.99.0](https://github.com/libgit2/libgit2/releases/tag/v0.99.0).
 
@@ -83,7 +105,7 @@ For integration in your projects,
 * Add `build/include` to your `include_directories`
 * Add `build/lib` to your `link_directories`
 * Build your application, linking with `cppgit2`
-* Add `build/lib` to your `LD_LIBRARY_PATH` to load the shared libraries at runtime. 
+* Add `build/lib` to your `LD_LIBRARY_PATH` to load the shared libraries at runtime.
 
 Here's an example using `g++`:
 
@@ -108,11 +130,11 @@ SET_PROPERTY(TARGET my_sample PROPERTY CXX_STANDARD 11)
 
 ## Sample Programs
 
-This section presents some simple examples illustrating various `cppgit2` features. You can find the full set of available examples in the `/samples` directory. Samples are still a work-in-progress. Pull requests are welcome here. 
+This section presents some simple examples illustrating various `cppgit2` features. You can find the full set of available examples in the `/samples` directory. Samples are still a work-in-progress. Pull requests are welcome here.
 
 ### Initialize a new repository (`git init`)
 
-To initialize a new repository, simply call `repository::init`. 
+To initialize a new repository, simply call `repository::init`.
 
 ```cpp
 #include <cppgit2/repository.hpp>
@@ -123,11 +145,11 @@ int main() {
 }
 ```
 
-If you want to create a bare repository, set the second argument to `true`. 
+If you want to create a bare repository, set the second argument to `true`.
 
 ### Clone a repository and checkout specific branch (`git clone --branch`)
 
-Let's say you want to clone a repository and checkout a specific branch. Construct an `options` object using `clone::options`, set the checkout branch name, and then use `repository::clone` to clone the repository. 
+Let's say you want to clone a repository and checkout a specific branch. Construct an `options` object using `clone::options`, set the checkout branch name, and then use `repository::clone` to clone the repository.
 
 ```cpp
 #include <cppgit2/repository.hpp>
@@ -256,7 +278,7 @@ Date:   Thu Mar 19 20:48:07 2020 -0500
 
  README.md | 1 +
  1 file changed, 1 insertion(+)
- 
+
 
 ```
 
@@ -399,7 +421,7 @@ int main(int argc, char **argv) {
     auto repo = repository::open(argv[1]);
 
     repo.for_each_commit([](const commit &c) {
-      std::cout << c.id().to_hex_string(8) 
+      std::cout << c.id().to_hex_string(8)
                 << " [" << c.committer().name() << "]"
                 << " " << c.summary() << std::endl;
     });
@@ -515,10 +537,10 @@ void show_tree(const tree &tree) {
   for (size_t i = 0; i < tree.size(); ++i) {
     auto entry = tree.lookup_entry_by_index(i);
 
-    std::cout << std::setfill('0') << 
+    std::cout << std::setfill('0') <<
         std::oct << std::setw(6) << static_cast<git_filemode_t>(entry.filemode());
     std::cout << " " << object::object_type_to_string(entry.type())
-        << " " << entry.id().to_hex_string() 
+        << " " << entry.id().to_hex_string()
         << "\t" << entry.filename() << std::endl;
   }
 }
@@ -657,7 +679,7 @@ $ ./cat_file -s 8765a97b5b120259dd59262865ce166f382c0f9e
 
 ### Interoperability with `libgit2`
 
-Most `cppgit2` data structures can be constructed using a `libgit2` C pointer. 
+Most `cppgit2` data structures can be constructed using a `libgit2` C pointer.
 
 ```cpp
 // Construct libgit2 signature
@@ -692,7 +714,7 @@ REQUIRE(oid1.to_hex_string(8) == std::string(oid1_formatted)); // f9de917
 
 ### Ownership and Memory Management
 
-`libgit2` sometimes allocates memory and returns pointers to data structures that are owned by the user (required to be free'd by the user), and at other times returns a pointer to memory that is managed by the `libgit2` layer. 
+`libgit2` sometimes allocates memory and returns pointers to data structures that are owned by the user (required to be free'd by the user), and at other times returns a pointer to memory that is managed by the `libgit2` layer.
 
 To properly cleanup memory that is owned by the user, use the `ownership` enum to explicitly specify the ownership when wrapping.
 
@@ -700,10 +722,10 @@ To properly cleanup memory that is owned by the user, use the `ownership` enum t
 cppgit2::tree tree1(&tree_cptr, ownership::user);
 ```
 
-If the pointer being wrapped is owned by the user, the class destructor will call `git_<type>_free` on the pointer and clean up properly. If you specify the ownership as `ownership::libgit2`, the pointer is left alone. 
+If the pointer being wrapped is owned by the user, the class destructor will call `git_<type>_free` on the pointer and clean up properly. If you specify the ownership as `ownership::libgit2`, the pointer is left alone.
 
 ```cpp
-tree::tree(git_tree *c_ptr, ownership owner = ownership::libgit2) 
+tree::tree(git_tree *c_ptr, ownership owner = ownership::libgit2)
   : c_ptr_(c_ptr), owner_(owner) {}
 
 tree::~tree() {
@@ -1642,7 +1664,7 @@ virtual const char *what() const throw() { return message_; }
 | `git_submodule_add_setup` | `repository::setup_submodule` |
 | `git_submodule_add_to_index` | `submodule::add_to_index` |
 | `git_submodule_branch` | `submodule::branch_name` |
-| `git_submodule_clone` | `submodule::clone` | 
+| `git_submodule_clone` | `submodule::clone` |
 | `git_submodule_fetch_recurse_submodules` | `submodule::recuse_submodules_option` |
 | `git_submodule_foreach` | `repository::for_each_submodule` |
 | `git_submodule_free` | `submodule::~submodule` |
