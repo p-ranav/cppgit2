@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <a href="https://en.wikipedia.org/wiki/C%2B%2B17">
-    <img src="https://img.shields.io/badge/C%2B%2B-17-blue.svg" alt="standard"/>
+  <a href="https://en.wikipedia.org/wiki/C%2B%2B11">
+    <img src="https://img.shields.io/badge/C%2B%2B-11-blue.svg" alt="standard"/>
   </a>
   <a href="https://github.com/p-ranav/tabulate/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="license"/>
